@@ -1,7 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dodo.infra.codegroup.CodeGroupDao">
+<mapper namespace="com.dodo.module.codegroup.CodeGroupDao">
+	<resultMap id="resultMapObj" type="com.dodo.module.codegroup.CodeGroupDto"></resultMap>
 
-	  
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT
+			seq,
+			code,
+		    name,
+		    count,
+		    useNy,
+		    delNy
+		FROM
+			codeGroup
+		WHERE 1=1
+			AND delNy=0
+		ORDER BY seq ASC
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			seq,
+			code,
+		    name,
+		    count,
+		    useNy,
+		    delNy
+		FROM
+			codeGroup
+		WHERE 1=1
+		AND seq=#{seq}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO codeGroup
+		(
+			code,
+		    name,
+		    count,
+		    useNy,
+		    delNy
+		)
+		VALUES
+		(
+			#{code},
+		    #{name},
+		    #{count},
+		    #{useNy},
+		    0
+		)
+		
+		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		UPDATE codeGroup
+		SET
+			name=#{name},
+			count=#{count},
+			useNy=#{useNy}
+		WHERE
+			seq=#{seq}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM codeGroup
+		WHERE
+			seq=#{seq}
+	</delete>
+	
+	<update id="uelete">
+		UPDATE codeGroup
+		SET
+			delNy=1
+		WHERE
+			seq=#{seq}
+	</update>
+	
 </mapper>

@@ -9,14 +9,17 @@
 			seq,
 			code,
 		    name,
+		    nameEng,
 		    count,
+		    sequence,
+		    description,
 		    useNy,
 		    delNy
 		FROM
 			codeGroup
 		WHERE 1=1
 			AND delNy=0
-		ORDER BY seq ASC
+		ORDER BY seq DESC
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
@@ -24,7 +27,10 @@
 			seq,
 			code,
 		    name,
+		    nameEng,
 		    count,
+		    sequence,
+		    description,
 		    useNy,
 		    delNy
 		FROM
@@ -38,7 +44,10 @@
 		(
 			code,
 		    name,
+		    nameEng,
 		    count,
+		    sequence,
+		    description,
 		    useNy,
 		    delNy
 		)
@@ -46,7 +55,10 @@
 		(
 			#{code},
 		    #{name},
+		    #{nameEng},
 		    #{count},
+		    #{sequence},
+		    #{description},
 		    #{useNy},
 		    0
 		)
@@ -59,8 +71,12 @@
 	<update id="update">
 		UPDATE codeGroup
 		SET
+			code=#{code},
 			name=#{name},
+			nameEng=#{nameEng},
 			count=#{count},
+			sequence=#{sequence},
+			description=#{description},
 			useNy=#{useNy}
 		WHERE
 			seq=#{seq}

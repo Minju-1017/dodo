@@ -5,7 +5,10 @@ public class CodeGroupDto {
 	private String seq;
 	private String code;
 	private String name;
+	private String nameEng;
 	private int count;
+	private int sequence;
+	private String description;
 	private int useNy;
 	private String useNyStr;
 	private int delNy;
@@ -34,6 +37,14 @@ public class CodeGroupDto {
 		this.name = name;
 	}
 	
+	public String getNameEng() {
+		return nameEng;
+	}
+
+	public void setNameEng(String nameEng) {
+		this.nameEng = nameEng;
+	}
+
 	public int getCount() {
 		return count;
 	}
@@ -42,6 +53,22 @@ public class CodeGroupDto {
 		this.count = count;
 	}
 	
+	public int getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public int getUseNy() {
 		return useNy;
 	}

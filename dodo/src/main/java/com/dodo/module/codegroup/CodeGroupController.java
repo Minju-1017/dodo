@@ -65,7 +65,7 @@ public class CodeGroupController {
 	public String codeGroupXdmMfom(Model model, CodeGroupDto codeGroupDto) {		
 		model.addAttribute("codeGroupItem", codeGroupService.selectOne(codeGroupDto));
 		
-		return "/xdm/codegroup/groupListXdmMfom";
+		return "xdm/codegroup/CodeGroupXdmMfom";
 	}
 	
 	/**

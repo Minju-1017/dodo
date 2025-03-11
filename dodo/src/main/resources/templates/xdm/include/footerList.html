@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+	<th:block th:fragment="footerList"> <!-- 중복되는 head 부분 블록 처리 -->
+	
+		</div> <!-- .wrapper -->
+			
+		<script src="/xdm/template/tinydash-master/js/jquery.min.js"></script>
+		<script src="/xdm/template/tinydash-master/js/popper.min.js"></script>
+		<script src="/xdm/template/tinydash-master/js/moment.min.js"></script>
+		<script src="/xdm/template/tinydash-master/js/bootstrap.min.js"></script>
+		<script src="/xdm/template/tinydash-master/js/simplebar.min.js"></script>
+		<script src='/xdm/template/tinydash-master/js/daterangepicker.js'></script>
+		<script src='/xdm/template/tinydash-master/js/jquery.stickOnScroll.js'></script>
+		<script src="/xdm/template/tinydash-master/js/tinycolor-min.js"></script>
+		<script src="/xdm/template/tinydash-master/js/config.js"></script>
+		<script src='/xdm/template/tinydash-master/js/jquery.dataTables.min.js'></script>
+		<script src='/xdm/template/tinydash-master/js/dataTables.bootstrap4.min.js'></script>
+		<script>
+			$('#dataTable-1').DataTable(
+			{
+			  autoWidth: true,
+			  "lengthMenu": [
+			    [16, 32, 64, -1],
+			    [16, 32, 64, "All"]
+			  ]
+			});
+		</script>
+		<script src="/xdm/template/tinydash-master/js/apps.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			
+			function gtag()
+			{
+			  dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', 'UA-56159088-1');
+		</script>
+	</th:block>
+</html>

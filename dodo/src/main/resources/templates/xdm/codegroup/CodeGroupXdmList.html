@@ -4,12 +4,6 @@
 	<div th:replace="~{/xdm/include/headList :: headList}"></div> <!-- 중복되는 head 처리 -->
 								
 	<main role="main" class="main-content">
-		<img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png">
-	<img src="/xdm/template/tinydash-master/assets/images/icon_delete.png">
-	<img src="/xdm/template/tinydash-master/assets/images/icon_excel.png">
-	<img src="/xdm/template/tinydash-master/assets/images/icon_modify.png">
-	<img src="/xdm/template/tinydash-master/assets/images/icon_insert.png">
-	<img src="/xdm/template/tinydash-master/assets/images/icon_list.png">
 		<div class="container-fluid">
 			<div class="row justify-content-center">
 				<div class="col-12">
@@ -285,14 +279,46 @@
 			}
 		}
 		
+		function getSelectedElementsCnt(name) {
+			// 선택된 목록의 갯수 세기
+			return document.querySelectorAll('input[name="' + name + '"]:checked').length;
+		}
+		
+		document.getElementById("modify").onclick = function() {
+			const selectedElementsCnt = getSelectedElementsCnt("check");
+			
+			if (selectedElementsCnt == 0) {
+				return;
+			}
+			
+			if (selectedElementsCnt > 1) {
+				alert("1개의 코드 그룹만 선택해 주세요.");
+				return;
+			}
+			
+			// TODO: id seq로 해당 데이터 수정 폼 열기
+		}
+		
 		document.getElementById("delete").onclick = function() {
-			if (!confirm("정말 삭제하시겠습니까?")) {
+			const selectedElementsCnt = getSelectedElementsCnt("check");
+			
+			if (selectedElementsCnt == 0) {
+				return;
+			}
+			
+			if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?")) {
 				return false;
 			}
 		}
 		
 		document.getElementById("uelete").onclick = function() {
-			if (!confirm("정말 삭제하시겠습니까?(업데이트)")) {
+			const selectedElementsCnt = getSelectedElementsCnt("check");
+			
+			if (selectedElementsCnt == 0) {
+				return;
+			}
+			
+			if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
 				return false;
 			}
 		}

@@ -12,7 +12,7 @@ public class CodeGroupDto {
 	private int useNy;
 	private String useNyStr;
 	private int delNy;
-	
+
 	public String getSeq() {
 		return seq;
 	}

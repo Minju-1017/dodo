@@ -4,39 +4,46 @@
 <mapper namespace="com.dodo.module.codegroup.CodeGroupDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.codegroup.CodeGroupDto"></resultMap>
 
+	<!-- 공통 구문 selectCommon으로 선언 -->
+	<sql id="selectCommon">
+		FROM 
+			codeGroup a
+		WHERE 1=1
+	</sql>
+	
+	<sql id="selectCommonColumn">
+		a.seq,
+		a.code,
+	    a.name,
+	    a.nameEng,
+	    a.count,
+	    a.sequence,
+	    a.description,
+	    a.useNy,
+	    a.delNy
+	</sql>
+	<!-- End -->
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT
-			seq,
-			code,
-		    name,
-		    nameEng,
-		    count,
-		    sequence,
-		    description,
-		    useNy,
-		    delNy
-		FROM
-			codeGroup
-		WHERE 1=1
-			AND delNy=0
-		ORDER BY seq DESC
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+			AND a.delNy=0
+		ORDER BY a.seq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
-			seq,
-			code,
-		    name,
-		    nameEng,
-		    count,
-		    sequence,
-		    description,
-		    useNy,
-		    delNy
-		FROM
-			codeGroup
-		WHERE 1=1
-		AND seq=#{seq}
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+		AND a.seq=#{seq}
 	</select>
 	
 	<insert id="insert">

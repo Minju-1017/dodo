@@ -3,22 +3,27 @@ package com.dodo.module.codegroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CodeGroupController {
 	
 	@Autowired
-	CodeGroupService codeGroupService; //
+	CodeGroupService codeGroupService;
 	
 	/**
-	 * 전체 데이터 읽어오기
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/xdm/codegroup/CodeGroupXdmList")
-	public String codeGroupXdmList(Model model) {
-		model.addAttribute("codeGroupList", codeGroupService.selectList());
+	public String codeGroupXdmList(Model model, CodeGroupVo vo) throws Exception {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(codeGroupService.selectOneCount());
+		
+		model.addAttribute("codeGroupList", codeGroupService.selectList(vo));
+		model.addAttribute("vo", vo);
 		
 		return "xdm/codegroup/CodeGroupXdmList";
 	}

@@ -17,6 +17,10 @@ repositories {
 	mavenCentral()
 }
 
+// STS 설치 이후 추가하고 싶은 것이 있을 땐 https://mvnrepository.com/에서 검색
+// Log4Jdbc Log4j2 JDBC 4 1 검색 -> 1.16 버전 선택 -> Gradle 탭에서 복사
+// 추가한 이후엔 오른쪽 마우스 메뉴에서 Gradle > Refresh Gradle Project 후 팀내 공지할 것
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -27,6 +31,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
+	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
+	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
 
 tasks.named('test') {

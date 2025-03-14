@@ -4,262 +4,175 @@
 	<div th:replace="~{/xdm/include/headList :: headList}"></div> <!-- 중복되는 head 처리 -->
 								
 	<main role="main" class="main-content">
-		<div class="container-fluid">
-			<div class="row justify-content-center">
-				<div class="col-12">
-					<h2 class="mb-2 page-title">Code Group</h2>
-					<div class="row my-4">
-						<div class="col-md-2">
-							<select class="form-control" id="yeargroup" required>
-								<option selected disabled value="">N</option>
-								<option>...</option>
-							</select>
+		<form name="formList" id="formList" method="post" autocomplete="off">
+			<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
+			<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+			
+			<div class="container-fluid">
+				<div class="row justify-content-center">
+					<div class="col-12">
+						<h2 class="mb-2 page-title">Code Group</h2>
+						<div class="row my-4">
+							<div class="col-md-2">
+								<select class="form-control" id="yeargroup" required>
+									<option selected disabled value="">N</option>
+									<option>...</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<select class="form-control" id="monthgroup" required>
+									<option selected disabled value="">Y</option>
+									<option>...</option>
+								</select>
+							</div>    
+							<div class="col-md-2">
+								<select class="form-control" id="daygroup" required>
+									<option selected disabled value="">날짜</option>
+									<option>등록일</option>
+									<option>수정일</option>
+								</select>
+							</div>   
+							<div class="col-md-2">
+								<input class="form-control" placeholder="2024-12-25">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control" placeholder="2024-1-24">
+							</div>
 						</div>
-						<div class="col-md-2">
-							<select class="form-control" id="monthgroup" required>
-								<option selected disabled value="">Y</option>
-								<option>...</option>
-							</select>
-						</div>    
-						<div class="col-md-2">
-							<select class="form-control" id="daygroup" required>
-								<option selected disabled value="">날짜</option>
-								<option>등록일</option>
-								<option>수정일</option>
-							</select>
-						</div>   
-						<div class="col-md-2">
-							<input class="form-control" placeholder="2024-12-25">
+						<div class="row my-4">
+							<div class="col-md-2">
+								<select class="form-control" id="searchgroup" required>
+									<option selected disabled value="">검색구분</option>
+									<option>코드그룹 코드</option>
+									<option>코드그룹 이름</option>
+									<option>코드 이름 (영문)</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<input class="form-control" placeholder="검색어">
+							</div>   
+							<div class="col-md-2">
+								<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_search.png"></a>
+								<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_refresh.png"></a>
+							</div>
 						</div>
-						<div class="col-md-2">
-							<input class="form-control" placeholder="2024-1-24">
-						</div>
-					</div>
-					<div class="row my-4">
-						<div class="col-md-2">
-							<select class="form-control" id="searchgroup" required>
-								<option selected disabled value="">검색구분</option>
-								<option>코드그룹 코드</option>
-								<option>코드그룹 이름</option>
-								<option>코드 이름 (영문)</option>
-							</select>
-						</div>
-						<div class="col-md-2">
-							<input class="form-control" placeholder="검색어">
-						</div>   
-						<div class="col-md-2">
-							<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_search.png"></a>
-							<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_refresh.png"></a>
-						</div>
-					</div>
-					<div class="row my-4 col-md-12 card shadow card-body">
-						<!-- table -->
-						<table class="table datatables" id="dataTable-1">
-							<thead>
-								<tr>
-									<th>
-										<div class="custom-checkbox">
-											<input type="checkbox" id="checkAll" name="checkAll">
-										</div>
-									</th>
-									<th>#</th>
-									<th>사용</th>
-									<th>코드그룹 코드</th>
-									<th>코드그룹 이름</th>
-									<th>코드 이름 (영문)</th>
-									<th>갯수</th>
-									<th>순서</th>
-									<th>등록일</th>
-									<th>수정일</th>
-								</tr>
-							</thead>
-							<tbody>
+						<div class="row my-4 col-md-12 card shadow card-body">
+							<!-- table -->
+							<!-- 
+								Paging 개발을 위한 주석처리 - 원래 템플릿에 기능 있었음(id="dataTable-1" 이부분만 넣어주면 됨)
+								<table class="table datatables" id="dataTable-1">
+							-->
+							<table class="table datatables" id="">
+								<thead>
+									<!-- Paging 개발을 위한 코드 삽입 -->
+									<tr>
+										<td colspan="9" style="border-top: none;">
+											Total: 18
+										</td>
+										<td colspan="1" style="border-top: none;">
+											<select class="form-control" id="daygroup" required>
+												<option selected value="">5</option>
+												<option>10</option>
+												<option>15</option>
+											</select>
+										</td>
+									</tr>
+									<!-- End Paging 개발을 위한 코드 삽입 -->
+									<tr>
+										<th>
+											<div class="custom-checkbox">
+												<input type="checkbox" id="checkAll" name="checkAll">
+											</div>
+										</th>
+										<th>#</th>
+										<th>사용</th>
+										<th>코드그룹 코드</th>
+										<th>코드그룹 이름</th>
+										<th>코드 이름 (영문)</th>
+										<th>갯수</th>
+										<th>순서</th>
+										<th>등록일</th>
+										<th>수정일</th>
+									</tr>
+								</thead>
+								<tbody>
 									<tr th:if="${#lists.isEmpty(codeGroupList)}">
 										<td class="text-center" colspan="10">
 											데이터가 없습니다.
 										</td>
 									</tr> 
-								<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
-									<td>
-										<div class="custom-checkbox">
-											<input type="checkbox" class="" name="check" id="${list?.seq}">
-										</div>
-    									</td>
-									<td th:text="${list?.seq}"></td>
-									<td th:text="${list?.useNyStr}"></td>
-									<td th:text="${list?.code}"></td>
-									<td>			
-										<a th:href="@{/xdm/codegroup/CodeGroupXdmItem(seq=${list.seq})}"
-											th:text="${list?.name}"></a>
-									</td>
-									<td th:text="${list?.nameEng}"></td>
-									<td th:text="${list?.count}"></td>
-									<td th:text="${list?.sequence}"></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
-						<!-- MJ 코드 추가 -->
-						<div class="row" style="margin-top: 30px;">
-							<div class="col">
-								<a href="#" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
-								<a href="#" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
-							</div>
-							<div class="col" style="text-align: right;">
-								<a href="#" id="excel"><img src="/xdm/template/tinydash-master/assets/images/icon_excel.png"></a>
-								<a href="#" id="modify"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
-								<a href="/xdm/codegroup/CodeGroupXdmForm"><img src="/xdm/template/tinydash-master/assets/images/icon_insert.png"></a>   
-							</div>
-						</div>
-						<!-- MJ 코드 추가 End -->
-					</div> <!-- table section -->
-				</div> <!-- .col-12 -->
-			</div> <!-- .row -->
-		</div> <!-- .container-fluid -->
-		<div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog"
-			aria-labelledby="defaultModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="list-group list-group-flush my-n3">
-							<div class="list-group-item bg-transparent row align-items-center">
-								<div class="col-auto">
-									<span class="fe fe-box fe-24"></span>
-								</div>
+									<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
+										<td>
+											<div class="custom-checkbox">
+												<input type="checkbox" class="" name="check" id="${list?.seq}">
+											</div>
+	    									</td>
+										<td th:text="${list?.seq}"></td>
+										<td th:text="${list?.useNyStr}"></td>
+										<td th:text="${list?.code}"></td>
+										<td>			
+											<a th:href="@{/xdm/codegroup/CodeGroupXdmItem(seq=${list.seq})}"
+												th:text="${list?.name}"></a>
+										</td>
+										<td th:text="${list?.nameEng}"></td>
+										<td th:text="${list?.count}"></td>
+										<td th:text="${list?.sequence}"></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<!-- Paging 개발을 위한 코드 삽입 -->
+								<tfoot>
+									<tr>
+										<td colspan="10" style="border-top: none;">
+											<nav aria-label="Page navigation">
+												<ul class="pagination justify-content-center">
+													<!-- 타임리프 
+														gt 뜻: >
+														ne 뜻: !=
+														eq 뜻: ==
+													-->
+													<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+														<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+															th:attr="onclick=|goList('${vo.startPage - 1}')|">
+															<span aria-hidden="true">&laquo;</span>
+														</a>
+													</li>
+													<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+														th:classappend="${num eq vo.currPage} ? active : ''" 
+														class="page-item" style="cursor: pointer;">
+														<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+													</li>
+													<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+														<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+															<span aria-hidden="true">&raquo;</span>
+														</a>
+													</li>
+												</ul>
+											</nav>
+										</td>
+									</tr>
+								</tfoot>
+								<!-- Paging 개발을 위한 코드 삽입 End -->
+							</table>
+							<!-- MJ 코드 추가 -->
+							<div class="row">
 								<div class="col">
-										<small>
-											<strong>Package has uploaded successfull</strong>
-										</small>
-									<div class="my-0 text-muted small">
-										Package is zipped and uploaded
-									</div>
-									<small class="badge badge-pill badge-light text-muted">
-										1m ago
-									</small>
+									<a href="#" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
+									<a href="#" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
+								</div>
+								<div class="col" style="text-align: right;">
+									<a href="#" id="excel"><img src="/xdm/template/tinydash-master/assets/images/icon_excel.png"></a>
+									<a href="#" id="modify"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
+									<a href="/xdm/codegroup/CodeGroupXdmForm"><img src="/xdm/template/tinydash-master/assets/images/icon_insert.png"></a>   
 								</div>
 							</div>
-							<div class="list-group-item bg-transparent row align-items-center">
-								<div class="col-auto">
-									<span class="fe fe-download fe-24"></span>
-								</div>
-								<div class="col">
-									<small>
-										<strong>Widgets are updated successfull</strong>
-									</small>
-									<div class="my-0 text-muted small">
-										Just create new layout Index, form, table
-									</div>
-									<small class="badge badge-pill badge-light text-muted">
-										2m ago
-									</small>
-								</div>
-							</div>
-							<div class="list-group-item bg-transparent row align-items-center">
-								<div class="col-auto">
-									<span class="fe fe-inbox fe-24"></span>
-								</div>
-								<div class="col">
-								<small>
-									<strong>Notifications have been sent</strong>
-								</small>
-								<div class="my-0 text-muted small">
-									Fusce dapibus, tellus ac cursus commodo
-								</div>
-								<small class="badge badge-pill badge-light text-muted">
-									30m ago
-								</small>
-							</div>
-							<div class="list-group-item bg-transparent row align-items-center">
-								<div class="col-auto">
-									<span class="fe fe-link fe-24"></span>
-								</div>
-								<div class="col">
-									<small>
-										<strong>Link was attached to menu</strong>
-									</small>
-									<div class="my-0 text-muted small">
-										New layout has been attached to the menu
-									</div>
-									<small class="badge badge-pill badge-light text-muted">
-										1h ago
-									</small>
-								</div>
-							</div> <!-- / .row -->
-						</div> <!-- / .list-group -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-block" 
-							data-dismiss="modal">Clear All</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" 
-			aria-labelledby="defaultModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body px-5">
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-success justify-content-center">
-									<i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Control area</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-activity fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Activity</p>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Droplet</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Upload</p>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-users fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Users</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-settings fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Settings</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+							<!-- End MJ 코드 추가 -->
+						</div> <!-- table section -->
+					</div> <!-- .col-12 -->
+				</div> <!-- .row -->
+			</div> <!-- .container-fluid -->
+		</form>
 	</main> <!-- main -->
 	
 	<div th:replace="~{/xdm/include/footerList :: footerList}"></div> <!-- 중복되는 footer 처리 -->
@@ -321,6 +234,12 @@
 			if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
 				return false;
 			}
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function goList(num) {
+			alert(num);	
 		}
 	</script>
 	

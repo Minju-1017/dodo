@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dodo.module.codegroup.CodeGroupDto;
+
 @Service
 public class CodeService {
 	
@@ -37,5 +39,9 @@ public class CodeService {
 	
 	public int uelete(CodeDto codeDto) {
 		return codeDao.uelete(codeDto);
+	}
+	
+	public List<CodeGroupDto> selectCodeGroupList() {
+		return codeDao.selectCodeGroupList();
 	}
 }

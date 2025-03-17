@@ -3,14 +3,15 @@ package com.dodo.module.code;
 public class CodeDto {
 	
 	private String seq;
-	private String code;
-	private String name;
-	private String nameEng;
-	private int sequence;
-	private int useNy;
-	private String useNyStr;
-	private int delNy;
+	private String cName;
+	private String cNameEng;
+	private int cSequence;
+	private String cDescription;
+	private int cUseNy;
+	private String cUseNyStr;
+	private int cDelNy;
 	private String codeGroup_seq;
+	private String cgName;
 	
 	public String getSeq() {
 		return seq;
@@ -20,57 +21,61 @@ public class CodeDto {
 		this.seq = seq;
 	}
 	
-	public String getCode() {
-		return code;
+	public String getcName() {
+		return cName;
 	}
 	
-	public void setCode(String code) {
-		this.code = code;
+	public void setcName(String cName) {
+		this.cName = cName;
 	}
 	
-	public String getName() {
-		return name;
+	public String getcNameEng() {
+		return cNameEng;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setcNameEng(String cNameEng) {
+		this.cNameEng = cNameEng;
 	}
 	
-	public String getNameEng() {
-		return nameEng;
+	public int getcSequence() {
+		return cSequence;
 	}
 	
-	public void setNameEng(String nameEng) {
-		this.nameEng = nameEng;
+	public void setcSequence(int cSequence) {
+		this.cSequence = cSequence;
 	}
 	
-	public int getSequence() {
-		return sequence;
+	public String getcDescription() {
+		return cDescription;
 	}
 	
-	public void setSequence(int sequence) {
-		this.sequence = sequence;
+	public void setcDescription(String cDescription) {
+		this.cDescription = cDescription;
 	}
 	
-	public int getUseNy() {
-		return useNy;
+	public int getcUseNy() {
+		return cUseNy;
 	}
 	
-	public String getUseNyStr() {
-		return useNyStr;
+	public void setcUseNy(int cUseNy) {
+		this.cUseNy = cUseNy;
+		this.cUseNyStr = (cUseNy == 1) ? "Y" : "N";
 	}
 	
-	public void setUseNy(int useNy) {
-		this.useNy = useNy;
-		this.useNyStr = (useNy == 1) ? "Y" : "N";
+	public String getcUseNyStr() {
+		return cUseNyStr;
 	}
 	
-	public int getDelNy() {
-		return delNy;
+	public void setcUseNyStr(String cUseNyStr) {
+		
 	}
 	
-	public void setDelNy(int delNy) {
-		this.delNy = delNy;
+	public int getcDelNy() {
+		return cDelNy;
+	}
+	
+	public void setcDelNy(int cDelNy) {
+		this.cDelNy = cDelNy;
 	}
 	
 	public String getCodeGroup_seq() {
@@ -79,6 +84,14 @@ public class CodeDto {
 	
 	public void setCodeGroup_seq(String codeGroup_seq) {
 		this.codeGroup_seq = codeGroup_seq;
+	}
+
+	public String getCgName() {
+		return cgName;
+	}
+
+	public void setCgName(String cgName) {
+		this.cgName = cgName;
 	}
 	
 }

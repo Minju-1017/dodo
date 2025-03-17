@@ -3,23 +3,29 @@
 
 <mapper namespace="com.dodo.module.code.CodeDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.code.CodeDto"></resultMap>
+	<resultMap id="resultMapObj_CG" type="com.dodo.module.codegroup.CodeGroupDto"></resultMap>
 
 	<!-- 공통 구문 selectCommon으로 선언 -->
 	<sql id="selectCommon">
 		FROM 
 			code a
+		LEFT JOIN
+			codeGroup b
+		ON
+			a.codeGroup_seq = b.seq
 		WHERE 1=1
 	</sql>
 	
 	<sql id="selectCommonColumn">
 		a.seq,
-		a.code,
-	    a.name,
-	    a.nameEng,
-	    a.sequence,
-	    a.useNy,
-	    a.delNy,
-	    a.codeGroup_seq
+	    a.cName,
+	    a.cNameEng,
+	    a.cSequence,
+	    a.cDescription,
+	    a.cUseNy,
+	    a.cDelNy,
+	    a.codeGroup_seq,
+    	b.cgName
 	</sql>
 	<!-- End -->
 	
@@ -32,7 +38,7 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.delNy=0
+			AND a.cDelNy=0
 		ORDER BY a.seq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
@@ -48,21 +54,21 @@
 	<insert id="insert">
 		INSERT INTO code
 		(
-			code,
-		    name,
-		    nameEng,
-		    sequence,
-		    useNy,
-		    delNy,
+		    cName,
+		    cNameEng,
+		    cSequence,
+		    cDescription,
+		    cUseNy,
+		    cDelNy,
 		    codeGroup_seq
 		)
 		VALUES
 		(
-			#{code},
-		    #{name},
-		    #{nameEng},
-		    #{sequence},
-		    #{useNy},
+		    #{cName},
+		    #{cNameEng},
+		    #{cSequence},
+		    #{cDescription},
+		    #{cUseNy},
 		    0,
 		    #{codeGroup_seq}
 		)
@@ -75,7 +81,11 @@
 	<update id="update">
 		UPDATE code
 		SET
-			name=#{name}
+			cName=#{cName},
+			cNameEng=#{cNameEng},
+			cSequence=#{cSequence},
+			cDescription=#{cDescription},
+			cUseNy=#{cUseNy}
 		WHERE
 			seq=#{seq}
 	</update>
@@ -89,9 +99,26 @@
 	<update id="uelete">
 		UPDATE code
 		SET
-			delNy=1
+			cDelNy=1
 		WHERE
 			seq=#{seq}
 	</update>
+	
+	<select id="selectCodeGroupList" resultMap="resultMapObj_CG">
+		SELECT
+			seq,
+		    cgName,
+		    cgNameEng,
+		    cgCount,
+		    cgSequence,
+		    cgDescription,
+		    cgUseNy,
+		    cgDelNy
+		FROM 
+			codeGroup
+		WHERE 1=1
+			AND cgDelNy=0
+		ORDER BY seq DESC
+	</select>
 	
 </mapper>

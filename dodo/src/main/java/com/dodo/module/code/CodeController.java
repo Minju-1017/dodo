@@ -1,10 +1,14 @@
 package com.dodo.module.code;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dodo.module.codegroup.CodeGroupDto;
 
 @Controller
 public class CodeController {
@@ -46,7 +50,9 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/xdm/code/CodeXdmForm")
-	public String codeXdmForm() {
+	public String codeXdmForm(Model model) {		
+		model.addAttribute("codeGroupList", codeService.selectCodeGroupList());
+		
 		return "xdm/code/CodeXdmForm";
 	}
 	

@@ -13,14 +13,13 @@
 	
 	<sql id="selectCommonColumn">
 		a.seq,
-		a.code,
-	    a.name,
-	    a.nameEng,
-	    a.count,
-	    a.sequence,
-	    a.description,
-	    a.useNy,
-	    a.delNy
+	    a.cgName,
+	    a.cgNameEng,
+	    a.cgCount,
+	    a.cgSequence,
+	    a.cgDescription,
+	    a.cgUseNy,
+	    a.cgDelNy
 	</sql>
 	<!-- End -->
 	
@@ -33,7 +32,7 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.delNy=0
+			AND a.cgDelNy=0
 		ORDER BY a.seq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
@@ -49,24 +48,22 @@
 	<insert id="insert">
 		INSERT INTO codeGroup
 		(
-			code,
-		    name,
-		    nameEng,
-		    count,
-		    sequence,
-		    description,
-		    useNy,
-		    delNy
+		    cgName,
+		    cgNameEng,
+		    cgCount,
+		    cgSequence,
+		    cgDescription,
+		    cgUseNy,
+		    cgDelNy
 		)
 		VALUES
 		(
-			#{code},
-		    #{name},
-		    #{nameEng},
-		    #{count},
-		    #{sequence},
-		    #{description},
-		    #{useNy},
+		    #{cgName},
+		    #{cgNameEng},
+		    #{cgCount},
+		    #{cgSequence},
+		    #{cgDescription},
+		    #{cgUseNy},
 		    0
 		)
 		
@@ -78,13 +75,12 @@
 	<update id="update">
 		UPDATE codeGroup
 		SET
-			code=#{code},
-			name=#{name},
-			nameEng=#{nameEng},
-			count=#{count},
-			sequence=#{sequence},
-			description=#{description},
-			useNy=#{useNy}
+			cgName=#{cgName},
+			cgNameEng=#{cgNameEng},
+			cgCount=#{cgCount},
+			cgSequence=#{cgSequence},
+			cgDescription=#{cgDescription},
+			cgUseNy=#{cgUseNy}
 		WHERE
 			seq=#{seq}
 	</update>
@@ -98,7 +94,7 @@
 	<update id="uelete">
 		UPDATE codeGroup
 		SET
-			delNy=1
+			cgDelNy=1
 		WHERE
 			seq=#{seq}
 	</update>

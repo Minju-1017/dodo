@@ -31,7 +31,7 @@ public class CodeGroupController {
 	/**
 	 * 조건에 맞는 데이터 1줄만 읽어오기
 	 * @param model
-	 * @param groupListDto html에서 호출되는 파라메터와 일치하는 값이 있다면, 자동으로 바인딩 된다.
+	 * @param codeListDto html에서 호출되는 파라메터와 일치하는 값이 있다면, 자동으로 바인딩 된다.
 	 * @return
 	 */
 	@RequestMapping(value = "/xdm/codegroup/CodeGroupXdmItem")

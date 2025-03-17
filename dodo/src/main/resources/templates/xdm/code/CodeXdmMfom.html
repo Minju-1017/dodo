@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<div th:replace="~{/xdm/include/headForm :: headForm}"></div> <!-- 중복되는 head 처리 -->
+	
+	<main role="main" class="main-content">
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				<div class="col-12">
+					<h2 class="page-title">Code Group</h2>
+					<div class="row col-md-12 card shadow mb-4">
+						<div class="card-header">
+							<h5 class="card-title" style="padding-top: 20px;">
+								기본 정보
+							</h5>
+						</div>
+						<div class="card-body">
+							<form class="needs-validation" novalidate
+								action="/xdm/codegroup/CodeGroupXdmUpdt" method="post" id="form">
+								
+								<input type="hidden" name="seq" th:value="${codeGroupItem?.seq}" />
+								
+								<div class="form-row">
+									<div class="col-md-3 mb-3">
+										<label>
+											코드그룹 코드 <span style="color: red; font-weight: 500;">*</span>
+										</label>
+										<input type="text" class="form-control" name="seq" id="seq" 
+											 th:value="${codeGroupItem?.seq}" disabled>
+									</div>
+									<div class="col-md-3 mb-3">
+										<label>코드그룹 코드 (ANOTHER)</label>
+										<input type="text" class="form-control" name="code" id="code" 
+											th:value="${codeGroupItem?.code}" placeholder="영대소문자, 숫자">
+									</div>
+									<div class="col-md-3 mb-3">
+										<label for="name">
+											코드그룹 이름 <span style="color: red; font-weight: 500;">*</span>
+										</label>
+										<input type="text" class="form-control" name="name" id="name"
+											th:value="${codeGroupItem?.name}" placeholder="한글, 영대소문자, 숫자" required>
+										<div class="valid-feedback"> Looks good! </div>
+									</div>
+									<div class="col-md-3 mb-3">
+										<label>코드그룹 이름 (영문)</label>
+										<input type="text" class="form-control" name="nameEng" id="nameEng"
+											th:value="${codeGroupItem?.nameEng}" placeholder="영대소문자, 숫자">
+									</div>
+								</div> <!-- /.form-row -->
+								<div class="form-row">
+									<div class="col-md-3 mb-3">
+										<label>
+											사용여부 <span style="color: red; font-weight: 500;">*</span>
+										</label>
+										<select class="form-control select2" id="useNy" name="useNy" 
+											th:value="${codeGroupItem?.useNy}">
+											<option value="1" th:selected="${codeGroupItem?.useNy} == 1">Y</option>
+											<option value="0" th:selected="${codeGroupItem?.useNy} == 0">N</option>
+										</select>
+									</div>
+									<div class="col-md-3 mb-3">
+										<label for="sequence">
+											순서 <span style="color: red; font-weight: 500;">*</span>
+										</label>
+										<input type="text" class="form-control" id="sequence" name="sequence" 
+											th:value="${codeGroupItem?.sequence}" required>
+										<div class="valid-feedback"> Looks good! </div>
+									</div>
+									<div class="col-md-3 mb-3">
+										<label for="count">
+											갯수 <span style="color: red; font-weight: 500;">*</span>
+										</label>
+										<input type="text" class="form-control" id="count" name="count"
+											th:value="${codeGroupItem?.count}" required>
+										<div class="valid-feedback"> Looks good! </div>
+									</div>
+								</div> <!-- /.form-row -->
+								<div class="form-row">
+									<div class="col-md-6 mb-3">
+										<label>설명</label>
+										<textarea class="form-control" rows="5" id="description" name="description"
+											th:text="${codeGroupItem?.description}" style="resize: none;"></textarea>
+									</div>
+								</div> <!-- /.form-row -->
+								<div class="row">
+									<div class="col-md-6 mb-3">
+										<a href="/xdm/codegroup/CodeGroupXdmList"><img src="/xdm/template/tinydash-master/assets/images/icon_list.png"></a>
+									</div>
+									<div class="col-md-6 mb-3" style="text-align: right;">
+										<button class="btn" type="button" id="btnSave">
+											<img src="/xdm/template/tinydash-master/assets/images/icon_submit.png">
+										</button>
+									</div>
+								</div>
+							</form>
+						</div> <!-- /.col -->
+					</div> <!-- end section -->
+				</div> <!-- /.col-12 col-lg-10 col-xl-10 -->
+			</div> <!-- .row -->
+		</div> <!-- .container-fluid -->
+		<!-- 코드 수정 - MJ End -->
+	</main> <!-- main -->
+	
+	<div th:replace="~{/xdm/include/footerForm :: footerForm}"></div> <!-- 중복되는 footer 처리 -->
+	
+	<script type="text/javascript">
+		document.getElementById("btnSave").onclick = function() {
+			document.getElementById("form").submit();
+		}
+	</script>
+	
+</body>
+</html>

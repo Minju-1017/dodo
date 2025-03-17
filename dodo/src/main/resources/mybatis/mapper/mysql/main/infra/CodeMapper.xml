@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dodo.module.code.CodeDao">
+	<resultMap id="resultMapObj" type="com.dodo.module.code.CodeDto"></resultMap>
+
+	<!-- 공통 구문 selectCommon으로 선언 -->
+	<sql id="selectCommon">
+		FROM 
+			code a
+		WHERE 1=1
+	</sql>
+	
+	<sql id="selectCommonColumn">
+		a.seq,
+		a.code,
+	    a.name,
+	    a.nameEng,
+	    a.sequence,
+	    a.useNy,
+	    a.delNy,
+	    a.codeGroup_seq
+	</sql>
+	<!-- End -->
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+			AND a.delNy=0
+		ORDER BY a.seq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+		AND a.seq=#{seq}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO code
+		(
+			code,
+		    name,
+		    nameEng,
+		    sequence,
+		    useNy,
+		    delNy,
+		    codeGroup_seq
+		)
+		VALUES
+		(
+			#{code},
+		    #{name},
+		    #{nameEng},
+		    #{sequence},
+		    #{useNy},
+		    0,
+		    #{codeGroup_seq}
+		)
+		
+		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		UPDATE code
+		SET
+			name=#{name}
+		WHERE
+			seq=#{seq}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM code
+		WHERE
+			seq=#{seq}
+	</delete>
+	
+	<update id="uelete">
+		UPDATE code
+		SET
+			delNy=1
+		WHERE
+			seq=#{seq}
+	</update>
+	
+</mapper>

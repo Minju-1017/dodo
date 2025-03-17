@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+	<div th:replace="~{/xdm/include/headList :: headList}"></div> <!-- 중복되는 head 처리 -->
+		
+	<main role="main" class="main-content">
+		<form name="formList" id="formList" method="post" autocomplete="off">
+			<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
+			<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+		
+			<div class="container-fluid">
+				<div class="row justify-content-center">
+					<div class="col-12">
+						<h2 class="mb-2 page-title">Code</h2>
+	              
+						<div class="row my-4">
+							<div class="col-md-2">
+								<select class="form-control" id="yeargroup" required>
+									<option selected disabled value="">N</option>
+									<option>...</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<select class="form-control" id="monthgroup" required>
+									<option selected disabled value="">Y</option>
+									<option>...</option>
+								</select>
+							</div>    
+							<div class="col-md-2">
+								<select class="form-control" id="daygroup" required>
+									<option selected disabled value="">날짜</option>
+									<option>등록일</option>
+									<option>수정일</option>
+								</select>
+							</div>   
+							<div class="col-md-2">
+								<input class="form-control" placeholder="2024-12-25">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control" placeholder="2024-1-24">
+							</div>
+						</div>
+						<div class="row my-4">
+							<div class="col-md-2">
+								<select class="form-control" id="searchgroup" required>
+									<option selected disabled value="">검색구분</option>
+									<option>코드그룹 코드</option>
+									<option>코드그룹 이름</option>
+									<option>코드</option>
+									<option>코드 이름</option>
+									<option>코드 이름 (영문)</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<input class="form-control" placeholder="검색어">
+							</div>   
+							<div class="col-md-2">
+								<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_search.png"></a>
+								<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_refresh.png"></a>
+							</div>
+						</div>
+	
+						<div class="row my-4">
+							<!-- Small table -->
+							<div class="col-md-12">
+								<div class="card shadow">
+									<div class="card-body">
+										<!-- table -->
+										<!-- 
+											Paging 개발을 위한 주석처리 - 원래 템플릿에 기능 있었음(id="dataTable-1" 이부분만 넣어주면 됨)
+											<table class="table datatables" id="dataTable-1">
+										-->
+										<table class="table datatables" id="">
+											<thead>
+												<!-- Paging 개발을 위한 코드 삽입 -->
+												<tr>
+													<td colspan="9" style="border-top: none;">
+														Total: 18
+													</td>
+													<td colspan="1" style="border-top: none;">
+														<select class="form-control" id="daygroup" required>
+															<option selected value="">5</option>
+															<option>10</option>
+															<option>15</option>
+														</select>
+													</td>
+												</tr>
+												<!-- End Paging 개발을 위한 코드 삽입 -->
+												<tr>
+													<div class="custom-checkbox">
+														<input type="checkbox" id="checkAll" name="checkAll">
+													</div>
+													<th>#</th>
+													<th>사용</th>
+													<th>코드그룹 코드</th>
+													<th>코드그룹 이름</th>
+													<th>코드</th>
+													<th>코드 이름</th>
+													<th>코드 이름 (영문)</th>
+													<th>순서</th>
+													<th>등록일</th>
+													<th>수정일</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:if="${#lists.isEmpty(codeList)}">
+													<td class="text-center" colspan="10">
+														데이터가 없습니다.
+													</td>
+												</tr> 
+												<tr th:if="${!#lists.isEmpty(codeList)}" th:each="list : ${codeList}">
+													<td>
+														<div class="custom-checkbox"><input type="checkbox" class=""></div>
+													</td>
+													<td th:text="${list?.seq}"></td>
+													<td th:text="${list?.useNyStr}"></td>
+													<td></td>
+													<td></td>
+													<td th:text="${list?.code}"></td>
+													<td>			
+														<a th:href="@{/xdm/code/CodeXdmItem(seq=${list.seq})}"
+															th:text="${list?.name}"></a>
+													</td>
+													<td th:text="${list?.nameEng}"></td>
+													<td th:text="${list?.sequence}"></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</tbody>
+											<!-- Paging 개발을 위한 코드 삽입 -->
+											<tfoot>
+												<tr>
+													<td colspan="10" style="border-top: none;">
+														<nav aria-label="Page navigation">
+															<ul class="pagination justify-content-center">
+																<!-- 타임리프 
+																	gt 뜻: >
+																	ne 뜻: !=
+																	eq 뜻: ==
+																-->
+																<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+																	<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+																		th:attr="onclick=|goList('${vo.startPage - 1}')|">
+																		<span aria-hidden="true">&laquo;</span>
+																	</a>
+																</li>
+																<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+																	th:classappend="${num eq vo.currPage} ? active : ''" 
+																	class="page-item" style="cursor: pointer;">
+																	<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+																</li>
+																<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+																	<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+																		<span aria-hidden="true">&raquo;</span>
+																	</a>
+																</li>
+															</ul>
+														</nav>
+													</td>
+												</tr>
+											</tfoot>
+											<!-- Paging 개발을 위한 코드 삽입 End -->
+										</table>
+										<!-- MJ 코드 추가 -->
+										<div class="row">
+											<div class="col">
+												<a href="#" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
+												<a href="#" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
+											</div>
+											<div class="col" style="text-align: right;">
+												<a href="#" id="excel"><img src="/xdm/template/tinydash-master/assets/images/icon_excel.png"></a>
+												<a href="#" id="modify"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
+												<a href="/xdm/code/CodeXdmForm"><img src="/xdm/template/tinydash-master/assets/images/icon_insert.png"></a>   
+											</div>
+										</div>				
+										<!-- MJ 코드 추가 End -->
+									</div>
+								</div>
+							</div> <!-- simple table -->
+						</div> <!-- end section -->
+					</div> <!-- .col-12 -->
+				</div> <!-- .row -->
+			</div> <!-- .container-fluid -->
+		</form>
+	</main> <!-- main -->
+	
+	<div th:replace="~{/xdm/include/footerList :: footerList}"></div> <!-- 중복되는 footer 처리 -->
+	
+	<script type="text/javascript">
+		document.getElementById("checkAll").onclick = function() {
+			allCheck("check", this.checked);
+		}
+		
+		function allCheck(name, isChecked) {
+			const element = document.getElementsByName(name);
+			
+			for(let i = 0; i < element.length; i++) {          
+				if(!element[i].disabled) {
+					element[i].checked = isChecked;	
+				}
+			}
+		}
+		
+		function getSelectedElementsCnt(name) {
+			// 선택된 목록의 갯수 세기
+			return document.querySelectorAll('input[name="' + name + '"]:checked').length;
+		}
+		
+		document.getElementById("modify").onclick = function() {
+			const selectedElementsCnt = getSelectedElementsCnt("check");
+			
+			if (selectedElementsCnt == 0) {
+				return;
+			}
+			
+			if (selectedElementsCnt > 1) {
+				alert("1개의 코드 그룹만 선택해 주세요.");
+				return;
+			}
+			
+			// TODO: id seq로 해당 데이터 수정 폼 열기
+		}
+		
+		document.getElementById("delete").onclick = function() {
+			const selectedElementsCnt = getSelectedElementsCnt("check");
+			
+			if (selectedElementsCnt == 0) {
+				return;
+			}
+			
+			if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?")) {
+				return false;
+			}
+		}
+		
+		document.getElementById("uelete").onclick = function() {
+			const selectedElementsCnt = getSelectedElementsCnt("check");
+			
+			if (selectedElementsCnt == 0) {
+				return;
+			}
+			
+			if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
+				return false;
+			}
+		}
+	</script>
+	
+	<script type="text/javascript">
+		let fom = document.querySelector("form[name=formList]");
+		
+		function goList(currPage) {
+ 			document.querySelector("input[name=currPage]").value = currPage;
+ 			fom.action = "/xdm/code/CodeXdmList";
+ 			fom.submit();
+		}
+	</script>
+	
+</body>
+</html>

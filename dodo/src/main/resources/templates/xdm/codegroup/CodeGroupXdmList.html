@@ -106,7 +106,7 @@
 											<div class="custom-checkbox">
 												<input type="checkbox" class="" name="check" id="${list?.seq}">
 											</div>
-	    									</td>
+	    								</td>
 										<td th:text="${list?.seq}"></td>
 										<td th:text="${list?.useNyStr}"></td>
 										<td th:text="${list?.code}"></td>
@@ -238,8 +238,12 @@
 	</script>
 	
 	<script type="text/javascript">
-		function goList(num) {
-			alert(num);	
+		let fom = document.querySelector("form[name=formList]");
+		
+		function goList(currPage) {
+ 			document.querySelector("input[name=currPage]").value = currPage;
+ 			fom.action = "/xdm/codegroup/CodeGroupXdmList";
+ 			fom.submit();
 		}
 	</script>
 	

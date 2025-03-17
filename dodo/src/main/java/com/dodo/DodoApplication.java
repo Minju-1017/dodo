@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DodoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DodoApplication.class, args);
+		SpringApplication.run(DodoApplication.class, args); //
 	}
 
 }

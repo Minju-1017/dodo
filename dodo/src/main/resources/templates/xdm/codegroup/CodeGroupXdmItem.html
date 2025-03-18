@@ -45,7 +45,7 @@
 			</ul>
 			<ul class="navbar-nav flex-fill w-100 mb-2">
 				<li class="nav-item w-100">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="/xdm/member/MemberXdmList">
 						<i class="fe fe-shield fe-16"></i>
 						<span class="ml-3 item-text">회원관리</span>
 					</a>
@@ -124,8 +124,8 @@
 							<div class="form-row">
 								<div class="col-md-3 mb-3">
 									<label>코드그룹 코드</label>
-									<input type="text" class="form-control" name="seq" id="seq" 
-										th:value="${codeGroupItem?.seq}" readonly>
+									<input type="text" class="form-control" name="cgSeq" id="cgSeq" 
+										th:value="${codeGroupItem?.cgSeq}" readonly>
 								</div>
 								<div class="col-md-3 mb-3">
 									<label for="name">코드그룹 이름</label>
@@ -151,8 +151,8 @@
 								</div>
 								<div class="col-md-3 mb-3">
 									<label for="count">갯수</label>
-									<input type="text" class="form-control" name="cgCount" id="cgCount" 
-										th:value="${codeGroupItem?.cgCount}" readonly>
+									<input type="text" class="form-control" name="cCount" id="cCount" 
+										th:value="${codeGroupItem?.cCount}" readonly>
 								</div>
 							</div> <!-- /.form-row -->
 							<div class="form-row">
@@ -168,9 +168,9 @@
 									<a href="/xdm/codegroup/CodeGroupXdmList"><img src="/xdm/template/tinydash-master/assets/images/icon_list.png"></a>
 								</div>
 								<div class="col-md-6 mb-3" style="text-align: right;">
-									<a th:href="@{/xdm/codegroup/CodeGroupXdmMfom(seq=${codeGroupItem.seq})}"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
-									<a th:href="@{/xdm/codegroup/CodeGroupXdmUele(seq=${codeGroupItem.seq})}" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
-									<a th:href="@{/xdm/codegroup/CodeGroupXdmDele(seq=${codeGroupItem.seq})}" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
+									<a th:href="@{/xdm/codegroup/CodeGroupXdmMfom(cgSeq=${codeGroupItem.cgSeq})}"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
+									<a th:href="@{/xdm/codegroup/CodeGroupXdmUele(cgSeq=${codeGroupItem.cgSeq})}" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
+									<a th:href="@{/xdm/codegroup/CodeGroupXdmDele(cgSeq=${codeGroupItem.cgSeq})}" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
 								</div>
 							</div>
 						</div> <!-- /.col -->

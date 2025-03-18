@@ -45,7 +45,7 @@
 			</ul>
 			<ul class="navbar-nav flex-fill w-100 mb-2">
 				<li class="nav-item w-100">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="/xdm/member/MemberXdmList">
 						<i class="fe fe-shield fe-16"></i>
 						<span class="ml-3 item-text">회원관리</span>
 					</a>
@@ -142,7 +142,7 @@
 								<input class="form-control" placeholder="2024-12-25">
 							</div>
 							<div class="col-md-2">
-								<input class="form-control" placeholder="2024-1-24">
+								<input class="form-control" placeholder="2024-12-24">
 							</div>
 						</div>
 						<div class="row my-4">
@@ -173,13 +173,14 @@
 									<!-- Paging 개발을 위한 코드 삽입 -->
 									<tr>
 										<td colspan="9" style="border-top: none;">
-											Total: 18
+											Total: <span th:text="${vo.totalRows}"></span>
 										</td>
 										<td colspan="1" style="border-top: none;">
-											<select class="form-control" id="daygroup" required>
-												<option selected value="">5</option>
-												<option>10</option>
-												<option>15</option>
+											<select class="form-control" id="daygroup" 
+												th:value="${vo.rowNumToShow}">
+												<option value="5" th:selected="${vo.rowNumToShow} == 5">5</option>
+												<option value="10" th:selected="${vo.rowNumToShow} == 10">10</option>
+												<option value="15" th:selected="${vo.rowNumToShow} == 15">15</option>
 											</select>
 										</td>
 									</tr>
@@ -210,21 +211,21 @@
 									<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
 										<td>
 											<div class="custom-checkbox">
-												<input type="checkbox" class="" name="check" id="${list?.seq}">
+												<input type="checkbox" class="" name="check" id="${list?.cgSeq}">
 											</div>
 	    								</td>
 										<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 										<td th:text="${list?.cgUseNyStr}"></td>
-										<td th:text="${list?.seq}"></td>
+										<td th:text="${list?.cgSeq}"></td>
 										<td>			
-											<a th:href="@{/xdm/codegroup/CodeGroupXdmItem(seq=${list.seq})}"
+											<a th:href="@{/xdm/codegroup/CodeGroupXdmItem(cgSeq=${list.cgSeq})}"
 												th:text="${list?.cgName}"></a>
 										</td>
 										<td th:text="${list?.cgNameEng}"></td>
-										<td th:text="${list?.cgCount}"></td>
+										<td th:text="${list?.cCount}"></td>
 										<td th:text="${list?.cgSequence}"></td>
-										<td></td>
-										<td></td>
+										<td th:text="${list?.cgRegiDateStr}"></td>
+										<td th:text="${list?.cgUpdtDateStr}"></td>
 									</tr>
 								</tbody>
 								<!-- Paging 개발을 위한 코드 삽입 -->

@@ -26,6 +26,7 @@
 					</svg>
 				</a>
 			</div>
+			<!-- 코드 추가 - MJ -->
 			<ul class="navbar-nav flex-fill w-100 mb-2">
 				<li class="nav-item w-100">
 					<a class="nav-link" href="./index.html">
@@ -68,21 +69,19 @@
 			</ul>
 			<ul class="navbar-nav flex-fill w-100 mb-2">
 				<li class="nav-item dropdown">
-					<a href="#systemsetting" data-toggle="collapse" aria-expanded="true"
+					<a href="#systemsetting" data-toggle="collapse" aria-expanded="false"
 						class="dropdown-toggle nav-link">
 						<i class="fe fe-credit-card fe-16"></i>
 						<span class="ml-3 item-text">시스템관리</span>
 					</a>
 					<ul class="collapse list-unstyled pl-4 w-100" id="systemsetting">
 						<li class="nav-item">
-							<a class="nav-link pl-3" data-toggle="collapse"
-								href="/xdm/code/CodeXdmList">
+							<a class="nav-link pl-3" href="/xdm/code/CodeXdmList">
 								<span class="ml-1 item-text">코드관리</span>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-3"
-								href="/xdm/codegroup/CodeGroupXdmList">
+							<a class="nav-link pl-3" href="/xdm/codegroup/CodeGroupXdmList">
 								<span class="ml-1 item-text">코드그룹관리</span>
 							</a>
 						</li>
@@ -105,32 +104,26 @@
 					</a>
 				</li>
 			</ul>
+			<!-- 코드 추가 - MJ End -->
 		</nav>
 	</aside>
-		
+							
 	<main role="main" class="main-content">
 		<form name="formList" id="formList" method="post" autocomplete="off">
 			<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 			<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-		
+			
 			<div class="container-fluid">
 				<div class="row justify-content-center">
 					<div class="col-12">
-						<h2 class="mb-2 page-title">Code</h2>
-	              
+						<h2 class="mb-2 page-title">회원 관리</h2>
 						<div class="row my-4">
 							<div class="col-md-2">
-								<select class="form-control" id="yeargroup" required>
-									<option selected disabled value="">N</option>
-									<option>...</option>
+								<select class="form-control" name="code_cSeq" id="code_cSeq" required>
+									<option selected disabled>성별</option>
+									<option th:each="list : ${codeList}" th:value="${list?.cSeq}" th:text="${list?.cName}"></option>
 								</select>
-							</div>
-							<div class="col-md-2">
-								<select class="form-control" id="monthgroup" required>
-									<option selected disabled value="">Y</option>
-									<option>...</option>
-								</select>
-							</div>    
+							</div>  
 							<div class="col-md-2">
 								<select class="form-control" id="daygroup" required>
 									<option selected disabled value="">날짜</option>
@@ -147,16 +140,6 @@
 						</div>
 						<div class="row my-4">
 							<div class="col-md-2">
-								<select class="form-control" id="searchgroup" required>
-									<option selected disabled value="">검색구분</option>
-									<option>코드그룹 코드</option>
-									<option>코드그룹 이름</option>
-									<option>코드</option>
-									<option>코드 이름</option>
-									<option>코드 이름 (영문)</option>
-								</select>
-							</div>
-							<div class="col-md-2">
 								<input class="form-control" placeholder="검색어">
 							</div>   
 							<div class="col-md-2">
@@ -164,130 +147,121 @@
 								<a href="#"><img src="/xdm/template/tinydash-master/assets/images/icon_refresh.png"></a>
 							</div>
 						</div>
-	
-						<div class="row my-4">
-							<!-- Small table -->
-							<div class="col-md-12">
-								<div class="card shadow">
-									<div class="card-body">
-										<!-- table -->
-										<!-- 
-											Paging 개발을 위한 주석처리 - 원래 템플릿에 기능 있었음(id="dataTable-1" 이부분만 넣어주면 됨)
-											<table class="table datatables" id="dataTable-1">
-										-->
-										<table class="table datatables" id="">
-											<thead>
-												<!-- Paging 개발을 위한 코드 삽입 -->
-												<tr>
-													<td colspan="10" style="border-top: none;">
-														Total: <span th:text="${vo.totalRows}"></span>
-													</td>
-													<td colspan="1" style="border-top: none;">
-														<select class="form-control" id="rowNumToShow"
-															th:value="${vo.rowNumToShow}">
-															<option value="5" th:selected="${vo.rowNumToShow} == 5">5</option>
-															<option value="10" th:selected="${vo.rowNumToShow} == 10">10</option>
-															<option value="15" th:selected="${vo.rowNumToShow} == 15">15</option>
-														</select>
-													</td>
-												</tr>
-												<!-- End Paging 개발을 위한 코드 삽입 -->
-												<tr>
-													<th>
-														<div class="custom-checkbox">
-															<input type="checkbox" id="checkAll" name="checkAll">
-														</div>
-													</th>
-													<th>#</th>
-													<th>사용</th>
-													<th>코드그룹 코드</th>
-													<th>코드그룹 이름</th>
-													<th>코드</th>
-													<th>코드 이름</th>
-													<th>코드 이름 (영문)</th>
-													<th>순서</th>
-													<th>등록일</th>
-													<th>수정일</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:if="${#lists.isEmpty(codeList)}">
-													<td class="text-center" colspan="11">
-														데이터가 없습니다.
-													</td>
-												</tr> 
-												<tr th:if="${!#lists.isEmpty(codeList)}" th:each="list : ${codeList}">
-													<td>
-														<div class="custom-checkbox">
-															<input type="checkbox" class="" name="check" id="${list?.cSeq}">
-														</div>
-				    								</td>
-													<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-													<td th:text="${list?.cUseNyStr}"></td>
-													<td th:text="${list?.codeGroup_cgSeq}"></td>
-													<td th:text="${list?.cgName}"></td>
-													<td th:text="${list?.cSeq}"></td>
-													<td>
-														<a th:href="@{/xdm/code/CodeXdmItem(cSeq=${list.cSeq})}"
-															th:text="${list?.cName}"></a>
-													</td>
-													<td th:text="${list?.cNameEng}"></td>
-													<td th:text="${list?.cSequence}"></td>
-													<td th:text="${list?.cRegiDateStr}"></td>
-													<td th:text="${list?.cUpdtDateStr}"></td>
-												</tr>
-											</tbody>
-											<!-- Paging 개발을 위한 코드 삽입 -->
-											<tfoot>
-												<tr>
-													<td colspan="11" style="border-top: none;">
-														<nav aria-label="Page navigation">
-															<ul class="pagination justify-content-center">
-																<!-- 타임리프 
-																	gt 뜻: >
-																	ne 뜻: !=
-																	eq 뜻: ==
-																-->
-																<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
-																	<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
-																		th:attr="onclick=|goList('${vo.startPage - 1}')|">
-																		<span aria-hidden="true">&laquo;</span>
-																	</a>
-																</li>
-																<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
-																	th:classappend="${num eq vo.currPage} ? active : ''" 
-																	class="page-item" style="cursor: pointer;">
-																	<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
-																</li>
-																<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
-																	<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
-																		<span aria-hidden="true">&raquo;</span>
-																	</a>
-																</li>
-															</ul>
-														</nav>
-													</td>
-												</tr>
-											</tfoot>
-											<!-- Paging 개발을 위한 코드 삽입 End -->
-										</table>
-										<!-- MJ 코드 추가 -->
-										<div class="row">
-											<div class="col">
-												<a href="#" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
-												<a href="#" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
+						<div class="row my-4 col-md-12 card shadow card-body">
+							<!-- table -->
+							<!-- 
+								Paging 개발을 위한 주석처리 - 원래 템플릿에 기능 있었음(id="dataTable-1" 이부분만 넣어주면 됨)
+								<table class="table datatables" id="dataTable-1">
+							-->
+							<table class="table datatables" id="">
+								<thead>
+									<!-- Paging 개발을 위한 코드 삽입 -->
+									<tr>
+										<td colspan="10" style="border-top: none;">
+											Total: <span th:text="${vo.totalRows}"></span>
+										</td>
+										<td colspan="1" style="border-top: none;">
+											<select class="form-control" id="daygroup" 
+												th:value="${vo.rowNumToShow}">
+												<option value="5" th:selected="${vo.rowNumToShow} == 5">5</option>
+												<option value="10" th:selected="${vo.rowNumToShow} == 10">10</option>
+												<option value="15" th:selected="${vo.rowNumToShow} == 15">15</option>
+											</select>
+										</td>
+									</tr>
+									<!-- End Paging 개발을 위한 코드 삽입 -->
+									<tr>
+										<th>
+											<div class="custom-checkbox">
+												<input type="checkbox" id="checkAll" name="checkAll">
 											</div>
-											<div class="col" style="text-align: right;">
-												<a href="#" id="excel"><img src="/xdm/template/tinydash-master/assets/images/icon_excel.png"></a>
-												<a href="#" id="modify"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
-												<a href="/xdm/code/CodeXdmForm"><img src="/xdm/template/tinydash-master/assets/images/icon_insert.png"></a>   
+										</th>
+										<th>#</th>
+										<th>탈퇴여부</th>
+										<th>고유번호(Seq)</th>
+										<th>아이디</th>
+										<th>이름</th>
+										<th>이메일</th>
+										<th>생년월일</th>
+										<th>성별</th>
+										<th>등록일</th>
+										<th>수정일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${#lists.isEmpty(memberList)}">
+										<td class="text-center" colspan="11">
+											데이터가 없습니다.
+										</td>
+									</tr> 
+									<tr th:if="${!#lists.isEmpty(memberList)}" th:each="list : ${memberList}">
+										<td>
+											<div class="custom-checkbox">
+												<input type="checkbox" class="" name="check" id="${list?.mSeq}">
 											</div>
-										</div>				
-										<!-- MJ 코드 추가 End -->
-									</div>
+	    								</td>
+										<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+										<td th:text="${list?.mDelNyStr}"></td>
+										<td th:text="${list?.mSeq}"></td>
+										<td th:text="${list?.mId}"></td>
+										<td>			
+											<a th:href="@{/xdm/member/MemberXdmItem(mSeq=${list.mSeq})}"
+												th:text="${list?.mName}"></a>
+										</td>
+										<td th:text="${list?.mEmail}"></td>
+										<td th:text="${list?.mBirth}"></td>
+										<td th:text="${list?.mGenderCdStr}"></td>
+										<td th:text="${list?.mRegiDateStr}"></td>
+										<td th:text="${list?.mUpdtDateStr}"></td>
+									</tr>
+								</tbody>
+								<!-- Paging 개발을 위한 코드 삽입 -->
+								<tfoot>
+									<tr>
+										<td colspan="11" style="border-top: none;">
+											<nav aria-label="Page navigation">
+												<ul class="pagination justify-content-center">
+													<!-- 타임리프 
+														gt 뜻: >
+														ne 뜻: !=
+														eq 뜻: ==
+													-->
+													<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+														<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+															th:attr="onclick=|goList('${vo.startPage - 1}')|">
+															<span aria-hidden="true">&laquo;</span>
+														</a>
+													</li>
+													<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+														th:classappend="${num eq vo.currPage} ? active : ''" 
+														class="page-item" style="cursor: pointer;">
+														<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+													</li>
+													<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+														<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+															<span aria-hidden="true">&raquo;</span>
+														</a>
+													</li>
+												</ul>
+											</nav>
+										</td>
+									</tr>
+								</tfoot>
+								<!-- Paging 개발을 위한 코드 삽입 End -->
+							</table>
+							<!-- MJ 코드 추가 -->
+							<div class="row">
+								<div class="col">
+									<a href="#" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
+									<a href="#" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
 								</div>
-							</div> <!-- simple table -->
-						</div> <!-- end section -->
+								<div class="col" style="text-align: right;">
+									<a href="#" id="excel"><img src="/xdm/template/tinydash-master/assets/images/icon_excel.png"></a>
+									<a href="#" id="modify"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>  
+								</div>
+							</div>
+							<!-- End MJ 코드 추가 -->
+						</div> <!-- table section -->
 					</div> <!-- .col-12 -->
 				</div> <!-- .row -->
 			</div> <!-- .container-fluid -->
@@ -361,7 +335,7 @@
 		
 		function goList(currPage) {
  			document.querySelector("input[name=currPage]").value = currPage;
- 			fom.action = "/xdm/code/CodeXdmList";
+ 			fom.action = "/xdm/member/MemberXdmList";
  			fom.submit();
 		}
 	</script>

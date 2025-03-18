@@ -76,13 +76,13 @@
 					</a>
 					<ul class="collapse list-unstyled pl-4 w-100" id="systemsetting">
 						<li class="nav-item">
-							<a class="nav-link pl-3" data-toggle="collapse"
+							<a class="nav-link pl-3"
 								href="/xdm/code/CodeXdmList">
 								<span class="ml-1 item-text">코드관리</span>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link pl-3"
+							<a class="nav-link pl-3" data-toggle="collapse"
 								href="/xdm/codegroup/CodeGroupXdmList">
 								<span class="ml-1 item-text">코드그룹관리</span>
 							</a>
@@ -113,80 +113,88 @@
 		<div class="container-fluid">
 			<div class="row justify-content-center">
 				<div class="col-12">
-					<h2 class="page-title">Code</h2>
+					<h2 class="page-title">회원 정보</h2>
 					<div class="row col-md-12 card shadow mb-4">
-						<div class="card-header">
-							<h5 class="card-title" style="padding-top: 20px;">
-								기본 정보
-							</h5>
-						</div>
 						<div class="card-body">
 							<div class="form-row">
 								<div class="col-md-3 mb-3">
-									<label>코드그룹 <span style="color: red; font-weight: 500;">*</span></label>
-									<input type="text" class="form-control"
-										name="cgName" id="cgName" 
-										value="성별" readonly>
+										<label>탈퇴여부</label>
+										<input type="text" class="form-control" name="mDelNy" id="mDelNy" 
+											th:value="${memberItem?.mDelNyStr}" readonly>
 								</div>
 							</div> <!-- /.form-row -->
 							<div class="form-row">
 								<div class="col-md-3 mb-3">
-									<label>코드</label>
-									<input type="text" class="form-control" 
-										name="cSeq" id="cSeq" 
-										th:value="${codeItem?.cSeq}" readonly>
-								</div>
-								<div class="col-md-3 mb-3">
-									<label for="validationCustom1">코드 이름</label>
-									<input type="text" class="form-control" name="cName" id="cName"
-										th:value="${codeItem?.cName}" readonly>
-								</div>
-								<div class="col-md-3 mb-3">
-									<label>코드 이름 (영문)</label>
-									<input type="text" class="form-control"
-										name="cNameEng" id="cNameEng"
-										th:value="${codeItem?.cNameEng}" readonly>
+									<label>고유번호(Seq)</label>
+									<input type="text" class="form-control" name="mSeq" id="mSeq" 
+										th:value="${memberItem?.mSeq}" readonly>
 								</div>
 							</div> <!-- /.form-row -->
 							<div class="form-row">
 								<div class="col-md-3 mb-3">
-									<label>
-										사용여부
-									</label>
-									<input type="text" class="form-control"
-										name="cUseNy" id="cUseNy"
-										th:value="${codeItem?.cUseNyStr}" readonly>
-								</div>
-								<div class="col-md-3 mb-3">
-									<label>순서</label>
-									<input type="text" class="form-control" 
-										id="cSequence" name="cSequence"
-										th:value="${codeItem?.cSequence}" readonly>
+									<label for="name">아이디</label>
+									<input type="text" class="form-control" name="mId" id="mId" 
+										th:value="${memberItem?.mId}" readonly>
 								</div>
 							</div> <!-- /.form-row -->
 							<div class="form-row">
-								<div class="col-md-6 mb-3">
-									<label>설명</label>
-									<textarea class="form-control" rows="5" id="cDescription" 
-										name="cDescription" th:text="${codeItem?.cDescription}" 
-										style="resize: none;" readonly></textarea>
+								<div class="col-md-3 mb-3">
+									<label>이름</label>
+									<input type="text" class="form-control" name="mName" id="mName"
+										th:value="${memberItem?.mName}" readonly>
 								</div>
 							</div> <!-- /.form-row -->
-							<div class="row">
-								<div class="col-md-6 mb-3">
-									<a href="/xdm/code/CodeXdmList"><img src="/xdm/template/tinydash-master/assets/images/icon_list.png"></a>
+							<div class="form-row">
+								<div class="col-md-3 mb-3">
+									<label>이메일</label>
+									<input type="text" class="form-control" name="mEmail" id="mEmail" 
+										th:value="${memberItem?.mEmail}" readonly>
 								</div>
-								<div class="col-md-6 mb-3" style="text-align: right;">
-									<a th:href="@{/xdm/code/CodeXdmMfom(cSeq=${codeItem.cSeq})}"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
-									<a th:href="@{/xdm/code/CodeXdmUele(cSeq=${codeItem.cSeq})}" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
-									<a th:href="@{/xdm/code/CodeXdmDele(cSeq=${codeItem.cSeq})}" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
+							</div> <!-- /.form-row -->
+							<div class="form-row">
+								<div class="col-md-3 mb-3">
+									<label>비밀번호</label>
+									<input type="password" class="form-control" name="mPwd" id="mPwd" 
+										th:value="${memberItem?.mPwd}" readonly>
+								</div>
+							</div> <!-- /.form-row -->
+							<div class="form-row">
+								<div class="col-md-3 mb-3">
+									<label>생년월일</label>
+									<input type="text" class="form-control" name="mBirth" id="mBirth" 
+										th:value="${memberItem?.mBirth}" readonly>
+								</div>
+							</div> <!-- /.form-row -->
+							<div class="form-row">
+								<div class="col-md-3 mb-3">
+									<label for="count">성별</label>
+									<input type="text" class="form-control" name="mGenderCdStr" id="mGenderCdStr" 
+										th:value="${memberItem?.mGenderCdStr}" readonly>
+								</div>
+							</div> <!-- /.form-row -->
+							<div class="form-row">
+								<div class="col-md-3 mb-3">
+									<label>프로필 이미지 파일명</label>
+									<input type="text" class="form-control" id="mPfFileName" name="mPfFileName" 
+										th:value="${memberItem?.mPfFileName}" readonly>
 								</div>
 							</div>
-						</div> <!-- /.card-body -->
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<a href="/xdm/member/MemberXdmList"><img src="/xdm/template/tinydash-master/assets/images/icon_list.png"></a>
+								</div>
+								<div class="col-md-6 mb-3" style="text-align: right;">
+									<a th:href="@{/xdm/member/MemberXdmMfom(mSeq=${memberItem.mSeq})}"><img src="/xdm/template/tinydash-master/assets/images/icon_modify.png"></a>
+									<a th:href="@{/xdm/member/MemberXdmUele(mSeq=${memberItem.mSeq})}" id="uelete"><img src="/xdm/template/tinydash-master/assets/images/icon_uelete.png"></a>
+									<a th:href="@{/xdm/member/MemberXdmDele(mSeq=${memberItem.mSeq})}" id="delete"><img src="/xdm/template/tinydash-master/assets/images/icon_delete.png"></a>
+								</div>
+							</div>
+						</div> <!-- /.col -->
 					</div> <!-- end section -->
 				</div> <!-- /.col-12 col-lg-10 col-xl-10 -->
 			</div> <!-- .row -->
 		</div> <!-- .container-fluid -->
+		<!-- 코드 수정 - MJ End -->
 	</main> <!-- main -->
 	
 	<div th:replace="~{/xdm/include/footerForm :: footerForm}"></div> <!-- 중복되는 footer 처리 -->

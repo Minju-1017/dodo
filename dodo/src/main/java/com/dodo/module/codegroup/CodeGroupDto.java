@@ -1,25 +1,39 @@
 package com.dodo.module.codegroup;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.dodo.module.Constants;
+
 public class CodeGroupDto {
 	
-	private String seq;
+	private String cgSeq;
 	private String cgName;
 	private String cgNameEng;
-	private int cgCount;
 	private int cgSequence;
 	private String cgDescription;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date cgRegiDate;
+	private String cgRegiDateStr;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date cgUpdtDate;
+	private String cgUpdtDateStr;
+	
 	private int cgUseNy;
 	private String cgUseNyStr;
-	private int cgDelNy;
-	
-	public String getSeq() {
-		return seq;
+	private int cCount;
+
+	public String getCgSeq() {
+		return cgSeq;
 	}
-	
-	public void setSeq(String seq) {
-		this.seq = seq;
+
+	public void setCgSeq(String cgSeq) {
+		this.cgSeq = cgSeq;
 	}
-	
+
 	public String getCgName() {
 		return cgName;
 	}
@@ -34,14 +48,6 @@ public class CodeGroupDto {
 	
 	public void setCgNameEng(String cgNameEng) {
 		this.cgNameEng = cgNameEng;
-	}
-	
-	public int getCgCount() {
-		return cgCount;
-	}
-	
-	public void setCgCount(int cgCount) {
-		this.cgCount = cgCount;
 	}
 	
 	public int getCgSequence() {
@@ -60,6 +66,33 @@ public class CodeGroupDto {
 		this.cgDescription = cgDescription;
 	}
 	
+	
+	public Date getCgRegiDate() {
+		return cgRegiDate;
+	}
+
+	public void setCgRegiDate(Date cgRegiDate) {
+		this.cgRegiDate = cgRegiDate;
+		this.cgRegiDateStr = Constants.DATETIME_FORMAT.format(cgRegiDate);
+	}
+
+	public String getCgRegiDateStr() {
+		return cgRegiDateStr;
+	}
+
+	public Date getCgUpdtDate() {
+		return cgUpdtDate;
+	}
+
+	public void setCgUpdtDate(Date cgUpdtDate) {
+		this.cgUpdtDate = cgUpdtDate;
+		this.cgUpdtDateStr = Constants.DATETIME_FORMAT.format(cgUpdtDate);
+	}
+
+	public String getCgUpdtDateStr() {
+		return cgUpdtDateStr;
+	}
+
 	public int getCgUseNy() {
 		return cgUseNy;
 	}
@@ -72,13 +105,13 @@ public class CodeGroupDto {
 	public String getCgUseNyStr() {
 		return cgUseNyStr;
 	}
-	
-	public int getCgDelNy() {
-		return cgDelNy;
+
+	public int getcCount() {
+		return cCount;
 	}
-	
-	public void setCgDelNy(int cgDelNy) {
-		this.cgDelNy = cgDelNy;
+
+	public void setcCount(int cCount) {
+		this.cCount = cCount;
 	}
 	
 }

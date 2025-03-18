@@ -12,14 +12,20 @@
 	</sql>
 	
 	<sql id="selectCommonColumn">
-		a.seq,
+		a.cgSeq,
 	    a.cgName,
 	    a.cgNameEng,
-	    a.cgCount,
 	    a.cgSequence,
 	    a.cgDescription,
+	    a.cgRegiDate,
+	    a.cgUpdtDate,
 	    a.cgUseNy,
-	    a.cgDelNy
+	    (SELECT COUNT(b.cSeq)
+	    	FROM code b
+	    	WHERE 1=1 
+	    		AND b.cDelNy = 0 
+	    		AND b.codeGroup_cgSeq = a.cgSeq
+	    ) as cCount
 	</sql>
 	<!-- End -->
 	
@@ -33,16 +39,24 @@
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
 			AND a.cgDelNy=0
-		ORDER BY a.seq DESC
+		ORDER BY a.cgSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+			AND a.cgDelNy=0
+		ORDER BY a.cgSeq DESC
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-		AND a.seq=#{seq}
+		AND a.cgSeq=#{cgSeq}
 	</select>
 	
 	<insert id="insert">
@@ -50,24 +64,24 @@
 		(
 		    cgName,
 		    cgNameEng,
-		    cgCount,
 		    cgSequence,
 		    cgDescription,
 		    cgUseNy,
+		    cgRegiDate,
 		    cgDelNy
 		)
 		VALUES
 		(
 		    #{cgName},
 		    #{cgNameEng},
-		    #{cgCount},
 		    #{cgSequence},
 		    #{cgDescription},
 		    #{cgUseNy},
+		    now(),
 		    0
 		)
 		
-		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+		<selectKey resultType="String" keyProperty="cgSeq" order="AFTER">
 			SELECT last_insert_id()
 		</selectKey>
 	</insert>
@@ -77,26 +91,27 @@
 		SET
 			cgName=#{cgName},
 			cgNameEng=#{cgNameEng},
-			cgCount=#{cgCount},
 			cgSequence=#{cgSequence},
 			cgDescription=#{cgDescription},
-			cgUseNy=#{cgUseNy}
+			cgUseNy=#{cgUseNy},
+			cgUpdtDate=now()
 		WHERE
-			seq=#{seq}
+			cgSeq=#{cgSeq}
 	</update>
 	
 	<delete id="delete">
 		DELETE FROM codeGroup
 		WHERE
-			seq=#{seq}
+			cgSeq=#{cgSeq}
 	</delete>
 	
 	<update id="uelete">
 		UPDATE codeGroup
 		SET
+			cgUpdtDate=now(),
 			cgDelNy=1
 		WHERE
-			seq=#{seq}
+			cgSeq=#{cgSeq}
 	</update>
 	
 </mapper>

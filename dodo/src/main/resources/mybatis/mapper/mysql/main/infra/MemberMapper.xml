@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dodo.module.member.MemberDao">
+	<resultMap id="resultMapObj" type="com.dodo.module.member.MemberDto"></resultMap>
+
+	<!-- 공통 구문 selectCommon으로 선언 -->
+	<sql id="selectCommon">
+		FROM 
+			member a
+		WHERE 1=1
+	</sql>
+	
+	<sql id="selectCommonColumn">
+		a.mSeq,
+	    a.mId,
+	    a.mName,
+	    a.mEmail,
+	    a.mPwd,
+	    a.mBirth,
+	    a.mGenderCd,
+	    a.mRegiDate,
+	    a.mUpdtDate,
+	    a.mPfFileName,
+	    a.mDelNy
+	</sql>
+	<!-- End -->
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+			AND a.mDelNy=0
+		ORDER BY a.mSeq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+		AND a.mSeq=#{mSeq}
+	</select>
+	
+	<update id="update">
+		UPDATE member
+		SET
+			mName=#{mName},
+			mEmail=#{mEmail},
+			mPwd=#{mPwd},
+			mBirth=#{mBirthStr},
+			mGenderCd=#{mGenderCd},
+			mPfFileName=#{mPfFileName},
+			mUpdtDate=now()
+		WHERE
+			mSeq=#{mSeq}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM member
+		WHERE
+			mSeq=#{mSeq}
+	</delete>
+	
+	<update id="uelete">
+		UPDATE member
+		SET
+			mDelNy=1
+		WHERE
+			mSeq=#{mSeq}
+	</update>
+	
+</mapper>

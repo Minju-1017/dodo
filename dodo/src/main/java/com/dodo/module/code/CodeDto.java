@@ -1,26 +1,40 @@
 package com.dodo.module.code;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.dodo.module.Constants;
+
 public class CodeDto {
 	
-	private String seq;
+	private String cSeq;
 	private String cName;
 	private String cNameEng;
 	private int cSequence;
 	private String cDescription;
 	private int cUseNy;
 	private String cUseNyStr;
-	private int cDelNy;
-	private String codeGroup_seq;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date cRegiDate;
+	private String cRegiDateStr;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date cUpdtDate;
+	private String cUpdtDateStr;
+	
+	private String codeGroup_cgSeq;
 	private String cgName;
 	
-	public String getSeq() {
-		return seq;
+	public String getcSeq() {
+		return cSeq;
 	}
-	
-	public void setSeq(String seq) {
-		this.seq = seq;
+
+	public void setcSeq(String cSeq) {
+		this.cSeq = cSeq;
 	}
-	
+
 	public String getcName() {
 		return cName;
 	}
@@ -65,25 +79,39 @@ public class CodeDto {
 	public String getcUseNyStr() {
 		return cUseNyStr;
 	}
-	
-	public void setcUseNyStr(String cUseNyStr) {
-		
+
+	public Date getcRegiDate() {
+		return cRegiDate;
+	}
+
+	public void setcRegiDate(Date cRegiDate) {
+		this.cRegiDate = cRegiDate;
+		this.cRegiDateStr = Constants.DATETIME_FORMAT.format(cRegiDate);
+	}
+
+	public String getcRegiDateStr() {
+		return cRegiDateStr;
+	}
+
+	public Date getcUpdtDate() {
+		return cUpdtDate;
 	}
 	
-	public int getcDelNy() {
-		return cDelNy;
+	public void setcUpdtDate(Date cUpdtDate) {
+		this.cUpdtDate = cUpdtDate;
+		this.cUpdtDateStr = Constants.DATETIME_FORMAT.format(cUpdtDate);
 	}
 	
-	public void setcDelNy(int cDelNy) {
-		this.cDelNy = cDelNy;
+	public String getcUpdtDateStr() {
+		return cUpdtDateStr;
 	}
-	
-	public String getCodeGroup_seq() {
-		return codeGroup_seq;
+
+	public String getCodeGroup_cgSeq() {
+		return codeGroup_cgSeq;
 	}
-	
-	public void setCodeGroup_seq(String codeGroup_seq) {
-		this.codeGroup_seq = codeGroup_seq;
+
+	public void setCodeGroup_cgSeq(String codeGroup_cgSeq) {
+		this.codeGroup_cgSeq = codeGroup_cgSeq;
 	}
 
 	public String getCgName() {

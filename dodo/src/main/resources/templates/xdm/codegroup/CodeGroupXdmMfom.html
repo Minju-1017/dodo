@@ -46,7 +46,7 @@
 			</ul>
 			<ul class="navbar-nav flex-fill w-100 mb-2">
 				<li class="nav-item w-100">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="/xdm/member/MemberXdmList">
 						<i class="fe fe-shield fe-16"></i>
 						<span class="ml-3 item-text">회원관리</span>
 					</a>
@@ -125,15 +125,15 @@
 							<form class="needs-validation" novalidate
 								action="/xdm/codegroup/CodeGroupXdmUpdt" method="post" id="form">
 								
-								<input type="hidden" name="seq" th:value="${codeGroupItem?.seq}" />
+								<input type="hidden" name="cgSeq" th:value="${codeGroupItem?.cgSeq}" />
 								
 								<div class="form-row">
 									<div class="col-md-3 mb-3">
 										<label>
 											코드그룹 코드 <span style="color: red; font-weight: 500;">*</span>
 										</label>
-										<input type="text" class="form-control" name="seq" id="seq" 
-											 th:value="${codeGroupItem?.seq}" disabled>
+										<input type="text" class="form-control" name="cgSeq" id="cgSeq" 
+											 th:value="${codeGroupItem?.cgSeq}" disabled>
 									</div>
 									<div class="col-md-3 mb-3">
 										<label for="name">
@@ -171,11 +171,9 @@
 										<div class="valid-feedback"> Looks good! </div>
 									</div>
 									<div class="col-md-3 mb-3">
-										<label for="count">
-											갯수 <span style="color: red; font-weight: 500;">*</span>
-										</label>
-										<input type="text" class="form-control" id="cgCount" name="cgCount"
-											th:value="${codeGroupItem?.cgCount}" required>
+										<label for="count">갯수</label>
+										<input type="text" class="form-control" id="cCount" name="cCount"
+											th:value="${codeGroupItem?.cCount}" disabled>
 										<div class="valid-feedback"> Looks good! </div>
 									</div>
 								</div> <!-- /.form-row -->

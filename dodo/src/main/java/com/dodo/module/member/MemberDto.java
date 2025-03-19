@@ -19,7 +19,6 @@ public class MemberDto {
 	private String mBirthStr;
 	
 	private int mGenderCd;
-	private String mGenderCdStr;
 	private String mPfFileName;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -88,22 +87,6 @@ public class MemberDto {
 	
 	public void setmGenderCd(int mGenderCd) {
 		this.mGenderCd = mGenderCd;
-		
-		switch(mGenderCd) {
-			case Constants.GENDER_MALE:
-				this.mGenderCdStr = "남";
-				break;
-			case Constants.GENDER_FEMALE:
-				this.mGenderCdStr = "여";
-				break;
-			default:
-				this.mGenderCdStr = "";
-				break;
-		}
-	}
-	
-	public String getmGenderCdStr() {
-		return mGenderCdStr;
 	}
 
 	public String getmPfFileName() {

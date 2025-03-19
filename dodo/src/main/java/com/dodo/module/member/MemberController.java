@@ -45,6 +45,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberXdmItem")
 	public String memberXdmItem(Model model, MemberDto memberDto) {
+		model.addAttribute("codeList", codeService.selectListWithoutPaging(memberDto));
 		model.addAttribute("memberItem", service.selectOne(memberDto));
 		
 		return path + "MemberXdmItem";
@@ -57,8 +58,8 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberXdmMfom")
 	public String memberXdmMfom(Model model, MemberDto memberDto) {		
-		model.addAttribute("memberItem", service.selectOne(memberDto));
 		model.addAttribute("codeList", codeService.selectListWithoutPaging(memberDto));
+		model.addAttribute("memberItem", service.selectOne(memberDto));
 		
 		return path + "MemberXdmMfom";
 	}

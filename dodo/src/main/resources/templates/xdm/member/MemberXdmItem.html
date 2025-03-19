@@ -168,8 +168,10 @@
 							<div class="form-row">
 								<div class="col-md-3 mb-3">
 									<label for="count">성별</label>
-									<input type="text" class="form-control" name="mGenderCdStr" id="mGenderCdStr" 
-										th:value="${memberItem?.mGenderCdStr}" readonly>
+									<input type="text" class="form-control" name="mGenderCd" id="mGenderCd" 
+										th:each="codeList : ${codeList}" 
+										th:if="${#strings.equals(codeList.cSeq, memberItem?.mGenderCd)}"
+										th:value="${codeList?.cName}" readonly>
 								</div>
 							</div> <!-- /.form-row -->
 							<div class="form-row">

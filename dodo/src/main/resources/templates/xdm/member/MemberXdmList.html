@@ -210,7 +210,11 @@
 										</td>
 										<td th:text="${list?.mEmail}"></td>
 										<td th:text="${list?.mBirth}"></td>
-										<td th:text="${list?.mGenderCdStr}"></td>
+										<td th:each="codeList : ${codeList}" 
+											th:if="${#strings.equals(codeList.cSeq, list.mGenderCd)}"
+											th:text="${codeList?.cName}">
+											
+										</td>
 										<td th:text="${list?.mRegiDateStr}"></td>
 										<td th:text="${list?.mUpdtDateStr}"></td>
 									</tr>

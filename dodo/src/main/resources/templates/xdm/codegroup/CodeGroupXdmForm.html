@@ -128,43 +128,50 @@
 										<label>
 											코드그룹 코드 <span style="color: red; font-weight: 500;">*</span>
 										</label>
-										<input type="text" class="form-control" name="cgSeq" id="cgSeq" placeholder="자동생성" disabled>
+										<input type="text" class="form-control" name="cgSeq" id="cgSeq"
+											placeholder="자동생성" disabled>
 									</div>
 									<div class="col-md-3 mb-3">
-										<label for="name">
+										<label for="cgName">
 											코드그룹 이름 <span style="color: red; font-weight: 500;">*</span>
 										</label>
 										<input type="text" class="form-control" name="cgName" id="cgName"
 											placeholder="한글, 영대소문자, 숫자" required>
-										<div class="valid-feedback"> Looks good! </div>
+										<div class="invalid-feedback"> 코드그룹 이름을 입력해 주세요. </div>
+										<div class="valid-feedback"> good </div>
 									</div>
 									<div class="col-md-3 mb-3">
 										<label>코드그룹 이름 (영문)</label>
-										<input type="text" class="form-control" name="cgNameEng" id="cgNameEng" placeholder="영대소문자, 숫자">
+										<input type="text" class="form-control" name="cgNameEng" id="cgNameEng" 
+											placeholder="영대소문자, 숫자">
 									</div>
 								</div> <!-- /.form-row -->
 								<div class="form-row">
 									<div class="col-md-3 mb-3">
-										<label>
+										<label for="cgUseNy">
 											사용여부 <span style="color: red; font-weight: 500;">*</span>
 										</label>
-										<select class="form-control" id="cgUseNy" name="cgUseNy">
-											<option value="1" selected>Y</option>
+										<select class="form-control" id="cgUseNy" name="cgUseNy" required>
+											<option value="">선택</option>
+											<option value="1">Y</option>
 											<option value="0">N</option>
 										</select>
+										<div class="invalid-feedback"> 코드그룹 사용여부를 선택해 주세요. </div>
 									</div>
 									<div class="col-md-3 mb-3">
-										<label for="sequence">
+										<label for="cgSequence">
 											순서 <span style="color: red; font-weight: 500;">*</span>
 										</label>
-										<input type="text" class="form-control" id="cgSequence" name="cgSequence" required>
-										<div class="valid-feedback"> Looks good! </div>
+										<input type="text" class="form-control" placeholder="숫자(0보다 큰 정수)"
+											id="cgSequence" name="cgSequence" required>
+										<div class="invalid-feedback"> 코드 그룹의 순서를 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 									</div>
 								</div> <!-- /.form-row -->
 								<div class="form-row">
 									<div class="col-md-6 mb-3">
 										<label>설명</label>
-										<textarea class="form-control" rows="5" id="cgDescription" name="cgDescription" style="resize: none;"></textarea>
+										<textarea class="form-control" rows="5"  style="resize: none;"
+											id="cgDescription" name="cgDescription"></textarea>
 									</div>
 								</div> <!-- /.form-row -->
 								<div class="row">
@@ -183,16 +190,192 @@
 				</div> <!-- /.col-12 col-lg-10 col-xl-10 -->
 			</div> <!-- .row -->
 		</div> <!-- .container-fluid -->
-		<!-- 코드 수정 - MJ End -->
 	</main> <!-- main -->
+	
+	<!-- Modal -->
+	<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" 
+		data-backdrop="static" aria-labelledby="defaultModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="defaultModalLabel">알림</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="prevFocusId" name="prevFocusId" />
+					<span id="modalContent" name="modalContent"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 		
 	<div th:replace="~{/xdm/include/footerForm :: footerForm}"></div> <!-- 중복되는 footer 처리 -->
 
+	<!-- Validation: Bootstrap -->
 	<script type="text/javascript">
+		const regex = /^[0-9]+$/;	
+		
+		// Form
+		let cgName = document.getElementById("cgName");
+		let cgUseNy = document.getElementById("cgUseNy");
+		let cgSequence = document.getElementById("cgSequence");
+		
 		document.getElementById("btnSave").onclick = function() {
+			var focus = false;
+			
+			// cgName 체크
+			cgName.value = cgName.value.trim();
+			cgName.classList.remove("is-valid");
+			cgName.classList.remove("is-invalid");
+			
+			if (cgName.value == null || cgName.value == "") {
+				cgName.classList.add("is-invalid");
+				
+				if (!focus) {
+					cgName.focus();
+					focus = true;
+				}
+			}
+			
+			// cgUseNy 체크
+			cgUseNy.classList.remove("is-valid");
+			cgUseNy.classList.remove("is-invalid");
+			
+			if (cgUseNy.value == null || cgUseNy.value == "") {
+				cgUseNy.classList.add("is-invalid");
+				
+				if (!focus) {
+					cgUseNy.focus();
+					focus = true;
+				}
+			}
+			
+			// cgSequence 체크
+			cgSequence.value = cgSequence.value.trim();
+			cgSequence.classList.remove("is-valid");
+			cgSequence.classList.remove("is-invalid");
+			
+			if (cgSequence.value == null || cgSequence.value == ""
+					|| !regex.test(cgSequence.value) || cgSequence.value < 1) {
+				cgSequence.classList.add("is-invalid");
+				
+				if (!focus) {
+					cgSequence.focus();
+					focus = true;
+				}
+			}
+			
+			if (focus) return false;
+			
 			document.getElementById("form").submit();
 		}
+		
+		cgName.addEventListener("input", function(){
+			cgName.classList.remove("is-valid");
+			cgName.classList.remove("is-invalid");
+			
+			if (cgName.value != null && cgName.value != "") {
+				cgName.classList.add("is-valid");
+			} else {
+				cgName.classList.add("is-invalid");
+			}		
+		});
+		
+		cgUseNy.addEventListener("input", function(){
+			cgUseNy.classList.remove("is-valid");
+			cgUseNy.classList.remove("is-invalid");
+			
+			if (cgUseNy.value != null && cgUseNy.value != "") {
+				cgUseNy.classList.add("is-valid");
+			} else {
+				cgUseNy.classList.add("is-invalid");
+			}		
+		});
+		
+		cgSequence.addEventListener("input", function(){
+			cgSequence.classList.remove("is-valid");
+			cgSequence.classList.remove("is-invalid");
+			
+			if (cgSequence.value != null && cgSequence.value != ""
+					&& regex.test(cgSequence.value) && cgSequence.value >= 1) {
+				cgSequence.classList.add("is-valid");
+			} else {
+				cgSequence.classList.add("is-invalid");
+			}		
+		});
 	</script>
+
+	<!-- Validation: Modal, Alert -->
+	<!-- <script type="text/javascript">
+		const regex = /^[0-9]+$/;	
+		
+		// Modal
+		let modalContent = document.getElementById("modalContent");
+		let prevFocusId = document.getElementById("prevFocusId");
+		
+		// Form
+		let cgName = document.getElementById("cgName");
+		let cgUseNy = document.getElementById("cgUseNy");
+		let cgSequence = document.getElementById("cgSequence");
+		
+		document.getElementById("btnSave").onclick = function() {
+			// cgName 체크
+			cgName.value = cgName.value.trim();
+			
+			if (cgName.value == null || cgName.value == "") {
+				// alert 사용
+				// alert("코드 그룹 이름을 입력해 주세요!");
+				// cgName.focus();
+				// return false;
+				
+				// modal 사용
+				showModal("cgName", "코드 그룹 이름을 입력해 주세요!");
+				return false;
+			}
+			
+			// cgUseNy 체크
+			if (cgUseNy.value == null || cgUseNy.value == "") {
+				showModal("cgUseNy", "코드 그룹 사용여부를 선택해 주세요!");
+				return false;
+			}
+			
+			// cgSequence 체크
+			cgSequence.value = cgSequence.value.trim();
+			
+			if (cgSequence.value == null || cgSequence.value == "") {
+				showModal("cgSequence", "코드 그룹의 순서를 입력해 주세요!");
+				return false;
+			}
+			
+			if (!regex.test(cgSequence.value) || cgSequence.value < 1) {
+				showModal("cgSequence", "코드 그룹의 순서를 숫자(0보다 큰 정수)로 입력해 주세요!");
+				return false;
+			}
+			
+			document.getElementById("form").submit();
+		}
+		
+		function showModal(_prevFocusId, _contetnInnerText) {
+			prevFocusId.value = _prevFocusId;
+			modalContent.innerText = _contetnInnerText; // 해당 아이디값의 텍스트 변경하기
+			
+			$("#defaultModal").modal("show");
+			$("#defaultModal").on("hidden.bs.modal", function (e) {
+				if (prevFocusId.value == "cgName") {
+					cgName.focus();
+				} else if (prevFocusId.value == "cgUseNy") {
+					cgUseNy.focus();
+				} else if (prevFocusId.value == "cgSequence") {
+					cgSequence.focus();
+				}
+			});
+		}
+	</script> -->
 		
 </body>
 </html>

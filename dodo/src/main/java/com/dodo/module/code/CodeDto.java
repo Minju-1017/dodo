@@ -1,12 +1,16 @@
 package com.dodo.module.code;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.dodo.module.Constants;
 
 public class CodeDto {
+	
+	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>(); // 전체 코드 리스트
 	
 	private String cSeq;
 	private String cName;
@@ -27,6 +31,14 @@ public class CodeDto {
 	private String codeGroup_cgSeq;
 	private String cgName;
 	
+	public static List<CodeDto> getCachedCodeArrayList() {
+		return cachedCodeArrayList;
+	}
+
+	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
+		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
+	}
+
 	public String getcSeq() {
 		return cSeq;
 	}

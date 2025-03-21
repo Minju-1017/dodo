@@ -9,37 +9,37 @@ import org.springframework.stereotype.Service;
 public class CodeGroupService {
 	
 	@Autowired
-	CodeGroupDao codeGroupDao;
+	CodeGroupDao dao;
 	
 	public int selectOneCount() {
-		return codeGroupDao.selectOneCount();
+		return dao.selectOneCount();
 	}
 	
 	public List<CodeGroupDto> selectList(CodeGroupVo vo) {
-		return codeGroupDao.selectList(vo);
+		return dao.selectList(vo);
 	}
 	
 	public List<CodeGroupDto> selectListWithoutPaging() {
-		return codeGroupDao.selectListWithoutPaging();
+		return dao.selectListWithoutPaging();
 	}
 	
 	public CodeGroupDto selectOne(CodeGroupDto codeGroupDto) {
-		return codeGroupDao.selectOne(codeGroupDto);
+		return dao.selectOne(codeGroupDto);
 	}
 	
 	public int insert(CodeGroupDto codeGroupDto) {
-		return codeGroupDao.insert(codeGroupDto);
+		return dao.insert(codeGroupDto);
 	}
 	
 	public int update(CodeGroupDto codeGroupDto) {
-		return codeGroupDao.update(codeGroupDto);
+		return dao.update(codeGroupDto);
 	}
 	
 	public int delete(CodeGroupDto codeGroupDto) {
-		return codeGroupDao.delete(codeGroupDto);
+		return dao.delete(codeGroupDto);
 	}
 	
 	public int uelete(CodeGroupDto codeGroupDto) {
-		return codeGroupDao.uelete(codeGroupDto);
+		return dao.uelete(codeGroupDto);
 	}
 }

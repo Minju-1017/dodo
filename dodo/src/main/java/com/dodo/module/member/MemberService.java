@@ -9,37 +9,33 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 	
 	@Autowired
-	MemberDao memberDao;
+	MemberDao dao;
 	
 	public int selectOneCount() {
-		return memberDao.selectOneCount();
+		return dao.selectOneCount();
 	}
 	
 	public List<MemberDto> selectList(MemberVo vo) {
-		return memberDao.selectList(vo);
-	}
-	
-	public List<MemberDto> selectListWithoutPaging() {
-		return memberDao.selectListWithoutPaging();
+		return dao.selectList(vo);
 	}
 	
 	public MemberDto selectOne(MemberDto memberDto) {
-		return memberDao.selectOne(memberDto);
+		return dao.selectOne(memberDto);
 	}
 	
 	public int insert(MemberDto memberDto) {
-		return memberDao.insert(memberDto);
+		return dao.insert(memberDto);
 	}
 	
 	public int update(MemberDto memberDto) {
-		return memberDao.update(memberDto);
+		return dao.update(memberDto);
 	}
 	
 	public int delete(MemberDto memberDto) {
-		return memberDao.delete(memberDto);
+		return dao.delete(memberDto);
 	}
 	
 	public int uelete(MemberDto memberDto) {
-		return memberDao.uelete(memberDto);
+		return dao.uelete(memberDto);
 	}
 }

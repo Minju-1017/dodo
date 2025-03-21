@@ -29,8 +29,7 @@ public class MemberController {
 	public String memberXdmList(Model model, MemberVo vo, MemberDto memberDto) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectOneCount());
-		
-		model.addAttribute("codeList", codeService.selectListWithoutPaging(memberDto));
+
 		model.addAttribute("memberList", service.selectList(vo));
 		model.addAttribute("vo", vo);
 		
@@ -45,7 +44,6 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberXdmItem")
 	public String memberXdmItem(Model model, MemberDto memberDto) {
-		model.addAttribute("codeList", codeService.selectListWithoutPaging(memberDto));
 		model.addAttribute("memberItem", service.selectOne(memberDto));
 		
 		return path + "MemberXdmItem";
@@ -58,7 +56,6 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberXdmMfom")
 	public String memberXdmMfom(Model model, MemberDto memberDto) {		
-		model.addAttribute("codeList", codeService.selectListWithoutPaging(memberDto));
 		model.addAttribute("memberItem", service.selectOne(memberDto));
 		
 		return path + "MemberXdmMfom";

@@ -10,6 +10,8 @@ import com.dodo.module.member.MemberDto;
 @Repository
 public interface CodeDao {
 
+	public List<CodeDto> selectListCachedCodeArrayList();
+	
 	public int selectOneCount();
 	public List<CodeDto> selectList(CodeVo vo); 
 	public List<CodeDto> selectListWithoutPaging(MemberDto memberDto); 

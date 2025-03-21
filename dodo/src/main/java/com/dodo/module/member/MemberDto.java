@@ -6,8 +6,6 @@ import com.dodo.module.Constants;
 
 public class MemberDto {
 	
-	private final static int CODE_GROUP_SEQ = 1; // mGenderCd에 사용하는 코드 그룹
-	
 	private String mSeq;
 	private String mId;
 	private String mName;

@@ -33,6 +33,18 @@
 	</sql>
 	<!-- End -->
 	
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			cSeq,
+			cName,
+			codeGroup_cgSeq
+		FROM
+			code
+		WHERE 1=1
+			AND cDelNy = 0
+		    AND cUseNy = 1
+   </select>
+	
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon"/>
@@ -46,14 +58,6 @@
 		ORDER BY a.cSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
-	</select>
-	
-	<select id="selectListWithoutPaging" resultMap="resultMapObj">
-		SELECT
-			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
-			AND a.codeGroup_cgSeq = #{CODE_GROUP_SEQ}
-		ORDER BY a.codeGroup_cgSeq DESC
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

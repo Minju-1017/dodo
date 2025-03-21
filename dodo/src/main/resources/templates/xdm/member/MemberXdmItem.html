@@ -159,7 +159,7 @@
 											<div class="col-lg-3 col-12">
 												<label for="mGender" class="form-label">성별</label>
                                    				<input type="text" class="form-control" name="mGenderCd" id="mGenderCd" 
-													th:each="codeList : ${@codeService.selectListCachedCode(1)}" 
+													th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}" 
 													th:if="${#strings.equals(codeList.cSeq, memberItem?.mGenderCd)}"
 													th:value="${codeList?.cName}" disabled />
 											</div>

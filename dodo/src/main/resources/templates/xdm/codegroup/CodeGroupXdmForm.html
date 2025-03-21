@@ -194,22 +194,22 @@
         </div>
         
         <!-- Modal -->
-		<div class="modal fade" id="codeGroupModal" tabindex="-1" role="dialog" 
+        <div class="modal fade" id="codeGroupModal" tabindex="-1" role="dialog"
 			data-backdrop="static" aria-labelledby="codeGroupModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="codeGroupModalLabel">알림</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+						<button type="button" class="btn-close"
+							data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
 						<input type="hidden" id="prevFocusId" name="prevFocusId" />
 						<span id="modalContent" name="modalContent"></span>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">닫기</button>
 					</div>
 				</div>
 			</div>
@@ -319,7 +319,7 @@
 	
 		<!-- Validation: Modal, Alert -->
 		<!-- <script type="text/javascript">
-			const regex = /^[0-9]+$/;	
+			const regex = /^[0-9]+$/;
 			
 			// Modal
 			let modalContent = document.getElementById("modalContent");

@@ -126,12 +126,8 @@
 												<div class="col-lg-2 col-12">
 													<select class="form-select" name="code_cSeq" id="code_cSeq">
 														<option selected>성별</option>
-														<option th:each="codeList : ${@codeService.selectListCachedCode(1)}"
+														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
 															th:value="${codeList.cSeq}" th:text="${codeList.cName}"></option>
-														
-														<!-- TODO: sql 가져오던 부분 정리
-														<option th:each="list : ${codeList}" th:value="${list?.cSeq}" th:text="${list?.cName}"></option>
-														-->
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
@@ -222,7 +218,7 @@
 														</td>
 														<td th:text="${list?.mEmail}"></td>
 														<td th:text="${list?.mBirth}"></td>
-														<td th:each="codeList : ${@codeService.selectListCachedCode(1)}" 
+														<td th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}" 
 															th:if="${#strings.equals(codeList.cSeq, list?.mGenderCd)}"
 															th:text="${codeList?.cName}">
 															

@@ -201,7 +201,7 @@
 												<label for="mGender" class="form-label">성별</label>
 												<select class="form-select" name="mGenderCd" id="mGenderCd">
 													<option th:selected="${memberItem?.mGenderCd} == 0" disabled>성별</option>
-													<option th:each="codeList : ${@codeService.selectListCachedCode(1)}"
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
 														th:value="${codeList?.cSeq}" th:text="${codeList?.cName}"
 														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}">
 													</option>

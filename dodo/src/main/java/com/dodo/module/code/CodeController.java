@@ -83,7 +83,7 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmMfom")
-	public String codeXdmMfom(Model model, CodeDto codeDto) {		
+	public String codeXdmMfom(Model model, CodeDto codeDto) {
 		model.addAttribute("codeItem", service.selectOne(codeDto));
 		
 		return path + "CodeXdmMfom";

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dodo.module.game.GameDao">
+	<resultMap id="resultMapObj" type="com.dodo.module.game.GameDto"></resultMap>
+
+	<!-- 공통 구문 selectCommon으로 선언 -->
+	<sql id="selectCommon">
+		FROM 
+			game a
+		WHERE 1=1
+	</sql>
+	
+	<sql id="selectCommonColumn">
+		a.gSeq,
+	    a.gName,
+	    a.gTnFileName,
+	    a.gLevel,
+	    a.gMinPeople,
+	    a.gMaxPeople,
+	    a.gBestPeople,
+	    a.gRecommendPeople,
+	    a.gUseAge,
+	    a.gMinTime,
+	    a.gMaxTime,
+	    a.gOfficialCd,
+	    a.gOfficialUrl,
+	    a.gComuUrl1,
+	    a.gComuUrl2,
+	    a.gRegiDate,
+	    a.gUpdtDate
+	</sql>
+	<!-- End -->
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+			AND a.gDelNy=0
+		ORDER BY a.gSeq DESC
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+		AND a.gSeq=#{gSeq}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO game
+		(
+		    gName,
+		    gTnFileName,
+		    gLevel,
+		    gMinPeople,
+		    gMaxPeople,
+		    gBestPeople,
+		    gRecommendPeople,
+		    gUseAge,
+		    gMinTime,
+		    gMaxTime,
+		    gOfficialCd,
+		    gOfficialUrl,
+		    gComuUrl1,
+		    gComuUrl2,
+		    gRegiDate,
+			gDelNy	
+		)
+		VALUES
+		(
+			#{gName},
+		    #{gTnFileName},
+		    #{gLevel},
+		    #{gMinPeople},
+		    #{gMaxPeople},
+		    #{gBestPeople},
+		    #{gRecommendPeople},
+		    #{gUseAge},
+		    #{gMinTime},
+		    #{gMaxTime},
+		    #{gOfficialCd},
+		    #{gOfficialUrl},
+		    #{gComuUrl1},
+		    #{gComuUrl2},
+		   	now(),
+		    0
+		)
+		
+		<selectKey resultType="String" keyProperty="gSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		UPDATE game
+		SET
+			gName=#{gName},
+		    gTnFileName=#{gTnFileName},
+		    gLevel=#{gLevel},
+		    gMinPeople=#{gMinPeople},
+		    gMaxPeople=#{gMaxPeople},
+		    gBestPeople=#{gBestPeople},
+		    gRecommendPeople=#{gRecommendPeople},
+		    gUseAge=#{gUseAge},
+		    gMinTime=#{gMinTime},
+		    gMaxTime=#{gMaxTime},
+		    gOfficialCd=#{gOfficialCd},
+		    gOfficialUrl=#{gOfficialUrl},
+		    gComuUrl1=#{gComuUrl1},
+		    gComuUrl2=#{gComuUrl2},
+		    gUpdtDate=now()
+		WHERE
+			gSeq=#{gSeq}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM game
+		WHERE
+			gSeq=#{gSeq}
+	</delete>
+	
+	<update id="uelete">
+		UPDATE game
+		SET
+			gUpdtDate=now(),
+			gDelNy=1
+		WHERE
+			gSeq=#{gSeq}
+	</update>
+	
+</mapper>

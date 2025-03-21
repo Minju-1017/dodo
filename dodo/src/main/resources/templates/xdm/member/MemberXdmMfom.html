@@ -32,7 +32,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="/xdm/member/MemberXdmList">
+								<a class="nav-link active" href="/xdm/member/MemberXdmList">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
 										<span class="nav-link-text">회원관리</span>
@@ -40,7 +40,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href="/xdm/game/GameXdmList">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
 										<span class="nav-link-text">서비스관리</span>
@@ -162,8 +162,9 @@
 													비밀번호 확인
 													<span class="text-danger">*</span>
 												</label>
-												<input type="password" class="form-control" id="mPwdRe" name="mPwdRe" required />
-												<div class="invalid-feedback"> 비밀번호를 다시 입력해 주세요. </div>
+												<input type="password" class="form-control" id="mPwdRe" name="mPwdRe"
+													th:value="${memberItem?.mPwd}" required />
+												<div class="invalid-feedback"> 비밀번호를 동일하게 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-3 col-12">
@@ -181,7 +182,7 @@
 													이메일
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" id="mEmail" name="mEmail" 
+												<input type="email" class="form-control" id="mEmail" name="mEmail" 
 													th:value="${memberItem?.mEmail}" required />
 												<div class="invalid-feedback"> 이메일을 형식에 맞게 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
@@ -200,11 +201,14 @@
 											<div class="col-lg-3 col-12">
 												<label for="mGender" class="form-label">성별</label>
 												<select class="form-select" name="mGenderCd" id="mGenderCd">
-													<option th:selected="${memberItem?.mGenderCd} == 0" disabled>성별</option>
 													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
-														th:value="${codeList?.cSeq}" th:text="${codeList?.cName}"
-														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}">
-													</option>
+														th:if="${#strings.equals(codeList.cSeq, 0)}"
+														th:value="${codeList.cSeq}"
+														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}">성별</option>
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+														th:unless="${#strings.equals(codeList.cSeq, 0)}"
+														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}"></option>
 												</select>
 											</div>
 											<div class="col-lg-3 col-12">
@@ -233,9 +237,180 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 	
+		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
+			const email_regex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; //(알파벳,숫자)@(알파벳,숫자).(알파벳,숫자)
+			const birth_regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+
+			// Form
+			let mPwd = document.getElementById("mPwd");
+			let mPwdRe = document.getElementById("mPwdRe");
+			let mName = document.getElementById("mName");
+			let mEmail = document.getElementById("mEmail");
+			let mBirth = document.getElementById("mBirth");
+			
+			// btnSave 클릭시
 			document.getElementById("btnSave").onclick = function() {
+				var focus = false; // Validation 후 Focus 줘야 하는 Input
+				
+				// mPwd 체크
+				mPwd.value = mPwd.value.trim();
+				resetValidation(mPwd);
+				
+				if (mPwd.value == null || mPwd.value == "") {
+					mPwd.classList.add("is-invalid");
+					
+					if (!focus) {
+						mPwd.focus();
+						focus = true;
+					}
+				} else {
+					mPwd.classList.add("is-valid");
+				}
+				
+				// mPwdRe 체크
+				mPwdRe.value = mPwdRe.value.trim();
+				resetValidation(mPwdRe);
+				
+				if (mPwdRe.value == null || mPwdRe.value == ""
+						|| mPwd.value != mPwdRe.value) {
+					mPwdRe.classList.add("is-invalid");
+					
+					if (!focus) {
+						mPwdRe.focus();
+						focus = true;
+					}
+				} else {
+					mPwdRe.classList.add("is-valid");
+				}
+				
+				// mName 체크
+				mName.value = mName.value.trim();
+				resetValidation(mName);
+				
+				if (mName.value == null || mName.value == "") {
+					mName.classList.add("is-invalid");
+					
+					if (!focus) {
+						mName.focus();
+						focus = true;
+					}
+				} else {
+					mName.classList.add("is-valid");
+				}
+				
+				// mEmail 체크
+				mEmail.value = mEmail.value.trim();
+				resetValidation(mEmail);
+				
+				if (mEmail.value == null || mEmail.value == ""
+						|| !email_regex.test(mEmail.value)) {
+					mEmail.classList.add("is-invalid");
+					
+					if (!focus) {
+						mEmail.focus();
+						focus = true;
+					}
+				} else {
+					mEmail.classList.add("is-valid");
+				}
+				
+				// mBirth 체크
+				mBirth.value = mBirth.value.trim();
+				resetValidation(mBirth);
+				
+				if (mBirth.value == null || mBirth.value == ""
+					|| !birth_regex.test(mBirth.value)) {
+					mBirth.classList.add("is-invalid");
+					
+					if (!focus) {
+						mBirth.focus();
+						focus = true;
+					}
+				} else {
+					mBirth.classList.add("is-valid");
+				}
+				
+				// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+				// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+				if (focus) return false;
+				
 				document.getElementById("form").submit();
+			}
+			
+			// mPwd Input 시 체크
+			mPwd.addEventListener("input", function() {
+				pwdCheck();
+			});
+			
+			// mPwdRe Input 시 체크
+			mPwdRe.addEventListener("input", function() {
+				pwdCheck();	
+			});
+			
+			// pwd 입력창, 재입력 창 세트로 확인
+			function pwdCheck() {
+				// mPwd 체크
+				mPwd.value = mPwd.value.trim();
+				resetValidation(mPwd);
+				
+				if (mPwd.value == null || mPwd.value == "") {
+					mPwd.classList.add("is-invalid");
+				} else {
+					mPwd.classList.add("is-valid");
+				}	
+				
+				// mPwdRe 체크
+				mPwdRe.value = mPwdRe.value.trim();
+				resetValidation(mPwdRe);
+				
+				if (mPwdRe.value == null || mPwdRe.value == ""
+						|| mPwd.value != mPwdRe.value) {
+					mPwdRe.classList.add("is-invalid");
+				} else {
+					mPwdRe.classList.add("is-valid");
+				}
+			}
+			
+			// mName Input 시 체크
+			mName.addEventListener("input", function(){
+				resetValidation(mName);
+				
+				if (mName.value == null || mName.value == "") {
+					mName.classList.add("is-invalid");
+				} else {
+					mName.classList.add("is-valid");
+				}	
+			});
+			
+			// mEmail Input 시 체크
+			mEmail.addEventListener("input", function(){
+				resetValidation(mEmail);
+				
+				if (mEmail.value == null || mEmail.value == ""
+					|| !email_regex.test(mEmail.value)) {
+					mEmail.classList.add("is-invalid");
+				} else {
+					mEmail.classList.add("is-valid");
+				}	
+			});
+			
+			// mBirth Input 시 체크
+			mBirth.addEventListener("input", function(){
+				resetValidation(mBirth);
+				
+				if (mBirth.value == null || mBirth.value == ""
+					|| !birth_regex.test(mBirth.value)) {
+					mBirth.classList.add("is-invalid");
+				} else {
+					mBirth.classList.add("is-valid");
+				}	
+			});
+			
+			// Validation 초기화
+			function resetValidation(object) {
+				object.classList.remove("is-valid");
+				object.classList.remove("is-invalid");
 			}
 		</script>
       	

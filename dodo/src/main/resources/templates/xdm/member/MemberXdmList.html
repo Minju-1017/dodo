@@ -40,7 +40,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href="/xdm/game/GameXdmList">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
 										<span class="nav-link-text">서비스관리</span>
@@ -125,8 +125,11 @@
 											<div class="row g-3 needs-validation" novalidate>
 												<div class="col-lg-2 col-12">
 													<select class="form-select" name="code_cSeq" id="code_cSeq">
-														<option selected>성별</option>
 														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+															th:if="${#strings.equals(codeList.cSeq, 0)}"
+															th:value="${codeList.cSeq}">성별</option>
+														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+															th:unless="${#strings.equals(codeList.cSeq, 0)}"
 															th:value="${codeList.cSeq}" th:text="${codeList.cName}"></option>
 													</select>
 												</div>
@@ -218,10 +221,9 @@
 														</td>
 														<td th:text="${list?.mEmail}"></td>
 														<td th:text="${list?.mBirth}"></td>
-														<td th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}" 
+														<td th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
 															th:if="${#strings.equals(codeList.cSeq, list?.mGenderCd)}"
 															th:text="${codeList?.cName}">
-															
 														</td>
 														<td th:text="${list?.mRegiDateStr}"></td>
 														<td th:text="${list?.mUpdtDateStr}"></td>

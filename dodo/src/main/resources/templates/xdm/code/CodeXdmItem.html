@@ -40,7 +40,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href="/xdm/game/GameXdmList">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
 										<span class="nav-link-text">서비스관리</span>
@@ -121,7 +121,7 @@
 											<div class="col-lg-3 col-12">
 												<label for="cgName" class="form-label">코드그룹</label>
 												<input type="text" class="form-control" id="cgName" 
-													value="성별" disabled />
+													th:value="${codeItem?.cgName}" disabled />
 											</div>
 											<div class="col-lg-9 col-12"></div>
 											<div class="col-lg-3 col-12">

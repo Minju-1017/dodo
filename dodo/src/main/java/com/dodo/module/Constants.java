@@ -12,5 +12,8 @@ public class Constants {
 	
 	// Member에 사용하는 코드 그룹
 	public final static int MEMBER_CODE_GROUP_SEQ_GENDER = 1; // mGenderCd
+	
+	// Game에 사용하는 코드 그룹
+	public final static int GAME_CODE_GROUP_SEQ_OFFICIAL = 1; // gOfficialCd
 
 }

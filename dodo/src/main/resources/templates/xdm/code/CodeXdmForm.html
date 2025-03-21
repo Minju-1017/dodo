@@ -40,7 +40,7 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">
+								<a class="nav-link" href="/xdm/game/GameXdmList">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
 										<span class="nav-link-text">서비스관리</span>
@@ -219,9 +219,139 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
+		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
+			const regex = /^[0-9]+$/;	
+			
+			// Form
+			let codeGroup_cgSeq = document.getElementById("codeGroup_cgSeq");
+			let cName = document.getElementById("cName");
+			let cUseNy = document.getElementById("cUseNy");
+			let cSequence = document.getElementById("cSequence");
+			
+			// btnSave 클릭시
 			document.getElementById("btnSave").onclick = function() {
+				var focus = false; // Validation 후 Focus 줘야 하는 Input
+				
+				// codeGroup_cgSeq 체크
+				resetValidation(codeGroup_cgSeq);
+				
+				if (codeGroup_cgSeq.value == null || codeGroup_cgSeq.value == "") {
+					codeGroup_cgSeq.classList.add("is-invalid");
+					
+					if (!focus) {
+						codeGroup_cgSeq.focus();
+						focus = true;
+					}
+				} else {
+					codeGroup_cgSeq.classList.add("is-valid");
+				}
+				
+				// cName 체크
+				cName.value = cName.value.trim();
+				resetValidation(cName);
+				
+				if (cName.value == null || cName.value == "") {
+					cName.classList.add("is-invalid");
+					
+					if (!focus) {
+						cName.focus();
+						focus = true;
+					}
+				} else {
+					cName.classList.add("is-valid");
+				}
+				
+				// cUseNy 체크
+				resetValidation(cUseNy);
+				
+				if (cUseNy.value == null || cUseNy.value == "") {
+					cUseNy.classList.add("is-invalid");
+					
+					if (!focus) {
+						cUseNy.focus();
+						focus = true;
+					}
+				} else {
+					cUseNy.classList.add("is-valid");
+				}
+				
+				// cSequence 체크
+				cSequence.value = cSequence.value.trim();
+				resetValidation(cSequence);
+				
+				if (cSequence.value == null || cSequence.value == ""
+						|| !regex.test(cSequence.value) || cSequence.value < 1
+						|| isNaN(cSequence.value)) {
+					cSequence.classList.add("is-invalid");
+					
+					if (!focus) {
+						cSequence.focus();
+						focus = true;
+					}
+				} else {
+					cSequence.classList.add("is-valid");
+				}
+				
+				// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+				// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+				if (focus) return false;
+				
 				document.getElementById("form").submit();
+			}
+			
+			// codeGroup_cgSeq Input 시 체크
+			codeGroup_cgSeq.addEventListener("input", function() {
+				resetValidation(codeGroup_cgSeq);
+				
+				if (codeGroup_cgSeq.value == null || codeGroup_cgSeq.value == "") {
+					codeGroup_cgSeq.classList.add("is-invalid");
+				} else {
+					codeGroup_cgSeq.classList.add("is-valid");
+				}	
+			});
+			
+			// cName Input 시 체크
+			cName.addEventListener("input", function() {
+				cName.value = cName.value.trim();
+				resetValidation(cName);
+				
+				if (cName.value == null || cName.value == "") {
+					cName.classList.add("is-invalid");
+				} else {
+					cName.classList.add("is-valid");
+				}	
+			});
+			
+			// cUseNy Input 시 체크
+			cUseNy.addEventListener("input", function() {
+				resetValidation(cUseNy);
+				
+				if (cUseNy.value == null || cUseNy.value == "") {
+					cUseNy.classList.add("is-invalid");
+				} else {
+					cUseNy.classList.add("is-valid");
+				}	
+			});
+			
+			// cSequence Input 시 체크
+			cSequence.addEventListener("input", function() {
+				cSequence.value = cSequence.value.trim();
+				resetValidation(cSequence);
+				
+				if (cSequence.value == null || cSequence.value == ""
+					|| !regex.test(cSequence.value) || cSequence.value < 1
+					|| isNaN(cSequence.value)) {
+					cSequence.classList.add("is-invalid");
+				} else {
+					cSequence.classList.add("is-valid");
+				}	
+			});
+			
+			// Validation 초기화
+			function resetValidation(object) {
+				object.classList.remove("is-valid");
+				object.classList.remove("is-invalid");
 			}
 		</script>
       	

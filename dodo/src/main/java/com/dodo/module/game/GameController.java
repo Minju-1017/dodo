@@ -3,7 +3,7 @@ package com.dodo.module.game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,12 +21,13 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmList")
-	public String gameXdmList(Model model, GameVo vo) throws Exception {
+	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount());
+		vo.setParamsPaging(service.selectOneCount(vo));
 		
-		model.addAttribute("gameList", service.selectList(vo));
-		model.addAttribute("vo", vo);
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("gameList", service.selectList(vo));
+		}
 		
 		return path + "GameXdmList";
 	}

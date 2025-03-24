@@ -33,6 +33,8 @@ public class GameDto {
 	private Date gUpdtDate;
 	private String gUpdtDateStr;
 	
+	private double rScoreAvg; // 리뷰 테이블에서 점수 평균 가져온 값
+	
 	public String getgSeq() {
 		return gSeq;
 	}
@@ -177,6 +179,14 @@ public class GameDto {
 	
 	public String getgUpdtDateStr() {
 		return gUpdtDateStr;
+	}
+
+	public double getrScoreAvg() {
+		return rScoreAvg;
+	}
+
+	public void setrScoreAvg(double rScoreAvg) {
+		this.rScoreAvg = rScoreAvg;
 	}
 	
 }

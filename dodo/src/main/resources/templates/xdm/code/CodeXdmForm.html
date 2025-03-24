@@ -221,8 +221,6 @@
 
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
-			const regex = /^[0-9]+$/;	
-			
 			// Form
 			let codeGroup_cgSeq = document.getElementById("codeGroup_cgSeq");
 			let cName = document.getElementById("cName");
@@ -248,10 +246,9 @@
 				}
 				
 				// cName 체크
-				cName.value = cName.value.trim();
 				resetValidation(cName);
 				
-				if (cName.value == null || cName.value == "") {
+				if (cName.value.trim() == null || cName.value.trim() == "") {
 					cName.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -277,12 +274,11 @@
 				}
 				
 				// cSequence 체크
-				cSequence.value = cSequence.value.trim();
 				resetValidation(cSequence);
 				
-				if (cSequence.value == null || cSequence.value == ""
-						|| !regex.test(cSequence.value) || cSequence.value < 1
-						|| isNaN(cSequence.value)) {
+				if (cSequence.value.trim() == null || cSequence.value.trim() == ""
+						|| !regex_number.test(cSequence.value.trim()) || cSequence.value.trim() < 1
+						|| isNaN(cSequence.value.trim())) {
 					cSequence.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -296,6 +292,9 @@
 				// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
 				// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 				if (focus) return false;
+				
+				cName.value = cName.value.trim();
+				cSequence.value = cSequence.value.trim();
 				
 				document.getElementById("form").submit();
 			}
@@ -313,10 +312,9 @@
 			
 			// cName Input 시 체크
 			cName.addEventListener("input", function() {
-				cName.value = cName.value.trim();
 				resetValidation(cName);
 				
-				if (cName.value == null || cName.value == "") {
+				if (cName.value.trim() == null || cName.value.trim() == "") {
 					cName.classList.add("is-invalid");
 				} else {
 					cName.classList.add("is-valid");
@@ -336,12 +334,11 @@
 			
 			// cSequence Input 시 체크
 			cSequence.addEventListener("input", function() {
-				cSequence.value = cSequence.value.trim();
 				resetValidation(cSequence);
 				
-				if (cSequence.value == null || cSequence.value == ""
-					|| !regex.test(cSequence.value) || cSequence.value < 1
-					|| isNaN(cSequence.value)) {
+				if (cSequence.value.trim() == null || cSequence.value.trim() == ""
+					|| !regex_number.test(cSequence.value.trim()) || cSequence.value.trim() < 1
+					|| isNaN(cSequence.value.trim())) {
 					cSequence.classList.add("is-invalid");
 				} else {
 					cSequence.classList.add("is-valid");

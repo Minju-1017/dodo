@@ -11,8 +11,8 @@ public class GameService {
 	@Autowired
 	GameDao dao;
 	
-	public int selectOneCount() {
-		return dao.selectOneCount();
+	public int selectOneCount(GameVo vo) {
+		return dao.selectOneCount(vo);
 	}
 	
 	public List<GameDto> selectList(GameVo vo) {

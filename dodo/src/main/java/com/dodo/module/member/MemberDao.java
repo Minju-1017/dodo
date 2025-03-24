@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberDao {
 
-	public int selectOneCount();
+	public int selectOneCount(MemberVo vo);
 	public List<MemberDto> selectList(MemberVo vo);  
 	public MemberDto selectOne(MemberDto memberDto);
 	public int insert(MemberDto memberDto);

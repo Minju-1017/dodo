@@ -9,6 +9,30 @@
 		FROM 
 			member a
 		WHERE 1=1
+       		<if test="shDelNy != null and !shDelNy.equals('')">AND a.mDelNy = #{shDelNy}</if> 
+       		<if test="shGender != null and !shGender.equals('')">AND a.mGenderCd = #{shGender}</if>			
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.mRegiDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 2
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.mUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+			</choose>				
+	        <choose>
+	            <when test="shOption == 1">AND a.mSeq = #{shValue}</when>
+	            <when test="shOption == 2">AND a.mId LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 3">AND a.mName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 4">AND a.mEmail LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 5">AND a.mBirth LIKE CONCAT('%',#{shValue},'%')</when>
+	        </choose>
+		ORDER BY a.mSeq DESC
 	</sql>
 	
 	<sql id="selectCommonColumn">
@@ -35,8 +59,6 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.mDelNy=0
-		ORDER BY a.mSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
@@ -44,8 +66,10 @@
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
-		AND a.mSeq=#{mSeq}
+		FROM 
+			member a
+		WHERE 1=1
+			AND a.mSeq=#{mSeq}
 	</select>
 	
 	<update id="update">

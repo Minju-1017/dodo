@@ -11,8 +11,8 @@ public class MemberService {
 	@Autowired
 	MemberDao dao;
 	
-	public int selectOneCount() {
-		return dao.selectOneCount();
+	public int selectOneCount(MemberVo vo) {
+		return dao.selectOneCount(vo);
 	}
 	
 	public List<MemberDto> selectList(MemberVo vo) {

@@ -108,7 +108,7 @@
 					<div class="row mb-8">
 						<div class="col-md-12">
 							<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-								<h2>Code Group</h2>
+								<h2>Board Game</h2>
 							</div>
 						</div>
 					</div>
@@ -118,61 +118,127 @@
 								<div class="card-body d-flex flex-column gap-8 p-7">
 									<div class="d-flex flex-column gap-4">
 										<form class="row g-5 needs-validation" novalidate
-											action="/xdm/codegroup/CodeGroupXdmInst" method="post" id="form">
+											action="/xdm/game/GameXdmInst" method="post" id="form">
 											<div class="col-lg-3 col-12">
-												<label for="cgSeq" class="form-label">
-													코드그룹 코드
+												<label for="gSeq" class="form-label">
+													고유번호
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" name="cgSeq" id="cgSeq" 
+												<input type="text" class="form-control" name="gSeq" id="gSeq" 
 													placeholder="자동생성" disabled />
 											</div>
 											<div class="col-lg-3 col-12">
-												<label for="cgName" class="form-label">
-													코드그룹 이름
+												<label for="gName" class="form-label">
+													게임명
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" name="cgName" id="cgName"
+												<input type="text" class="form-control" name="gName" id="gName"
 													placeholder="한글, 영대소문자, 숫자" required />
-												<div class="invalid-feedback"> 코드그룹 이름을 입력해 주세요. </div>
+												<div class="invalid-feedback"> 게임명을 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-3 col-12">
-												<label for="cgNameEng" class="form-label">코드그룹 이름(영문)</label>
-												<input type="text" class="form-control" 
-													name="cgNameEng" id="cgNameEng" placeholder="영대소문자, 숫자" />
+												<label for="gTnFileName" class="form-label">썸네일 이미지 파일명</label>
+												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" />
 											</div>
 											<div class="col-lg-3 col-12"></div>
 											<div class="col-lg-3 col-12">
-												<label for="cgUseNy" class="form-label">
-													사용여부
+												<label for="gLevel" class="form-label">
+													난이도
 													<span class="text-danger">*</span>
 												</label>
-												<select class="form-control" id="cgUseNy" name="cgUseNy" required>
-													<option value="">선택</option>
-													<option value="1">Y</option>
-													<option value="0">N</option>
-												</select>
-												<div class="invalid-feedback"> 코드그룹 사용여부를 선택해 주세요. </div>
+												<input type="text" class="form-control" placeholder="0 ~ 5 사이의 실수"
+													id="gLevel" name="gLevel" required />
+												<div class="invalid-feedback"> 난이도를 숫자(0 ~ 5 사이의 실수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-3 col-12">
-												<label for="cgSequence" class="form-label">
-													순서
+												<label for="gUseAge" class="form-label">
+													최저 사용 연령
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="숫자(0보다 큰 정수)"
-													id="cgSequence" name="cgSequence" required />
-												<div class="invalid-feedback"> 코드 그룹의 순서를 숫자(0보다 큰 정수)로 입력해 주세요. </div>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gUseAge" name="gUseAge" required />
+												<div class="invalid-feedback"> 최저 사용 연령을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-6 col-12"></div>
-											<div class="col-lg-6 col-12">
-												<label class="form-label">설명</label>
-                                   				<textarea class="form-control" rows="5" style="resize: none;"
-													id="cgDescription" name="cgDescription"></textarea>
+											<div class="col-lg-3 col-12">
+												<label for="gMinTime" class="form-label">
+													최소 소요 시간
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gMinTime" name="gMinTime" required />
+												<div class="invalid-feedback"> 최소 소요 시간을 숫자(0보다 큰 정수, 분 단위)로 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-6 col-12"></div>
+											<div class="col-lg-3 col-12">
+												<label for="gMaxTime" class="form-label">
+													최대 소요 시간
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gMaxTime" name="gMaxTime" required />
+												<div class="invalid-feedback"> 최대 소요 시간을 숫자(0보다 큰 정수, 분 단위)로 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-3 col-12">
+												<label for="gMinPeople" class="form-label">
+													최소 인원
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gMinPeople" name="gMinPeople" required />
+												<div class="invalid-feedback"> 최소 인원을 숫자(0보다 큰 정수, 최대 인원보다 작거나 같게)로 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-3 col-12">
+												<label for="gMaxPeople" class="form-label">
+													최대 인원
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gMaxPeople" name="gMaxPeople" required />
+												<div class="invalid-feedback"> 최대 인원을 숫자(0보다 큰 정수, 최소 인원보다 크거나 같게)로 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-3 col-12">
+												<label for="gBestPeople" class="form-label">
+													최적인원
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gBestPeople" name="gBestPeople" required />
+												<div class="invalid-feedback"> 최적인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-3 col-12">
+												<label for="gRecommendPeople" class="form-label">
+													추천인원
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													id="gRecommendPeople" name="gRecommendPeople" required />
+												<div class="invalid-feedback"> 추천인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-3 col-12">
+												<label for="gOfficialCd" class="form-label">
+													공식판매사
+													<span class="text-danger">*</span>
+												</label>
+												<select class="form-select" name="gOfficialCd" id="gOfficialCd" required>
+													<option value="">선택</option>
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
+														th:value="${codeList.cSeq}" th:text="${codeList.cName}"></option>
+												</select>
+												<div class="invalid-feedback"> 공식판매사를 선택해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											
+											<!-- TODO: 여기서부터 -->
+											
+											
 											<div class="col-lg-6 col-12">
 												<div class="d-flex flex-column flex-md-row gap-2">
 													<a href="/xdm/codegroup/CodeGroupXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
@@ -219,8 +285,6 @@
 
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
-			const regex = /^[0-9]+$/;	
-			
 			// Form
 			let cgName = document.getElementById("cgName");
 			let cgUseNy = document.getElementById("cgUseNy");
@@ -231,10 +295,9 @@
 				var focus = false; // Validation 후 Focus 줘야 하는 Input
 				
 				// cgName 체크
-				cgName.value = cgName.value.trim();
 				resetValidation(cgName);
 				
-				if (cgName.value == null || cgName.value == "") {
+				if (cgName.value.trim() == null || cgName.value.trim() == "") {
 					cgName.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -260,12 +323,11 @@
 				}
 				
 				// cgSequence 체크
-				cgSequence.value = cgSequence.value.trim();
 				resetValidation(cgSequence);
 				
-				if (cgSequence.value == null || cgSequence.value == ""
-						|| !regex.test(cgSequence.value) || cgSequence.value < 1
-						|| isNaN(cgSequence.value)) {
+				if (cgSequence.value.trim() == null || cgSequence.value.trim() == ""
+						|| !regex_number.test(cgSequence.value.trim()) || cgSequence.value.trim() < 1
+						|| isNaN(cgSequence.value.trim())) {
 					cgSequence.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -280,15 +342,17 @@
 				// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 				if (focus) return false;
 				
+				cgName.value = cgName.value.trim();
+				cgSequence.value = cgSequence.value.trim();
+				
 				document.getElementById("form").submit();
 			}
 			
 			// cgName Input 시 체크
 			cgName.addEventListener("input", function() {
-				cgName.value = cgName.value.trim();
 				resetValidation(cgName);
 				
-				if (cgName.value == null || cgName.value == "") {
+				if (cgName.value.trim() == null || cgName.value.trim() == "") {
 					cgName.classList.add("is-invalid");
 				} else {
 					cgName.classList.add("is-valid");
@@ -308,12 +372,11 @@
 			
 			// cgSequence Input 시 체크
 			cgSequence.addEventListener("input", function() {
-				cgSequence.value = cgSequence.value.trim();
 				resetValidation(cgSequence);
 				
-				if (cgSequence.value == null || cgSequence.value == ""
-					|| !regex.test(cgSequence.value) || cgSequence.value < 1
-					|| isNaN(cgSequence.value)) {
+				if (cgSequence.value.trim() == null || cgSequence.value.trim() == ""
+					|| !regex_number.test(cgSequence.value.trim()) || cgSequence.value.trim() < 1
+					|| isNaN(cgSequence.value.trim())) {
 					cgSequence.classList.add("is-invalid");
 				} else {
 					cgSequence.classList.add("is-valid");
@@ -326,73 +389,6 @@
 				object.classList.remove("is-invalid");
 			}
 		</script>
-	
-		<!-- Validation: Modal, Alert -->
-		<!-- <script type="text/javascript">
-			const regex = /^[0-9]+$/;
-			
-			// Modal
-			let modalContent = document.getElementById("modalContent");
-			let prevFocusId = document.getElementById("prevFocusId");
-			
-			// Form
-			let cgName = document.getElementById("cgName");
-			let cgUseNy = document.getElementById("cgUseNy");
-			let cgSequence = document.getElementById("cgSequence");
-			
-			document.getElementById("btnSave").onclick = function() {
-				// cgName 체크
-				cgName.value = cgName.value.trim();
-				
-				if (cgName.value == null || cgName.value == "") {
-					// alert 사용
-					// alert("코드 그룹 이름을 입력해 주세요!");
-					// cgName.focus();
-					// return false;
-					
-					// modal 사용
-					showModal("cgName", "코드 그룹 이름을 입력해 주세요!");
-					return false;
-				}
-				
-				// cgUseNy 체크
-				if (cgUseNy.value == null || cgUseNy.value == "") {
-					showModal("cgUseNy", "코드 그룹 사용여부를 선택해 주세요!");
-					return false;
-				}
-				
-				// cgSequence 체크
-				cgSequence.value = cgSequence.value.trim();
-				
-				if (cgSequence.value == null || cgSequence.value == "") {
-					showModal("cgSequence", "코드 그룹의 순서를 입력해 주세요!");
-					return false;
-				}
-				
-				if (!regex.test(cgSequence.value) || cgSequence.value < 1) {
-					showModal("cgSequence", "코드 그룹의 순서를 숫자(0보다 큰 정수)로 입력해 주세요!");
-					return false;
-				}
-				
-				document.getElementById("form").submit();
-			}
-			
-			function showModal(_prevFocusId, _contetnInnerText) {
-				prevFocusId.value = _prevFocusId;
-				modalContent.innerText = _contetnInnerText; // 해당 아이디값의 텍스트 변경하기
-				
-				$("#codeGroupModal").modal("show");
-				$("#codeGroupModal").on("hidden.bs.modal", function (e) {
-					if (prevFocusId.value == "cgName") {
-						cgName.focus();
-					} else if (prevFocusId.value == "cgUseNy") {
-						cgUseNy.focus();
-					} else if (prevFocusId.value == "cgSequence") {
-						cgSequence.focus();
-					}
-				});
-			}
-		</script> -->
       	
    	</body>
 </html>

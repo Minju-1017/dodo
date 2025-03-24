@@ -3,6 +3,7 @@ package com.dodo.module.code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dodo.module.codegroup.CodeGroupService;
@@ -25,12 +26,13 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmList")
-	public String codeXdmList(Model model, CodeVo vo) throws Exception {
+	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount());
+		vo.setParamsPaging(service.selectOneCount(vo));
 		
-		model.addAttribute("codeList", service.selectList(vo));
-		model.addAttribute("vo", vo);
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("codeList", service.selectList(vo));
+		}
 		
 		return path + "CodeXdmList";
 	}

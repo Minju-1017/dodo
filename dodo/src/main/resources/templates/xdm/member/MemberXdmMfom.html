@@ -239,9 +239,6 @@
 	
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
-			const email_regex = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; //(알파벳,숫자)@(알파벳,숫자).(알파벳,숫자)
-			const birth_regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
-
 			// Form
 			let mPwd = document.getElementById("mPwd");
 			let mPwdRe = document.getElementById("mPwdRe");
@@ -254,10 +251,9 @@
 				var focus = false; // Validation 후 Focus 줘야 하는 Input
 				
 				// mPwd 체크
-				mPwd.value = mPwd.value.trim();
 				resetValidation(mPwd);
 				
-				if (mPwd.value == null || mPwd.value == "") {
+				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
 					mPwd.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -269,11 +265,10 @@
 				}
 				
 				// mPwdRe 체크
-				mPwdRe.value = mPwdRe.value.trim();
 				resetValidation(mPwdRe);
 				
-				if (mPwdRe.value == null || mPwdRe.value == ""
-						|| mPwd.value != mPwdRe.value) {
+				if (mPwdRe.value.trim() == null || mPwdRe.value.trim() == ""
+						|| mPwd.value.trim() != mPwdRe.value.trim()) {
 					mPwdRe.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -285,10 +280,9 @@
 				}
 				
 				// mName 체크
-				mName.value = mName.value.trim();
 				resetValidation(mName);
 				
-				if (mName.value == null || mName.value == "") {
+				if (mName.value.trim() == null || mName.value.trim() == "") {
 					mName.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -300,11 +294,10 @@
 				}
 				
 				// mEmail 체크
-				mEmail.value = mEmail.value.trim();
 				resetValidation(mEmail);
 				
-				if (mEmail.value == null || mEmail.value == ""
-						|| !email_regex.test(mEmail.value)) {
+				if (mEmail.value.trim() == null || mEmail.value.trim() == ""
+						|| !regex_email.test(mEmail.value.trim())) {
 					mEmail.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -316,11 +309,10 @@
 				}
 				
 				// mBirth 체크
-				mBirth.value = mBirth.value.trim();
 				resetValidation(mBirth);
 				
-				if (mBirth.value == null || mBirth.value == ""
-					|| !birth_regex.test(mBirth.value)) {
+				if (mBirth.value.trim() == null || mBirth.value.trim() == ""
+					|| !regex_birth.test(mBirth.value.trim())) {
 					mBirth.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -351,21 +343,19 @@
 			// pwd 입력창, 재입력 창 세트로 확인
 			function pwdCheck() {
 				// mPwd 체크
-				mPwd.value = mPwd.value.trim();
 				resetValidation(mPwd);
 				
-				if (mPwd.value == null || mPwd.value == "") {
+				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
 					mPwd.classList.add("is-invalid");
 				} else {
 					mPwd.classList.add("is-valid");
 				}	
 				
 				// mPwdRe 체크
-				mPwdRe.value = mPwdRe.value.trim();
 				resetValidation(mPwdRe);
 				
-				if (mPwdRe.value == null || mPwdRe.value == ""
-						|| mPwd.value != mPwdRe.value) {
+				if (mPwdRe.value.trim() == null || mPwdRe.value.trim() == ""
+						|| mPwd.value.trim() != mPwdRe.value.trim()) {
 					mPwdRe.classList.add("is-invalid");
 				} else {
 					mPwdRe.classList.add("is-valid");
@@ -376,7 +366,7 @@
 			mName.addEventListener("input", function(){
 				resetValidation(mName);
 				
-				if (mName.value == null || mName.value == "") {
+				if (mName.value.trim() == null || mName.value.trim() == "") {
 					mName.classList.add("is-invalid");
 				} else {
 					mName.classList.add("is-valid");
@@ -387,8 +377,8 @@
 			mEmail.addEventListener("input", function(){
 				resetValidation(mEmail);
 				
-				if (mEmail.value == null || mEmail.value == ""
-					|| !email_regex.test(mEmail.value)) {
+				if (mEmail.value.trim() == null || mEmail.value.trim() == ""
+					|| !regex_email.test(mEmail.value.trim())) {
 					mEmail.classList.add("is-invalid");
 				} else {
 					mEmail.classList.add("is-valid");
@@ -399,8 +389,8 @@
 			mBirth.addEventListener("input", function(){
 				resetValidation(mBirth);
 				
-				if (mBirth.value == null || mBirth.value == ""
-					|| !birth_regex.test(mBirth.value)) {
+				if (mBirth.value.trim() == null || mBirth.value.trim() == ""
+					|| !regex_birth.test(mBirth.value.trim())) {
 					mBirth.classList.add("is-invalid");
 				} else {
 					mBirth.classList.add("is-valid");

@@ -124,48 +124,56 @@
 										<div class="d-flex flex-column gap-4">
 											<div class="row g-3">
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>N</option>
-														<option>...</option>
+													<select class="form-select" id="shDelNy" name="shDelNy">
+														<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+														<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+														<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>Y</option>
-														<option>...</option>
+													<select class="form-select" name="shUseNy" id="shUseNy">
+														<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
+														<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
+														<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>날짜</option>
-														<option>등록일</option>
-														<option>수정일</option>
+													<select class="form-select"id="shOptionDate" name="shOptionDate">
+														<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
+														<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+														<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" placeholder="2025-01-01" />
+													<input type="text" class="form-control" id="shDateStart" name="shDateStart" 
+														placeholder="시작일" autocomplete="off">
+														<!-- th:value="${#strings.substring(vo.shDateStart, 0, 10)}" -->
 												</div>
 												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" placeholder="2025-01-01" />
+													<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
+														placeholder="종료일" autocomplete="off">
+														<!-- th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" -->
 												</div>
 												<div class="col-lg-2 col-12"></div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>검색그룹</option>
-														<option>코드그룹 코드</option>
-														<option>코드그룹 이름</option>
-														<option>코드</option>
-														<option>코드 이름</option>
-														<option>코드 영문</option>
+													<select class="form-select" id="shOption" name="shOption">
+														<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+														<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
+														<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+														<option value="3" th:selected="${vo.shOption == 3}">코드</option>
+														<option value="4" th:selected="${vo.shOption == 4}">코드 이름</option>
+														<option value="5" th:selected="${vo.shOption == 5}">코드 이름 (영문)</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control "placeholder="검색어" />
+													<input type="text" class="form-control" id="shValue" name="shValue" 
+														th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
+													<div class="invalid-feedback" id="shValueFeedback"></div>
 												</div>
 												<div class="col-lg-6 col-12">
 													<div class="d-flex flex-column flex-md-row gap-2">
-														<button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
-														<button class="btn btn-secondary" type="submit"><i class="bi bi-arrow-clockwise"></i></button>
+														<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
+														<button type="submit" id="btnReset" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
 													</div>
 												</div>
 											</div>
@@ -178,17 +186,9 @@
 							<div class="col-md-12 text-center">
 								<!-- card -->
 								<div class="card h-100 card-lg">
-									<div class="d-md-flex justify-content-between align-items-center px-6 py-6">
-										<span>Total: <span th:text="${vo.totalRows}"></span></span>
-										<nav class="mt-2 mt-md-0">
-											<select class="form-select mt-2 mt-md-0"
-												id="rowNumToShow" th:value="${vo.rowNumToShow}">
-												<option value="5" th:selected="${vo.rowNumToShow} == 5">5</option>
-												<option value="10" th:selected="${vo.rowNumToShow} == 10">10</option>
-												<option value="15" th:selected="${vo.rowNumToShow} == 15">15</option>
-											</select>
-										</nav>
-									</div>
+								
+									<div th:replace="~{/xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+									
 									<!-- card body -->
 									<div class="card-body p-0">
 										<!-- table -->
@@ -289,6 +289,28 @@
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
       	
       	<script type="text/javascript">
+			let fom = document.querySelector("form[name=formList]");
+			let goUrlXdmList = "/xdm/code/CodeXdmList";
+			
+			function goList(currPage) {
+	 			document.querySelector("input[name=currPage]").value = currPage;
+	 			fom.action = goUrlXdmList;
+	 			fom.submit();
+			}
+			
+	      	document.getElementById("btnSearch").onclick = function () {
+	      		fom.action = goUrlXdmList;
+	      		fom.submit();
+			};
+			
+			document.getElementById("changeRowNum").onchange = function () {
+			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+			    fom.action = goUrlXdmList;
+			    fom.submit();
+			}
+		</script>
+		
+      	<script type="text/javascript">
 			document.getElementById("checkAll").onclick = function() {
 				allCheck("check", this.checked);
 			}
@@ -345,16 +367,6 @@
 				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
 					return false;
 				}
-			}
-		</script>
-		
-		<script type="text/javascript">
-			let fom = document.querySelector("form[name=formList]");
-			
-			function goList(currPage) {
-	 			document.querySelector("input[name=currPage]").value = currPage;
-	 			fom.action = "/xdm/code/CodeXdmList";
-	 			fom.submit();
 			}
 		</script>
       	

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.member.MemberDto;
 
 @Repository
@@ -12,7 +11,7 @@ public interface CodeDao {
 
 	public List<CodeDto> selectListCachedCodeArrayList();
 	
-	public int selectOneCount();
+	public int selectOneCount(CodeVo vo);
 	public List<CodeDto> selectList(CodeVo vo); 
 	public List<CodeDto> selectListWithoutPaging(MemberDto memberDto); 
 	public CodeDto selectOne(CodeDto codeDto);

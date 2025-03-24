@@ -9,6 +9,28 @@
 		FROM 
 			codeGroup a
 		WHERE 1=1
+			<if test="shUseNy != null and !shUseNy.equals('')">AND a.cgUseNy = #{shUseNy}</if>
+       		<if test="shDelNy != null and !shDelNy.equals('')">AND a.cgDelNy = #{shDelNy}</if> 				
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.cgRegiDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 2
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.cgUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+			</choose>				
+	        <choose>
+	            <when test="shOption == 1">AND a.cgSeq = #{shValue}</when>
+	            <when test="shOption == 2">AND a.cgName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 3">AND a.cgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+	        </choose>
+		ORDER BY a.cgSeq DESC
 	</sql>
 	
 	<sql id="selectCommonColumn">
@@ -27,6 +49,13 @@
 	    		AND b.codeGroup_cgSeq = a.cgSeq
 	    ) as cCount
 	</sql>
+	<!-- Mybatis if 문법
+		1) 조건이 하나일 때
+			<if test=
+		2) 조건이 여러개일 때
+			<choose>
+				<when test=
+	-->
 	<!-- End -->
 	
 	<select id="selectOneCount" resultType="Integer">
@@ -38,8 +67,7 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.cgDelNy=0
-		ORDER BY a.cgSeq DESC
+		
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
@@ -48,14 +76,14 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.cgDelNy=0
-		ORDER BY a.cgSeq DESC
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
+		FROM 
+			codeGroup a
+		WHERE 1=1
 		AND a.cgSeq=#{cgSeq}
 	</select>
 	

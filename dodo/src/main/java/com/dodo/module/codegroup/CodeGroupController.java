@@ -3,7 +3,7 @@ package com.dodo.module.codegroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,12 +21,15 @@ public class CodeGroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeGroupXdmList")
-	public String codeGroupXdmList(Model model, CodeGroupVo vo) throws Exception {
+	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount());
+		vo.setParamsPaging(service.selectOneCount(vo));
 		
-		model.addAttribute("codeGroupList", service.selectList(vo));
-		model.addAttribute("vo", vo);
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("codeGroupList", service.selectList(vo));
+			// model.addAttribute("vo", vo); 	// 함수 파라메터로 정의된 아래 구문과 동일한 표현이라 주석처리 
+												// @ModelAttribute("vo") CodeGroupVo vo
+		}
 		
 		return path + "CodeGroupXdmList";
 	}

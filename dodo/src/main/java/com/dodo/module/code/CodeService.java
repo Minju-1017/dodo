@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.member.MemberDto;
 
 import jakarta.annotation.PostConstruct;
@@ -57,8 +56,8 @@ public class CodeService {
 	}
 	//-->
 	
-	public int selectOneCount() {
-		return dao.selectOneCount();
+	public int selectOneCount(CodeVo vo) {
+		return dao.selectOneCount(vo);
 	}
 	
 	public List<CodeDto> selectList(CodeVo vo) {

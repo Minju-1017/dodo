@@ -17,6 +17,30 @@
 		ON
 			a.codeGroup_cgSeq = b.cgSeq
 		WHERE 1=1
+			<if test="shUseNy != null and !shUseNy.equals('')">AND a.cUseNy = #{shUseNy}</if>
+       		<if test="shDelNy != null and !shDelNy.equals('')">AND a.cDelNy = #{shDelNy}</if> 				
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.cRegiDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 2
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.cUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+			</choose>				
+	        <choose>
+	        	<when test="shOption == 1">AND a.codeGroup_cgSeq = #{shValue}</when>
+	            <when test="shOption == 2">AND b.cgName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 3">AND a.cSeq = #{shValue}</when>
+	            <when test="shOption == 4">AND a.cName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 5">AND a.cNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+	        </choose>
+		ORDER BY a.cSeq DESC
 	</sql>
 	
 	<sql id="selectCommonColumn">
@@ -54,8 +78,6 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.cDelNy=0
-		ORDER BY a.cSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
@@ -63,8 +85,14 @@
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
-		AND a.cSeq=#{cSeq}
+		FROM 
+			code a
+		LEFT JOIN
+			codeGroup b
+		ON
+			a.codeGroup_cgSeq = b.cgSeq
+		WHERE 1=1
+			AND a.cSeq=#{cSeq}
 	</select>
 	
 	<insert id="insert">

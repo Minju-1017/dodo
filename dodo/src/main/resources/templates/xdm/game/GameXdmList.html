@@ -112,7 +112,7 @@
 						<div class="row mb-8">
 							<div class="col-md-12">
 								<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-									<h2>Code Group</h2>
+									<h2>Board Game</h2>
 								</div>
 							</div>
 						</div>
@@ -123,46 +123,129 @@
 										<div class="d-flex flex-column gap-4">
 											<div class="row g-3">
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>N</option>
-														<option>...</option>
+													<select class="form-select" id="shDelNy" name="shDelNy">
+														<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+														<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+														<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>Y</option>
-														<option>...</option>
+													<select class="form-select" id="shDelNy" name="shDelNy">
+														<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+														<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+														<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>날짜</option>
-														<option>등록일</option>
-														<option>수정일</option>
+													<select class="form-select"id="shOptionDate" name="shOptionDate">
+														<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
+														<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+														<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" placeholder="2025-01-01" />
+													<input type="text" class="form-control" id="shDateStart" name="shDateStart" 
+														placeholder="시작일" autocomplete="off">
+														<!-- th:value="${#strings.substring(vo.shDateStart, 0, 10)}" -->
 												</div>
 												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" placeholder="2025-01-01" />
+													<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
+														placeholder="종료일" autocomplete="off">
+														<!-- th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" -->
 												</div>
 												<div class="col-lg-2 col-12"></div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select">
-														<option selected>검색그룹</option>
-														<option>코드그룹 코드</option>
-														<option>코드그룹 이름</option>
-														<option>코드그룹 이름(영문)</option>
+													<select class="form-select"id="shMinLevel" name="shMinLevel">
+														<option value="" th:selected="${vo.shMinLevel == null}">최소난이도</option>
+														<option th:each="i : ${#numbers.sequence(1,5)}" 
+															th:value="${i}" th:selected="${vo.shMinLevel == i}" th:text="${i}"></option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control "placeholder="검색어" />
+													<select class="form-select"id="shMaxLevel" name="shMaxLevel">
+														<option value="" th:selected="${vo.shMaxLevel == null}">최대난이도</option>
+														<option th:each="i : ${#numbers.sequence(1,5)}" 
+															th:value="${i}" th:selected="${vo.shMaxLevel == i}" th:text="${i}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shMinScoreAvg" name="shMinScoreAvg">
+														<option value="" th:selected="${vo.shMinScoreAvg == null}">최소평점</option>
+														<option th:each="i : ${#numbers.sequence(1,10)}" 
+															th:value="${i}" th:selected="${vo.shMinScoreAvg == i}" th:text="${i}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shMaxScoreAvg" name="shMaxScoreAvg">
+														<option value="" th:selected="${vo.shMaxScoreAvg == null}">최대평점</option>
+														<option th:each="i : ${#numbers.sequence(1,10)}" 
+															th:value="${i}" th:selected="${vo.shMaxScoreAvg == i}" th:text="${i}"></option>
+													</select>
+												</div>
+												<div class="col-lg-4 col-12"></div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shMinPeople" name="shMinPeople">
+														<option value="" th:selected="${vo.shMinPeople == null}">최소인원</option>
+														<option th:each="i : ${#numbers.sequence(1,100)}" 
+															th:value="${i}" th:selected="${vo.shMinPeople == i}" th:text="${i}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shMaxPeople" name="shMaxPeople">
+														<option value="" th:selected="${vo.shMaxPeople == null}">최대인원</option>
+														<option th:each="i : ${#numbers.sequence(1,100)}" 
+															th:value="${i}" th:selected="${vo.shMaxPeople == i}" th:text="${i}"></option>
+														<option value="101" th:selected="${vo.shMaxPeople == 101}">100+</option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shMinTime" name="shMinTime">
+														<option value="" th:selected="${vo.shMinTime == null}">최소소요시간</option>
+														<option th:each="i : ${#numbers.sequence(1,60)}" 
+															th:value="${i}" th:selected="${vo.shMinTime == i}" th:text="${i}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shMaxTime" name="shMaxTime">
+														<option value="" th:selected="${vo.shMaxTime == null}">최대소요시간</option>
+														<option th:each="i : ${#numbers.sequence(1,60)}" 
+															th:value="${i}" th:selected="${vo.shMaxTime == i}" th:text="${i}"></option>
+														<option value="61" th:selected="${vo.shMaxPeople == 61}">60+</option>
+													</select>
+												</div>
+												<div class="col-lg-4 col-12"></div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shUseAge" name="shUseAge">
+														<option value="" th:selected="${vo.shUseAge == null}">사용연령</option>
+														<option th:each="i : ${#numbers.sequence(1,20)}" 
+															th:value="${i}" th:selected="${vo.shUseAge == i}" th:text="${i}+'세 이상'"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select" name="shOfficial" id="shOfficial">
+														<option value="" th:selected="${vo.shOfficial == null}">공식판매사</option>
+														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
+															th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+															th:selected="${#strings.equals(codeList.cSeq, vo.shOfficial)}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select" id="shOption" name="shOption">
+														<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+														<option value="1" th:selected="${vo.shOption == 1}">고유번호</option>
+														<option value="2" th:selected="${vo.shOption == 2}">게임명</option>
+														<option value="3" th:selected="${vo.shOption == 3}">최적인원</option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<input type="text" class="form-control" id="shValue" name="shValue" 
+														th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
+													<div class="invalid-feedback" id="shValueFeedback"></div>
 												</div>
 												<div class="col-lg-6 col-12">
 													<div class="d-flex flex-column flex-md-row gap-2">
-														<button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
-														<button class="btn btn-secondary" type="submit"><i class="bi bi-arrow-clockwise"></i></button>
+														<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
+														<button type="submit" id="btnReset" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
 													</div>
 												</div>
 											</div>
@@ -175,16 +258,9 @@
 							<div class="col-md-12 text-center">
 								<!-- card -->
 								<div class="card h-100 card-lg">
-									<div class="d-md-flex justify-content-between align-items-center px-6 py-6">
-										<span>Total: <span th:text="${vo.totalRows}"></span></span>
-										<nav class="mt-2 mt-md-0">
-											<select class="form-select mt-2 mt-md-0" th:value="${vo.rowNumToShow}">
-												<option value="5" th:selected="${vo.rowNumToShow} == 5">5</option>
-												<option value="10" th:selected="${vo.rowNumToShow} == 10">10</option>
-												<option value="15" th:selected="${vo.rowNumToShow} == 15">15</option>
-											</select>
-										</nav>
-									</div>
+									
+									<div th:replace="~{/xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+									
 									<!-- card body -->
 									<div class="card-body p-0">
 										<!-- table -->
@@ -198,40 +274,55 @@
 															</div>
 														</th>
 														<th>#</th>
-														<th>사용</th>
-														<th>코드그룹 코드</th>
-														<th>코드그룹 이름</th>
-														<th>코드그룹 이름(영문)</th>
-														<th>갯수</th>
-														<th>순서</th>
+														<th>고유번호</th>
+														<th>게임명</th>
+														<th>인원</th>
+														<th>최적인원</th>
+														<th>사용연령</th>
+														<th>소요시간</th>
+														<th>평점</th>
+														<th>난이도</th>
+														<th>공식판매처</th>
 														<th>등록일</th>
 														<th>수정일</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr th:if="${#lists.isEmpty(codeGroupList)}">
-														<td class="text-center" colspan="10">
+													<tr th:if="${#lists.isEmpty(gameList)}">
+														<td class="text-center" colspan="13">
 															데이터가 없습니다.
 														</td>
 													</tr> 
-													<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
+													<tr th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}">
 														<td>
 															<div class="form-check">
-																<input class="form-check-input" type="checkbox" name="check" id="${list?.cgSeq}">
+																<input class="form-check-input" type="checkbox" name="check" id="${list?.gSeq}">
 															</div>
 														</td>
 														<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-														<td th:text="${list?.cgUseNyStr}"></td>
-														<td th:text="${list?.cgSeq}"></td>
-														<td>			
-															<a th:href="@{/xdm/codegroup/CodeGroupXdmItem(cgSeq=${list.cgSeq})}"
-																th:text="${list?.cgName}"></a>
+														<td th:text="${list?.gSeq}"></td>
+														<td>
+															<a th:href="@{/xdm/game/GameXdmItem(gSeq=${list.gSeq})}"
+																th:text="${list?.gName}"></a>
 														</td>
-														<td th:text="${list?.cgNameEng}"></td>
-														<td th:text="${list?.cCount}"></td>
-														<td th:text="${list?.cgSequence}"></td>
-														<td th:text="${list?.cgRegiDateStr}"></td>
-														<td th:text="${list?.cgUpdtDateStr}"></td>
+														<td th:if="${list?.gMinPeople eq list?.gMaxPeople}" 
+															th:text="${list?.gMaxPeople}"></td>
+														<td th:if="${list?.gMinPeople ne list?.gMaxPeople}" 
+															th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명'}"></td>
+														<td th:text="${list?.gBestPeople}"></td>
+														<td th:text="${list?.gUseAge + '세 이상'}"></td>
+														<td th:if="${list?.gMinTime eq list?.gMaxTime}" 
+															th:text="${list?.gMaxTime}"></td>
+														<td th:if="${list?.gMinTime ne list?.gMaxTime}" 
+															th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></td>
+														<td th:text="${list?.rScoreAvg}"></td>	
+														<td th:text="${list?.gLevel}"></td>
+														<td th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
+															th:if="${#strings.equals(codeList.cSeq, list?.gOfficialCd)}"
+															th:text="${codeList?.cName}">
+														</td>
+														<td th:text="${list?.gRegiDateStr}"></td>
+														<td th:text="${list?.gUpdtDateStr}"></td>
 													</tr>
 												</tbody>
 											</table>
@@ -274,7 +365,7 @@
 										<div class="d-flex flex-column flex-md-row gap-2">
 											<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
 											<a href="#" class="btn btn-info" id="modify">U</a>
-											<a href="/xdm/codegroup/CodeGroupXdmForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></a>
+											<a href="/xdm/game/GameXdmForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></a>
 										</div>
 									</div>
 								 </div>
@@ -287,6 +378,28 @@
         
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
       	
+      	<script type="text/javascript">
+			let fom = document.querySelector("form[name=formList]");
+			let goUrlXdmList = "/xdm/game/GameXdmList";
+			
+			function goList(currPage) {
+	 			document.querySelector("input[name=currPage]").value = currPage;
+	 			fom.action = goUrlXdmList;
+	 			fom.submit();
+			}
+			
+	      	document.getElementById("btnSearch").onclick = function () {
+	      		fom.action = goUrlXdmList;
+	      		fom.submit();
+			};
+			
+			document.getElementById("changeRowNum").onchange = function () {
+			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+			    fom.action = goUrlXdmList;
+			    fom.submit();
+			}
+		</script>
+		
       	<script type="text/javascript">
 			document.getElementById("checkAll").onclick = function() {
 				allCheck("check", this.checked);
@@ -344,16 +457,6 @@
 				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
 					return false;
 				}
-			}
-		</script>
-		
-		<script type="text/javascript">
-			let fom = document.querySelector("form[name=formList]");
-			
-			function goList(currPage) {
-	 			document.querySelector("input[name=currPage]").value = currPage;
-	 			fom.action = "/xdm/codegroup/CodeGroupXdmList";
-	 			fom.submit();
 			}
 		</script>
 	

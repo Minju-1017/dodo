@@ -3,7 +3,7 @@ package com.dodo.module.member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dodo.module.code.CodeService;
@@ -26,12 +26,13 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmList")
-	public String memberXdmList(Model model, MemberVo vo, MemberDto memberDto) throws Exception {
+	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount());
+		vo.setParamsPaging(service.selectOneCount(vo));
 
-		model.addAttribute("memberList", service.selectList(vo));
-		model.addAttribute("vo", vo);
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("memberList", service.selectList(vo));
+		}
 		
 		return path + "MemberXdmList";
 	}

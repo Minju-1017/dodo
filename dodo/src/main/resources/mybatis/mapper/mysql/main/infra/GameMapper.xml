@@ -9,6 +9,38 @@
 		FROM 
 			game a
 		WHERE 1=1
+       		<if test="shDelNy != null and !shDelNy.equals('')">AND a.gDelNy = #{shDelNy}</if> 				
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.gRegiDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 2
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.gUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
+				</when>
+			</choose>	
+			<if test="shMinLevel != null and !shMinLevel.equals('')">AND a.gLevel >= #{shMinLevel}</if>	
+			<if test="shMaxLevel != null and !shMaxLevel.equals('')">AND #{shMaxLevel} >= a.gLevel</if>	
+			<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND a.rScoreAvg >= #{shMinScoreAvg}</if>	
+			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= a.rScoreAvg</if>	
+			<if test="shMinPeople != null and !shMinPeople.equals('')">AND a.gMinPeople >= #{shMinPeople}</if>	
+			<if test="shMaxPeople != null and !shMaxPeople.equals('')">AND #{shMaxPeople} >= a.gMaxPeople</if>			
+	        <if test="shUseAge != null and !shUseAge.equals('')">AND a.gUseAge >= #{shUseAge}</if>
+	        <if test="shMinTime != null and !shMinTime.equals('')">AND a.gMinTime >= #{shMinTime}</if>	
+			<if test="shMaxTime != null and !shMaxTime.equals('')">AND #{shMaxTime} >= a.gMaxTime</if>
+			<if test="shOfficial != null and !shOfficial.equals('')">AND a.gOfficialCd = #{shOfficial}</if> 	
+	        <choose>
+	            <when test="shOption == 1">AND a.gSeq = #{shValue}</when>
+	            <when test="shOption == 2">AND a.gName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 3">AND a.gBestPeople = #{shValue}</when>
+	            <when test="shOption == 4">AND a.ggRecommendPeople = #{shValue}</when>
+	        </choose>
+		ORDER BY a.gSeq DESC
 	</sql>
 	
 	<sql id="selectCommonColumn">
@@ -28,7 +60,13 @@
 	    a.gComuUrl1,
 	    a.gComuUrl2,
 	    a.gRegiDate,
-	    a.gUpdtDate
+	    a.gUpdtDate,
+	    (SELECT IFNULL(AVG(b.rScore),0)
+			FROM review b
+			WHERE 1=1 
+				AND b.rDelNy = 0 
+				AND b.game_gSeq = a.gSeq
+	    ) as rScoreAvg
 	</sql>
 	<!-- End -->
 	
@@ -41,8 +79,6 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-			AND a.gDelNy=0
-		ORDER BY a.gSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
@@ -50,8 +86,10 @@
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
-		AND a.gSeq=#{gSeq}
+		FROM 
+			game a
+		WHERE 1=1
+			AND a.gSeq=#{gSeq}
 	</select>
 	
 	<insert id="insert">

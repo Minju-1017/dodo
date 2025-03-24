@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GameDao {
 
-	public int selectOneCount();
+	public int selectOneCount(GameVo vo);
 	public List<GameDto> selectList(GameVo vo); 
 	public List<GameDto> selectListWithoutPaging(); 
 	public GameDto selectOne(GameDto gameDto);

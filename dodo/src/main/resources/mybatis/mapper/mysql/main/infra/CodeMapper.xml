@@ -127,6 +127,7 @@
 	<update id="update">
 		UPDATE code
 		SET
+			codeGroup_cgSeq=#{codeGroup_cgSeq},
 			cName=#{cName},
 			cNameEng=#{cNameEng},
 			cSequence=#{cSequence},

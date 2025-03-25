@@ -105,8 +105,10 @@
            	<!-- main wrapper -->
 			<main class="main-content-wrapper">
 				<form name="formList" id="formList" method="post" autocomplete="off">
+					
 					<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+					<input type="hidden" name="cgSeq">
 					
 					<div class="container">
 						<div class="row mb-8">
@@ -225,8 +227,8 @@
 														<td th:text="${list?.cgUseNyStr}"></td>
 														<td th:text="${list?.cgSeq}"></td>
 														<td>			
-															<a th:href="@{/xdm/codegroup/CodeGroupXdmItem(cgSeq=${list.cgSeq})}"
-																th:text="${list?.cgName}"></a>
+															<a href="javascript:void(0);" th:text="${list?.cgName}"
+																th:attr="onclick=|goForm('${list.cgSeq}')|"></a>
 														</td>
 														<td th:text="${list?.cgNameEng}"></td>
 														<td th:text="${list?.cCount}"></td>
@@ -275,7 +277,7 @@
 										<div class="d-flex flex-column flex-md-row gap-2">
 											<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
 											<a href="#" class="btn btn-info" id="modify">U</a>
-											<a href="/xdm/codegroup/CodeGroupXdmForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></a>
+											<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
 										</div>
 									</div>
 								 </div>
@@ -289,13 +291,22 @@
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
 		<script type="text/javascript">
+			let seq = document.querySelector("input[name=cgSeq]");
+		
 			let fom = document.querySelector("form[name=formList]");
 			let goUrlXdmList = "/xdm/codegroup/CodeGroupXdmList";
+			let goUrlXdmForm = "/xdm/codegroup/CodeGroupXdmForm";
 			
 			function goList(currPage) {
 	 			document.querySelector("input[name=currPage]").value = currPage;
 	 			fom.action = goUrlXdmList;
 	 			fom.submit();
+			}
+			
+			goForm = function (keyValue) {
+			    seq.value = keyValue;
+			    fom.action = goUrlXdmForm;
+			    fom.submit();
 			}
 			
 	      	document.getElementById("btnSearch").onclick = function () {
@@ -307,6 +318,10 @@
 			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 			    fom.action = goUrlXdmList;
 			    fom.submit();
+			}
+			
+			document.getElementById("btnForm").onclick = function () {
+			    goForm(0);
 			}
 		</script>
 		

@@ -4,7 +4,7 @@ import com.dodo.module.BaseVo;
 
 public class GameVo extends BaseVo {
 	
-	private int gSeq;
+	private String gSeq;
 	
 	private Integer shMinLevel;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
 	private Integer shMaxLevel;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
@@ -17,11 +17,11 @@ public class GameVo extends BaseVo {
 	private Integer shMaxTime; 		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
 	private Integer shOfficial; 	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
 
-	public int getgSeq() {
+	public String getgSeq() {
 		return gSeq;
 	}
 
-	public void setgSeq(int gSeq) {
+	public void setgSeq(String gSeq) {
 		this.gSeq = gSeq;
 	}
 

@@ -118,110 +118,122 @@
 								<div class="card-body d-flex flex-column gap-8 p-7">
 									<div class="d-flex flex-column gap-4">
 										<form class="row g-5 needs-validation" novalidate
-											action="/xdm/game/GameXdmInst" method="post" id="form">
+											method="post" id="form" name="form">
+											
+											<input type="hidden" name="gSeq" th:value="${vo.gSeq}">
+											
 											<div class="col-lg-3 col-12">
 												<label for="gSeq" class="form-label">
 													고유번호
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="gSeq" id="gSeq" 
-													placeholder="자동생성" disabled />
+													th:value="${gameItem?.gSeq}" placeholder="자동생성" disabled />
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-8 col-12"></div>
+											<div class="col-lg-5 col-12">
 												<label for="gName" class="form-label">
 													게임명
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="gName" id="gName"
-													placeholder="한글, 영대소문자, 숫자" required />
+													th:value="${gameItem?.gName}" placeholder="한글, 영대소문자, 숫자" required />
 												<div class="invalid-feedback"> 게임명을 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-3 col-12">
 												<label for="gTnFileName" class="form-label">썸네일 이미지 파일명</label>
-												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" />
+												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
+													th:value="${gameItem?.gTnFileName}" placeholder="png, jpg, jpeg" />
 											</div>
-											<div class="col-lg-3 col-12"></div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-4 col-12">
 												<label for="gLevel" class="form-label">
 													난이도
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="0 ~ 5 사이의 실수"
-													id="gLevel" name="gLevel" required />
-												<div class="invalid-feedback"> 난이도를 숫자(0 ~ 5 사이의 실수)로 입력해 주세요. </div>
+												<input type="text" class="form-control" placeholder="0 ~ 5 사이의 실수 (소수점 두 자리)"
+													th:value="${gameItem?.gLevel}" id="gLevel" name="gLevel" required />
+												<div class="invalid-feedback"> 난이도를 숫자(0 ~ 5 사이의 실수, 소수점 두 자리)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12">
 												<label for="gUseAge" class="form-label">
 													최저 사용 연령
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													id="gUseAge" name="gUseAge" required />
+													th:value="${gameItem?.gUseAge}" id="gUseAge" name="gUseAge" required />
 												<div class="invalid-feedback"> 최저 사용 연령을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-4 col-12">
 												<label for="gMinTime" class="form-label">
 													최소 소요 시간
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													id="gMinTime" name="gMinTime" required />
-												<div class="invalid-feedback"> 최소 소요 시간을 숫자(0보다 큰 정수, 분 단위)로 입력해 주세요. </div>
+												<input type="text" class="form-control" 
+													placeholder="최대 시간보다 작거나 같고, 0보다 큰 정수 (분 단위)"
+													th:value="${gameItem?.gMinTime}" id="gMinTime" name="gMinTime" required />
+												<div class="invalid-feedback"> 최대 시간보다 작거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12">
 												<label for="gMaxTime" class="form-label">
 													최대 소요 시간
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													id="gMaxTime" name="gMaxTime" required />
-												<div class="invalid-feedback"> 최대 소요 시간을 숫자(0보다 큰 정수, 분 단위)로 입력해 주세요. </div>
+												<input type="text" class="form-control" 
+													placeholder="최소보다 크거나 같고, 0보다 큰 정수 (분 단위)"
+													th:value="${gameItem?.gMaxTime}" id="gMaxTime" name="gMaxTime" required />
+												<div class="invalid-feedback"> 최소 소요 시간보다 크거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-4 col-12">
 												<label for="gMinPeople" class="form-label">
 													최소 인원
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													id="gMinPeople" name="gMinPeople" required />
-												<div class="invalid-feedback"> 최소 인원을 숫자(0보다 큰 정수, 최대 인원보다 작거나 같게)로 입력해 주세요. </div>
+												<input type="text" class="form-control" placeholder="최대보다 작고, 0보다 큰 정수"
+													th:value="${gameItem?.gMinPeople}" id="gMinPeople" name="gMinPeople" required />
+												<div class="invalid-feedback"> 최대 인원보다 작거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12">
 												<label for="gMaxPeople" class="form-label">
 													최대 인원
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													id="gMaxPeople" name="gMaxPeople" required />
-												<div class="invalid-feedback"> 최대 인원을 숫자(0보다 큰 정수, 최소 인원보다 크거나 같게)로 입력해 주세요. </div>
+												<input type="text" class="form-control" placeholder="최소보다 크고, 0보다 큰 정수"
+													th:value="${gameItem?.gMaxPeople}" id="gMaxPeople" name="gMaxPeople" required />
+												<div class="invalid-feedback"> 최소 인원보다 크거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-4 col-12">
 												<label for="gBestPeople" class="form-label">
 													최적인원
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													id="gBestPeople" name="gBestPeople" required />
+													th:value="${gameItem?.gBestPeople}" id="gBestPeople" name="gBestPeople" required />
 												<div class="invalid-feedback"> 최적인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12">
 												<label for="gRecommendPeople" class="form-label">
 													추천인원
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" placeholder="0보다 큰 정수"
+													th:value="${gameItem?.gRecommendPeople}"
 													id="gRecommendPeople" name="gRecommendPeople" required />
 												<div class="invalid-feedback"> 추천인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
+											<div class="col-lg-4 col-12"></div>
 											<div class="col-lg-3 col-12">
 												<label for="gOfficialCd" class="form-label">
 													공식판매사
@@ -230,21 +242,50 @@
 												<select class="form-select" name="gOfficialCd" id="gOfficialCd" required>
 													<option value="">선택</option>
 													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
-														th:value="${codeList.cSeq}" th:text="${codeList.cName}"></option>
+														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+														th:selected="${#string.equals(codeList.cSeq, gameItem?.gOfficialCd)}"></option>
 												</select>
 												<div class="invalid-feedback"> 공식판매사를 선택해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											
-											<!-- TODO: 여기서부터 -->
-											
-											
+											<div class="col-lg-5 col-12">
+												<label for="gOfficialUrl" class="form-label">공식 판매 URL</label>
+												<input type="text" class="form-control" placeholder="공식 판매 URL"
+													th:value="${gameItem?.gOfficialUrl}"
+													id="gOfficialUrl" name="gOfficialUrl" required />
+												<div class="invalid-feedback"> 공식 판매 주소를 URL 형식에 맞게 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-8 col-12">
+												<label for="gComuUrl1" class="form-label">보드라이프 URL</label>
+												<input type="text" class="form-control" placeholder="보드라이프 URL"
+													th:value="${gameItem?.gComuUrl1}" id="gComuUrl1" name="gComuUrl1" required />
+												<div class="invalid-feedback"> 보드라이프 주소를 URL 형식에 맞게 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-8 col-12">
+												<label for="gComuUrl2" class="form-label">Geek URL</label>
+												<input type="text" class="form-control" placeholder="Geek URL"
+													th:value="${gameItem?.gComuUrl2}" 
+													id="gComuUrl2" name="gComuUrl2" required />
+												<div class="invalid-feedback"> Geek 주소를 URL 형식에 맞게 입력해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-4 col-12"></div>
 											<div class="col-lg-6 col-12">
 												<div class="d-flex flex-column flex-md-row gap-2">
-													<a href="/xdm/codegroup/CodeGroupXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+													<a href="/xdm/game/GameXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
 												</div>
 											</div>
 											<div class="col-lg-6 col-12" style="text-align: right;">
+												<a th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
+													th:href="@{/xdm/game/GameXdmUele(gSeq=${gameItem.gSeq})}" 
+													id="uelete" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+												<a th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
+													th:href="@{/xdm/game/GameXdmDele(gSeq=${gameItem.gSeq})}" 
+													id="delete" class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
 												<button class="btn btn-primary" type="button" id="btnSave">
 													<i class="bi bi-database-add"></i>
 												</button>
@@ -283,8 +324,28 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
+		<script type="text/javascript">
+			document.getElementById("delete").onclick = function() {
+				if (!confirm("정말 삭제하시겠습니까?")) {
+					return false;
+				}
+			}
+			
+			document.getElementById("uelete").onclick = function() {
+				if (!confirm("정말 삭제하시겠습니까? (업데이트)")) {
+					return false;
+				}
+			}
+		</script>
+		
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
+			let seq = document.querySelector("input[name=gSeq]");
+			
+			let fom = document.querySelector("form[name=form]");
+			let goUrlXdmInst = "/xdm/game/GameXdmInst";
+			let goUrlXdmUpdt = "/xdm/game/GameXdmUpdt";
+			
 			// Form
 			let cgName = document.getElementById("cgName");
 			let cgUseNy = document.getElementById("cgUseNy");
@@ -345,7 +406,13 @@
 				cgName.value = cgName.value.trim();
 				cgSequence.value = cgSequence.value.trim();
 				
-				document.getElementById("form").submit();
+				if(seq.value == "0" || seq.value == "") {
+					fom.action = goUrlXdmInst;
+					fom.submit();
+				} else {
+					fom.action = goUrlXdmUpdt;
+					fom.submit();
+				}
 			}
 			
 			// cgName Input 시 체크

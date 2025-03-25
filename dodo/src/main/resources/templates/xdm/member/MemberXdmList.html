@@ -108,7 +108,8 @@
 				
 					<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-				
+					<input type="hidden" name="mSeq">
+					
 					<div class="container">
 						<div class="row mb-8">
 							<div class="col-md-12">
@@ -222,17 +223,17 @@
 													</tr>
 													<tr th:if="${!#lists.isEmpty(memberList)}" th:each="list : ${memberList}">
 														<td>
-															<div class="custom-checkbox">
-																<input type="checkbox" class="" name="check" id="${list?.mSeq}">
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox" name="check" id="${list?.mSeq}">
 															</div>
 					    								</td>
 														<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 														<td th:text="${list?.mDelNyStr}"></td>
 														<td th:text="${list?.mSeq}"></td>
 														<td th:text="${list?.mId}"></td>
-														<td>			
-															<a th:href="@{/xdm/member/MemberXdmItem(mSeq=${list.mSeq})}"
-																th:text="${list?.mName}"></a>
+														<td>	
+															<a href="javascript:void(0);" th:text="${list?.mName}"
+																th:attr="onclick=|goForm('${list.mSeq}')|"></a>
 														</td>
 														<td th:text="${list?.mEmail}"></td>
 														<td th:text="${list?.mBirth}"></td>
@@ -292,13 +293,22 @@
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
 		<script type="text/javascript">
+			let seq = document.querySelector("input[name=mSeq]");
+		
 			let fom = document.querySelector("form[name=formList]");
 			let goUrlXdmList = "/xdm/member/MemberXdmList";
+			let goUrlXdmForm = "/xdm/member/MemberXdmForm";
 			
 			function goList(currPage) {
 	 			document.querySelector("input[name=currPage]").value = currPage;
 	 			fom.action = goUrlXdmList;
 	 			fom.submit();
+			}
+			
+			goForm = function (keyValue) {
+			    seq.value = keyValue;
+			    fom.action = goUrlXdmForm;
+			    fom.submit();
 			}
 			
 	      	document.getElementById("btnSearch").onclick = function () {

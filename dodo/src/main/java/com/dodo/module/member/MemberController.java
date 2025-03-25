@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dodo.module.code.CodeService;
+import com.dodo.module.codegroup.CodeGroupDto;
+import com.dodo.module.codegroup.CodeGroupVo;
 
 @Controller
 @RequestMapping(value="/xdm/member/")
@@ -38,28 +40,20 @@ public class MemberController {
 	}
 	
 	/**
-	 * 조건에 맞는 데이터 1줄만 읽어오기
-	 * @param model
-	 * @param Dto html에서 호출되는 파라메터와 일치하는 값이 있다면, 자동으로 바인딩 된다.
+	 * 데이터 입력/수정 폼
 	 * @return
 	 */
-	@RequestMapping(value = "MemberXdmItem")
-	public String memberXdmItem(Model model, MemberDto memberDto) {
-		model.addAttribute("memberItem", service.selectOne(memberDto));
+	@RequestMapping(value = "MemberXdmForm")
+	public String memberXdmForm(@ModelAttribute("vo") MemberVo vo,
+			Model model, MemberDto memberDto) throws Exception {
+		if (vo.getmSeq().equals("0") || vo.getmSeq().equals("")) {
+			// insert mode
+		} else {
+			// update mode
+			model.addAttribute("memberItem", service.selectOne(memberDto));
+		}
 		
-		return path + "MemberXdmItem";
-	}
-	
-	/**
-	 * 데이터 수정 폼
-	 * 데이터 1개 읽어와서 화면에 보여주기
-	 * @return
-	 */
-	@RequestMapping(value = "MemberXdmMfom")
-	public String memberXdmMfom(Model model, MemberDto memberDto) {		
-		model.addAttribute("memberItem", service.selectOne(memberDto));
-		
-		return path + "MemberXdmMfom";
+		return path + "MemberXdmForm";
 	}
 	
 	/**

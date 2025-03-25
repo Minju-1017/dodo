@@ -35,24 +35,19 @@ public class CodeGroupController {
 	}
 	
 	/**
-	 * 조건에 맞는 데이터 1줄만 읽어오기
-	 * @param model
-	 * @param codeListDto html에서 호출되는 파라메터와 일치하는 값이 있다면, 자동으로 바인딩 된다.
-	 * @return
-	 */
-	@RequestMapping(value = "CodeGroupXdmItem")
-	public String codeGroupXdmItem(Model model, CodeGroupDto codeGroupDto) {
-		model.addAttribute("codeGroupItem", service.selectOne(codeGroupDto));
-		
-		return path + "CodeGroupXdmItem";
-	}
-	
-	/**
-	 * 데이터 입력 폼
+	 * 데이터 입력/수정 폼
 	 * @return
 	 */
 	@RequestMapping(value = "CodeGroupXdmForm")
-	public String codeGroupXdmForm() {
+	public String codeGroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo,
+			Model model, CodeGroupDto codeGroupDto) throws Exception {
+		if (vo.getCgSeq().equals("0") || vo.getCgSeq().equals("")) {
+			// insert mode
+		} else {
+			// update mode
+			model.addAttribute("codeGroupItem", service.selectOne(codeGroupDto));
+		}
+		
 		return path + "CodeGroupXdmForm";
 	}
 	
@@ -65,18 +60,6 @@ public class CodeGroupController {
 		service.insert(codeGroupDto);
 		
 		return "redirect:CodeGroupXdmList";
-	}
-	
-	/**
-	 * 데이터 수정 폼
-	 * 데이터 1개 읽어와서 화면에 보여주기
-	 * @return
-	 */
-	@RequestMapping(value = "CodeGroupXdmMfom")
-	public String codeGroupXdmMfom(Model model, CodeGroupDto codeGroupDto) {		
-		model.addAttribute("codeGroupItem", service.selectOne(codeGroupDto));
-		
-		return path + "CodeGroupXdmMfom";
 	}
 	
 	/**

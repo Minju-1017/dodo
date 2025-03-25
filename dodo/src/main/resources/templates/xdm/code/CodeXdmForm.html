@@ -129,9 +129,11 @@
 										</div>
 									
 										<form th:if="${!#lists.isEmpty(codeGroupList)}"
-											class="row g-5 needs-validation" novalidate
-											action="/xdm/code/CodeXdmInst" method="post" id="form">
-
+											class="row g-5 needs-validation" novalidate 
+												method="post" id="form" name="form">
+											 
+											<input type="hidden" name="cSeq" th:value="${vo.cSeq}">
+											
 											<div class="col-lg-3 col-12">
 												<label for="codeGroup_cgSeq" class="form-label">
 													코드그룹
@@ -139,7 +141,9 @@
 												</label>
 												<select class="form-select" name="codeGroup_cgSeq" id="codeGroup_cgSeq" required>
 													<option value="">선택</option>
-													<option th:each="list : ${codeGroupList}" th:value="${list?.cgSeq}" th:text="${list?.cgName}"></option>
+													<option th:each="list : ${codeGroupList}" 
+														th:value="${list?.cgSeq}" th:text="${list?.cgName}"
+														th:selected="${list?.cgSeq} == ${codeItem?.codeGroup_cgSeq}"></option>
 												</select>
 												<div class="invalid-feedback"> 코드그룹을 선택해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
@@ -151,7 +155,7 @@
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="cSeq" id="cSeq"
-													placeholder="자동생성" disabled />
+													th:value="${codeItem?.cSeq}" placeholder="자동생성" disabled />
 											</div>
 											<div class="col-lg-3 col-12">
 												<label for="cName" class="form-label">
@@ -159,44 +163,46 @@
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="cName" id="cName"
-													placeholder="한글, 영대소문자, 숫자" required />
+													th:value="${codeItem?.cName}" placeholder="한글, 영대소문자, 숫자" required />
 												<div class="invalid-feedback"> 코드 이름을 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-3 col-12">
 												<label for="cNameEng" class="form-label">코드 이름(영문)</label>
 												<input type="text" class="form-control" name="cNameEng" id="cNameEng"
-													placeholder="영대소문자, 숫자" />
-											</div>
+													th:value="${codeItem?.cNameEng}" placeholder="영대소문자, 숫자" />
+											</div>		
 											<div class="col-lg-3 col-12"></div>
 											<div class="col-lg-3 col-12">
 												<label for="cUseNy" class="form-label">
 													사용여부
 													<span class="text-danger">*</span>
 												</label>
-												<select class="form-select" id="cUseNy" name="cUseNy" required>
+												<select class="form-select" id="cUseNy" name="cUseNy" 
+													th:value="${codeItem?.cUseNy}" required>
 													<option value="">선택</option>
-													<option value="1">Y</option>
-													<option value="0">N</option>
+													<option value="1" th:selected="${codeItem?.cUseNy} == 1">Y</option>
+													<option value="0" th:selected="${codeItem?.cUseNy} == 0">N</option>
 												</select>
 												<div class="invalid-feedback"> 코드 사용여부를 선택해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
-											</div>
+											</div>				
 											<div class="col-lg-3 col-12">
 												<label for="cSequence" class="form-label">
 													순서
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" id="cSequence" name="cSequence"
-													placeholder="숫자(0보다 큰 정수)" required />
+												<input type="text" class="form-control" id="cSequence" name="cSequence" 
+													th:value="${codeItem?.cSequence}" placeholder="숫자(0보다 큰 정수)" required />
 												<div class="invalid-feedback"> 코드의 순서를 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
-											</div>
+											</div>				
 											<div class="col-lg-6 col-12"></div>
 											<div class="col-lg-6 col-12">
 												<label class="form-label">설명</label>
-	                                  				<textarea class="form-control" rows="5" style="resize: none;"
-														id="cDescription" name="cDescription"></textarea>
+                                   				<textarea class="form-control" rows="5" style="resize: none;"
+													id="cDscription" name="cDescription" 
+													th:text="${codeItem?.cDescription}"></textarea>
 											</div>
 											<div class="col-lg-6 col-12"></div>
 											<div class="col-lg-6 col-12">
@@ -205,7 +211,15 @@
 												</div>
 											</div>
 											<div class="col-lg-6 col-12" style="text-align: right;">
-												<button class="btn btn-primary" type="button" id="btnSave"><i class="bi bi-database-add"></i></button>
+												<a th:if="${vo.cSeq != null and vo.cSeq != '' and vo.cSeq != '0'}"
+													th:href="@{/xdm/code/CodeXdmUele(cSeq=${codeItem.cSeq})}" 
+													id="uelete" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+												<a th:if="${vo.cSeq != null and vo.cSeq != '' and vo.cSeq != '0'}"
+													th:href="@{/xdm/code/CodeXdmDele(cSeq=${codeItem.cSeq})}"
+													id="delete" class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
+												<button class="btn btn-primary" type="button" id="btnSave">
+													<i class="bi bi-database-add"></i>
+												</button>
 											</div>
 										</form>
 									</div>
@@ -218,9 +232,29 @@
 		</div>
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-
+		
+		<script type="text/javascript">
+			document.getElementById("delete").onclick = function() {
+				if (!confirm("정말 삭제하시겠습니까?")) {
+					return false;
+				}
+			}
+			
+			document.getElementById("uelete").onclick = function() {
+				if (!confirm("정말 삭제하시겠습니까? (업데이트)")) {
+					return false;
+				}
+			}
+		</script>
+		
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
+			let seq = document.querySelector("input[name=cSeq]");
+			
+			let fom = document.querySelector("form[name=form]");
+			let goUrlXdmInst = "/xdm/code/CodeXdmInst";
+			let goUrlXdmUpdt = "/xdm/code/CodeXdmUpdt";
+		
 			// Form
 			let codeGroup_cgSeq = document.getElementById("codeGroup_cgSeq");
 			let cName = document.getElementById("cName");
@@ -296,7 +330,13 @@
 				cName.value = cName.value.trim();
 				cSequence.value = cSequence.value.trim();
 				
-				document.getElementById("form").submit();
+				if(seq.value == "0" || seq.value == "") {
+					fom.action = goUrlXdmInst;
+					fom.submit();
+				} else {
+					fom.action = goUrlXdmUpdt;
+					fom.submit();
+				}
 			}
 			
 			// codeGroup_cgSeq Input 시 체크

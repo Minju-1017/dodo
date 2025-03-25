@@ -105,8 +105,10 @@
            	<!-- main wrapper -->
 			<main class="main-content-wrapper">
 				<form name="formList" id="formList" method="post" autocomplete="off">
+					
 					<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+					<input type="hidden" name="gSeq">
 					
 					<div class="container">
 						<div class="row mb-8">
@@ -242,7 +244,7 @@
 														th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
 													<div class="invalid-feedback" id="shValueFeedback"></div>
 												</div>
-												<div class="col-lg-6 col-12">
+												<div class="col-lg-2 col-12">
 													<div class="d-flex flex-column flex-md-row gap-2">
 														<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
 														<button type="submit" id="btnReset" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
@@ -302,8 +304,8 @@
 														<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 														<td th:text="${list?.gSeq}"></td>
 														<td>
-															<a th:href="@{/xdm/game/GameXdmItem(gSeq=${list.gSeq})}"
-																th:text="${list?.gName}"></a>
+															<a href="javascript:void(0);" th:text="${list?.gName}"
+																th:attr="onclick=|goForm('${list.gSeq}')|"></a>
 														</td>
 														<td th:if="${list?.gMinPeople eq list?.gMaxPeople}" 
 															th:text="${list?.gMaxPeople}"></td>
@@ -365,7 +367,7 @@
 										<div class="d-flex flex-column flex-md-row gap-2">
 											<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
 											<a href="#" class="btn btn-info" id="modify">U</a>
-											<a href="/xdm/game/GameXdmForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></a>
+											<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
 										</div>
 									</div>
 								 </div>
@@ -379,13 +381,22 @@
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
       	
       	<script type="text/javascript">
+      		let seq = document.querySelector("input[name=gSeq]");
+      	
 			let fom = document.querySelector("form[name=formList]");
 			let goUrlXdmList = "/xdm/game/GameXdmList";
+			let goUrlXdmForm = "/xdm/game/GameXdmForm";
 			
 			function goList(currPage) {
 	 			document.querySelector("input[name=currPage]").value = currPage;
 	 			fom.action = goUrlXdmList;
 	 			fom.submit();
+			}
+			
+			goForm = function (keyValue) {
+			    seq.value = keyValue;
+			    fom.action = goUrlXdmForm;
+			    fom.submit();
 			}
 			
 	      	document.getElementById("btnSearch").onclick = function () {
@@ -397,6 +408,10 @@
 			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 			    fom.action = goUrlXdmList;
 			    fom.submit();
+			}
+			
+			document.getElementById("btnForm").onclick = function () {
+			    goForm(0);
 			}
 		</script>
 		

@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dodo.module.codegroup.CodeGroupDto;
+import com.dodo.module.codegroup.CodeGroupVo;
+
 @Controller
 @RequestMapping(value="/xdm/game/")
 public class GameController {
@@ -33,24 +36,19 @@ public class GameController {
 	}
 	
 	/**
-	 * 조건에 맞는 데이터 1줄만 읽어오기
-	 * @param model
-	 * @param codeListDto html에서 호출되는 파라메터와 일치하는 값이 있다면, 자동으로 바인딩 된다.
-	 * @return
-	 */
-	@RequestMapping(value = "GameXdmItem")
-	public String gameXdmItem(Model model, GameDto gameDto) {
-		model.addAttribute("gameItem", service.selectOne(gameDto));
-		
-		return path + "GameXdmItem";
-	}
-	
-	/**
-	 * 데이터 입력 폼
+	 * 데이터 입력/수정 폼
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmForm")
-	public String gameXdmForm() {
+	public String gameXdmForm(@ModelAttribute("vo") GameVo vo,
+			Model model, GameDto gameDto) throws Exception {	
+		if (vo.getgSeq().equals("0") || vo.getgSeq().equals("")) {
+			// insert mode
+		} else {
+			// update mode
+			model.addAttribute("gameItem", service.selectOne(gameDto));
+		}
+		
 		return path + "GameXdmForm";
 	}
 	
@@ -63,18 +61,6 @@ public class GameController {
 		service.insert(gameDto);
 		
 		return "redirect:GameXdmList";
-	}
-	
-	/**
-	 * 데이터 수정 폼
-	 * 데이터 1개 읽어와서 화면에 보여주기
-	 * @return
-	 */
-	@RequestMapping(value = "GameXdmMfom")
-	public String gameXdmMfom(Model model, GameDto gameDto) {		
-		model.addAttribute("gameItem", service.selectOne(gameDto));
-		
-		return path + "GameXdmMfom";
 	}
 	
 	/**

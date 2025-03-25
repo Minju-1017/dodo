@@ -117,15 +117,18 @@
 							<div class="card card-lg border-0">
 								<div class="card-body d-flex flex-column gap-8 p-7">
 									<div class="d-flex flex-column gap-4">
-										<form class="row g-5 needs-validation" novalidate
-											action="/xdm/codegroup/CodeGroupXdmInst" method="post" id="form">
+										<form class="row g-5 needs-validation" novalidate 
+											method="post" id="form" name="form">
+											
+											<input type="hidden" name="cgSeq" th:value="${vo.cgSeq}">
+											
 											<div class="col-lg-3 col-12">
 												<label for="cgSeq" class="form-label">
 													코드그룹 코드
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="cgSeq" id="cgSeq" 
-													placeholder="자동생성" disabled />
+													th:value="${codeGroupItem?.cgSeq}" placeholder="자동생성" disabled />
 											</div>
 											<div class="col-lg-3 col-12">
 												<label for="cgName" class="form-label">
@@ -133,14 +136,14 @@
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="cgName" id="cgName"
-													placeholder="한글, 영대소문자, 숫자" required />
+													th:value="${codeGroupItem?.cgName}" placeholder="한글, 영대소문자, 숫자" required />
 												<div class="invalid-feedback"> 코드그룹 이름을 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-3 col-12">
 												<label for="cgNameEng" class="form-label">코드그룹 이름(영문)</label>
-												<input type="text" class="form-control" 
-													name="cgNameEng" id="cgNameEng" placeholder="영대소문자, 숫자" />
+												<input type="text" class="form-control" name="cgNameEng" id="cgNameEng"
+													th:value="${codeGroupItem?.cgNameEng}" placeholder="영대소문자, 숫자" />
 											</div>
 											<div class="col-lg-3 col-12"></div>
 											<div class="col-lg-3 col-12">
@@ -148,10 +151,11 @@
 													사용여부
 													<span class="text-danger">*</span>
 												</label>
-												<select class="form-control" id="cgUseNy" name="cgUseNy" required>
+												<select class="form-select" id="cgUseNy" name="cgUseNy" 
+													th:value="${codeGroupItem?.cgUseNy}" required>
 													<option value="">선택</option>
-													<option value="1">Y</option>
-													<option value="0">N</option>
+													<option value="1" th:selected="${codeGroupItem?.cgUseNy} == 1">Y</option>
+													<option value="0" th:selected="${codeGroupItem?.cgUseNy} == 0">N</option>
 												</select>
 												<div class="invalid-feedback"> 코드그룹 사용여부를 선택해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
@@ -161,16 +165,22 @@
 													순서
 													<span class="text-danger">*</span>
 												</label>
-												<input type="text" class="form-control" placeholder="숫자(0보다 큰 정수)"
-													id="cgSequence" name="cgSequence" required />
+												<input type="text" class="form-control" id="cgSequence" name="cgSequence" 
+													th:value="${codeGroupItem?.cgSequence}" placeholder="숫자(0보다 큰 정수)" required />
 												<div class="invalid-feedback"> 코드 그룹의 순서를 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-6 col-12"></div>
+											<div class="col-lg-3 col-12">
+												<label for="cgCount" class="form-label">갯수</label>
+												<input type="text" class="form-control" 
+													th:value="${codeGroupItem?.cCount}" id="cCount" disabled />
+											</div>
+											<div class="col-lg-3 col-12"></div>
 											<div class="col-lg-6 col-12">
-												<label class="form-label">설명</label>
+												<label for="cgDescription" class="form-label">설명</label>
                                    				<textarea class="form-control" rows="5" style="resize: none;"
-													id="cgDescription" name="cgDescription"></textarea>
+												 	id="cgDescription" name="cgDescription"
+													th:text="${codeGroupItem?.cgDescription}"></textarea>
 											</div>
 											<div class="col-lg-6 col-12"></div>
 											<div class="col-lg-6 col-12">
@@ -179,6 +189,12 @@
 												</div>
 											</div>
 											<div class="col-lg-6 col-12" style="text-align: right;">
+												<a th:if="${vo.cgSeq != null and vo.cgSeq != '' and vo.cgSeq != '0'}"
+													th:href="@{/xdm/codegroup/CodeGroupXdmUele(cgSeq=${codeGroupItem.cgSeq})}" 
+													id="uelete" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+												<a th:if="${vo.cgSeq != null and vo.cgSeq != '' and vo.cgSeq != '0'}"
+													th:href="@{/xdm/codegroup/CodeGroupXdmDele(cgSeq=${codeGroupItem.cgSeq})}" 
+													id="delete" class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
 												<button class="btn btn-primary" type="button" id="btnSave">
 													<i class="bi bi-database-add"></i>
 												</button>
@@ -192,33 +208,31 @@
 				</div>
 			</main>
         </div>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="codeGroupModal" tabindex="-1" role="dialog"
-			data-backdrop="static" aria-labelledby="codeGroupModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="codeGroupModalLabel">알림</h5>
-						<button type="button" class="btn-close"
-							data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<input type="hidden" id="prevFocusId" name="prevFocusId" />
-						<span id="modalContent" name="modalContent"></span>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-					</div>
-				</div>
-			</div>
-		</div>
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
+		<script type="text/javascript">
+			document.getElementById("delete").onclick = function() {
+				if (!confirm("정말 삭제하시겠습니까?")) {
+					return false;
+				}
+			}
+			
+			document.getElementById("uelete").onclick = function() {
+				if (!confirm("정말 삭제하시겠습니까? (업데이트)")) {
+					return false;
+				}
+			}
+		</script>
+		
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
+			let seq = document.querySelector("input[name=cgSeq]");
+			
+			let fom = document.querySelector("form[name=form]");
+			let goUrlXdmInst = "/xdm/codegroup/CodeGroupXdmInst";
+			let goUrlXdmUpdt = "/xdm/codegroup/CodeGroupXdmUpdt";
+		
 			// Form
 			let cgName = document.getElementById("cgName");
 			let cgUseNy = document.getElementById("cgUseNy");
@@ -279,7 +293,13 @@
 				cgName.value = cgName.value.trim();
 				cgSequence.value = cgSequence.value.trim();
 				
-				document.getElementById("form").submit();
+				if(seq.value == "0" || seq.value == "") {
+					fom.action = goUrlXdmInst;
+					fom.submit();
+				} else {
+					fom.action = goUrlXdmUpdt;
+					fom.submit();
+				}
 			}
 			
 			// cgName Input 시 체크
@@ -323,7 +343,7 @@
 				object.classList.remove("is-invalid");
 			}
 		</script>
-	
+		
 		<!-- Validation: Modal, Alert -->
 		<!-- <script type="text/javascript">
 			const regex = /^[0-9]+$/;

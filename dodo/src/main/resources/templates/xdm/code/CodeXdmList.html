@@ -108,7 +108,8 @@
 				
 					<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-			
+					<input type="hidden" name="cSeq">
+					
 					<div class="container">
 						<div class="row mb-8">
 							<div class="col-md-12">
@@ -230,9 +231,9 @@
 														<td th:text="${list?.codeGroup_cgSeq}"></td>
 														<td th:text="${list?.cgName}"></td>
 														<td th:text="${list?.cSeq}"></td>
-														<td>
-															<a th:href="@{/xdm/code/CodeXdmItem(cSeq=${list.cSeq})}"
-																th:text="${list?.cName}"></a>
+														<td>			
+															<a href="javascript:void(0);" th:text="${list?.cName}"
+																th:attr="onclick=|goForm('${list.cSeq}')|"></a>
 														</td>
 														<td th:text="${list?.cNameEng}"></td>
 														<td th:text="${list?.cSequence}"></td>
@@ -275,7 +276,7 @@
 										<div class="d-flex flex-column flex-md-row gap-2">
 											<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
 											<a href="#" class="btn btn-info" id="modify">U</a>
-											<a href="/xdm/code/CodeXdmForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></a>
+											<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
 										</div>
 									</div>
 								 </div>
@@ -289,13 +290,22 @@
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
       	
       	<script type="text/javascript">
+      		let seq = document.querySelector("input[name=cSeq]");
+      	
 			let fom = document.querySelector("form[name=formList]");
 			let goUrlXdmList = "/xdm/code/CodeXdmList";
+			let goUrlXdmForm = "/xdm/code/CodeXdmForm";
 			
 			function goList(currPage) {
 	 			document.querySelector("input[name=currPage]").value = currPage;
 	 			fom.action = goUrlXdmList;
 	 			fom.submit();
+			}
+			
+			goForm = function (keyValue) {
+			    seq.value = keyValue;
+			    fom.action = goUrlXdmForm;
+			    fom.submit();
 			}
 			
 	      	document.getElementById("btnSearch").onclick = function () {
@@ -308,34 +318,22 @@
 			    fom.action = goUrlXdmList;
 			    fom.submit();
 			}
+			
+			document.getElementById("btnForm").onclick = function () {
+			    goForm(0);
+			}
 		</script>
 		
+		<!-- Check Box 관련 처리 -->
       	<script type="text/javascript">
 			document.getElementById("checkAll").onclick = function() {
 				allCheck("check", this.checked);
 			}
 			
-			function allCheck(name, isChecked) {
-				const element = document.getElementsByName(name);
-				
-				for(let i = 0; i < element.length; i++) {          
-					if(!element[i].disabled) {
-						element[i].checked = isChecked;	
-					}
-				}
-			}
-			
-			function getSelectedElementsCnt(name) {
-				// 선택된 목록의 갯수 세기
-				return document.querySelectorAll('input[name="' + name + '"]:checked').length;
-			}
-			
 			document.getElementById("modify").onclick = function() {
 				const selectedElementsCnt = getSelectedElementsCnt("check");
 				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
+				if (selectedElementsCnt == 0) return;
 				
 				if (selectedElementsCnt > 1) {
 					alert("1개의 코드 그룹만 선택해 주세요.");
@@ -348,9 +346,7 @@
 			document.getElementById("delete").onclick = function() {
 				const selectedElementsCnt = getSelectedElementsCnt("check");
 				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
+				if (selectedElementsCnt == 0) return;
 				
 				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?")) {
 					return false;
@@ -360,9 +356,7 @@
 			document.getElementById("uelete").onclick = function() {
 				const selectedElementsCnt = getSelectedElementsCnt("check");
 				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
+				if (selectedElementsCnt == 0) return;
 				
 				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
 					return false;

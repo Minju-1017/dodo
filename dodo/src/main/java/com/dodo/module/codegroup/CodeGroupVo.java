@@ -4,13 +4,13 @@ import com.dodo.module.BaseVo;
 
 public class CodeGroupVo extends BaseVo {
 
-	private int cgSeq;
+	private String cgSeq;
 
-	public int getCgSeq() {
+	public String getCgSeq() {
 		return cgSeq;
 	}
 
-	public void setCgSeq(int cgSeq) {
+	public void setCgSeq(String cgSeq) {
 		this.cgSeq = cgSeq;
 	}
 

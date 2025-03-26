@@ -2,24 +2,51 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 	<th:block th:fragment="footer"> <!-- 중복되는 head 부분 블록 처리 -->
-		
+	
 			<!-- Modal -->
-	        <div class="modal fade" id="dodoModal" tabindex="-1" role="dialog"
-				data-backdrop="static" aria-labelledby="dodoModalLabel" aria-hidden="true">
+	        <div class="modal fade" id="modalConfirm" data-backdrop="static" 
+	        	data-bs-keyboard="false" tabindex="-1" role="dialog"
+				aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="dodoModalLabel">알림</h5>
+							<h5 class="modal-title" id="modalConfirmTitle">알림</h5>
 							<button type="button" class="btn-close"
 								data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body">
+						<div class="modal-body" id="modalConfirmBody">
 							<input type="hidden" id="prevFocusId" name="prevFocusId" />
-							<span id="modalContent" name="modalContent"></span>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+								취소
+							</button>
+							<button type="button" class="btn btn-danger" name="" id="btnModalUelete">
+								삭제(업데이트)
+							</button>
+							<button type="button" class="btn btn-danger" name="" id="btnModalDelete">
+								삭제
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="modalAlert" data-backdrop="static" 
+	        	data-bs-keyboard="false" tabindex="-1" role="dialog"
+				aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalAlertTitle">알림</h5>
+							<button type="button" class="btn-close"
+								data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body" id="modalAlertBody"></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+								닫기
+							</button>
 						</div>
 					</div>
 				</div>
@@ -31,6 +58,7 @@
 		<script src="/xdm/template/FreshCart-1.4.0/dashboard/assets/libs/simplebar/dist/simplebar.min.js"></script>
 
 		<!-- Theme JS -->
+		<!-- 파일명에 .min이 들어간 것은 코드를 한줄로 나오게 하는 난독화 기법 -->
 		<script src="/xdm/template/FreshCart-1.4.0/dashboard/assets/js/theme.min.js"></script>
 		<script src="/xdm/template/FreshCart-1.4.0/dashboard/assets/js/vendors/jquery.min.js"></script>
 		<script src="/xdm/template/FreshCart-1.4.0/dashboard/assets/libs/apexcharts/dist/apexcharts.min.js"></script>

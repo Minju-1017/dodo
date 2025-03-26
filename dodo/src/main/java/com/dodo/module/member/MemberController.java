@@ -1,11 +1,16 @@
 package com.dodo.module.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dodo.module.Constants;
 import com.dodo.module.code.CodeService;
 import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.codegroup.CodeGroupVo;
@@ -22,8 +27,30 @@ public class MemberController {
 	@Autowired
 	CodeService codeService;
 	
+	@RequestMapping(value = "MemberXdmSignIn")	
+	public String memberXdmSignIn() {					
+		return path + "MemberXdmSignIn";
+	}
+	
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberXdmSignInProc")
+	public Map<String, Object> memberXdmSignInProc(MemberDto memberDto) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		MemberDto mDto = service.selectSignInMember(memberDto);
+		
+		if (mDto == null) { // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+			returnMap.put("rt", "fail");
+		} else {
+			Constants.bLogin = true;
+			returnMap.put("rt", "success");
+		}
+		
+		return returnMap;
+	}
+	
 	/**
-	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * 회원관리 - 전체 데이터 읽어오기(페이징 기능 들어감)
 	 * @param model
 	 * @return
 	 */
@@ -40,7 +67,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * 데이터 입력/수정 폼
+	 * 회원관리 - 데이터 입력/수정 폼
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmForm")
@@ -57,7 +84,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * 입력한 데이터 수정하기
+	 * 회원관리 - 입력한 데이터 수정하기
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "MemberXdmUpdt")
@@ -68,7 +95,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * 데이터 삭제하기
+	 * 회원관리 - 데이터 삭제하기
 	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "MemberXdmDele")
@@ -79,7 +106,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * 데이터 삭제 옵션 세팅 - update 이용
+	 * 회원관리 - 데이터 삭제 옵션 세팅(update 이용)
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "MemberXdmUele")

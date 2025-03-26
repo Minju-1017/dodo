@@ -42,7 +42,7 @@
 							<input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search" />
 						</form>
 					</div>
-					<div>
+					<div th:if="${@constants.bLogin}">
 						<ul class="list-unstyled d-flex align-items-center mb-0 ms-5 ms-lg-0">
 							<li class="dropdown ms-4">
 								<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,11 +68,17 @@
 										</li>
 									</ul>
 									<div class="border-top px-5 py-3">
-										<a href="#">Log Out</a>
+										<a href="/xdm/MemberXdmSignOut">Log Out</a>
 									</div>
 								</div>
 							</li>
 						</ul>
+					</div>
+					<div th:if="${!@constants.bLogin}">
+						<a href="/xdm/member/MemberXdmSignIn" 
+							class="btn btn-outline-primary rounded-circle border-0">
+							<i class="bi bi-person fs-4"></i>
+						</a>
 					</div>
 				</div>
 			</div>

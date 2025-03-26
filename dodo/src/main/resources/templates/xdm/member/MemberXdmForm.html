@@ -9,14 +9,14 @@
 			<nav class="navbar-vertical-nav d-none d-xl-block">
 				<div class="navbar-vertical">
 					<div class="px-4 py-5">
-						<a href="../dashboard/index.html" class="navbar-brand">
+						<a href="/xdm/index" class="navbar-brand">
 							<img src="/xdm/template/FreshCart-1.4.0/dashboard/assets/images/logo/logo.png" alt="" width="180px" />
 						</a>
 					</div>
 					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
 						<ul class="navbar-nav flex-column" id="sideNavbar">
 							<li class="nav-item">
-								<a class="nav-link" href="../dashboard/index.html">
+								<a class="nav-link" href="/xdm/index">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
 										<span class="nav-link-text">Home</span>
@@ -223,13 +223,17 @@
 												</div>
 											</div>
 											<div class="col-lg-6 col-12" style="text-align: right;">
-												<a th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
-													th:href="@{/xdm/member/MemberXdmUele(mSeq=${memberItem.mSeq})}" 
-													id="uelete" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
-												<a th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
-													th:href="@{/xdm/member/MemberXdmDele(mSeq=${memberItem.mSeq})}" 
-													id="delete" class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
-												<button class="btn btn-primary" type="button" id="btnSave"><i class="bi bi-database-add"></i></button>
+												<button th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
+													class="btn btn-danger" type="button" id="btnUelete">
+													<i class="bi bi-trash3"></i>
+												</button>
+												<button th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
+													class="btn btn-danger" type="button" id="btnDelete">
+													<i class="bi bi-x-lg"></i>
+												</button>
+												<button class="btn btn-primary" type="button" id="btnSave">
+													<i class="bi bi-database-add"></i>
+												</button>
 											</div>
 										</form>
 									</div>
@@ -242,27 +246,17 @@
         </div>
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-	
-		<script type="text/javascript">
-			document.getElementById("delete").onclick = function() {
-				if (!confirm("정말 삭제하시겠습니까?")) {
-					return false;
-				}
-			}
-			
-			document.getElementById("uelete").onclick = function() {
-				if (!confirm("정말 삭제하시겠습니까? (업데이트)")) {
-					return false;
-				}
-			}
-		</script>
 		
-		<!-- Validation: Bootstrap -->
+		<!-- 변수 정의 -->
 		<script type="text/javascript">
+			// Seq
 			let seq = document.querySelector("input[name=mSeq]");
 			
+			// URL
 			let fom = document.querySelector("form[name=form]");
 			let goUrlXdmUpdt = "/xdm/member/MemberXdmUpdt";
+			let goUrlXdmUele = "/xdm/member/MemberXdmUele";
+			let goUrlXdmDele = "/xdm/member/MemberXdmDele";
 		
 			// Form
 			let mPwd = document.getElementById("mPwd");
@@ -270,6 +264,10 @@
 			let mName = document.getElementById("mName");
 			let mEmail = document.getElementById("mEmail");
 			let mBirth = document.getElementById("mBirth");
+		</script>
+		
+		<!-- Validation: Bootstrap -->
+		<script type="text/javascript">
 			
 			// btnSave 클릭시
 			document.getElementById("btnSave").onclick = function() {
@@ -322,7 +320,7 @@
 				resetValidation(mEmail);
 				
 				if (mEmail.value.trim() == null || mEmail.value.trim() == ""
-						|| !regex_email.test(mEmail.value.trim())) {
+						|| !REGEX_EMAIL.test(mEmail.value.trim())) {
 					mEmail.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -337,7 +335,7 @@
 				resetValidation(mBirth);
 				
 				if (mBirth.value.trim() == null || mBirth.value.trim() == ""
-					|| !regex_birth.test(mBirth.value.trim())) {
+					|| !REGEX_BIRTH.test(mBirth.value.trim())) {
 					mBirth.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -408,7 +406,7 @@
 				resetValidation(mEmail);
 				
 				if (mEmail.value.trim() == null || mEmail.value.trim() == ""
-					|| !regex_email.test(mEmail.value.trim())) {
+					|| !REGEX_EMAIL.test(mEmail.value.trim())) {
 					mEmail.classList.add("is-invalid");
 				} else {
 					mEmail.classList.add("is-valid");
@@ -420,7 +418,7 @@
 				resetValidation(mBirth);
 				
 				if (mBirth.value.trim() == null || mBirth.value.trim() == ""
-					|| !regex_birth.test(mBirth.value.trim())) {
+					|| !REGEX_BIRTH.test(mBirth.value.trim())) {
 					mBirth.classList.add("is-invalid");
 				} else {
 					mBirth.classList.add("is-valid");
@@ -431,6 +429,39 @@
 			function resetValidation(object) {
 				object.classList.remove("is-valid");
 				object.classList.remove("is-invalid");
+			}
+		</script>
+		
+		<!-- 삭제/삭제(업데이트) 모달 -->
+		<script type="text/javascript">
+			if(document.getElementById("btnUelete")){
+				document.getElementById("btnUelete").onclick = function () {
+					document.querySelector("#modalConfirmTitle").textContent = "확인";
+					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제(업데이트)하시겠습니까?";
+					document.querySelector("#btnModalUelete").style.display = '';
+					document.querySelector("#btnModalDelete").style.display = 'none';
+					$("#modalConfirm").modal("show");   	
+				}
+			}
+	
+			document.getElementById("btnModalUelete").onclick = function () {
+				fom.action = goUrlXdmUele;
+				fom.submit();
+			}
+			
+			if(document.getElementById("btnDelete")){
+				document.getElementById("btnDelete").onclick = function () {
+					document.querySelector("#modalConfirmTitle").textContent = "확인";
+					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까?";
+					document.querySelector("#btnModalUelete").style.display = 'none';
+					document.querySelector("#btnModalDelete").style.display = '';
+					$("#modalConfirm").modal("show");      	
+				}
+			}
+	
+			document.getElementById("btnModalDelete").onclick = function () {
+				fom.action = goUrlXdmDele;
+				fom.submit();
 			}
 		</script>
       	

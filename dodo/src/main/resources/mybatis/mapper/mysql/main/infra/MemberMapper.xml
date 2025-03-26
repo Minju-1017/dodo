@@ -72,6 +72,16 @@
 			AND a.mSeq=#{mSeq}
 	</select>
 	
+	<select id="selectSignInMember" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		FROM 
+			member a
+		WHERE 1=1
+			AND a.mId=#{mId}
+			AND a.mPwd=#{mPwd}
+	</select>
+	
 	<update id="update">
 		UPDATE member
 		SET

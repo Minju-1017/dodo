@@ -23,6 +23,10 @@ public class MemberService {
 		return dao.selectOne(memberDto);
 	}
 	
+	public MemberDto selectSignInMember(MemberDto memberDto) {
+		return dao.selectSignInMember(memberDto);
+	}
+	
 	public int insert(MemberDto memberDto) {
 		return dao.insert(memberDto);
 	}

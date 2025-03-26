@@ -1,14 +1,28 @@
-const regex_number = /^[0-9]+$/;
-const regex_email = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; //(알파벳,숫자)@(알파벳,숫자).(알파벳,숫자)
-const regex_birth = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+// 정규식
+const REGEX_NUMBER = /^[0-9]+$/; // 정수
+const REGEX_REAL_NUMBER = /^[\d]*\.?[\d]{0,2}$/; // 소수점 두자리 실수
+const REGEX_BIRTH = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/); // yyyy-MM-dd
+const REGEX_EMAIL = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; // Email
+const REGEX_URL = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
 
 /**
  * 기본 알림 모달
  */
-function showModal(modalId, contetnInnerText) {
-	modalContent.innerText = contetnInnerText; // 해당 아이디값의 텍스트 변경하기
-	
-	$(modalId).modal("show");
+function showModalAlert(title, body) {
+	document.querySelector("#modalAlertTitle").textContent = title;
+	document.querySelector("#modalAlertBody").textContent = body;
+	$("#modalAlert").modal("show"); 
+}
+
+/**
+ * 데이터 삭제 알림 모달
+ */
+function showModalDeleteConfirm(title, body, showBtnUelete, showBtnDelete) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalUelete").style.display = showBtnUelete;
+	document.querySelector("#btnModalDelete").style.display = showBtnDelete;
+	$("#modalConfirm").modal("show");      	
 }
 
 /**

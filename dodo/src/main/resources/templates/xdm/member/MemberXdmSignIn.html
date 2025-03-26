@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Codescandy" name="author">
+	<title>XDM</title>
+	<!-- Favicon icon-->
+	<link rel="shortcut icon" type="image/x-icon" href="/xdm/template/FreshCart-1.4.0/dashboard/assets/images/favicon/favicon.ico">
+
+	<!-- Libs CSS -->
+	<link href="/xdm/template/FreshCart-1.4.0/dashboard/assets/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+	<link href="/xdm/template/FreshCart-1.4.0/dashboard/assets/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
+	<link href="/xdm/template/FreshCart-1.4.0/dashboard/assets/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="/xdm/template/FreshCart-1.4.0/dashboard/assets/css/theme.min.css">
+</head>
+
+<body>
+	<!-- main -->
+	<div>
+		<div class="main-wrapper">
+           	<!-- main wrapper -->
+			<main class="main-content-wrapper">
+				<section class="my-lg-14 my-8">
+					<div class="container">
+						<div class="row justify-content-center align-items-center">
+							<div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
+								<img src="/xdm/template/FreshCart-1.4.0/dashboard/assets/images/svg-graphics/signin-g.svg" alt="" class="img-fluid" />
+							</div>
+							<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
+								<div class="mb-lg-9 mb-5">
+									<h1 class="mb-1 h2 fw-bold">로그인</h1>
+								</div>
+								<form class="needs-validation" novalidate>
+									<div class="row g-3">
+										<div class="col-12">
+											<label for="mId" class="form-label visually-hidden">아이디</label>
+											<input type="text" class="form-control" id="mId" placeholder="아이디" required />
+											<div class="invalid-feedback">아이디를 입력해 주세요.</div>
+										</div>
+										<div class="col-12">
+											<div class="password-field position-relative">
+												<label for="mPwd" class="form-label visually-hidden">패스워드</label>
+												<div class="password-field position-relative">
+													<input type="password" class="form-control fakePassword" 
+														id="mPwd" placeholder="패스워드" required />
+													<span><i class="bi bi-eye-slash passwordToggler"></i></span>
+													<div class="invalid-feedback">패스워드를 입력해 주세요.</div>
+												</div>
+											</div>
+										</div>
+										<div class="d-flex justify-content-between">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+												<label class="form-check-label" for="flexCheckDefault">로그인 상태 유지</label>
+											</div>
+											<div>
+												<a href="../pages/forgot-password.html">비밀번호 재설정</a>
+											</div>
+										</div>
+										<div class="col-6 d-grid">
+											<button type="button" id="btnSignIn" class="btn btn-primary">로그인</button>
+										</div>
+										<div class="col-6 d-grid">
+											<a href="/xdm/index" class="btn btn-secondary">취소</a>
+										</div>
+										<div>
+											회원가입이 필요하세요?
+											<a href="../pages/signup.html">회원가입</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+        </div>
+      	
+      	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+		<!-- 변수 정의 -->
+		<script type="text/javascript">
+			// Form
+			let mId = document.getElementById("mId");
+			let mPwd = document.getElementById("mPwd");
+		</script>
+		
+		<!-- Validation: Bootstrap -->
+		<script type="text/javascript">
+			// btnSave 클릭시
+			document.getElementById("btnSignIn").onclick = function() {
+				var focus = false; // Validation 후 Focus 줘야 하는 Input
+				
+				// mId 체크
+				resetValidation(mId);
+				
+				if (mId.value.trim() == null || mId.value.trim() == "") {
+					mId.classList.add("is-invalid");
+					
+					if (!focus) {
+						mId.focus();
+						focus = true;
+					}
+				} else {
+					mId.classList.add("is-valid");
+				}
+				
+				// mPwd 체크
+				resetValidation(mPwd);
+				
+				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
+					mPwd.classList.add("is-invalid");
+					
+					if (!focus) {
+						mPwd.focus();
+						focus = true;
+					}
+				} else {
+					mPwd.classList.add("is-valid");
+				}
+				
+				if (focus) return false;
+				
+				mId.value = mId.value.trim();
+				mPwd.value = mPwd.value.trim();
+				
+				signIn();
+			}
+			
+			// mId Input 시 체크
+			mId.addEventListener("input", function() {
+				resetValidation(mId);
+				
+				if (mId.value.trim() == null || mId.value.trim() == "") {
+					mId.classList.add("is-invalid");
+				} else {
+					mId.classList.add("is-valid");
+				}		
+			});
+			
+			// mPwd Input 시 체크
+			mPwd.addEventListener("input", function() {
+				resetValidation(mPwd);
+				
+				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
+					mPwd.classList.add("is-invalid");
+				} else {
+					mPwd.classList.add("is-valid");
+				}		
+			});
+			
+			// Validation 초기화
+			function resetValidation(object) {
+				object.classList.remove("is-valid");
+				object.classList.remove("is-invalid");
+			}
+			
+			function signIn() {
+				$.ajax({
+					async: true 
+					,cache: false
+					,type: "post"
+					/* ,dataType:"json" */
+					,url: "/xdm/member/MemberXdmSignInProc"
+					/* ,data : $("#formLogin").serialize() */
+					,data : { "mId" : $("#mId").val(), "mPwd" : $("#mPwd").val(), "autoLogin" : $("#autoLogin").is(":checked")}
+					,success: function(response) {
+						if(response.rt == "success") {
+							location.href = "/xdm/index";
+						} else {  
+							showModalAlert("확인", "일치하는 회원이 존재하지 않습니다!");
+						}
+					}
+					,error : function(jqXHR, textStatus, errorThrown){
+						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					}
+				});
+			}
+		</script>
+		
+   	</body>
+</html>

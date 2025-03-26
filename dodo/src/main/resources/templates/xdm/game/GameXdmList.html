@@ -9,14 +9,14 @@
 			<nav class="navbar-vertical-nav d-none d-xl-block">
 				<div class="navbar-vertical">
 					<div class="px-4 py-5">
-						<a href="../dashboard/index.html" class="navbar-brand">
+						<a href="/xdm/index" class="navbar-brand">
 							<img src="/xdm/template/FreshCart-1.4.0/dashboard/assets/images/logo/logo.png" alt="" width="180px" />
 						</a>
 					</div>
 					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
 						<ul class="navbar-nav flex-column" id="sideNavbar">
 							<li class="nav-item">
-								<a class="nav-link" href="../dashboard/index.html">
+								<a class="nav-link" href="/xdm/index">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
 										<span class="nav-link-text">Home</span>
@@ -132,13 +132,6 @@
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select" id="shDelNy" name="shDelNy">
-														<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-														<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
-														<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
 													<select class="form-select"id="shOptionDate" name="shOptionDate">
 														<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
 														<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
@@ -155,7 +148,7 @@
 														placeholder="종료일" autocomplete="off">
 														<!-- th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" -->
 												</div>
-												<div class="col-lg-2 col-12"></div>
+												<div class="col-lg-4 col-12"></div>
 												<div class="col-lg-2 col-12">
 													<select class="form-select"id="shMinLevel" name="shMinLevel">
 														<option value="" th:selected="${vo.shMinLevel == null}">최소난이도</option>
@@ -278,6 +271,7 @@
 														<th>#</th>
 														<th>고유번호</th>
 														<th>게임명</th>
+														<th>카테고리</th>
 														<th>인원</th>
 														<th>최적인원</th>
 														<th>사용연령</th>
@@ -291,7 +285,7 @@
 												</thead>
 												<tbody>
 													<tr th:if="${#lists.isEmpty(gameList)}">
-														<td class="text-center" colspan="13">
+														<td class="text-center" colspan="14">
 															데이터가 없습니다.
 														</td>
 													</tr> 
@@ -306,6 +300,10 @@
 														<td>
 															<a href="javascript:void(0);" th:text="${list?.gName}"
 																th:attr="onclick=|goForm('${list.gSeq}')|"></a>
+														</td>
+														<td th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}"
+															th:if="${#strings.equals(codeList.cSeq, list?.gCategoryCd)}"
+															th:text="${codeList?.cName}">
 														</td>
 														<td th:if="${list?.gMinPeople eq list?.gMaxPeople}" 
 															th:text="${list?.gMaxPeople}"></td>

@@ -9,14 +9,14 @@
 			<nav class="navbar-vertical-nav d-none d-xl-block">
 				<div class="navbar-vertical">
 					<div class="px-4 py-5">
-						<a href="../dashboard/index.html" class="navbar-brand">
+						<a href="/xdm/index" class="navbar-brand">
 							<img src="/xdm/template/FreshCart-1.4.0/dashboard/assets/images/logo/logo.png" alt="" width="180px" />
 						</a>
 					</div>
 					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
 						<ul class="navbar-nav flex-column" id="sideNavbar">
 							<li class="nav-item">
-								<a class="nav-link" href="../dashboard/index.html">
+								<a class="nav-link" href="/xdm/index">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
 										<span class="nav-link-text">Home</span>
@@ -211,12 +211,14 @@
 												</div>
 											</div>
 											<div class="col-lg-6 col-12" style="text-align: right;">
-												<a th:if="${vo.cSeq != null and vo.cSeq != '' and vo.cSeq != '0'}"
-													th:href="@{/xdm/code/CodeXdmUele(cSeq=${codeItem.cSeq})}" 
-													id="uelete" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
-												<a th:if="${vo.cSeq != null and vo.cSeq != '' and vo.cSeq != '0'}"
-													th:href="@{/xdm/code/CodeXdmDele(cSeq=${codeItem.cSeq})}"
-													id="delete" class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
+												<button th:if="${vo.cSeq != null and vo.cSeq != '' and vo.cSeq != '0'}"
+													class="btn btn-danger" type="button" id="btnUelete">
+													<i class="bi bi-trash3"></i>
+												</button>
+												<button th:if="${vo.cSeq != null and vo.cSeq != '' and vo.cSeq != '0'}"
+													class="btn btn-danger" type="button" id="btnDelete">
+													<i class="bi bi-x-lg"></i>
+												</button>
 												<button class="btn btn-primary" type="button" id="btnSave">
 													<i class="bi bi-database-add"></i>
 												</button>
@@ -233,34 +235,26 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
-		<script type="text/javascript">
-			document.getElementById("delete").onclick = function() {
-				if (!confirm("정말 삭제하시겠습니까?")) {
-					return false;
-				}
-			}
-			
-			document.getElementById("uelete").onclick = function() {
-				if (!confirm("정말 삭제하시겠습니까? (업데이트)")) {
-					return false;
-				}
-			}
-		</script>
-		
-		<!-- Validation: Bootstrap -->
+		<!-- 변수 정의 -->
 		<script type="text/javascript">
 			let seq = document.querySelector("input[name=cSeq]");
 			
+			// URL
 			let fom = document.querySelector("form[name=form]");
 			let goUrlXdmInst = "/xdm/code/CodeXdmInst";
 			let goUrlXdmUpdt = "/xdm/code/CodeXdmUpdt";
+			let goUrlXdmUele = "/xdm/code/CodeXdmUele";
+			let goUrlXdmDele = "/xdm/code/CodeXdmDele";
 		
 			// Form
 			let codeGroup_cgSeq = document.getElementById("codeGroup_cgSeq");
 			let cName = document.getElementById("cName");
 			let cUseNy = document.getElementById("cUseNy");
-			let cSequence = document.getElementById("cSequence");
-			
+			let cSequence = document.getElementById("cSequence");			
+		</script>
+		
+		<!-- Validation: Bootstrap -->
+		<script type="text/javascript">
 			// btnSave 클릭시
 			document.getElementById("btnSave").onclick = function() {
 				var focus = false; // Validation 후 Focus 줘야 하는 Input
@@ -311,7 +305,7 @@
 				resetValidation(cSequence);
 				
 				if (cSequence.value.trim() == null || cSequence.value.trim() == ""
-						|| !regex_number.test(cSequence.value.trim()) || cSequence.value.trim() < 1
+						|| !REGEX_NUMBER.test(cSequence.value.trim()) || cSequence.value.trim() < 1
 						|| isNaN(cSequence.value.trim())) {
 					cSequence.classList.add("is-invalid");
 					
@@ -377,7 +371,7 @@
 				resetValidation(cSequence);
 				
 				if (cSequence.value.trim() == null || cSequence.value.trim() == ""
-					|| !regex_number.test(cSequence.value.trim()) || cSequence.value.trim() < 1
+					|| !REGEX_NUMBER.test(cSequence.value.trim()) || cSequence.value.trim() < 1
 					|| isNaN(cSequence.value.trim())) {
 					cSequence.classList.add("is-invalid");
 				} else {
@@ -389,6 +383,31 @@
 			function resetValidation(object) {
 				object.classList.remove("is-valid");
 				object.classList.remove("is-invalid");
+			}
+		</script>
+		
+		<!-- 삭제/삭제(업데이트) 모달 -->
+		<script type="text/javascript">
+			if(document.getElementById("btnUelete")){
+				document.getElementById("btnUelete").onclick = function () {
+					showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none');   	
+				}
+			}
+	
+			document.getElementById("btnModalUelete").onclick = function () {
+				fom.action = goUrlXdmUele;
+				fom.submit();
+			}
+			
+			if(document.getElementById("btnDelete")){
+				document.getElementById("btnDelete").onclick = function () {
+					showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');    	
+				}
+			}
+	
+			document.getElementById("btnModalDelete").onclick = function () {
+				fom.action = goUrlXdmDele;
+				fom.submit();
 			}
 		</script>
       	

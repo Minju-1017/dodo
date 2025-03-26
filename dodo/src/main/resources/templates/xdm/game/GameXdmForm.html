@@ -9,14 +9,14 @@
 			<nav class="navbar-vertical-nav d-none d-xl-block">
 				<div class="navbar-vertical">
 					<div class="px-4 py-5">
-						<a href="../dashboard/index.html" class="navbar-brand">
+						<a href="/xdm/index" class="navbar-brand">
 							<img src="/xdm/template/FreshCart-1.4.0/dashboard/assets/images/logo/logo.png" alt="" width="180px" />
 						</a>
 					</div>
 					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
 						<ul class="navbar-nav flex-column" id="sideNavbar">
 							<li class="nav-item">
-								<a class="nav-link" href="../dashboard/index.html">
+								<a class="nav-link" href="/xdm/index">
 									<div class="d-flex align-items-center">
 										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
 										<span class="nav-link-text">Home</span>
@@ -130,7 +130,6 @@
 												<input type="text" class="form-control" name="gSeq" id="gSeq" 
 													th:value="${gameItem?.gSeq}" placeholder="자동생성" disabled />
 											</div>
-											<div class="col-lg-8 col-12"></div>
 											<div class="col-lg-5 col-12">
 												<label for="gName" class="form-label">
 													게임명
@@ -141,7 +140,22 @@
 												<div class="invalid-feedback"> 게임명을 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
-											<div class="col-lg-3 col-12">
+											<div class="col-lg-4 col-12"></div>
+											<div class="col-lg-4 col-12">
+												<label for="gOfficialCd" class="form-label">
+													게임 카테고리
+													<span class="text-danger">*</span>
+												</label>
+												<select class="form-select" name="gCategoryCd" id="gCategoryCd" required>
+													<option value="">선택</option>
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}"
+														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+														th:selected="${#strings.equals(codeList.cSeq, gameItem?.gCategoryCd)}"></option>
+												</select>
+												<div class="invalid-feedback"> 게임 카테고리를 선택해 주세요. </div>
+												<div class="valid-feedback"> Good! </div>
+											</div>
+											<div class="col-lg-4 col-12">
 												<label for="gTnFileName" class="form-label">썸네일 이미지 파일명</label>
 												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
 													th:value="${gameItem?.gTnFileName}" placeholder="png, jpg, jpeg" />
@@ -243,14 +257,14 @@
 													<option value="">선택</option>
 													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
 														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
-														th:selected="${#string.equals(codeList.cSeq, gameItem?.gOfficialCd)}"></option>
+														th:selected="${#strings.equals(codeList.cSeq, gameItem?.gOfficialCd)}"></option>
 												</select>
 												<div class="invalid-feedback"> 공식판매사를 선택해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
 											</div>
 											<div class="col-lg-5 col-12">
 												<label for="gOfficialUrl" class="form-label">공식 판매 URL</label>
-												<input type="text" class="form-control" placeholder="공식 판매 URL"
+												<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
 													th:value="${gameItem?.gOfficialUrl}"
 													id="gOfficialUrl" name="gOfficialUrl" required />
 												<div class="invalid-feedback"> 공식 판매 주소를 URL 형식에 맞게 입력해 주세요. </div>
@@ -259,7 +273,7 @@
 											<div class="col-lg-4 col-12"></div>
 											<div class="col-lg-8 col-12">
 												<label for="gComuUrl1" class="form-label">보드라이프 URL</label>
-												<input type="text" class="form-control" placeholder="보드라이프 URL"
+												<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
 													th:value="${gameItem?.gComuUrl1}" id="gComuUrl1" name="gComuUrl1" required />
 												<div class="invalid-feedback"> 보드라이프 주소를 URL 형식에 맞게 입력해 주세요. </div>
 												<div class="valid-feedback"> Good! </div>
@@ -267,7 +281,7 @@
 											<div class="col-lg-4 col-12"></div>
 											<div class="col-lg-8 col-12">
 												<label for="gComuUrl2" class="form-label">Geek URL</label>
-												<input type="text" class="form-control" placeholder="Geek URL"
+												<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
 													th:value="${gameItem?.gComuUrl2}" 
 													id="gComuUrl2" name="gComuUrl2" required />
 												<div class="invalid-feedback"> Geek 주소를 URL 형식에 맞게 입력해 주세요. </div>
@@ -280,12 +294,14 @@
 												</div>
 											</div>
 											<div class="col-lg-6 col-12" style="text-align: right;">
-												<a th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
-													th:href="@{/xdm/game/GameXdmUele(gSeq=${gameItem.gSeq})}" 
-													id="uelete" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
-												<a th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
-													th:href="@{/xdm/game/GameXdmDele(gSeq=${gameItem.gSeq})}" 
-													id="delete" class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
+												<button th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
+													class="btn btn-danger" type="button" id="btnUelete">
+													<i class="bi bi-trash3"></i>
+												</button>
+												<button th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
+													class="btn btn-danger" type="button" id="btnDelete">
+													<i class="bi bi-x-lg"></i>
+												</button>
 												<button class="btn btn-primary" type="button" id="btnSave">
 													<i class="bi bi-database-add"></i>
 												</button>
@@ -299,112 +315,289 @@
 				</div>
 			</main>
         </div>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="codeGroupModal" tabindex="-1" role="dialog"
-			data-backdrop="static" aria-labelledby="codeGroupModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="codeGroupModalLabel">알림</h5>
-						<button type="button" class="btn-close"
-							data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<input type="hidden" id="prevFocusId" name="prevFocusId" />
-						<span id="modalContent" name="modalContent"></span>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">닫기</button>
-					</div>
-				</div>
-			</div>
-		</div>
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-
+		
+		<!-- 변수 정의 -->
 		<script type="text/javascript">
-			document.getElementById("delete").onclick = function() {
-				if (!confirm("정말 삭제하시겠습니까?")) {
-					return false;
-				}
-			}
+			// Seq
+			let seq = document.querySelector("input[name=gSeq]");
 			
-			document.getElementById("uelete").onclick = function() {
-				if (!confirm("정말 삭제하시겠습니까? (업데이트)")) {
-					return false;
-				}
-			}
+			// URL
+			let fom = document.querySelector("form[name=form]");
+			let goUrlXdmInst = "/xdm/game/GameXdmInst";
+			let goUrlXdmUpdt = "/xdm/game/GameXdmUpdt";
+			let goUrlXdmUele = "/xdm/game/GameXdmUele";
+			let goUrlXdmDele = "/xdm/game/GameXdmDele";
+			
+			// Form
+			let cName = document.getElementById("gName");
+			let gCategoryCd = document.getElementById("gCategoryCd");
+			let gLevel = document.getElementById("gLevel");
+			let gUseAge = document.getElementById("gUseAge");
+			let gMinTime = document.getElementById("gMinTime");
+			let gMaxTime = document.getElementById("gMaxTime");
+			let gMinPeople = document.getElementById("gMinPeople");
+			let gMaxPeople = document.getElementById("gMaxPeople");
+			let gBestPeople = document.getElementById("gBestPeople");
+			let gRecommendPeople = document.getElementById("gRecommendPeople");
+			let gOfficialCd = document.getElementById("gOfficialCd");
+			let gOfficialUrl = document.getElementById("gOfficialUrl");
+			let gComuUrl1 = document.getElementById("gComuUrl1");
+			let gComuUrl2 = document.getElementById("gComuUrl2");
 		</script>
 		
 		<!-- Validation: Bootstrap -->
 		<script type="text/javascript">
-			let seq = document.querySelector("input[name=gSeq]");
-			
-			let fom = document.querySelector("form[name=form]");
-			let goUrlXdmInst = "/xdm/game/GameXdmInst";
-			let goUrlXdmUpdt = "/xdm/game/GameXdmUpdt";
-			
-			// Form
-			let cgName = document.getElementById("cgName");
-			let cgUseNy = document.getElementById("cgUseNy");
-			let cgSequence = document.getElementById("cgSequence");
-			
 			// btnSave 클릭시
 			document.getElementById("btnSave").onclick = function() {
 				var focus = false; // Validation 후 Focus 줘야 하는 Input
 				
-				// cgName 체크
-				resetValidation(cgName);
+				// gName 체크
+				resetValidation(gName);
 				
-				if (cgName.value.trim() == null || cgName.value.trim() == "") {
-					cgName.classList.add("is-invalid");
+				if (gName.value.trim() == null || gName.value.trim() == "") {
+					gName.classList.add("is-invalid");
 					
 					if (!focus) {
-						cgName.focus();
+						gName.focus();
 						focus = true;
 					}
 				} else {
-					cgName.classList.add("is-valid");
+					gName.classList.add("is-valid");
 				}
 				
-				// cgUseNy 체크
-				resetValidation(cgUseNy);
+				// gCategoryCd 체크
+				resetValidation(gCategoryCd);
 				
-				if (cgUseNy.value == null || cgUseNy.value == "") {
-					cgUseNy.classList.add("is-invalid");
+				if (gCategoryCd.value == null || gCategoryCd.value == "") {
+					gCategoryCd.classList.add("is-invalid");
 					
 					if (!focus) {
-						cgUseNy.focus();
+						gCategoryCd.focus();
 						focus = true;
 					}
 				} else {
-					cgUseNy.classList.add("is-valid");
+					gCategoryCd.classList.add("is-valid");
 				}
 				
-				// cgSequence 체크
-				resetValidation(cgSequence);
+				// gLevel 체크
+				resetValidation(gLevel);
 				
-				if (cgSequence.value.trim() == null || cgSequence.value.trim() == ""
-						|| !regex_number.test(cgSequence.value.trim()) || cgSequence.value.trim() < 1
-						|| isNaN(cgSequence.value.trim())) {
-					cgSequence.classList.add("is-invalid");
+				if (gLevel.value.trim() == null || gLevel.value.trim() == ""
+					|| !REGEX_REAL_NUMBER.test(gLevel.value.trim())
+					|| gLevel.value.trim() < 0 || gLevel.value.trim() > 5
+					|| isNaN(gLevel.value.trim())) {
+					gLevel.classList.add("is-invalid");
 					
 					if (!focus) {
-						cgSequence.focus();
+						gLevel.focus();
 						focus = true;
 					}
 				} else {
-					cgSequence.classList.add("is-valid");
+					gLevel.classList.add("is-valid");
 				}
 				
-				// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
-				// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+				// gUseAge 체크
+				resetValidation(gUseAge);
+				
+				if (gUseAge.value.trim() == null || gUseAge.value.trim() == ""
+					|| !REGEX_NUMBER.test(gUseAge.value.trim()) || gUseAge.value.trim() < 1
+					|| isNaN(gUseAge.value.trim())) {
+					gUseAge.classList.add("is-invalid");
+					
+					if (!focus) {
+						gUseAge.focus();
+						focus = true;
+					}
+				} else {
+					gUseAge.classList.add("is-valid");
+				}
+				
+				// gMinTime 체크
+				resetValidation(gMinTime);
+				
+				if (gMinTime.value.trim() == null || gMinTime.value.trim() == ""
+						|| !REGEX_NUMBER.test(gMinTime.value.trim()) 
+						|| gMinTime.value.trim() < 1
+						|| gMinTime.value.trim() > gMaxTime.value.trim()
+						|| isNaN(gMinTime.value.trim())) {
+					gMinTime.classList.add("is-invalid");
+					
+					if (!focus) {
+						gMinTime.focus();
+						focus = true;
+					}
+				} else {
+					gMinTime.classList.add("is-valid");
+				}
+				
+				// gMaxTime 체크
+				resetValidation(gMaxTime);
+				
+				if (gMaxTime.value.trim() == null || gMaxTime.value.trim() == ""
+						|| !REGEX_NUMBER.test(gMaxTime.value.trim()) 
+						|| gMaxTime.value.trim() < 1
+						|| gMaxTime.value.trim() < gMinTime.value.trim()
+						|| isNaN(gMaxTime.value.trim())) {
+					gMaxTime.classList.add("is-invalid");
+					
+					if (!focus) {
+						gMaxTime.focus();
+						focus = true;
+					}
+				} else {
+					gMaxTime.classList.add("is-valid");
+				}
+				
+				// gMinPeople 체크
+				resetValidation(gMinPeople);
+				
+				if (gMinPeople.value.trim() == null || gMinPeople.value.trim() == ""
+						|| !REGEX_NUMBER.test(gMinPeople.value.trim()) 
+						|| gMinPeople.value.trim() > gMaxPeople.value.trim()
+						|| isNaN(gMinPeople.value.trim())) {
+					gMinPeople.classList.add("is-invalid");
+					
+					if (!focus) {
+						gMinTimgMinPeoplee.focus();
+						focus = true;
+					}
+				} else {
+					gMinPeople.classList.add("is-valid");
+				}
+				
+				// gMaxPeople 체크
+				resetValidation(gMaxPeople);
+				
+				if (gMaxPeople.value.trim() == null || gMaxPeople.value.trim() == ""
+						|| !REGEX_NUMBER.test(gMaxPeople.value.trim()) 
+						|| gMaxPeople.value.trim() < gMinPeople.value.trim()
+						|| isNaN(gMaxPeople.value.trim())) {
+					gMaxPeople.classList.add("is-invalid");
+					
+					if (!focus) {
+						gMaxPeople.focus();
+						focus = true;
+					}
+				} else {
+					gMaxPeople.classList.add("is-valid");
+				}
+				
+				// gBestPeople 체크
+				resetValidation(gBestPeople);
+				
+				if (gBestPeople.value.trim() == null || gBestPeople.value.trim() == ""
+					|| !REGEX_NUMBER.test(gBestPeople.value.trim()) 
+					|| gBestPeople.value.trim() < 1
+					|| isNaN(gBestPeople.value.trim())) {
+					gBestPeople.classList.add("is-invalid");
+					
+					if (!focus) {
+						gBestPeople.focus();
+						focus = true;
+					}
+				} else {
+					gBestPeople.classList.add("is-valid");
+				}
+				
+				// gRecommendPeople 체크
+				resetValidation(gRecommendPeople);
+				
+				if (gRecommendPeople.value.trim() == null || gRecommendPeople.value.trim() == ""
+					|| !REGEX_NUMBER.test(gRecommendPeople.value.trim()) 
+					|| gRecommendPeople.value.trim() < 1
+					|| isNaN(gRecommendPeople.value.trim())) {
+					gRecommendPeople.classList.add("is-invalid");
+					
+					if (!focus) {
+						gRecommendPeople.focus();
+						focus = true;
+					}
+				} else {
+					gRecommendPeople.classList.add("is-valid");
+				}
+				
+				// gOfficialCd 체크
+				resetValidation(gOfficialCd);
+				
+				if (gOfficialCd.value == null || gOfficialCd.value == "") {
+					gOfficialCd.classList.add("is-invalid");
+					
+					if (!focus) {
+						gOfficialCd.focus();
+						focus = true;
+					}
+				} else {
+					gOfficialCd.classList.add("is-valid");
+				}
+				
+				// gOfficialUrl 체크
+				resetValidation(gOfficialUrl);
+				
+				if (gOfficialUrl.value.trim() != null 
+						&& gOfficialUrl.value.trim() != "") {
+					if (!REGEX_URL.test(gOfficialUrl.value.trim())) {
+						gOfficialUrl.classList.add("is-invalid");
+						
+						if (!focus) {
+							gOfficialUrl.focus();
+							focus = true;
+						}
+					} else {
+						gOfficialUrl.classList.add("is-valid");
+					}
+				}
+				
+				// gComuUrl1 체크
+				resetValidation(gComuUrl1);
+				
+				if (gComuUrl1.value.trim() != null 
+						&& gComuUrl1.value.trim() != "") {
+					if (!REGEX_URL.test(gComuUrl1.value.trim())) {
+						gComuUrl1.classList.add("is-invalid");
+						
+						if (!focus) {
+							gComuUrl1.focus();
+							focus = true;
+						}
+					} else {
+						gComuUrl1.classList.add("is-valid");
+					}
+				}
+				
+				// gComuUrl2 체크
+				resetValidation(gComuUrl2);
+				
+				if (gComuUrl2.value.trim() != null 
+						&& gComuUrl2.value.trim() != "") {
+					if (!REGEX_URL.test(gComuUrl2.value.trim())) {
+						gComuUrl2.classList.add("is-invalid");
+						
+						if (!focus) {
+							gComuUrl2.focus();
+							focus = true;
+						}
+					} else {
+						gComuUrl2.classList.add("is-valid");
+					}
+				}
+				
+				// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 				if (focus) return false;
 				
-				cgName.value = cgName.value.trim();
-				cgSequence.value = cgSequence.value.trim();
+				gName.value = gName.value.trim();
+				gLevel.value = gLevel.value.trim();
+				gUseAge.value = gUseAge.value.trim();
+				gMinTime.value = gMinTime.value.trim();
+				gMaxTime.value = gMaxTime.value.trim();
+				gMinPeople.value = gMinPeople.value.trim();
+				gMaxPeople.value = gMaxPeople.value.trim();
+				gBestPeople.value = gBestPeople.value.trim();
+				gRecommendPeople.value = gRecommendPeople.value.trim();
+				gOfficialUrl.value = gOfficialUrl.value.trim();
+				gComuUrl1.value = gComuUrl1.value.trim();
+				gComuUrl2.value = gComuUrl2.value.trim();
 				
 				if(seq.value == "0" || seq.value == "") {
 					fom.action = goUrlXdmInst;
@@ -415,45 +608,250 @@
 				}
 			}
 			
-			// cgName Input 시 체크
-			cgName.addEventListener("input", function() {
-				resetValidation(cgName);
+			// gName Input 시 체크
+			gName.addEventListener("input", function() {
+				resetValidation(gName);
 				
-				if (cgName.value.trim() == null || cgName.value.trim() == "") {
-					cgName.classList.add("is-invalid");
+				if (gName.value.trim() == null || gName.value.trim() == "") {
+					gName.classList.add("is-invalid");
 				} else {
-					cgName.classList.add("is-valid");
+					gName.classList.add("is-valid");
 				}		
 			});
 			
-			// cgUseNy Input 시 체크
-			cgUseNy.addEventListener("input", function() {
-				resetValidation(cgUseNy);
+			// gCategoryCd 체크
+			gCategoryCd.addEventListener("input", function() {
+				resetValidation(gCategoryCd);
 				
-				if (cgUseNy.value == null || cgUseNy.value == "") {
-					cgUseNy.classList.add("is-invalid");
+				if (gCategoryCd.value == null || gCategoryCd.value == "") {
+					gCategoryCd.classList.add("is-invalid");
 				} else {
-					cgUseNy.classList.add("is-valid");
-				}	
+					gCategoryCd.classList.add("is-valid");
+				}		
 			});
 			
-			// cgSequence Input 시 체크
-			cgSequence.addEventListener("input", function() {
-				resetValidation(cgSequence);
+			// gLevel Input 시 체크
+			gLevel.addEventListener("input", function() {
+				resetValidation(gLevel);
 				
-				if (cgSequence.value.trim() == null || cgSequence.value.trim() == ""
-					|| !regex_number.test(cgSequence.value.trim()) || cgSequence.value.trim() < 1
-					|| isNaN(cgSequence.value.trim())) {
-					cgSequence.classList.add("is-invalid");
+				if (gLevel.value.trim() == null || gLevel.value.trim() == ""
+					|| !REGEX_REAL_NUMBER.test(gLevel.value.trim())
+					|| gLevel.value.trim() < 0 || gLevel.value.trim() > 5
+					|| isNaN(gLevel.value.trim())) {
+					gLevel.classList.add("is-invalid");
 				} else {
-					cgSequence.classList.add("is-valid");
+					gLevel.classList.add("is-valid");
+				}		
+			});
+			
+			// gUseAge Input 시 체크
+			gUseAge.addEventListener("input", function() {
+				resetValidation(gUseAge);
+				
+				if (gUseAge.value.trim() == null || gUseAge.value.trim() == ""
+					|| !REGEX_NUMBER.test(gUseAge.value.trim())
+					|| gUseAge.value.trim() < 1
+					|| isNaN(gUseAge.value.trim())) {
+					gUseAge.classList.add("is-invalid");
+				} else {
+					gUseAge.classList.add("is-valid");
+				}		
+			});
+			
+			// gMinTime Input 시 체크
+			gMinTime.addEventListener("input", function() {
+				timeCheck();
+			});
+			
+			// gMaxTime Input 시 체크
+			gMaxTime.addEventListener("input", function() {
+				timeCheck();	
+			});
+			
+			// gMinTime, gMaxTime Input 시 체크 세트 체크
+			function timeCheck() {
+				// gMinTime
+				resetValidation(gMinTime);
+				
+				if (gMinTime.value.trim() == null || gMinTime.value.trim() == ""
+					|| !REGEX_NUMBER.test(gMinTime.value.trim()) 
+					|| gMinTime.value.trim() < 1
+					|| gMinTime.value.trim() > gMaxTime.value.trim()
+					|| isNaN(gMinTime.value.trim())) {
+					gMinTime.classList.add("is-invalid");
+				} else {
+					gMinTime.classList.add("is-valid");
 				}	
+				
+				// gMaxTime
+				resetValidation(gMaxTime);
+				
+				if (gMaxTime.value.trim() == null || gMaxTime.value.trim() == ""
+					|| !REGEX_NUMBER.test(gMaxTime.value.trim()) 
+					|| gMaxTime.value.trim() < 1
+					|| gMaxTime.value.trim() < gMinTime.value.trim()
+					|| isNaN(gMaxTime.value.trim())) {
+					gMaxTime.classList.add("is-invalid");
+				} else {
+					gMaxTime.classList.add("is-valid");
+				}	
+			}
+			
+			// gMinPeople Input 시 체크
+			gMinPeople.addEventListener("input", function() {
+				peopleCheck();
+			});
+			
+			// gMaxPeople Input 시 체크
+			gMaxTime.addEventListener("input", function() {
+				peopleCheck();
+			});
+			
+			// gMinPeople, gMaxPeople Input 시 체크 세트 체크
+			function peopleCheck() {
+				// gMinPeople
+				resetValidation(gMinPeople);
+				
+				if (gMinPeople.value.trim() == null || gMinPeople.value.trim() == ""
+					|| !REGEX_NUMBER.test(gMinPeople.value.trim()) 
+					|| gMinPeople.value.trim() > gMaxPeople.value.trim()
+					|| isNaN(gMinPeople.value.trim())) {
+					gMinPeople.classList.add("is-invalid");
+				} else {
+					gMinPeople.classList.add("is-valid");
+				}		
+				
+				// gMaxPeople
+				resetValidation(gMaxPeople);
+				
+				if (gMaxPeople.value.trim() == null || gMaxPeople.value.trim() == ""
+						|| !REGEX_NUMBER.test(gMaxPeople.value.trim()) 
+						|| gMaxPeople.value.trim() < gMinPeople.value.trim()
+						|| isNaN(gMaxPeople.value.trim())) {
+					gMaxPeople.classList.add("is-invalid");
+				} else {
+					gMaxPeople.classList.add("is-valid");
+				}	
+			}
+			
+			// gBestPeople Input 시 체크
+			gBestPeople.addEventListener("input", function() {
+				resetValidation(gBestPeople);
+				
+				if (gBestPeople.value.trim() == null || gBestPeople.value.trim() == ""
+					|| !REGEX_NUMBER.test(gBestPeople.value.trim())
+					|| gBestPeople.value.trim() < 1
+					|| isNaN(gBestPeople.value.trim())) {
+					gBestPeople.classList.add("is-invalid");
+				} else {
+					gBestPeople.classList.add("is-valid");
+				}		
+			});
+			
+			// gRecommendPeople Input 시 체크
+			gRecommendPeople.addEventListener("input", function() {
+				resetValidation(gRecommendPeople);
+				
+				if (gRecommendPeople.value.trim() == null || gRecommendPeople.value.trim() == ""
+					|| !REGEX_NUMBER.test(gRecommendPeople.value.trim())
+					|| gRecommendPeople.value.trim() < 1
+					|| isNaN(gRecommendPeople.value.trim())) {
+					gRecommendPeople.classList.add("is-invalid");
+				} else {
+					gRecommendPeople.classList.add("is-valid");
+				}		
+			});
+			
+			// gOfficialCd Input 시 체크
+			gOfficialCd.addEventListener("input", function() {
+				resetValidation(gOfficialCd);
+				
+				if (gOfficialCd.value == null || gOfficialCd.value == "") {
+					gOfficialCd.classList.add("is-invalid");
+				} else {
+					gOfficialCd.classList.add("is-valid");
+				}		
+			});
+			
+			// gOfficialUrl Input 시 체크
+			gOfficialUrl.addEventListener("input", function() {
+				resetValidation(gOfficialUrl);
+				
+				if (gOfficialUrl.value.trim() != null
+						&& gOfficialUrl.value.trim() != "") {
+					if (!REGEX_URL.test(gOfficialUrl.value.trim())) {
+						gOfficialUrl.classList.add("is-invalid");
+					} else {
+						gOfficialUrl.classList.add("is-valid");
+					}	
+				}
+			});
+			
+			// gComuUrl1 Input 시 체크
+			gComuUrl1.addEventListener("input", function() {
+				resetValidation(gComuUrl1);
+				
+				if (gComuUrl1.value.trim() != null
+						&& gComuUrl1.value.trim() != "") {
+					if (!REGEX_URL.test(gComuUrl1.value.trim())) {
+						gComuUrl1.classList.add("is-invalid");
+					} else {
+						gComuUrl1.classList.add("is-valid");
+					}	
+				}
+			});
+			
+			// gComuUrl2 Input 시 체크
+			gComuUrl2.addEventListener("input", function() {
+				resetValidation(gComuUrl2);
+				
+				if (gComuUrl2.value.trim() != null
+						&& gComuUrl2.value.trim() != "") {
+					if (!REGEX_URL.test(gComuUrl2.value.trim())) {
+						gComuUrl2.classList.add("is-invalid");
+					} else {
+						gComuUrl2.classList.add("is-valid");
+					}		
+				}
 			});
 			
 			// Validation 초기화
 			function resetValidation(object) {
 				object.classList.remove("is-valid");
 				object.classList.remove("is-invalid");
+			}
+		</script>
+		
+		<!-- 삭제/삭제(업데이트) 모달 -->
+		<script type="text/javascript">
+			if(document.getElementById("btnUelete")){
+				document.getElementById("btnUelete").onclick = function () {
+					document.querySelector("#modalConfirmTitle").textContent = "확인";
+					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제(업데이트)하시겠습니까?";
+					document.querySelector("#btnModalUelete").style.display = '';
+					document.querySelector("#btnModalDelete").style.display = 'none';
+					$("#modalConfirm").modal("show");      	
+				}
+			}
+	
+			document.getElementById("btnModalUelete").onclick = function () {
+				fom.action = goUrlXdmUele;
+				fom.submit();
+			}
+			
+			if(document.getElementById("btnDelete")){
+				document.getElementById("btnDelete").onclick = function () {
+					document.querySelector("#modalConfirmTitle").textContent = "확인";
+					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까?";
+					document.querySelector("#btnModalUelete").style.display = 'none';
+					document.querySelector("#btnModalDelete").style.display = '';
+					$("#modalConfirm").modal("show");      	
+				}
+			}
+	
+			document.getElementById("btnModalDelete").onclick = function () {
+				fom.action = goUrlXdmDele;
+				fom.submit();
 			}
 		</script>
       	

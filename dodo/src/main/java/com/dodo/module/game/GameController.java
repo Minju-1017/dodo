@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dodo.module.Constants;
 import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.codegroup.CodeGroupVo;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value="/xdm/game/")
@@ -24,7 +27,12 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmList")
-	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
+	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo,
+			HttpSession httpSession) throws Exception {
+		if (httpSession.getAttribute("sessSeqXdm") == null) {
+			return "xdm/member/MemberXdmSignIn";
+		}
+		
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectOneCount(vo));
 		
@@ -36,7 +44,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 데이터 입력/수정 폼
+	 * 데이터 추가/수정 폼
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmForm")

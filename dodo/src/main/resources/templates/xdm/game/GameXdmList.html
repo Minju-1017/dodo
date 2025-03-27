@@ -150,6 +150,46 @@
 												</div>
 												<div class="col-lg-4 col-12"></div>
 												<div class="col-lg-2 col-12">
+													<select class="form-select" name="shCategoryCd" id="shCategoryCd">
+														<option value="" th:selected="${vo.shCategoryCd == null}">카테고리</option>
+														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}"
+															th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+															th:selected="${#strings.equals(codeList.cSeq, vo.shCategoryCd)}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select" name="shOfficialCd" id="shOfficialCd">
+														<option value="" th:selected="${vo.shOfficialCd == null}">공식판매사</option>
+														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
+															th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+															th:selected="${#strings.equals(codeList.cSeq, vo.shOfficialCd)}"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shUseAge" name="shUseAge">
+														<option value="" th:selected="${vo.shUseAge == null}">사용연령</option>
+														<option th:each="i : ${#numbers.sequence(1,20)}" 
+															th:value="${i}" th:selected="${vo.shUseAge == i}" th:text="${i}+'세 이상'"></option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shPeople" name="shPeople">
+														<option value="" th:selected="${vo.shPeople == null}">인원</option>
+														<option th:each="i : ${#numbers.sequence(1,100)}" 
+															th:value="${i}" th:selected="${vo.shPeople == i}" th:text="${i}"></option>
+														<option value="101" th:selected="${vo.shPeople == 101}">100+</option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12">
+													<select class="form-select"id="shTime" name="shTime">
+														<option value="" th:selected="${vo.shTime == null}">소요시간</option>
+														<option th:each="i : ${#numbers.sequence(1,60)}" 
+															th:value="${i}" th:selected="${vo.shTime == i}" th:text="${i}"></option>
+														<option value="61" th:selected="${vo.shTime == 61}">60+</option>
+													</select>
+												</div>
+												<div class="col-lg-2 col-12"></div>
+												<div class="col-lg-2 col-12">
 													<select class="form-select"id="shMinLevel" name="shMinLevel">
 														<option value="" th:selected="${vo.shMinLevel == null}">최소난이도</option>
 														<option th:each="i : ${#numbers.sequence(1,5)}" 
@@ -179,52 +219,6 @@
 												</div>
 												<div class="col-lg-4 col-12"></div>
 												<div class="col-lg-2 col-12">
-													<select class="form-select"id="shMinPeople" name="shMinPeople">
-														<option value="" th:selected="${vo.shMinPeople == null}">최소인원</option>
-														<option th:each="i : ${#numbers.sequence(1,100)}" 
-															th:value="${i}" th:selected="${vo.shMinPeople == i}" th:text="${i}"></option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select"id="shMaxPeople" name="shMaxPeople">
-														<option value="" th:selected="${vo.shMaxPeople == null}">최대인원</option>
-														<option th:each="i : ${#numbers.sequence(1,100)}" 
-															th:value="${i}" th:selected="${vo.shMaxPeople == i}" th:text="${i}"></option>
-														<option value="101" th:selected="${vo.shMaxPeople == 101}">100+</option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select"id="shMinTime" name="shMinTime">
-														<option value="" th:selected="${vo.shMinTime == null}">최소소요시간</option>
-														<option th:each="i : ${#numbers.sequence(1,60)}" 
-															th:value="${i}" th:selected="${vo.shMinTime == i}" th:text="${i}"></option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select"id="shMaxTime" name="shMaxTime">
-														<option value="" th:selected="${vo.shMaxTime == null}">최대소요시간</option>
-														<option th:each="i : ${#numbers.sequence(1,60)}" 
-															th:value="${i}" th:selected="${vo.shMaxTime == i}" th:text="${i}"></option>
-														<option value="61" th:selected="${vo.shMaxPeople == 61}">60+</option>
-													</select>
-												</div>
-												<div class="col-lg-4 col-12"></div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select"id="shUseAge" name="shUseAge">
-														<option value="" th:selected="${vo.shUseAge == null}">사용연령</option>
-														<option th:each="i : ${#numbers.sequence(1,20)}" 
-															th:value="${i}" th:selected="${vo.shUseAge == i}" th:text="${i}+'세 이상'"></option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select" name="shOfficial" id="shOfficial">
-														<option value="" th:selected="${vo.shOfficial == null}">공식판매사</option>
-														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
-															th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
-															th:selected="${#strings.equals(codeList.cSeq, vo.shOfficial)}"></option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
 													<select class="form-select" id="shOption" name="shOption">
 														<option value="" th:selected="${vo.shOption == null}">검색구분</option>
 														<option value="1" th:selected="${vo.shOption == 1}">고유번호</option>
@@ -232,7 +226,7 @@
 														<option value="3" th:selected="${vo.shOption == 3}">최적인원</option>
 													</select>
 												</div>
-												<div class="col-lg-2 col-12">
+												<div class="col-lg-4 col-12">
 													<input type="text" class="form-control" id="shValue" name="shValue" 
 														th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
 													<div class="invalid-feedback" id="shValueFeedback"></div>
@@ -272,10 +266,6 @@
 														<th>고유번호</th>
 														<th>게임명</th>
 														<th>카테고리</th>
-														<th>인원</th>
-														<th>최적인원</th>
-														<th>사용연령</th>
-														<th>소요시간</th>
 														<th>평점</th>
 														<th>난이도</th>
 														<th>공식판매처</th>
@@ -292,7 +282,7 @@
 													<tr th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}">
 														<td>
 															<div class="form-check">
-																<input class="form-check-input" type="checkbox" name="check" id="${list?.gSeq}">
+																<input class="form-check-input" type="checkbox" name="check" th:value="${list?.gSeq}">
 															</div>
 														</td>
 														<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
@@ -305,16 +295,6 @@
 															th:if="${#strings.equals(codeList.cSeq, list?.gCategoryCd)}"
 															th:text="${codeList?.cName}">
 														</td>
-														<td th:if="${list?.gMinPeople eq list?.gMaxPeople}" 
-															th:text="${list?.gMaxPeople}"></td>
-														<td th:if="${list?.gMinPeople ne list?.gMaxPeople}" 
-															th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명'}"></td>
-														<td th:text="${list?.gBestPeople}"></td>
-														<td th:text="${list?.gUseAge + '세 이상'}"></td>
-														<td th:if="${list?.gMinTime eq list?.gMaxTime}" 
-															th:text="${list?.gMaxTime}"></td>
-														<td th:if="${list?.gMinTime ne list?.gMaxTime}" 
-															th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></td>
 														<td th:text="${list?.rScoreAvg}"></td>	
 														<td th:text="${list?.gLevel}"></td>
 														<td th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
@@ -378,6 +358,7 @@
         
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
       	
+      	<!-- 변수 정의 / 공통 함수 -->
       	<script type="text/javascript">
       		let seq = document.querySelector("input[name=gSeq]");
       	
@@ -385,22 +366,32 @@
 			let goUrlXdmList = "/xdm/game/GameXdmList";
 			let goUrlXdmForm = "/xdm/game/GameXdmForm";
 			
-			function goList(currPage) {
-	 			document.querySelector("input[name=currPage]").value = currPage;
-	 			fom.action = goUrlXdmList;
-	 			fom.submit();
+			function submit(goUrl) {
+				fom.action = goUrl;
+				fom.submit();
 			}
-			
+		</script>
+		
+		<!-- 데이터 추가/수정 -->
+		<script type="text/javascript">
+			// 데이터 추가
+			document.getElementById("btnForm").onclick = function () {
+			    goForm(0);
+			}
+		
+			// 데이터 추가/수정
 			goForm = function (keyValue) {
 			    seq.value = keyValue;
-			    fom.action = goUrlXdmForm;
-			    fom.submit();
+			    submit(goUrlXdmForm);
 			}
-			
-	      	document.getElementById("btnSearch").onclick = function () {
-	      		fom.action = goUrlXdmList;
-	      		fom.submit();
-			};
+		</script>
+		
+		<!-- Search / Paging -->
+		<script type="text/javascript">
+			function goList(currPage) {
+	 			document.querySelector("input[name=currPage]").value = currPage;
+	 			submit(goUrlXdmList);
+			}
 			
 			document.getElementById("changeRowNum").onchange = function () {
 			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
@@ -408,68 +399,36 @@
 			    fom.submit();
 			}
 			
-			document.getElementById("btnForm").onclick = function () {
-			    goForm(0);
-			}
+			document.getElementById("btnSearch").onclick = function () {
+	      		fom.action = goUrlXdmList;
+	      		fom.submit();
+			};
 		</script>
 		
+		<!-- Table Check Box 처리 (Uelete/Delete/Update)-->
       	<script type="text/javascript">
-			document.getElementById("checkAll").onclick = function() {
+	      	document.getElementById("checkAll").onclick = function() {
 				allCheck("check", this.checked);
 			}
 			
-			function allCheck(name, isChecked) {
-				const element = document.getElementsByName(name);
-				
-				for(let i = 0; i < element.length; i++) {          
-					if(!element[i].disabled) {
-						element[i].checked = isChecked;	
-					}
-				}
-			}
-			
-			function getSelectedElementsCnt(name) {
-				// 선택된 목록의 갯수 세기
-				return document.querySelectorAll('input[name="' + name + '"]:checked').length;
-			}
-			
 			document.getElementById("modify").onclick = function() {
-				const selectedElementsCnt = getSelectedElementsCnt("check");
-				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
-				
-				if (selectedElementsCnt > 1) {
-					alert("1개의 코드 그룹만 선택해 주세요.");
-					return;
-				}
-				
-				// TODO: id seq로 해당 데이터 수정 폼 열기
-			}
-			
-			document.getElementById("delete").onclick = function() {
-				const selectedElementsCnt = getSelectedElementsCnt("check");
-				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
-				
-				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?")) {
-					return false;
-				}
+				modifyCheckedElement("1개의 게임");
 			}
 			
 			document.getElementById("uelete").onclick = function() {
-				const selectedElementsCnt = getSelectedElementsCnt("check");
-				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
-				
-				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
-					return false;
-				}
+				ueleteCheckedElementsModal("게임을");
+			}
+			
+			document.getElementById("btnModalUelete").onclick = function () {
+				ueleteCheckedElements(""); // TODO: URL
+			}
+			
+			document.getElementById("delete").onclick = function() {
+				deleteCheckedElementsModal("게임을");
+			}
+	
+			document.getElementById("btnModalDelete").onclick = function () {
+				deleteCheckedElements(""); // TODO: URL
 			}
 		</script>
 	

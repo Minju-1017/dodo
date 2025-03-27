@@ -292,6 +292,7 @@
 
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
+		<!-- 변수 정의 / 공통 함수 -->
 		<script type="text/javascript">
 			let seq = document.querySelector("input[name=mSeq]");
 		
@@ -299,87 +300,62 @@
 			let goUrlXdmList = "/xdm/member/MemberXdmList";
 			let goUrlXdmForm = "/xdm/member/MemberXdmForm";
 			
-			function goList(currPage) {
-	 			document.querySelector("input[name=currPage]").value = currPage;
-	 			fom.action = goUrlXdmList;
-	 			fom.submit();
-			}
-			
-			goForm = function (keyValue) {
-			    seq.value = keyValue;
-			    fom.action = goUrlXdmForm;
-			    fom.submit();
-			}
-			
-	      	document.getElementById("btnSearch").onclick = function () {
-	      		fom.action = goUrlXdmList;
-	      		fom.submit();
-			};
-			
-			document.getElementById("changeRowNum").onchange = function () {
-			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-			    fom.action = goUrlXdmList;
-			    fom.submit();
+			function submit(goUrl) {
+				fom.action = goUrl;
+				fom.submit();
 			}
 		</script>
 		
+		<!-- 데이터 추가/수정 -->
+		<script type="text/javascript">
+			// 데이터 추가/수정
+			goForm = function (keyValue) {
+			    seq.value = keyValue;
+			    submit(goUrlXdmForm);
+			}
+		</script>
+			
+		<!-- Search / Paging -->
+		<script type="text/javascript">
+			function goList(currPage) {
+	 			document.querySelector("input[name=currPage]").value = currPage;
+	 			submit(goUrlXdmList);
+			}
+			
+			document.getElementById("changeRowNum").onchange = function () {
+			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+			    submit(goUrlXdmList);
+			}
+			
+	      	document.getElementById("btnSearch").onclick = function () {
+	      		submit(goUrlXdmList);
+			};
+		</script>
+		
+		<!-- Table Check Box 처리 (Uelete/Delete/Update)-->
 		<script type="text/javascript">
 			document.getElementById("checkAll").onclick = function() {
 				allCheck("check", this.checked);
 			}
 			
-			function allCheck(name, isChecked) {
-				const element = document.getElementsByName(name);
-				
-				for(let i = 0; i < element.length; i++) {          
-					if(!element[i].disabled) {
-						element[i].checked = isChecked;	
-					}
-				}
-			}
-			
-			function getSelectedElementsCnt(name) {
-				// 선택된 목록의 갯수 세기
-				return document.querySelectorAll('input[name="' + name + '"]:checked').length;
-			}
-			
 			document.getElementById("modify").onclick = function() {
-				const selectedElementsCnt = getSelectedElementsCnt("check");
-				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
-				
-				if (selectedElementsCnt > 1) {
-					alert("1개의 코드 그룹만 선택해 주세요.");
-					return;
-				}
-				
-				// TODO: id seq로 해당 데이터 수정 폼 열기
-			}
-			
-			document.getElementById("delete").onclick = function() {
-				const selectedElementsCnt = getSelectedElementsCnt("check");
-				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
-				
-				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?")) {
-					return false;
-				}
+				modifyCheckedElement("1명의 회원");
 			}
 			
 			document.getElementById("uelete").onclick = function() {
-				const selectedElementsCnt = getSelectedElementsCnt("check");
-				
-				if (selectedElementsCnt == 0) {
-					return;
-				}
-				
-				if (!confirm("선택한 " + selectedElementsCnt + "개의 코드 그룹을 전부 삭제하시겠습니까?(업데이트)")) {
-					return false;
-				}
+				ueleteCheckedElementsModal("회원을");
+			}
+			
+			document.getElementById("btnModalUelete").onclick = function () {
+				ueleteCheckedElements(""); // TODO: URL
+			}
+			
+			document.getElementById("delete").onclick = function() {
+				deleteCheckedElementsModal("회원을");
+			}
+	
+			document.getElementById("btnModalDelete").onclick = function () {
+				deleteCheckedElements(""); // TODO: URL
 			}
 		</script>
 		

@@ -44,7 +44,7 @@
 						</div>
 						<div class="modal-body" id="modalAlertBody"></div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal">
 								닫기
 							</button>
 						</div>
@@ -66,6 +66,28 @@
 		
 		<!-- MJ JS -->
 		<script src="/xdm/assets/js/common.js"></script>
+		
+		<script type="text/javascript">
+			$("#btnSignOut").on("click", function(){
+				$.ajax({
+					async: true 
+					,cache: false
+					,type: "post"
+					,url: "/xdm/member/MemberXdmSignOutProc"
+					,data: {}
+					,success: function(response) {
+						if(response.rt == "success") {
+							location.href = "/xdm/index";
+						} else {
+							// by pass
+						}
+					}
+					,error : function(jqXHR, textStatus, errorThrown){
+						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+					}
+				});
+			});
+		</script>
 	
 	</th:block>
 </html>

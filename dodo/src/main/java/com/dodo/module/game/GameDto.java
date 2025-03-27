@@ -24,6 +24,7 @@ public class GameDto {
 	private String gOfficialUrl;
 	private String gComuUrl1;
 	private String gComuUrl2;
+	private int gCategoryCd;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date gRegiDate;
@@ -187,6 +188,14 @@ public class GameDto {
 
 	public void setrScoreAvg(double rScoreAvg) {
 		this.rScoreAvg = rScoreAvg;
+	}
+
+	public int getgCategoryCd() {
+		return gCategoryCd;
+	}
+
+	public void setgCategoryCd(int gCategoryCd) {
+		this.gCategoryCd = gCategoryCd;
 	}
 	
 }

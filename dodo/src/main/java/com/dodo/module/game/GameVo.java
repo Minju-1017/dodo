@@ -6,16 +6,16 @@ public class GameVo extends BaseVo {
 	
 	private String gSeq;
 	
-	private Integer shMinLevel;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMaxLevel;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMinScoreAvg;	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMaxScoreAvg;	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMinPeople;	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMaxPeople; 	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shUseAge; 		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMinTime; 		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shMaxTime; 		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
-	private Integer shOfficial; 	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
+	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
+	private Integer shMinLevel;		
+	private Integer shMaxLevel;
+	private Integer shMinScoreAvg;
+	private Integer shMaxScoreAvg;
+	private Integer shPeople;
+	private Integer shUseAge;
+	private Integer shTime;
+	private Integer shOfficialCd;
+	private Integer shCategoryCd;
 
 	public String getgSeq() {
 		return gSeq;
@@ -57,20 +57,12 @@ public class GameVo extends BaseVo {
 		this.shMaxScoreAvg = shMaxScoreAvg;
 	}
 
-	public Integer getShMinPeople() {
-		return shMinPeople;
+	public Integer getShPeople() {
+		return shPeople;
 	}
 
-	public void setShMinPeople(Integer shMinPeople) {
-		this.shMinPeople = shMinPeople;
-	}
-
-	public Integer getShMaxPeople() {
-		return shMaxPeople;
-	}
-
-	public void setShMaxPeople(Integer shMaxPeople) {
-		this.shMaxPeople = shMaxPeople;
+	public void setShPeople(Integer shPeople) {
+		this.shPeople = shPeople;
 	}
 
 	public Integer getShUseAge() {
@@ -81,28 +73,28 @@ public class GameVo extends BaseVo {
 		this.shUseAge = shUseAge;
 	}
 
-	public Integer getShMinTime() {
-		return shMinTime;
+	public Integer getShTime() {
+		return shTime;
 	}
 
-	public void setShMinTime(Integer shMinTime) {
-		this.shMinTime = shMinTime;
+	public void setShTime(Integer shTime) {
+		this.shTime = shTime;
 	}
 
-	public Integer getShMaxTime() {
-		return shMaxTime;
+	public Integer getShOfficialCd() {
+		return shOfficialCd;
 	}
 
-	public void setShMaxTime(Integer shMaxTime) {
-		this.shMaxTime = shMaxTime;
+	public void setShOfficialCd(Integer shOfficialCd) {
+		this.shOfficialCd = shOfficialCd;
 	}
 
-	public Integer getShOfficial() {
-		return shOfficial;
+	public Integer getShCategoryCd() {
+		return shCategoryCd;
 	}
 
-	public void setShOfficial(Integer shOfficial) {
-		this.shOfficial = shOfficial;
+	public void setShCategoryCd(Integer shCategoryCd) {
+		this.shCategoryCd = shCategoryCd;
 	}
 
 }

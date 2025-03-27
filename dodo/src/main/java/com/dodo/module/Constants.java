@@ -6,8 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Constants {
-	
-	public static boolean bLogin = false; // 로그인 상태
+	public static int SESSION_MINUTE_XDM = 60 * 30; // 30분
 	
 	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	public final static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

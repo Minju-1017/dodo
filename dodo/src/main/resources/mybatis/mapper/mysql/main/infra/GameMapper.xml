@@ -23,17 +23,16 @@
 					and shDateEnd != null and !shDateEnd.equals('')">
 					AND a.gUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
 				</when>
-			</choose>	
+			</choose>
+			<if test="shCategoryCd != null and !shCategoryCd.equals('')">AND a.gCategoryCd = #{shCategoryCd}</if>
+			<if test="shOfficialCd != null and !shOfficialCd.equals('')">AND a.gOfficialCd = #{shOfficialCd}</if>	
+	        <if test="shUseAge != null and !shUseAge.equals('')">AND a.gUseAge >= #{shUseAge}</if>			
+			<if test="shPeople != null and !shPeople.equals('')">AND #{shPeople} >= a.gMinPeople AND a.gMaxPeople >= #{shPeople}</if>			
+	        <if test="shTime != null and !shTime.equals('')">AND #{shTime} >= a.gMinTime AND a.gMaxTime >= #{shTime}</if>				
 			<if test="shMinLevel != null and !shMinLevel.equals('')">AND a.gLevel >= #{shMinLevel}</if>	
 			<if test="shMaxLevel != null and !shMaxLevel.equals('')">AND #{shMaxLevel} >= a.gLevel</if>	
 			<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND a.rScoreAvg >= #{shMinScoreAvg}</if>	
-			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= a.rScoreAvg</if>	
-			<if test="shMinPeople != null and !shMinPeople.equals('')">AND a.gMinPeople >= #{shMinPeople}</if>	
-			<if test="shMaxPeople != null and !shMaxPeople.equals('')">AND #{shMaxPeople} >= a.gMaxPeople</if>			
-	        <if test="shUseAge != null and !shUseAge.equals('')">AND a.gUseAge >= #{shUseAge}</if>
-	        <if test="shMinTime != null and !shMinTime.equals('')">AND a.gMinTime >= #{shMinTime}</if>	
-			<if test="shMaxTime != null and !shMaxTime.equals('')">AND #{shMaxTime} >= a.gMaxTime</if>
-			<if test="shOfficial != null and !shOfficial.equals('')">AND a.gOfficialCd = #{shOfficial}</if> 	
+			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= a.rScoreAvg</if>		
 	        <choose>
 	            <when test="shOption == 1">AND a.gSeq = #{shValue}</when>
 	            <when test="shOption == 2">AND a.gName LIKE CONCAT('%',#{shValue},'%')</when>
@@ -59,6 +58,7 @@
 	    a.gOfficialUrl,
 	    a.gComuUrl1,
 	    a.gComuUrl2,
+	    a.gCategoryCd,
 	    a.gRegiDate,
 	    a.gUpdtDate,
 	    (SELECT IFNULL(AVG(b.rScore),0)
@@ -109,6 +109,7 @@
 		    gOfficialUrl,
 		    gComuUrl1,
 		    gComuUrl2,
+		    gCategoryCd,
 		    gRegiDate,
 			gDelNy	
 		)
@@ -128,6 +129,7 @@
 		    #{gOfficialUrl},
 		    #{gComuUrl1},
 		    #{gComuUrl2},
+		    #{gCategoryCd},
 		   	now(),
 		    0
 		)
@@ -154,6 +156,7 @@
 		    gOfficialUrl=#{gOfficialUrl},
 		    gComuUrl1=#{gComuUrl1},
 		    gComuUrl2=#{gComuUrl2},
+		    gCategoryCd=#{gCategoryCd},
 		    gUpdtDate=now()
 		WHERE
 			gSeq=#{gSeq}

@@ -235,7 +235,7 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
-		<!-- 변수 정의 -->
+		<!-- 변수 정의 / 공통 함수 -->
 		<script type="text/javascript">
 			let seq = document.querySelector("input[name=cSeq]");
 			
@@ -246,11 +246,16 @@
 			let goUrlXdmUele = "/xdm/code/CodeXdmUele";
 			let goUrlXdmDele = "/xdm/code/CodeXdmDele";
 		
-			// Form
+			// Input
 			let codeGroup_cgSeq = document.getElementById("codeGroup_cgSeq");
 			let cName = document.getElementById("cName");
 			let cUseNy = document.getElementById("cUseNy");
-			let cSequence = document.getElementById("cSequence");			
+			let cSequence = document.getElementById("cSequence");	
+			
+			function submit(goUrl) {
+				fom.action = goUrl;
+				fom.submit();
+			}
 		</script>
 		
 		<!-- Validation: Bootstrap -->
@@ -262,7 +267,7 @@
 				// codeGroup_cgSeq 체크
 				resetValidation(codeGroup_cgSeq);
 				
-				if (codeGroup_cgSeq.value == null || codeGroup_cgSeq.value == "") {
+				if (!strValidation(codeGroup_cgSeq)) {
 					codeGroup_cgSeq.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -276,7 +281,7 @@
 				// cName 체크
 				resetValidation(cName);
 				
-				if (cName.value.trim() == null || cName.value.trim() == "") {
+				if (!strValidation(cName)) {
 					cName.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -290,7 +295,7 @@
 				// cUseNy 체크
 				resetValidation(cUseNy);
 				
-				if (cUseNy.value == null || cUseNy.value == "") {
+				if (!strValidation(cUseNy)) {
 					cUseNy.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -304,9 +309,7 @@
 				// cSequence 체크
 				resetValidation(cSequence);
 				
-				if (cSequence.value.trim() == null || cSequence.value.trim() == ""
-						|| !REGEX_NUMBER.test(cSequence.value.trim()) || cSequence.value.trim() < 1
-						|| isNaN(cSequence.value.trim())) {
+				if (!positiveNumberValidation(cSequence)) {
 					cSequence.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -325,11 +328,9 @@
 				cSequence.value = cSequence.value.trim();
 				
 				if(seq.value == "0" || seq.value == "") {
-					fom.action = goUrlXdmInst;
-					fom.submit();
+					submit(goUrlXdmInst);
 				} else {
-					fom.action = goUrlXdmUpdt;
-					fom.submit();
+					submit(goUrlXdmUpdt);
 				}
 			}
 			
@@ -337,7 +338,7 @@
 			codeGroup_cgSeq.addEventListener("input", function() {
 				resetValidation(codeGroup_cgSeq);
 				
-				if (codeGroup_cgSeq.value == null || codeGroup_cgSeq.value == "") {
+				if (!strValidation(codeGroup_cgSeq)) {
 					codeGroup_cgSeq.classList.add("is-invalid");
 				} else {
 					codeGroup_cgSeq.classList.add("is-valid");
@@ -348,7 +349,7 @@
 			cName.addEventListener("input", function() {
 				resetValidation(cName);
 				
-				if (cName.value.trim() == null || cName.value.trim() == "") {
+				if (!strValidation(cName)) {
 					cName.classList.add("is-invalid");
 				} else {
 					cName.classList.add("is-valid");
@@ -370,20 +371,12 @@
 			cSequence.addEventListener("input", function() {
 				resetValidation(cSequence);
 				
-				if (cSequence.value.trim() == null || cSequence.value.trim() == ""
-					|| !REGEX_NUMBER.test(cSequence.value.trim()) || cSequence.value.trim() < 1
-					|| isNaN(cSequence.value.trim())) {
+				if (!positiveNumberValidation(cSequence)) {
 					cSequence.classList.add("is-invalid");
 				} else {
 					cSequence.classList.add("is-valid");
 				}	
 			});
-			
-			// Validation 초기화
-			function resetValidation(object) {
-				object.classList.remove("is-valid");
-				object.classList.remove("is-invalid");
-			}
 		</script>
 		
 		<!-- 삭제/삭제(업데이트) 모달 -->
@@ -395,8 +388,7 @@
 			}
 	
 			document.getElementById("btnModalUelete").onclick = function () {
-				fom.action = goUrlXdmUele;
-				fom.submit();
+				submit(goUrlXdmUele);
 			}
 			
 			if(document.getElementById("btnDelete")){
@@ -406,8 +398,7 @@
 			}
 	
 			document.getElementById("btnModalDelete").onclick = function () {
-				fom.action = goUrlXdmDele;
-				fom.submit();
+				submit(goUrlXdmDele);
 			}
 		</script>
       	

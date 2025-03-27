@@ -247,7 +247,7 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
-		<!-- 변수 정의 -->
+		<!-- 변수 정의 / 공통 함수 -->
 		<script type="text/javascript">
 			// Seq
 			let seq = document.querySelector("input[name=mSeq]");
@@ -258,12 +258,17 @@
 			let goUrlXdmUele = "/xdm/member/MemberXdmUele";
 			let goUrlXdmDele = "/xdm/member/MemberXdmDele";
 		
-			// Form
+			// Input
 			let mPwd = document.getElementById("mPwd");
 			let mPwdRe = document.getElementById("mPwdRe");
 			let mName = document.getElementById("mName");
 			let mEmail = document.getElementById("mEmail");
 			let mBirth = document.getElementById("mBirth");
+			
+			function submit(goUrl) {
+				fom.action = goUrl;
+				fom.submit();
+			}
 		</script>
 		
 		<!-- Validation: Bootstrap -->
@@ -276,7 +281,7 @@
 				// mPwd 체크
 				resetValidation(mPwd);
 				
-				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
+				if (!strValidation(mPwd)) {
 					mPwd.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -290,7 +295,7 @@
 				// mPwdRe 체크
 				resetValidation(mPwdRe);
 				
-				if (mPwdRe.value.trim() == null || mPwdRe.value.trim() == ""
+				if (!strValidation(mPwdRe) 
 						|| mPwd.value.trim() != mPwdRe.value.trim()) {
 					mPwdRe.classList.add("is-invalid");
 					
@@ -305,7 +310,7 @@
 				// mName 체크
 				resetValidation(mName);
 				
-				if (mName.value.trim() == null || mName.value.trim() == "") {
+				if (!strValidation(mName)) {
 					mName.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -319,8 +324,7 @@
 				// mEmail 체크
 				resetValidation(mEmail);
 				
-				if (mEmail.value.trim() == null || mEmail.value.trim() == ""
-						|| !REGEX_EMAIL.test(mEmail.value.trim())) {
+				if (!emailValidation(mEmail)) {
 					mEmail.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -334,8 +338,7 @@
 				// mBirth 체크
 				resetValidation(mBirth);
 				
-				if (mBirth.value.trim() == null || mBirth.value.trim() == ""
-					|| !REGEX_BIRTH.test(mBirth.value.trim())) {
+				if (!dateValidation_yyyyMMdd(mBirth)) {
 					mBirth.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -373,7 +376,7 @@
 				// mPwd 체크
 				resetValidation(mPwd);
 				
-				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
+				if (!strValidation(mPwd)) {
 					mPwd.classList.add("is-invalid");
 				} else {
 					mPwd.classList.add("is-valid");
@@ -382,8 +385,7 @@
 				// mPwdRe 체크
 				resetValidation(mPwdRe);
 				
-				if (mPwdRe.value.trim() == null || mPwdRe.value.trim() == ""
-						|| mPwd.value.trim() != mPwdRe.value.trim()) {
+				if (!strValidation(mPwdRe) || mPwd.value.trim() != mPwdRe.value.trim()) {
 					mPwdRe.classList.add("is-invalid");
 				} else {
 					mPwdRe.classList.add("is-valid");
@@ -394,7 +396,7 @@
 			mName.addEventListener("input", function(){
 				resetValidation(mName);
 				
-				if (mName.value.trim() == null || mName.value.trim() == "") {
+				if (!strValidation(mName)) {
 					mName.classList.add("is-invalid");
 				} else {
 					mName.classList.add("is-valid");
@@ -405,8 +407,7 @@
 			mEmail.addEventListener("input", function(){
 				resetValidation(mEmail);
 				
-				if (mEmail.value.trim() == null || mEmail.value.trim() == ""
-					|| !REGEX_EMAIL.test(mEmail.value.trim())) {
+				if (!emailValidation(mEmail)) {
 					mEmail.classList.add("is-invalid");
 				} else {
 					mEmail.classList.add("is-valid");
@@ -417,51 +418,34 @@
 			mBirth.addEventListener("input", function(){
 				resetValidation(mBirth);
 				
-				if (mBirth.value.trim() == null || mBirth.value.trim() == ""
-					|| !REGEX_BIRTH.test(mBirth.value.trim())) {
+				if (!dateValidation_yyyyMMdd(mBirth)) {
 					mBirth.classList.add("is-invalid");
 				} else {
 					mBirth.classList.add("is-valid");
 				}	
 			});
-			
-			// Validation 초기화
-			function resetValidation(object) {
-				object.classList.remove("is-valid");
-				object.classList.remove("is-invalid");
-			}
 		</script>
 		
 		<!-- 삭제/삭제(업데이트) 모달 -->
 		<script type="text/javascript">
 			if(document.getElementById("btnUelete")){
 				document.getElementById("btnUelete").onclick = function () {
-					document.querySelector("#modalConfirmTitle").textContent = "확인";
-					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제(업데이트)하시겠습니까?";
-					document.querySelector("#btnModalUelete").style.display = '';
-					document.querySelector("#btnModalDelete").style.display = 'none';
-					$("#modalConfirm").modal("show");   	
+					showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none'); 	
 				}
 			}
 	
 			document.getElementById("btnModalUelete").onclick = function () {
-				fom.action = goUrlXdmUele;
-				fom.submit();
+				submit(goUrlXdmUele);
 			}
 			
 			if(document.getElementById("btnDelete")){
 				document.getElementById("btnDelete").onclick = function () {
-					document.querySelector("#modalConfirmTitle").textContent = "확인";
-					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까?";
-					document.querySelector("#btnModalUelete").style.display = 'none';
-					document.querySelector("#btnModalDelete").style.display = '';
-					$("#modalConfirm").modal("show");      	
+					showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');   	
 				}
 			}
 	
 			document.getElementById("btnModalDelete").onclick = function () {
-				fom.action = goUrlXdmDele;
-				fom.submit();
+				submit(goUrlXdmDele);
 			}
 		</script>
       	

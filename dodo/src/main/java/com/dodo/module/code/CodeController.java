@@ -1,14 +1,19 @@
 package com.dodo.module.code;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dodo.module.Constants;
 import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.codegroup.CodeGroupService;
 import com.dodo.module.codegroup.CodeGroupVo;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value="/xdm/code/")
@@ -28,7 +33,12 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmList")
-	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo) throws Exception {
+	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo,
+			HttpSession httpSession) throws Exception {
+		if (httpSession.getAttribute("sessSeqXdm") == null) {
+			return "xdm/member/MemberXdmSignIn";
+		}
+		
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectOneCount(vo));
 		
@@ -40,7 +50,7 @@ public class CodeController {
 	}
 	
 	/**
-	 * 데이터 입력/수정 폼
+	 * 데이터 추가/수정 폼
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmForm")
@@ -93,18 +103,42 @@ public class CodeController {
 	 */
 	@RequestMapping(value = "CodeXdmDele")
 	public String codeXdmDele(CodeDto codeDto) {
+		System.out.println(codeDto.getcSeq());
 		service.delete(codeDto);	
 
 		return "redirect:CodeXdmList";
 	}
 	
 	/**
-	 * 데이터 삭제 옵션 세팅 - update 이용
-	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 * 데이터 삭제하기
+	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "CodeXdmUele")
 	public String codeXdmUele(CodeDto codeDto) {
+		System.out.println(codeDto.getcSeq());
 		service.uelete(codeDto);	
+
+		return "redirect:CodeXdmList";
+	}
+	
+	/**
+	 * 여러건 데이터 삭제하기
+	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "CodeListXdmDele")
+	public String codeListXdmDele(List<CodeDto> codeListDto) {
+		service.listDelete(codeListDto);	
+
+		return "redirect:CodeXdmList";
+	}
+	
+	/**
+	 * 여러건 데이터 삭제 옵션 세팅 - update 이용
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "CodeListXdmUele")
+	public String codeListXdmUele(List<CodeDto> codeListDto) {
+		service.listUelete(codeListDto);	
 
 		return "redirect:CodeXdmList";
 	}

@@ -213,7 +213,7 @@
       	
       	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 		
-		<!-- 변수 정의 -->
+		<!-- 변수 정의 / 공통 함수 -->
 		<script type="text/javascript">
 			// Seq
 			let seq = document.querySelector("input[name=cgSeq]");
@@ -225,10 +225,15 @@
 			let goUrlXdmUele = "/xdm/codegroup/CodeGroupXdmUele";
 			let goUrlXdmDele = "/xdm/codegroup/CodeGroupXdmDele";
 		
-			// Form
+			// Input
 			let cgName = document.getElementById("cgName");
 			let cgUseNy = document.getElementById("cgUseNy");
 			let cgSequence = document.getElementById("cgSequence");
+			
+			function submit(goUrl) {
+				fom.action = goUrl;
+				fom.submit();
+			}
 		</script>
 		
 		<!-- Validation: Bootstrap -->
@@ -240,7 +245,7 @@
 				// cgName 체크
 				resetValidation(cgName);
 				
-				if (cgName.value.trim() == null || cgName.value.trim() == "") {
+				if (!strValidation(cgName)) {
 					cgName.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -254,7 +259,7 @@
 				// cgUseNy 체크
 				resetValidation(cgUseNy);
 				
-				if (cgUseNy.value == null || cgUseNy.value == "") {
+				if (!strValidation(cgUseNy)) {
 					cgUseNy.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -268,9 +273,7 @@
 				// cgSequence 체크
 				resetValidation(cgSequence);
 				
-				if (cgSequence.value.trim() == null || cgSequence.value.trim() == ""
-						|| !REGEX_NUMBER.test(cgSequence.value.trim()) || cgSequence.value.trim() < 1
-						|| isNaN(cgSequence.value.trim())) {
+				if (!positiveNumberValidation(cgSequence)) {
 					cgSequence.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -289,11 +292,9 @@
 				cgSequence.value = cgSequence.value.trim();
 				
 				if(seq.value == "0" || seq.value == "") {
-					fom.action = goUrlXdmInst;
-					fom.submit();
+					submit(goUrlXdmInst);
 				} else {
-					fom.action = goUrlXdmUpdt;
-					fom.submit();
+					submit(goUrlXdmUpdt);
 				}
 			}
 			
@@ -301,7 +302,7 @@
 			cgName.addEventListener("input", function() {
 				resetValidation(cgName);
 				
-				if (cgName.value.trim() == null || cgName.value.trim() == "") {
+				if (!strValidation(cgName)) {
 					cgName.classList.add("is-invalid");
 				} else {
 					cgName.classList.add("is-valid");
@@ -312,7 +313,7 @@
 			cgUseNy.addEventListener("input", function() {
 				resetValidation(cgUseNy);
 				
-				if (cgUseNy.value == null || cgUseNy.value == "") {
+				if (!strValidation(cgUseNy)) {
 					cgUseNy.classList.add("is-invalid");
 				} else {
 					cgUseNy.classList.add("is-valid");
@@ -323,52 +324,34 @@
 			cgSequence.addEventListener("input", function() {
 				resetValidation(cgSequence);
 				
-				if (cgSequence.value.trim() == null || cgSequence.value.trim() == ""
-					|| !REGEX_NUMBER.test(cgSequence.value.trim()) || cgSequence.value.trim() < 1
-					|| isNaN(cgSequence.value.trim())) {
+				if (!positiveNumberValidation(cgSequence)) {
 					cgSequence.classList.add("is-invalid");
 				} else {
 					cgSequence.classList.add("is-valid");
 				}	
 			});
-			
-			// Validation 초기화
-			function resetValidation(object) {
-				object.classList.remove("is-valid");
-				object.classList.remove("is-invalid");
-			}
 		</script>
 		
 		<!-- 삭제/삭제(업데이트) 모달 -->
 		<script type="text/javascript">
 			if(document.getElementById("btnUelete")){
 				document.getElementById("btnUelete").onclick = function () {
-					document.querySelector("#modalConfirmTitle").textContent = "확인";
-					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제(업데이트)하시겠습니까?";
-					document.querySelector("#btnModalUelete").style.display = '';
-					document.querySelector("#btnModalDelete").style.display = 'none';
-					$("#modalConfirm").modal("show");      	
+					showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none');	
 				}
 			}
 	
 			document.getElementById("btnModalUelete").onclick = function () {
-				fom.action = goUrlXdmUele;
-				fom.submit();
+				submit(goUrlXdmUele);
 			}
 			
 			if(document.getElementById("btnDelete")){
 				document.getElementById("btnDelete").onclick = function () {
-					document.querySelector("#modalConfirmTitle").textContent = "확인";
-					document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까?";
-					document.querySelector("#btnModalUelete").style.display = 'none';
-					document.querySelector("#btnModalDelete").style.display = '';
-					$("#modalConfirm").modal("show");      	
+					showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');     	
 				}
 			}
 	
 			document.getElementById("btnModalDelete").onclick = function () {
-				fom.action = goUrlXdmDele;
-				fom.submit();
+				submit(goUrlXdmDele);
 			}
 		</script>
 		

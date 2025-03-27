@@ -14,10 +14,4 @@ public class IndexController {
 										
 		return path + "index";
 	}
-	
-	@RequestMapping(value = "MemberXdmSignOut")	
-	public String memberXdmSignOut() {		
-		Constants.bLogin = false;
-		return "redirect:index";
-	}
 }

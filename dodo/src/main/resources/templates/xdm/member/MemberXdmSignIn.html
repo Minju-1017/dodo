@@ -99,7 +99,7 @@
 				// mId 체크
 				resetValidation(mId);
 				
-				if (mId.value.trim() == null || mId.value.trim() == "") {
+				if (!strValidation(mId)) {
 					mId.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -113,7 +113,7 @@
 				// mPwd 체크
 				resetValidation(mPwd);
 				
-				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
+				if (!strValidation(mPwd)) {
 					mPwd.classList.add("is-invalid");
 					
 					if (!focus) {
@@ -136,7 +136,7 @@
 			mId.addEventListener("input", function() {
 				resetValidation(mId);
 				
-				if (mId.value.trim() == null || mId.value.trim() == "") {
+				if (!strValidation(mId)) {
 					mId.classList.add("is-invalid");
 				} else {
 					mId.classList.add("is-valid");
@@ -147,18 +147,12 @@
 			mPwd.addEventListener("input", function() {
 				resetValidation(mPwd);
 				
-				if (mPwd.value.trim() == null || mPwd.value.trim() == "") {
+				if (!strValidation(mPwd)) {
 					mPwd.classList.add("is-invalid");
 				} else {
 					mPwd.classList.add("is-valid");
 				}		
 			});
-			
-			// Validation 초기화
-			function resetValidation(object) {
-				object.classList.remove("is-valid");
-				object.classList.remove("is-invalid");
-			}
 			
 			function signIn() {
 				$.ajax({

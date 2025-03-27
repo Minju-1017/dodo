@@ -153,6 +153,14 @@
 			cSeq=#{cSeq}
 	</update>
 	
+	<delete id="listDelete" parameterType="java.util.List">
+		DELETE FROM code
+			WHERE
+				<foreach collection="seqList" item="item" separator="or" open="" close="">
+					(cSeq=#{cSeq})
+				</foreach>
+	</delete>
+	
 	<!-- Code Group 데이터는 Code Group 쪽에서 가져오도록 처리
 	<select id="selectCodeGroupList" resultMap="resultMapObj_CG">
 		SELECT

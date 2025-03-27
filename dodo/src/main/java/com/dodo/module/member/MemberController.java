@@ -15,6 +15,8 @@ import com.dodo.module.code.CodeService;
 import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.codegroup.CodeGroupVo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value="/xdm/member/")
 public class MemberController {
@@ -27,24 +29,55 @@ public class MemberController {
 	@Autowired
 	CodeService codeService;
 	
+	/**
+	 * 로그인 화면 이동
+	 * @return
+	 */
 	@RequestMapping(value = "MemberXdmSignIn")	
-	public String memberXdmSignIn() {					
+	public String memberXdmSignIn() throws Exception {				
 		return path + "MemberXdmSignIn";
 	}
 	
+	/**
+	 * Ajax를 통한 로그인 처리
+	 * @param memberDto
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody // Ajax 코드는 무조건 써준다.
 	@RequestMapping(value = "MemberXdmSignInProc")
-	public Map<String, Object> memberXdmSignInProc(MemberDto memberDto) throws Exception {
+	public Map<String, Object> memberXdmSignInProc(MemberDto memberDto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		MemberDto mDto = service.selectSignInMember(memberDto);
 		
 		if (mDto == null) { // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+			httpSession.setAttribute("sessSeqXdm", null);
 			returnMap.put("rt", "fail");
 		} else {
-			Constants.bLogin = true;
+			httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_XDM);
+			httpSession.setAttribute("sessSeqXdm", mDto.getmSeq());
+			httpSession.setAttribute("sessIdXdm", mDto.getmId());
+			httpSession.setAttribute("sessNameXdm", mDto.getmName());
+			
 			returnMap.put("rt", "success");
 		}
+		
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 로그아웃 처리
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberXdmSignOutProc")	
+	public Map<String, Object> memberXdmSignOutProc(HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		returnMap.put("rt", "success");
+		httpSession.setAttribute("sessSeqXdm", null);
 		
 		return returnMap;
 	}
@@ -55,7 +88,12 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmList")
-	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo) throws Exception {
+	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo,
+			HttpSession httpSession) throws Exception {
+		if (httpSession.getAttribute("sessSeqXdm") == null) {
+			return "redirect:MemberXdmSignIn";
+		}
+		
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectOneCount(vo));
 
@@ -67,7 +105,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * 회원관리 - 데이터 입력/수정 폼
+	 * 회원관리 - 데이터 추가/수정 폼
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmForm")

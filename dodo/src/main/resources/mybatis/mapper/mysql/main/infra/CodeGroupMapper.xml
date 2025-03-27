@@ -75,7 +75,12 @@
 	<select id="selectListWithoutPaging" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
+		FROM 
+			codeGroup a
+		WHERE 1=1
+			AND a.cgUseNy = 1
+			AND a.cgDelNy = 0
+		ORDER BY a.cgSeq DESC
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

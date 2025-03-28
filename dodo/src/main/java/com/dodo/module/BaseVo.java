@@ -1,5 +1,7 @@
 package com.dodo.module;
 
+import java.util.Date;
+
 /**
  * 쿼리의 WHERE 구문에 들어가는 조건들은 모두 Vo에 들어간다고 보면 된다.
  * seq는 1개 포함 시키기(Dto에 들어가는 변수명과 동일하게)
@@ -167,6 +169,10 @@ public class BaseVo {
 	public String getShDateStart() {
 		return shDateStart;
 	}
+	
+	public String getShDateStartDB() {
+		return shDateStart + " 00:00:00";
+	}
 
 	public void setShDateStart(String shDateStart) {
 		this.shDateStart = shDateStart;
@@ -174,6 +180,10 @@ public class BaseVo {
 
 	public String getShDateEnd() {
 		return shDateEnd;
+	}
+	
+	public String getShDateEndDB() {
+		return shDateEnd + " 23:59:59";
 	}
 
 	public void setShDateEnd(String shDateEnd) {

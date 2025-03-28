@@ -177,3 +177,32 @@ function deleteCheckedElements(goUrl) {
 	// TODO: 체크한 리스트 삭제 처리
 	// submit(goUrl);		
 }
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Date Time Picker 처리
+ */
+jQuery.datetimepicker.setLocale('ko');
+
+jQuery(function(){
+	jQuery('#shDateStart').datetimepicker({
+		format:'Y-m-d',
+		timepicker:false,
+		onShow:function(ct) {
+			this.setOptions({
+				maxDate:jQuery('#shDateEnd').val()?jQuery('#shDateEnd').val():false
+			})
+		},
+	 });
+	
+	jQuery('#shDateEnd').datetimepicker({
+		format:'Y-m-d',
+		timepicker:false,
+		onShow:function(ct) {
+			this.setOptions({
+				minDate:jQuery('#shDateStart').val()?jQuery('#shDateStart').val():false
+			})
+		},
+	});
+});

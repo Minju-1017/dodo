@@ -4,70 +4,154 @@
 <th:block th:fragment="head"> <!-- 중복되는 head 부분 블록 처리 -->
 
 <head>
-   <!-- Required meta tags -->
+	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta content="Codescandy" name="author">
-	<title>XDM</title>
+	<title>Boardgame Mania</title>
+
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/slick-carousel/slick/slick.css" rel="stylesheet" />
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/slick-carousel/slick/slick-theme.css" rel="stylesheet" />
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/tiny-slider/dist/tiny-slider.css" rel="stylesheet" />
+
 	<!-- Favicon icon-->
-	<link rel="shortcut icon" type="image/x-icon" href="/assets/xdm/template/FreshCart-1.4.0/images/favicon/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/usr/template/FreshCart-1.4.0/images/favicon/favicon.ico">
 
 	<!-- Libs CSS -->
-	<link href="/assets/xdm/template/FreshCart-1.4.0/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
-	<link href="/assets/xdm/template/FreshCart-1.4.0/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
-	<link href="/assets/xdm/template/FreshCart-1.4.0/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
 
 	<!-- Theme CSS -->
-	<link rel="stylesheet" href="/assets/xdm/template/FreshCart-1.4.0/css/theme.min.css">
-  	</head>
+	<link rel="stylesheet" href="/assets/usr/template/FreshCart-1.4.0/css/theme.min.css">
+</head>
 
 <body>
-	<!-- main -->
-	<div>
 	<!-- navbar -->
-		<nav class="navbar navbar-expand-lg navbar-glass">
-			<div class="container-fluid">
-				<div class="d-flex justify-content-between align-items-center w-100">
-					<div class="d-flex align-items-center">
-						<a class="text-inherit d-block d-xl-none me-4" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-							<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-text-indent-right" viewBox="0 0 16 16">
-								<path
-									d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm10.646 2.146a.5.5 0 0 1 .708.708L11.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zM2 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"
-								/>
-							</svg>
+	<div class="border-bottom">
+		<div class="py-5">
+			<div class="container">
+				<div class="row w-100 align-items-center gx-lg-2 gx-0">
+					<div class="col-xxl-2 col-lg-3 col-md-6 col-5">
+						<a class="navbar-brand d-none d-lg-block" href="/usr/index">
+							<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" />
 						</a>
-
-						<form role="search">
-							<label for="search" class="form-label visually-hidden">Search</label>
-							<input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search" />
-						</form>
+						<div class="d-flex justify-content-between w-100 d-lg-none">
+							<a class="navbar-brand" href="/usr/index">
+								<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" />
+							</a>
+						</div>
 					</div>
-					<div th:if="${session.sessSeqXdm ne null}">
-						<ul class="list-unstyled d-flex align-items-center mb-0 ms-5 ms-lg-0">
-							<li class="dropdown ms-4">
-								<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="/assets/xdm/template/FreshCart-1.4.0/images/avatar/avatar-1.jpg" alt="" class="avatar avatar-md rounded-circle" />
+					<div class="col-xxl-8 col-lg-5 d-none d-lg-block"></div>
+					<div class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
+						<div class="list-inline">
+							<div class="list-inline-item me-5">
+								<a href="./pages/myboardgame-wish.html" class="text-muted position-relative">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+										fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round" class="feather feather-heart">
+										<path
+											d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+										</path>
+									</svg>
+									<span
+										class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+										3
+										<span class="visually-hidden">unread messages</span>
+									</span>
 								</a>
-								<div class="dropdown-menu dropdown-menu-end p-0">
-									<div class="lh-1 px-5 py-4 border-bottom">
-										<h5 class="mb-1 h6">[[${session.sessNameXdm}]]</h5>
-										<small>[[${session.sessGradeXdm}]]</small>
-									</div>
-									<div class="px-5 py-3">
-										<a id="btnSignOut" href="javascript:void(0);">Log Out</a>
-									</div>
-								</div>
-							</li>
-						</ul>
+							</div>
+							<div class="list-inline-item me-5 me-lg-0">
+								<a href="./pages/signup.html" class="text-muted">
+								<!-- <a href="#!" class="text-muted" data-bs-toggle="modal" data-bs-target="#userModal"> -->
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+										fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+										stroke-linejoin="round" class="feather feather-user">
+										<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+										<circle cx="12" cy="7" r="4"></circle>
+									</svg>
+								</a>
+							</div>
+							<div class="list-inline-item d-inline-block d-lg-none">
+								<!-- Button -->
+								<button class="navbar-toggler collapsed" type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#navbar-default" aria-controls="navbar-default"
+									aria-label="Toggle navigation">
+									<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+										class="bi bi-text-indent-left text-primary" viewBox="0 0 16 16">
+										<path
+											d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+									</svg>
+								</button>
+							</div>
+						</div>
 					</div>
-					<div th:if="${session.sessSeqXdm eq null}">
-						<a href="/xdm/member/MemberXdmSignIn" 
-							class="btn btn-outline-primary rounded-circle border-0">
-							<i class="bi bi-person fs-4"></i>
-						</a>
+				</div>
+			</div>
+		</div>
+
+		<nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-4"
+			aria-label="Offcanvas navbar large">
+			<div class="container">
+				<div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default"
+					aria-labelledby="navbar-defaultLabel">
+					<div class="offcanvas-body">
+						<div>
+							<ul class="navbar-nav align-items-center">
+								<li class="nav-item w-100 w-lg-auto">
+									<a class="nav-link" href="./index.html">홈</a>
+								</li>
+								<li class="nav-item dropdown w-100 w-lg-auto">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">보드게임</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="./pages/boardgame-top10.html">Top 10</a></li>
+										<li><a class="dropdown-item" href="./pages/boardgame-info.html">정보 및 리뷰</a></li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown w-100 w-lg-auto">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">게시판</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="./pages/board-review.html">게임 후기</a></li>
+										<li><a class="dropdown-item" href="./pages/board-free.html">자유게시판</a></li>
+										<li><a class="dropdown-item" href="./pages/board-off-meeting.html">오프라인 모임</a></li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown w-100 w-lg-auto">
+									<a class="nav-link" href="./pages/usedgame-shopping.html">중고 거래</a>
+								</li>
+								<li class="nav-item dropdown w-100 w-lg-auto">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">내 보드게임</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="./pages/myboardgame-holding.html">보유 게임</a></li>
+										<li><a class="dropdown-item" href="./pages/myboardgame-wish.html">위시 리스트</a></li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown w-100 w-lg-auto">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">내 쇼핑</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="./pages/myshopping-sales.html">판매 내역</a></li>
+										<li><a class="dropdown-item" href="./pages/myshopping-purchase.html">구매 내역</a></li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown w-100 w-lg-auto">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">내 정보</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="./pages/account-settings.html">기본 정보 변경</a></li>
+										<li><a class="dropdown-item" href="./pages/account-settings-pwd.html">비밀번호 변경</a></li>
+										<li><a class="dropdown-item" href="./pages/account-settings-withdrawal.html">회원 탈퇴</a>
+									</ul>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
 		</nav>
-	</th:block>
+	</div>
+</th:block>
 </html>

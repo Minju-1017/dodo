@@ -1,494 +1,585 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+	<div th:replace="~{/usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
-   	<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
-   	
-		<div class="main-wrapper">
-			<!-- navbar vertical -->
-			<!-- navbar -->
-			<nav class="navbar-vertical-nav d-none d-xl-block">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
-						</a>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column" id="sideNavbar">
-							<li class="nav-item">
-								<a class="nav-link active" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">Home</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
-									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<!-- Nav item -->
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
-									</div>
-								</a>
-							</li>
-						</ul>
+	<main>
+		<section class="mt-8">
+			<div class="container">
+				<div class="hero-slider">
+					<a href="https://brand.naver.com/asmodeekorea/products/11519633055" target="_blank">
+						<div style="background: url(/assets/usr/template/FreshCart-1.4.0/images/slider/slide-1.png) no-repeat; background-size: cover; border-radius: 0.5rem; background-position: center">
+							<div class="ps-lg-12 py-lg-16 col-xxl-5 col-md-7 py-14 px-8 text-xs-center">
+								<h2 class="text-dark display-5 fw-bold mt-4">&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;</h2>
+							</div>
+						</div>
+					</a>
+					<a href="http://s.godo.kr/2nqfa" target="_blank">
+						<div style="background: url(/assets/usr/template/FreshCart-1.4.0/images/slider/slide-2.png) no-repeat; background-size: cover; border-radius: 0.5rem; background-position: center">
+							<div class="ps-lg-12 py-lg-16 col-xxl-5 col-md-7 py-14 px-8 text-xs-center">
+								<h2 class="text-dark display-5 fw-bold mt-4">&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;<br/>&nbsp;</h2>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Category Section Start-->
+		<section class="mb-lg-10 mt-lg-14 my-8">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 mb-6">
+						<h3 class="mb-0">주요 카테고리</h3>
 					</div>
 				</div>
-			</nav>
-
-           	<!-- main wrapper -->
-			<main class="main-content-wrapper">
-				<section class="container">
-					<!-- row -->
-					<div class="row mb-8">
-						<div class="col-md-12">
-							<!-- card -->
-							<div
-							class="card bg-light border-0 rounded-4"
-							style="background-image: url(/assets/xdm/template/FreshCart-1.4.0/images/slider/slider-image-1.jpg); background-repeat: no-repeat; background-size: cover; background-position: right">
-								<div class="card-body p-lg-12">
-									<h1>Welcome back! FreshCart</h1>
-									<p>FreshCart is simple & clean design for developer and designer.</p>
-									<a href="#" class="btn btn-primary">Create Product</a>
+				<div class="category-slider">
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-1.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3 img-fluid" />
+									<div class="text-truncate">전략</div>
 								</div>
 							</div>
-						</div>
+						</a>
 					</div>
-					<!-- table -->
-					<div class="table-responsive-xl mb-6 mb-lg-0">
-						<div class="row flex-nowrap pb-3 pb-lg-0">
-							<div class="col-lg-4 col-12 mb-6">
-								<!-- card -->
-								<div class="card h-100 card-lg">
-									<!-- card body -->
-									<div class="card-body p-6">
-										<!-- heading -->
-										<div class="d-flex justify-content-between align-items-center mb-6">
-											<div>
-											<h4 class="mb-0 fs-5">Earnings</h4>
-											</div>
-											<div class="icon-shape icon-md bg-light-danger text-dark-danger rounded-circle">
-											<i class="bi bi-currency-dollar fs-5"></i>
-											</div>
-										</div>
-										<!-- project number -->
-										<div class="lh-1">
-											<h1 class="mb-2 fw-bold fs-2">$93,438.78</h1>
-											<span>Monthly revenue</span>
-										</div>
-									</div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-2.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">추상</div>
 								</div>
 							</div>
-							<div class="col-lg-4 col-12 mb-6">
-								<!-- card -->
-								<div class="card h-100 card-lg">
-									<!-- card body -->
-									<div class="card-body p-6">
-										<!-- heading -->
-										<div class="d-flex justify-content-between align-items-center mb-6">
-											<div>
-											<h4 class="mb-0 fs-5">Orders</h4>
-											</div>
-											<div class="icon-shape icon-md bg-light-warning text-dark-warning rounded-circle">
-											<i class="bi bi-cart fs-5"></i>
-											</div>
-										</div>
-										<!-- project number -->
-										<div class="lh-1">
-											<h1 class="mb-2 fw-bold fs-2">42,339</h1>
-											<span>
-											<span class="text-dark me-1">35+</span>
-											New Sales
-											</span>
-										</div>
-									</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-3.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">컬렉터블</div>
 								</div>
 							</div>
-							<div class="col-lg-4 col-12 mb-6">
-								<!-- card -->
-								<div class="card h-100 card-lg">
-									<!-- card body -->
-									<div class="card-body p-6">
-										<!-- heading -->
-										<div class="d-flex justify-content-between align-items-center mb-6">
-											<div>
-											<h4 class="mb-0 fs-5">Customer</h4>
-											</div>
-											<div class="icon-shape icon-md bg-light-info text-dark-info rounded-circle">
-											<i class="bi bi-people fs-5"></i>
-											</div>
-										</div>
-										<!-- project number -->
-										<div class="lh-1">
-											<h1 class="mb-2 fw-bold fs-2">39,354</h1>
-											<span>
-											<span class="text-dark me-1">30+</span>
-											new in 2 days
-											</span>
-										</div>
-									</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-4.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">가족</div>
 								</div>
 							</div>
-						</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-5.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">어린이</div>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-6.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">파티</div>
+								</div>
+							</div>
+						</a>
 					</div>
 
-					<!-- row -->
-					<div class="row">
-						<div class="col-xl-8 col-lg-6 col-md-12 col-12 mb-6">
-							<!-- card -->
-							<div class="card h-100 card-lg">
-								<div class="card-body p-6">
-									<!-- heading -->
-									<div class="d-flex justify-content-between">
-										<div>
-											<h3 class="mb-1 fs-5">Revenue</h3>
-											<small>(+63%) than last year)</small>
-										</div>
-										<div>
-											<!-- select option -->
-											<select class="form-select">
-											<option selected>2019</option>
-											<option value="2023">2020</option>
-											<option value="2024">2021</option>
-											<option value="2025">2022</option>
-											<option value="2025">2023</option>
-											</select>
-										</div>
-									</div>
-									<!-- chart -->
-									<div id="revenueChart" class="mt-6"></div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-7.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">테마</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-xl-4 col-lg-6 col-12 mb-6">
-							<!-- card -->
-							<div class="card h-100 card-lg">
-								<!-- card body -->
-								<div class="card-body p-6">
-									<!-- heading -->
-									<h3 class="mb-0 fs-5">Total Sales</h3>
-									<div id="totalSale" class="mt-6 d-flex justify-content-center"></div>
-									<div class="mt-4">
-										<!-- list -->
-										<ul class="list-unstyled mb-0">
-											<li class="mb-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-circle-fill text-primary" viewBox="0 0 16 16">
-												<circle cx="8" cy="8" r="8" />
-											</svg>
-											<span class="ms-1">
-												<span class="text-dark">Shippings $32.98</span>
-												(2%)
-											</span>
-											</li>
-											<li class="mb-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-circle-fill text-warning" viewBox="0 0 16 16">
-												<circle cx="8" cy="8" r="8" />
-											</svg>
-											<span class="ms-1">
-												<span class="text-dark">Refunds $11</span>
-												(11%)
-											</span>
-											</li>
-											<li class="mb-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-circle-fill text-danger" viewBox="0 0 16 16">
-												<circle cx="8" cy="8" r="8" />
-											</svg>
-											<span class="ms-1">
-												<span class="text-dark">Order $14.87</span>
-												(1%)
-											</span>
-											</li>
-											<li>
-											<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-circle-fill text-info" viewBox="0 0 16 16">
-												<circle cx="8" cy="8" r="8" />
-											</svg>
-											<span class="ms-1">
-												<span class="text-dark">Income 3,271</span>
-												(86%)
-											</span>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
+						</a>
 					</div>
-					<!-- row -->
-					<div class="row">
-						<div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-6">
-							<!-- card -->
-							<div class="card h-100 card-lg">
-								<!-- card body -->
-								<div class="card-body p-6">
-									<h3 class="mb-0 fs-5">Sales Overview</h3>
-									<div class="mt-6">
-										<!-- text -->
-										<div class="mb-5">
-											<div class="d-flex align-items-center justify-content-between">
-												<h5 class="fs-6">Total Profit</h5>
-												<span>
-													<span class="me-1 text-dark">$1,619</span>
-													(8.6%)
-												</span>
-											</div>
-											<!-- main wrapper -->
-											<div>
-												<!-- progressbar -->
-												<div class="progress bg-light-primary" style="height: 6px">
-													<div
-														class="progress-bar bg-primary"
-														role="progressbar"
-														aria-label="Example 1px high"
-														style="width: 25%"
-														aria-valuenow="25"
-														aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</div>
-										</div>
-										<div class="mb-5">
-											<!-- text -->
-											<div class="d-flex align-items-center justify-content-between">
-												<h5 class="fs-6">Total Income</h5>
-												<span>
-													<span class="me-1 text-dark">$3,571</span>
-													(86.4%)
-												</span>
-											</div>
-											<div>
-												<!-- progressbar -->
-												<div class="progress bg-info-soft" style="height: 6px">
-													<div
-														class="progress-bar bg-info"
-														role="progressbar"
-														aria-label="Example 1px high"
-														style="width: 88%"
-														aria-valuenow="88"
-														aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</div>
-										</div>
-										<div>
-											<!-- text -->
-											<div class="d-flex align-items-center justify-content-between">
-												<h5 class="fs-6">Total Expenses</h5>
-												<span>
-													<span class="me-1 text-dark">$3,430</span>
-													(74.5%)
-												</span>
-											</div>
-											<div>
-												<!-- progressbar -->
-												<div class="progress bg-light-danger" style="height: 6px">
-													<div
-														class="progress-bar bg-danger"
-														role="progressbar"
-														aria-label="Example 1px high"
-														style="width: 45%"
-														aria-valuenow="45"
-														aria-valuemin="0"
-														aria-valuemax="100"></div>
-												</div>
-											</div>
-										</div>
-									</div>
+					<div class="item">
+						<a href="./pages/boardgame-info-grid.html" class="text-decoration-none text-inherit">
+							<div class="card card-product mb-lg-4">
+								<div class="card-body text-center py-8">
+									<img src="/assets/usr/template/FreshCart-1.4.0/images/category/category-8.jpg"
+										alt="Grocery Ecommerce Template" class="mb-3" />
+									<div class="text-truncate">워게임</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-xl-6 col-lg-6 col-md-12 col-12 mb-6">
-							<div class="position-relative h-100">
-								<!-- card -->
-								<div class="card card-lg mb-6">
-									<!-- card body -->
-									<div class="card-body px-6 py-8">
-										<div class="d-flex align-items-center">
-											<div>
-												<!-- svg -->
-												<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bell text-warning" viewBox="0 0 16 16">
-													<path
-														d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-												</svg>
-											</div>
-											<!-- text -->
-											<div class="ms-4">
-												<h5 class="mb-1">Start your day with New Notification.</h5>
-												<p class="mb-0">
-													You have
-													<a class="link-info" href="#!">2 new notification</a>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- card -->
-								<div class="card card-lg">
-									<!-- card body -->
-									<div class="card-body px-6 py-8">
-										<div class="d-flex align-items-center">
-											<!-- svg -->
-											<div>
-												<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-lightbulb text-success" viewBox="0 0 16 16">
-													<path
-														d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z" />
-												</svg>
-											</div>
-											<!-- text -->
-											<div class="ms-4">
-												<h5 class="mb-1">Monitor your Sales and Profitability</h5>
-												<p class="mb-0"><a class="link-info" href="#!">View Performance</a></p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						</a>
 					</div>
-					<!-- row -->
-					<div class="row">
-						<div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-6">
-							<div class="card h-100 card-lg">
-								<!-- heading -->
-								<div class="p-6">
-									<h3 class="mb-0 fs-5">Recent Order</h3>
-								</div>
-								<div class="card-body p-0">
-									<!-- table -->
-									<div class="table-responsive">
-										<table class="table table-centered table-borderless text-nowrap table-hover">
-											<thead class="bg-light">
-												<tr>
-													<th scope="col">Order Number</th>
-													<th scope="col">Product Name</th>
-													<th scope="col">Order Date</th>
-													<th scope="col">Price</th>
-													<th scope="col">Status</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>#FC0005</td>
-													<td>Haldiram's Sev Bhujia</td>
-													<td>28 March 2023</td>
-													<td>$18.00</td>
-													<td>
-														<span class="badge bg-light-primary text-dark-primary">Shipped</span>
-													</td>
-												</tr>
-												<tr>
-													<td>#FC0004</td>
-													<td>NutriChoice Digestive</td>
-													<td>24 March 2023</td>
-													<td>$24.00</td>
-													<td>
-														<span class="badge bg-light-warning text-dark-warning">Pending</span>
-													</td>
-												</tr>
-												<tr>
-													<td>#FC0003</td>
-													<td>Onion Flavour Potato</td>
-													<td>8 Feb 2023</td>
-													<td>$9.00</td>
-													<td>
-														<span class="badge bg-light-danger text-dark-danger">Cancel</span>
-													</td>
-												</tr>
-												<tr>
-													<td>#FC0002</td>
-													<td>Blueberry Greek Yogurt</td>
-													<td>20 Jan 2023</td>
-													<td>$12.00</td>
-													<td>
-														<span class="badge bg-light-warning text-dark-warning">Pending</span>
-													</td>
-												</tr>
-												<tr>
-													<td>#FC0001</td>
-													<td>Slurrp Millet Chocolate</td>
-													<td>14 Jan 2023</td>
-													<td>$8.00</td>
-													<td>
-														<span class="badge bg-light-info text-dark-info">Processing</span>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
+				</div>
+			</div>
+		</section>
+		<!-- Popular Products Start-->
+		<section class="my-lg-14 my-8">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 mb-6">
+						<h3 class="mb-0">실시간 인기 게임</h3>
 					</div>
-				</section>
-			</main>
-        </div>
-      	
-      	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+				</div>
 
-   	</body>
-</html>
+				<div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">1</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-1.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip" 
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart" 
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">추상</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">캘리코</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+									</small>
+									<span class="text-muted small">9.87(2333)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">2</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-2.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">추상</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">캐스캐디아</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+									</small>
+									<span class="text-muted small">9.2(1589)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">3</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-3.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">가족</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">크라스 카리어트</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+									</small>
+									<span class="text-muted small">9.01(1322)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">4</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-4.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">추상</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">노바 루나</a></h2>	
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+									</small>
+									<span class="text-muted small">8.97(899)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">5</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-5.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">가족</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">스페이스 크루</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+									</small>
+									<span class="text-muted small">8.5(301)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">6</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-6.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">워게임</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">황혼의 투쟁</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+									</small>
+									<span class="text-muted small">8.21(149)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">7</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-7.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">파티</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">텔레스트레이션</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+									</small>
+									<span class="text-muted small">7.9(999)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">8</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-8.jpg"
+											class="mb-3 img-fluid" /></a>
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">전략</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">가이아 프로젝트</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+									</small>
+									<span class="text-muted small">7.8(149)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">9</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-9.jpg"
+											class="mb-3 img-fluid" /></a>
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">전략</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">7 원더스 대결</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star"></i>
+									</small>
+									<span class="text-muted small">7.11(1561)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<div class="position-absolute top-0 start-0">
+										<span class="badge bg-danger">10</span>
+									</div>
+									<a href="./pages/boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-10.jpg"
+											class="mb-3 img-fluid" /></a>
+
+									<div class="card-product-action">
+										<a href="./pages/myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip"
+											data-bs-html="true" title="내 게임 등록"></i></a>
+										<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
+											title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a href="./pages/usedgame-shopping.html" class="btn-action"><i class="bi bi-cart"
+											data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+									</div>
+								</div>
+								<div class="text-small mb-1">
+									<small class="text-muted">추상</small>
+								</div>
+								<h2 class="fs-6"><a href="./pages/boardgame-detail.html"
+										class="text-inherit text-decoration-none">아줄</a></h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									</span>
+								</div>
+								<div>
+									<small class="text-warning">
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-fill"></i>
+										<i class="bi bi-star-half"></i>
+										<i class="bi bi-star"></i>
+									</small>
+									<span class="text-muted small">6.89(149)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Popular Products End-->
+	</main>
+	
+	<div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+</body>

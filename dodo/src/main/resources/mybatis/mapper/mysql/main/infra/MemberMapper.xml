@@ -17,13 +17,13 @@
 					and shOptionDate == 1
 					and shDateStart != null and !shDateStart.equals('')
 					and shDateEnd != null and !shDateEnd.equals('')">
-					AND a.mRegiDate BETWEEN #{shDateStart} AND #{shDateEnd}
+					AND a.mRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
 				</when>
 				<when test="shOptionDate != null and !shOptionDate.equals('')
 					and shOptionDate == 2
 					and shDateStart != null and !shDateStart.equals('')
 					and shDateEnd != null and !shDateEnd.equals('')">
-					AND a.mUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
+					AND a.mUpdtDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
 				</when>
 			</choose>				
 	        <choose>

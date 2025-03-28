@@ -66,7 +66,7 @@
 											<button type="button" id="btnSignIn" class="btn btn-primary">로그인</button>
 										</div>
 										<div class="col-6 d-grid">
-											<a href="/xdm/index" class="btn btn-secondary">취소</a>
+											<a href="/usr/index" class="btn btn-secondary">취소</a>
 										</div>
 										<div>
 											회원가입이 필요하세요?
@@ -165,7 +165,7 @@
 					,data : { "mId" : $("#mId").val(), "mPwd" : $("#mPwd").val(), "autoLogin" : $("#autoLogin").is(":checked")}
 					,success: function(response) {
 						if (response.rt == "success") {
-							location.href = "/xdm/index";
+							location.href = "/usr/index";
 						} else if (response.rt == "fail_member") {  
 							showModalAlert("확인", "관리자만 로그인 할 수 있습니다!");
 						} else {  

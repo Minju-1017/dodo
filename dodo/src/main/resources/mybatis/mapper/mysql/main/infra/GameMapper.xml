@@ -15,13 +15,13 @@
 					and shOptionDate == 1
 					and shDateStart != null and !shDateStart.equals('')
 					and shDateEnd != null and !shDateEnd.equals('')">
-					AND a.gRegiDate BETWEEN #{shDateStart} AND #{shDateEnd}
+					AND a.gRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
 				</when>
 				<when test="shOptionDate != null and !shOptionDate.equals('')
 					and shOptionDate == 2
 					and shDateStart != null and !shDateStart.equals('')
 					and shDateEnd != null and !shDateEnd.equals('')">
-					AND a.gUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}
+					AND a.gUpdtDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
 				</when>
 			</choose>
 			<if test="shCategoryCd != null and !shCategoryCd.equals('')">AND a.gCategoryCd = #{shCategoryCd}</if>

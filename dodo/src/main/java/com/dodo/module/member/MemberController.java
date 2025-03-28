@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping(value={"/xdm/member/", "/usr/member/"})
 public class MemberController {
 
-	private String path_xdm = "xdm/member/";
+	private String path_admin = "xdm/member/";
 	private String path_user = "usr/member/";
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberXdmSignIn")	
 	public String memberXdmSignIn() throws Exception {				
-		return path_xdm + "MemberXdmSignIn";
+		return path_admin + "MemberXdmSignIn";
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class MemberController {
 			model.addAttribute("memberList", service.selectList(vo));
 		}
 		
-		return path_xdm + "MemberXdmList";
+		return path_admin + "MemberXdmList";
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class MemberController {
 			model.addAttribute("memberItem", service.selectOne(memberDto));
 		}
 		
-		return path_xdm + "MemberXdmForm";
+		return path_admin + "MemberXdmForm";
 	}
 	
 	/**

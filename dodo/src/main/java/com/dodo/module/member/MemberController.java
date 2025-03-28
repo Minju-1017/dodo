@@ -18,10 +18,11 @@ import com.dodo.module.codegroup.CodeGroupVo;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping(value="/xdm/member/")
+@RequestMapping(value={"/xdm/member/", "/usr/member/"})
 public class MemberController {
 
-	private String path = "xdm/member/";
+	private String path_xdm = "xdm/member/";
+	private String path_user = "usr/member/";
 	
 	@Autowired
 	MemberService service;
@@ -35,7 +36,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberXdmSignIn")	
 	public String memberXdmSignIn() throws Exception {				
-		return path + "MemberXdmSignIn";
+		return path_xdm + "MemberXdmSignIn";
 	}
 	
 	/**
@@ -49,18 +50,25 @@ public class MemberController {
 	public Map<String, Object> memberXdmSignInProc(MemberDto memberDto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		MemberDto mDto = service.selectSignInMember(memberDto);
+		MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
 		
-		if (mDto == null) { // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+		if (mDto == null) { 
 			httpSession.setAttribute("sessSeqXdm", null);
-			returnMap.put("rt", "fail");
+			returnMap.put("rt", "fail_none");
 		} else {
-			httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_XDM);
-			httpSession.setAttribute("sessSeqXdm", mDto.getmSeq());
-			httpSession.setAttribute("sessIdXdm", mDto.getmId());
-			httpSession.setAttribute("sessNameXdm", mDto.getmName());
-			
-			returnMap.put("rt", "success");
+			if (mDto.getmGradeCd() != Constants.MEMBER_GRADE_CODE_ADMIN) {
+				returnMap.put("rt", "fail_member");
+				mDto = null;
+			} else {
+				httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_XDM);
+				httpSession.setAttribute("sessSeqXdm", mDto.getmSeq());
+				httpSession.setAttribute("sessIdXdm", mDto.getmId());
+				httpSession.setAttribute("sessNameXdm", mDto.getmName());
+				httpSession.setAttribute("sessGradeXdm", 
+						CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
+				
+				returnMap.put("rt", "success");
+			}
 		}
 		
 		return returnMap;
@@ -76,8 +84,12 @@ public class MemberController {
 	public Map<String, Object> memberXdmSignOutProc(HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		returnMap.put("rt", "success");
 		httpSession.setAttribute("sessSeqXdm", null);
+		httpSession.setAttribute("sessIdXdm", null);
+		httpSession.setAttribute("sessNameXdm", null);
+		httpSession.setAttribute("sessGradeXdm", null);
+		
+		returnMap.put("rt", "success");
 		
 		return returnMap;
 	}
@@ -101,7 +113,7 @@ public class MemberController {
 			model.addAttribute("memberList", service.selectList(vo));
 		}
 		
-		return path + "MemberXdmList";
+		return path_xdm + "MemberXdmList";
 	}
 	
 	/**
@@ -118,7 +130,7 @@ public class MemberController {
 			model.addAttribute("memberItem", service.selectOne(memberDto));
 		}
 		
-		return path + "MemberXdmForm";
+		return path_xdm + "MemberXdmForm";
 	}
 	
 	/**

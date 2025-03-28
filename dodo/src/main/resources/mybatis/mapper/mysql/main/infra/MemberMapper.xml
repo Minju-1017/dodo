@@ -10,7 +10,8 @@
 			member a
 		WHERE 1=1
        		<if test="shDelNy != null and !shDelNy.equals('')">AND a.mDelNy = #{shDelNy}</if> 
-       		<if test="shGender != null and !shGender.equals('')">AND a.mGenderCd = #{shGender}</if>			
+       		<if test="shGenderCd != null and !shGenderCd.equals('')">AND a.mGenderCd = #{shGenderCd}</if>
+       		<if test="shGradeCd != null and !shGradeCd.equals('')">AND a.mGradeCd = #{shGradeCd}</if>						
 			<choose>
 				<when test="shOptionDate != null and !shOptionDate.equals('')
 					and shOptionDate == 1
@@ -46,6 +47,7 @@
 	    a.mRegiDate,
 	    a.mUpdtDate,
 	    a.mPfFileName,
+	    a.mGradeCd,
 	    a.mDelNy
 	</sql>
 	<!-- End -->
@@ -91,6 +93,7 @@
 			mBirth=#{mBirthStr},
 			mGenderCd=#{mGenderCd},
 			mPfFileName=#{mPfFileName},
+			mGradeCd=#{mGradeCd},
 			mUpdtDate=now()
 		WHERE
 			mSeq=#{mSeq}

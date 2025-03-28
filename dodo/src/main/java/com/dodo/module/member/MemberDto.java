@@ -18,6 +18,7 @@ public class MemberDto {
 	
 	private int mGenderCd;
 	private String mPfFileName;
+	private int mGradeCd;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date mRegiDate;
@@ -93,6 +94,14 @@ public class MemberDto {
 	
 	public void setmPfFileName(String mPfFileName) {
 		this.mPfFileName = mPfFileName;
+	}
+
+	public int getmGradeCd() {
+		return mGradeCd;
+	}
+
+	public void setmGradeCd(int mGradeCd) {
+		this.mGradeCd = mGradeCd;
 	}
 
 	public Date getmRegiDate() {

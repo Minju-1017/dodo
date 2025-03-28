@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta content="Codescandy" name="author">
+	<title>Board Mania - 회원가입</title>
+	<!-- Favicon icon-->
+	<link rel="shortcut icon" type="image/x-icon" href="/assets/usr/template/FreshCart-1.4.0/images/favicon/favicon.ico">
+	
+	<!-- Libs CSS -->
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
+	<link href="/assets/usr/template/FreshCart-1.4.0/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
+	
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="/assets/usr/template/FreshCart-1.4.0/css/theme.min.css">
+	
+	<!-- Date Time Picker CSS (https://xdsoft.net/jqplugins/datetimepicker/) -->
+	<link rel="stylesheet" type="text/css" href="/assets/common/css/jquery.datetimepicker.css">
+</head>
+
+<body>
+	<!-- navigation -->
+	<div class="border-bottom shadow-sm">
+		<nav class="navbar navbar-light py-2">
+			<div class="container justify-content-center justify-content-lg-between">
+				<a class="navbar-brand" href="../index.html">
+					<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" class="d-inline-block align-text-top">
+				</a>
+				<span class="navbar-text">이미 회원인가요? <a href="../pages/signin.html">로그인</a></span>
+			</div>
+		</nav>
+	</div>
+
+	<main>
+		<section class="my-lg-14 my-8">
+			<div class="container">
+				<div class="row justify-content-center align-items-center">
+					<div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
+						<img src="/assets/usr/template/FreshCart-1.4.0/images/svg-graphics/signup-g.svg" 
+							alt="" class="img-fluid" />
+					</div>
+					<div class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1">
+						<div class="mb-lg-9 mb-5">
+							<h1 class="mb-1 h2 fw-bold">회원가입</h1>
+							<p>보드게임 매니아에 오신 것을 환영합니다!</p>
+						</div>
+						<form class="needs-validation" novalidate>
+							<div class="row g-3">
+								<div class="col-12">
+									<label for="id" class="form-label visually-hidden">아이디</label>
+									<input type="text" class="form-control" id="id" placeholder="아이디" required />
+									<div class="invalid-feedback">아이디를 입력해 주세요.</div>
+								</div>
+								<div class="col-12">
+									<label for="fullName" class="form-label visually-hidden">이름</label>
+									<input type="text" class="form-control" id="fullName" placeholder="이름" required />
+									<div class="invalid-feedback">이름을 입력해 주세요.</div>
+								</div>
+								<div class="col-12">
+									<label for="formSignupEmail" class="form-label visually-hidden">이메일</label>
+									<input type="email" class="form-control" id="formSignupEmail" placeholder="이메일" required />
+									<div class="invalid-feedback">이메일을 입력해 주세요.</div>
+								</div>
+								<div class="col-12">
+									<div class="password-field position-relative">
+										<label for="formSignupPassword" class="form-label visually-hidden">비밀번호</label>
+										<div class="password-field position-relative">
+											<input type="password" class="form-control fakePassword" id="formSignupPassword" placeholder="비밀번호" required />
+											<span><i class="bi bi-eye-slash passwordToggler"></i></span>
+											<div class="invalid-feedback">비밀번호를 입력해 주세요.</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+									<div class="password-field position-relative">
+										<label for="formSignupPassword" class="form-label visually-hidden">비밀번호 재입력</label>
+										<div class="password-field position-relative">
+											<input type="password" class="form-control fakePassword" id="formSignupPassword" placeholder="비밀번호 재입력" required />
+											<span><i class="bi bi-eye-slash passwordToggler"></i></span>
+											<div class="invalid-feedback">비밀번호를 다시 입력해 주세요.</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+									<label class="form-label visually-hidden">생년월일</label>
+									<input type="number" class="form-control" id="formSignupBirth" placeholder="생년월일 예) 20250101" oninput="handleOnInput(this, 8)" required />
+									<div class="invalid-feedback">생년월일 8자리를 입력해 주세요.</div>
+								</div>
+								<div class="col-12">
+									<label class="form-label visually-hidden">성별</label>
+									<div class="row mb-3">
+										<div class="col-3">
+											<input class="form-check-input" type="radio" name="flexRadioDefault" id="maleRadio" />
+											<label class="form-check-label text-dark" for="maleRadio">남</label>
+										</div>
+										<div class="col-3">
+											<input class="form-check-input" type="radio" name="flexRadioDefault" id="femaleRadio" />
+											<label class="form-check-label text-dark" for="femaleRadio">여</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 d-grid"><button type="submit" class="btn btn-primary">회원가입</button></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+    <div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+    
+  </body>
+
+</html>

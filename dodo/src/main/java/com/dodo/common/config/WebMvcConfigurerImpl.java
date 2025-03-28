@@ -18,6 +18,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 					"/xdm/member/MemberXdmSignIn",
 					"/xdm/member/MemberXdmSignInProc",
 					"/usr/index",
+					"/usr/member/MemberUsrSignUpForm",
 					"/usr/member/MemberUsrSignIn",
 					"/usr/member/MemberUsrSignInProc"
 		);

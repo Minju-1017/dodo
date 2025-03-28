@@ -29,7 +29,28 @@ public class MemberController {
 	CodeService codeService;
 	
 	/**
-	 * 로그인 화면 이동
+	 * 회원가입 화면 이동 - User
+	 * @return
+	 */
+	@RequestMapping(value = "MemberUsrSignUpForm")	
+	public String memberUsrSignUpForm() throws Exception {				
+		return path_user + "MemberUsrSignUpForm";
+	}
+	
+	////////////////TODO: 사람 이미지 누르면 로그인 화면으로 이동하게 변경
+	
+	
+	/**
+	 * 로그인 화면 이동 - User
+	 * @return
+	 */
+	@RequestMapping(value = "MemberUsrSignIn")	
+	public String memberUsrSignIn() throws Exception {				
+		return path_user + "MemberUsrSignIn";
+	}
+	
+	/**
+	 * 로그인 화면 이동 - Admin
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmSignIn")	

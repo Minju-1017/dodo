@@ -2,7 +2,8 @@ package com.dodo.module.member;
 
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
-import com.dodo.module.Constants;
+
+import com.dodo.Constants;
 
 public class MemberDto {
 	

@@ -1,4 +1,4 @@
-package com.dodo.module;
+package com.dodo;
 
 import java.text.SimpleDateFormat;
 
@@ -6,8 +6,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Constants {
-	public static int SESSION_MINUTE_XDM = 60 * 30; // 30분
 	
+	// Url Path
+	public static String ABBREVIATION_ADMIN = "xdm";
+	public static String ABBREVIATION_USER = "usr";
+	
+	// Login Form URL
+	public static String URL_LOGIN_FORM_ADMIN = "/xdm/member/MemberXdmSignIn";
+	public static String URL_LOGIN_FORM_USER = "/usr/member/MemberUsrSignIn";
+	
+	// Login User Seq
+	public static String SESSION_SEQ_NAME_ADMIN = "sessSeqXdm";
+	public static String SESSION_SEQ_NAME_USER = "sessSeqUsr";
+	
+	// Login Session Time
+	public static int SESSION_MINUTE_ADMIN = 60 * 30; // 30분
+	
+	// Date Format
 	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	public final static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	

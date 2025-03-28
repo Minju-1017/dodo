@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.dodo.module.Constants;
+import com.dodo.Constants;
 
 public class CodeDto {
 	

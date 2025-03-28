@@ -12,11 +12,7 @@ public class IndexController {
 	private String path = "xdm/";
 	
 	@RequestMapping(value = "index")	
-	public String index(HttpSession httpSession) {
-		if (httpSession.getAttribute("sessSeqXdm") == null) {
-			return "xdm/member/MemberXdmSignIn";
-		}
-										
+	public String index(HttpSession httpSession) {							
 		return path + "index";
 	}
 }

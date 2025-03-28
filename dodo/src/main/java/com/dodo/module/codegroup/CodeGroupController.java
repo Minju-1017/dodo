@@ -6,8 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dodo.module.Constants;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -27,10 +25,6 @@ public class CodeGroupController {
 	@RequestMapping(value = "CodeGroupXdmList")
 	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo,
 			HttpSession httpSession) throws Exception {
-		if (httpSession.getAttribute("sessSeqXdm") == null) {
-			return "xdm/member/MemberXdmSignIn";
-		}
-		
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectOneCount(vo));
 		

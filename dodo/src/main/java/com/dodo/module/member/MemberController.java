@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dodo.module.Constants;
+import com.dodo.Constants;
 import com.dodo.module.code.CodeService;
-import com.dodo.module.codegroup.CodeGroupDto;
-import com.dodo.module.codegroup.CodeGroupVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -60,7 +58,7 @@ public class MemberController {
 				returnMap.put("rt", "fail_member");
 				mDto = null;
 			} else {
-				httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_XDM);
+				httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_ADMIN);
 				httpSession.setAttribute("sessSeqXdm", mDto.getmSeq());
 				httpSession.setAttribute("sessIdXdm", mDto.getmId());
 				httpSession.setAttribute("sessNameXdm", mDto.getmName());
@@ -102,10 +100,6 @@ public class MemberController {
 	@RequestMapping(value = "MemberXdmList")
 	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo,
 			HttpSession httpSession) throws Exception {
-		if (httpSession.getAttribute("sessSeqXdm") == null) {
-			return "redirect:MemberXdmSignIn";
-		}
-		
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectOneCount(vo));
 

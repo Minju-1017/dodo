@@ -113,4 +113,25 @@
 			mSeq=#{mSeq}
 	</update>
 	
+	<delete id="listDelete" parameterType="java.util.List">
+		DELETE FROM member
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(mSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="listUelete" parameterType="java.util.List">
+		UPDATE member
+		SET
+			mUpdtDate=now(),
+			mDelNy=1
+		<where> 
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(mSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
 </mapper>

@@ -147,4 +147,25 @@
 			cgSeq=#{cgSeq}
 	</update>
 	
+	<delete id="listDelete" parameterType="java.util.List">
+		DELETE FROM codeGroup
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(cgSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="listUelete" parameterType="java.util.List">
+		UPDATE codeGroup
+		SET
+			cgUpdtDate=now(),
+			cgDelNy=1
+		<where> 
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(cgSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
 </mapper>

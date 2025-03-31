@@ -1,10 +1,16 @@
 package com.dodo.module.codegroup;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -96,6 +102,58 @@ public class CodeGroupController {
 		service.uelete(codeGroupDto);	
 
 		return "redirect:CodeGroupXdmList";
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "CodeGroupListXdmDeleProc")
+	public Map<String, Object> codeGroupListXdmDeleProc(
+			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listDelete(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "CodeGroupListXdmUeleProc")
+	public Map<String, Object> codeGroupListXdmUeleProc(
+			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listUelete(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
 	}
 
 }

@@ -177,4 +177,25 @@
 			gSeq=#{gSeq}
 	</update>
 	
+	<delete id="listDelete" parameterType="java.util.List">
+		DELETE FROM game
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(gSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="listUelete" parameterType="java.util.List">
+		UPDATE game
+		SET
+			gUpdtDate=now(),
+			gDelNy=1
+		<where> 
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(gSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
 </mapper>

@@ -155,27 +155,59 @@ function deleteCheckedElementsModal(str) {
 }
 
 // 삭제(업데이트)
-function ueleteCheckedElements(goUrl) {
+function ueleteCheckedElements(goUrl, successUrl) {
 	var checkArr = new Array;
 					
 	$('input:checkbox[name=check]:checked').each(function () {
 		checkArr.push($(this).val());
     })
 	  
-	// TODO: 체크한 리스트 삭제(업데이트) 처리
-	// submit(goUrl);
+	$.ajax({
+		async: true 
+		,cache: false
+		,type : "post"
+		,url : goUrl
+		,traditional: true
+		,data : { chbox : checkArr }
+		,success: function(response) {
+			if(response.rt == "success") {
+				location.href = successUrl;
+			} else {
+				showModalAlert("확인", "삭제(업데이트) 실패하였습니다.");
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});	
 }
 
 // 삭제
-function deleteCheckedElements(goUrl) {
+function deleteCheckedElements(goUrl, successUrl) {
 	var checkArr = new Array;
-					
+						
 	$('input:checkbox[name=check]:checked').each(function () {
 		checkArr.push($(this).val());
     })
-    
-	// TODO: 체크한 리스트 삭제 처리
-	// submit(goUrl);		
+	  
+	$.ajax({
+		async: true 
+		,cache: false
+		,type : "post"
+		,url : goUrl
+		,traditional: true
+		,data : { chbox : checkArr }
+		,success: function(response) {
+			if(response.rt == "success") {
+				location.href = successUrl;
+			} else {
+				showModalAlert("확인", "삭제 실패하였습니다.");
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -197,6 +229,8 @@ jQuery(function(){
 	 });
 	
 	jQuery('#shDateEnd').datetimepicker({
+		/*datepicker:false,
+		format:'H:i',*/
 		format:'Y-m-d',
 		timepicker:false,
 		onShow:function(ct) {
@@ -204,5 +238,10 @@ jQuery(function(){
 				minDate:jQuery('#shDateStart').val()?jQuery('#shDateStart').val():false
 			})
 		},
+	});
+	
+	jQuery('#mBirth').datetimepicker({
+		format:'Y-m-d',
+		timepicker:false
 	});
 });

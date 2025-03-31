@@ -45,9 +45,11 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-xxl-8 col-lg-5 d-none d-lg-block"></div>
-					<div class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
+					<div class="col-xxl-5 col-lg-5 d-none d-lg-block"></div>
+					<div class="col-md-2 col-xxl-3 d-none d-lg-block"></div>
+					<div th:if="${session.sessSeqUsr ne null}" class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
 						<div class="list-inline">
+							<div class="list-inline-item me-5"></div>
 							<div class="list-inline-item me-5">
 								<a href="./pages/myboardgame-wish.html" class="text-muted position-relative">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -65,8 +67,42 @@
 								</a>
 							</div>
 							<div class="list-inline-item me-5 me-lg-0">
-								<a href="/usr/member/MemberUsrSignUpForm" class="text-muted">
-								<!-- <a href="#!" class="text-muted" data-bs-toggle="modal" data-bs-target="#userModal"> -->
+								<ul class="list-unstyled d-flex align-items-center">
+									<li class="dropdown ms-4">
+										<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											<img src="/assets/xdm/template/FreshCart-1.4.0/images/avatar/avatar-1.jpg" alt="" class="avatar avatar-md rounded-circle" />
+										</a>
+										<div class="dropdown-menu dropdown-menu-end p-0">
+											<div class="lh-1 px-5 py-4 border-bottom">
+												<h5 class="mb-1 h6">[[${session.sessNameUsr}]]</h5>
+												<small>[[${session.sessGradeUsr}]]</small>
+											</div>
+											<div class="px-5 py-3">
+												<a id="btnSignOut" href="javascript:void(0);">Log Out</a>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="list-inline-item d-inline-block d-lg-none">
+								<!-- Button -->
+								<button class="navbar-toggler collapsed" type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#navbar-default" aria-controls="navbar-default"
+									aria-label="Toggle navigation">
+									<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+										class="bi bi-text-indent-left text-primary" viewBox="0 0 16 16">
+										<path
+											d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708zM7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div th:if="${session.sessSeqUsr eq null}" class="col-lg-2 col-xxl-2 text-end col-md-6 col-7">
+						<div class="list-inline">
+							<div class="list-inline-item me-5"></div>
+							<div class="list-inline-item me-5 me-lg-0">
+								<a href="/usr/member/MemberUsrSignIn" class="text-muted">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
 										fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
 										stroke-linejoin="round" class="feather feather-user">
@@ -98,6 +134,11 @@
 			<div class="container">
 				<div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default"
 					aria-labelledby="navbar-defaultLabel">
+					<div class="offcanvas-header pb-1">
+						<a href="/usr/index"><img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png"
+								alt="" /></a>
+						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					</div>
 					<div class="offcanvas-body">
 						<div>
 							<ul class="navbar-nav align-items-center">
@@ -124,7 +165,7 @@
 								<li class="nav-item dropdown w-100 w-lg-auto">
 									<a class="nav-link" href="./pages/usedgame-shopping.html">중고 거래</a>
 								</li>
-								<li class="nav-item dropdown w-100 w-lg-auto">
+								<li th:if="${session.sessSeqUsr ne null}" class="nav-item dropdown w-100 w-lg-auto">
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 										aria-expanded="false">내 보드게임</a>
 									<ul class="dropdown-menu">
@@ -132,7 +173,7 @@
 										<li><a class="dropdown-item" href="./pages/myboardgame-wish.html">위시 리스트</a></li>
 									</ul>
 								</li>
-								<li class="nav-item dropdown w-100 w-lg-auto">
+								<li th:if="${session.sessSeqUsr ne null}" class="nav-item dropdown w-100 w-lg-auto">
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 										aria-expanded="false">내 쇼핑</a>
 									<ul class="dropdown-menu">
@@ -140,7 +181,7 @@
 										<li><a class="dropdown-item" href="./pages/myshopping-purchase.html">구매 내역</a></li>
 									</ul>
 								</li>
-								<li class="nav-item dropdown w-100 w-lg-auto">
+								<li th:if="${session.sessSeqUsr ne null}" class="nav-item dropdown w-100 w-lg-auto">
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 										aria-expanded="false">내 정보</a>
 									<ul class="dropdown-menu">

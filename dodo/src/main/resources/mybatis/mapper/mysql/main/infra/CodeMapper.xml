@@ -155,10 +155,23 @@
 	
 	<delete id="listDelete" parameterType="java.util.List">
 		DELETE FROM code
-			WHERE
-				<foreach collection="seqList" item="item" separator="or" open="" close="">
-					(cSeq=#{cSeq})
-				</foreach>
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(cSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="listUelete" parameterType="java.util.List">
+		UPDATE code
+		SET
+			cUpdtDate=now(),
+			cDelNy=1
+		<where> 
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(cSeq=#{item})
+			</foreach>
+		</where>
 	</delete>
 	
 	<!-- Code Group 데이터는 Code Group 쪽에서 가져오도록 처리

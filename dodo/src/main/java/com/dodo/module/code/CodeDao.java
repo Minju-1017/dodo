@@ -19,8 +19,8 @@ public interface CodeDao {
 	public int update(CodeDto codeDto);
 	public int delete(CodeDto codeDto);
 	public int uelete(CodeDto codeDto);
-	public int listDelete(List<CodeDto> codeListDto);
-	public int listUelete(List<CodeDto> codeListDto);
+	public int listDelete(List<String> seqList);
+	public int listUelete(List<String> seqList);
 	
 	/* Code Group 데이터는 Code Group 쪽에서 가져오도록 처리
 	public List<CodeGroupDto> selectCodeGroupList(); 

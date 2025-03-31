@@ -42,4 +42,12 @@ public class CodeGroupService {
 	public int uelete(CodeGroupDto codeGroupDto) {
 		return dao.uelete(codeGroupDto);
 	}
+	
+	public int listDelete(List<String> seqList) {
+		return dao.listDelete(seqList);
+	}
+	
+	public int listUelete(List<String> seqList) {
+		return dao.listUelete(seqList);
+	}
 }

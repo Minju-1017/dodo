@@ -102,6 +102,102 @@
 				</div>
 			</nav>
 
+			<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
+				<div class="navbar-vertical">
+					<div class="px-4 py-5 d-flex justify-content-between align-items-center">
+						<a href="/xdm/index" class="navbar-brand">
+							<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+						</a>
+						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					</div>
+					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+						<ul class="navbar-nav flex-column">
+							<li class="nav-item">
+								<a class="nav-link" href="/xdm/index">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+										<span class="nav-link-text">홈</span>
+									</div>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+										<span class="nav-link-text">공지사항</span>
+									</div>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active" href="/xdm/member/MemberXdmList">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+										<span class="nav-link-text">회원관리</span>
+									</div>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/xdm/game/GameXdmList">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+										<span class="nav-link-text">서비스관리</span>
+									</div>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+										<span class="nav-link-text">커뮤니케이션</span>
+									</div>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a
+									class="nav-link collapsed "
+									href="#"
+									data-bs-toggle="collapse"
+									data-bs-target="#navCategoriesOrders"
+									aria-expanded="false"
+									aria-controls="navCategoriesOrders"
+								>
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+										<span class="nav-link-text">시스템관리</span>
+									</div>
+								</a>
+								<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+									<ul class="nav flex-column">
+										<li class="nav-item">
+											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+										<span class="nav-link-text">개인정보관리</span>
+									</div>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">
+									<div class="d-flex align-items-center">
+										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+										<span class="nav-link-text">테스트</span>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
            	<!-- main wrapper -->
 			<main class="main-content-wrapper">
 				<form name="formList" id="formList" method="post" autocomplete="off">
@@ -141,12 +237,10 @@
 												<div class="col-lg-2 col-12">
 													<input type="text" class="form-control" id="shDateStart" name="shDateStart" 
 														placeholder="시작일" autocomplete="off">
-														<!-- th:value="${#strings.substring(vo.shDateStart, 0, 10)}" -->
 												</div>
 												<div class="col-lg-2 col-12">
 													<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
 														placeholder="종료일" autocomplete="off">
-														<!-- th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" -->
 												</div>
 												<div class="col-lg-4 col-12"></div>
 												<div class="col-lg-2 col-12">
@@ -232,7 +326,7 @@
 													<tr th:if="${!#lists.isEmpty(memberList)}" th:each="list : ${memberList}">
 														<td>
 															<div class="form-check">
-																<input class="form-check-input" type="checkbox" name="check" id="${list?.mSeq}">
+																<input class="form-check-input" type="checkbox" name="check" th:value="${list?.mSeq}">
 															</div>
 					    								</td>
 														<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
@@ -310,6 +404,8 @@
 			let fom = document.querySelector("form[name=formList]");
 			let goUrlXdmList = "/xdm/member/MemberXdmList";
 			let goUrlXdmForm = "/xdm/member/MemberXdmForm";
+			let goUrlXdmListUeleProc = "/xdm/member/MemberListXdmUeleProc";
+			let goUrlXdmListDeleProc = "/xdm/member/MemberListXdmDeleProc";
 			
 			function submit(goUrl) {
 				fom.action = goUrl;
@@ -358,7 +454,7 @@
 			}
 			
 			document.getElementById("btnModalUelete").onclick = function () {
-				ueleteCheckedElements(""); // TODO: URL
+				ueleteCheckedElements(goUrlXdmListUeleProc, goUrlXdmList);
 			}
 			
 			document.getElementById("delete").onclick = function() {
@@ -366,7 +462,7 @@
 			}
 	
 			document.getElementById("btnModalDelete").onclick = function () {
-				deleteCheckedElements(""); // TODO: URL
+				deleteCheckedElements(goUrlXdmListDeleProc, goUrlXdmList);
 			}
 		</script>
 		

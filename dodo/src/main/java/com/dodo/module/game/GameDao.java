@@ -15,4 +15,7 @@ public interface GameDao {
 	public int update(GameDto gameDto);
 	public int delete(GameDto gameDto);
 	public int uelete(GameDto gameDto);
+	public int listDelete(List<String> seqList);
+	public int listUelete(List<String> seqList);
+	
 }

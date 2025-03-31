@@ -1,6 +1,7 @@
 package com.dodo.module.member;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
@@ -37,9 +39,6 @@ public class MemberController {
 		return path_user + "MemberUsrSignUpForm";
 	}
 	
-	////////////////TODO: 사람 이미지 누르면 로그인 화면으로 이동하게 변경
-	
-	
 	/**
 	 * 로그인 화면 이동 - User
 	 * @return
@@ -48,6 +47,58 @@ public class MemberController {
 	public String memberUsrSignIn() throws Exception {				
 		return path_user + "MemberUsrSignIn";
 	}
+	
+	/**
+	 * Ajax를 통한 로그인 처리
+	 * @param memberDto
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberUsrSignInProc")
+	public Map<String, Object> memberUsrSignInProc(MemberDto memberDto, HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+		
+		if (mDto == null) { 
+			httpSession.setAttribute("sessSeqUsr", null);
+			returnMap.put("rt", "fail");
+		} else {
+			httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_USER);
+			httpSession.setAttribute("sessSeqUsr", mDto.getmSeq());
+			httpSession.setAttribute("sessIdUsr", mDto.getmId());
+			httpSession.setAttribute("sessNameUsr", mDto.getmName());
+			httpSession.setAttribute("sessGradeUsr", 
+					CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
+			
+			returnMap.put("rt", "success");
+		}
+		
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 로그아웃 처리
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberUsrSignOutProc")	
+	public Map<String, Object> memberUsrSignOutProc(HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		httpSession.setAttribute("sessSeqUsr", null);
+		httpSession.setAttribute("sessIdUsr", null);
+		httpSession.setAttribute("sessNameUsr", null);
+		httpSession.setAttribute("sessGradeUsr", null);
+		
+		returnMap.put("rt", "success");
+		
+		return returnMap;
+	}
+	
+	////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * 로그인 화면 이동 - Admin
@@ -179,6 +230,58 @@ public class MemberController {
 		service.uelete(memberDto);	
 
 		return "redirect:MemberXdmList";
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberListXdmDeleProc")
+	public Map<String, Object> memberListXdmDeleProc(
+			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listDelete(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberListXdmUeleProc")
+	public Map<String, Object> memberListXdmUeleProc(
+			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listUelete(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
 	}
 
 }

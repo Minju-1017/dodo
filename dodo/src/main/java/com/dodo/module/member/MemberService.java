@@ -42,4 +42,13 @@ public class MemberService {
 	public int uelete(MemberDto memberDto) {
 		return dao.uelete(memberDto);
 	}
+	
+	public int listDelete(List<String> seqList) {
+		return dao.listDelete(seqList);
+	}
+	
+	public int listUelete(List<String> seqList) {
+		return dao.listUelete(seqList);
+	}
+	
 }

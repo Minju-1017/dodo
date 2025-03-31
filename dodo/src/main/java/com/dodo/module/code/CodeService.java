@@ -87,12 +87,12 @@ public class CodeService {
 		return dao.uelete(codeDto);
 	}
 	
-	public int listDelete(List<CodeDto> codeListDto) {
-		return dao.listDelete(codeListDto);
+	public int listDelete(List<String> seqList) {
+		return dao.listDelete(seqList);
 	}
 	
-	public int listUelete(List<CodeDto> codeListDto) {
-		return dao.listUelete(codeListDto);
+	public int listUelete(List<String> seqList) {
+		return dao.listUelete(seqList);
 	}
 	
 	/* Code Group 데이터는 Code Group 쪽에서 가져오도록 처리

@@ -15,4 +15,7 @@ public interface MemberDao {
 	public int update(MemberDto memberDto);
 	public int delete(MemberDto memberDto);
 	public int uelete(MemberDto memberDto);
+	public int listDelete(List<String> seqList);
+	public int listUelete(List<String> seqList);
+	
 }

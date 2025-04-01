@@ -252,7 +252,7 @@
 										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12">
-										<label for="gTnFileName" class="form-label">썸네일 이미지 파일명</label>
+										<label for="gTnFileName" class="form-label">썸네일 이미지</label>
 										
 										<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper gap-2">
 											<div>
@@ -267,16 +267,12 @@
 											</div>
 	
 											<div class="file-upload btn btn-light ms-md-4">
-												<input type="file" class="file-input opacity-0" />
+												<input type="file" accept="image/*" name="gTnFileName" id="gTnFileName" class="file-input opacity-0" />
 												파일 선택
 											</div>
 	
-											<span class="ms-2">JPG, GIF or PNG. 1MB Max.</span>
+											<span class="ms-2">JPG, GIF 또는 PNG. 최대 1MB.</span>
 										</div>
-										
-										
-										<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
-											th:value="${gameItem?.gTnFileName}" placeholder="png, jpg, jpeg" />
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-4 col-12">
@@ -464,6 +460,7 @@
 	let gOfficialUrl = document.getElementById("gOfficialUrl");
 	let gComuUrl1 = document.getElementById("gComuUrl1");
 	let gComuUrl2 = document.getElementById("gComuUrl2");
+	let gTnFileName = document.getElementById("gTnFileName");
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -715,12 +712,16 @@
 		gOfficialUrl.value = gOfficialUrl.value.trim();
 		gComuUrl1.value = gComuUrl1.value.trim();
 		gComuUrl2.value = gComuUrl2.value.trim();
+
+		if (gTnFileName.files[0] != null
+				&& gTnFileName.files[0].name != null && gTnFileName.files[0].name != '') {}
+		//TODO:
 		
-		if(seq.value == "0" || seq.value == "") {
+		/* if(seq.value == "0" || seq.value == "") {
 			submit(goUrlXdmInst);
 		} else {
 			submit(goUrlXdmUpdt);
-		}
+		} */
 	}
 	
 	// gName Input 시 체크

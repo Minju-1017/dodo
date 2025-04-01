@@ -1,465 +1,463 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-	<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
-	
-		<div class="main-wrapper">
-			<!-- navbar vertical -->
-			<!-- navbar -->
-			<nav class="navbar-vertical-nav d-none d-xl-block">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
-						</a>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column" id="sideNavbar">
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">Home</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
-									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<!-- Nav item -->
-										<li class="nav-item">
-											<a class="nav-link active" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			
-			<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5 d-flex justify-content-between align-items-center">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
-						</a>
-						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">홈</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
-									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link active" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
-           	<!-- main wrapper -->
-			<main class="main-content-wrapper">
-				<form name="formList" id="formList" method="post" autocomplete="off">
-					
-					<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
-					<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-					<input type="hidden" name="cgSeq">
-					
-					<div class="container">
-						<div class="row mb-8">
-							<div class="col-md-12">
-								<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-									<h2>Code Group</h2>
-								</div>
+<div class="main-wrapper">
+	<!-- navbar vertical -->
+	<!-- navbar -->
+	<nav class="navbar-vertical-nav d-none d-xl-block">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column" id="sideNavbar">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">Home</span>
 							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+								<span class="nav-link-text">공지사항</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/game/GameXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+								<span class="nav-link-text">커뮤니케이션</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<!-- Nav item -->
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
 						</div>
-						<div class="row mb-8 g-5">
-							<div class="col-lg-12 col-12">
-								<div class="card card-lg border-0">
-									<div class="card-body d-flex flex-column gap-8 p-7">
-										<div class="d-flex flex-column gap-4">
-											<div class="row g-3">
-												<div class="col-lg-2 col-12">
-													<select class="form-select" id="shDelNy" name="shDelNy">
-														<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-														<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
-														<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select" name="shUseNy" id="shUseNy">
-														<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
-														<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
-														<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select"id="shOptionDate" name="shOptionDate">
-														<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
-														<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
-														<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" id="shDateStart"  name="shDateStart"
-														placeholder="시작일" autocomplete="off">
-														<!-- th:value="${#strings.substring(vo.shDateStart, 0, 10)}" -->
-												</div>
-												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
-														placeholder="종료일" autocomplete="off">
-														<!-- th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" -->
-												</div>
-												<div class="col-lg-2 col-12"></div>
-												<div class="col-lg-2 col-12">
-													<select class="form-select" id="shOption" name="shOption">
-														<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-														<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
-														<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
-														<option value="3" th:selected="${vo.shOption == 3}">코드그룹 이름 (영문)</option>
-													</select>
-												</div>
-												<div class="col-lg-2 col-12">
-													<input type="text" class="form-control" id="shValue" name="shValue" 
-														th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
-													<div class="invalid-feedback" id="shValueFeedback"></div>
-												</div>
-												<div class="col-lg-6 col-12">
-													<div class="d-flex flex-column flex-md-row gap-2">
-														<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
-														<button type="submit" id="btnReset" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
-													</div>
-												</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+								<span class="nav-link-text">개인정보관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+								<span class="nav-link-text">테스트</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5 d-flex justify-content-between align-items-center">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">홈</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+								<span class="nav-link-text">공지사항</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/game/GameXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+								<span class="nav-link-text">커뮤니케이션</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+								<span class="nav-link-text">개인정보관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+								<span class="nav-link-text">테스트</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+         	<!-- main wrapper -->
+	<main class="main-content-wrapper">
+		<form name="formList" id="formList" method="post" autocomplete="off">
+			
+			<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
+			<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+			<input type="hidden" name="cgSeq">
+			
+			<div class="container">
+				<div class="row mb-8">
+					<div class="col-md-12">
+						<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+							<h2>Code Group</h2>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-8 g-5">
+					<div class="col-lg-12 col-12">
+						<div class="card card-lg border-0">
+							<div class="card-body d-flex flex-column gap-8 p-7">
+								<div class="d-flex flex-column gap-4">
+									<div class="row g-3">
+										<div class="col-lg-2 col-12">
+											<select class="form-select" id="shDelNy" name="shDelNy">
+												<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+												<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+												<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
+											</select>
+										</div>
+										<div class="col-lg-2 col-12">
+											<select class="form-select" name="shUseNy" id="shUseNy">
+												<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
+												<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
+												<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
+											</select>
+										</div>
+										<div class="col-lg-2 col-12">
+											<select class="form-select"id="shOptionDate" name="shOptionDate">
+												<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
+												<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+												<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+											</select>
+										</div>
+										<div class="col-lg-2 col-12">
+											<input type="text" class="form-control" id="shDateStart"  name="shDateStart"
+												placeholder="시작일" autocomplete="off" readonly>
+										</div>
+										<div class="col-lg-2 col-12">
+											<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
+												placeholder="종료일" autocomplete="off" readonly>
+										</div>
+										<div class="col-lg-2 col-12"></div>
+										<div class="col-lg-2 col-12">
+											<select class="form-select" id="shOption" name="shOption">
+												<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+												<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
+												<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+												<option value="3" th:selected="${vo.shOption == 3}">코드그룹 이름 (영문)</option>
+											</select>
+										</div>
+										<div class="col-lg-2 col-12">
+											<input type="text" class="form-control" id="shValue" name="shValue" 
+												th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
+											<div class="invalid-feedback" id="shValueFeedback"></div>
+										</div>
+										<div class="col-lg-6 col-12">
+											<div class="d-flex flex-column flex-md-row gap-2">
+												<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
+												<button type="submit" id="btnReset" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></button>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-12 text-center">
-								<!-- card -->
-								<div class="card h-100 card-lg">
-								
-									<div th:replace="~{/xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
-									
-									<!-- card body -->
-									<div class="card-body p-0">
-										<!-- table -->
-										<div class="table-responsive">
-											<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
-												<thead class="bg-light">
-													<tr>
-														<th>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="checkAll" name="checkAll">
-															</div>
-														</th>
-														<th>#</th>
-														<th>사용</th>
-														<th>코드그룹 코드</th>
-														<th>코드그룹 이름</th>
-														<th>코드그룹 이름(영문)</th>
-														<th>갯수</th>
-														<th>순서</th>
-														<th>등록일</th>
-														<th>수정일</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr th:if="${#lists.isEmpty(codeGroupList)}">
-														<td class="text-center" colspan="10">
-															데이터가 없습니다.
-														</td>
-													</tr> 
-													<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
-														<td>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" name="check" th:value="${list?.cgSeq}">
-															</div>
-														</td>
-														<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-														<td th:text="${list?.cgUseNyStr}"></td>
-														<td th:text="${list?.cgSeq}"></td>
-														<td>			
-															<a href="javascript:void(0);" th:text="${list?.cgName}"
-																th:attr="onclick=|goForm('${list.cgSeq}')|"></a>
-														</td>
-														<td th:text="${list?.cgNameEng}"></td>
-														<td th:text="${list?.cCount}"></td>
-														<td th:text="${list?.cgSequence}"></td>
-														<td th:text="${list?.cgRegiDateStr}"></td>
-														<td th:text="${list?.cgUpdtDateStr}"></td>
-													</tr>
-												</tbody>
-											</table>
-									   	</div>
-									</div>
-									<div class="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
-										<div></div>
-										<nav class="mt-2 mt-md-0">
-											<ul class="pagination mb-0">
-												<!-- 타임리프 
-													gt 뜻: >
-													ne 뜻: !=
-													eq 뜻: ==
-												-->
-												<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
-													<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
-														th:attr="onclick=|goList('${vo.startPage - 1}')|">
-														<span aria-hidden="true">&laquo;</span>
-													</a>
-												</li>
-												<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
-													th:classappend="${num eq vo.currPage} ? active : ''" 
-													class="page-item" style="cursor: pointer;">
-													<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
-												</li>
-												<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
-													<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
-														<span aria-hidden="true">&raquo;</span>
-													</a>
-												</li>
-											</ul>
-										</nav>
-										<div></div>
-									</div>
-									<div class="d-md-flex justify-content-between align-items-center px-6 py-6">
-										<div class="d-flex flex-column flex-md-row gap-2">
-											<a href="#" class="btn btn-danger" id="uelete"><i class="bi bi-trash3"></i></a>
-											<a href="#" class="btn btn-danger" id="delete"><i class="bi bi-x-lg"></i></a>
-										</div>
-										<div class="d-flex flex-column flex-md-row gap-2">
-											<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
-											<a href="#" class="btn btn-info" id="modify">U</a>
-											<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
-										</div>
-									</div>
-								 </div>
-							</div>
-						</div>
 					</div>
-				</form>
-			</main>
-        </div>
-        
-      	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-		
-		<!-- 변수 정의 / 공통 함수 -->
-		<script type="text/javascript">
-			let seq = document.querySelector("input[name=cgSeq]");
-		
-			// URL
-			let fom = document.querySelector("form[name=formList]");
-			let goUrlXdmList = "/xdm/codegroup/CodeGroupXdmList";
-			let goUrlXdmForm = "/xdm/codegroup/CodeGroupXdmForm";
-			let goUrlXdmListUeleProc = "/xdm/codegroup/CodeGroupListXdmUeleProc";
-			let goUrlXdmListDeleProc = "/xdm/codegroup/CodeGroupListXdmDeleProc";
-			
-			function submit(goUrl) {
-				fom.action = goUrl;
-				fom.submit();
-			}
-		</script>
-		
-		<!-- 데이터 추가/수정 -->
-		<script type="text/javascript">
-			// 데이터 추가
-			document.getElementById("btnForm").onclick = function () {
-			    goForm(0);
-			}
-			
-			// 데이터 추가/수정
-			goForm = function (keyValue) {
-			    seq.value = keyValue;
-			    submit(goUrlXdmForm);
-			}
-		</script>
-		
-		<!-- Search / Paging -->
-		<script type="text/javascript">
-			function goList(currPage) {
-	 			document.querySelector("input[name=currPage]").value = currPage;
-	 			submit(goUrlXdmList);
-			}
-			
-			document.getElementById("changeRowNum").onchange = function () {
-			    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-			    submit(goUrlXdmList);
-			}
-			
-	      	document.getElementById("btnSearch").onclick = function () {
-	      		submit(goUrlXdmList);
-			};
-		</script>
-		
-		<!-- Table Check Box 처리 (Uelete/Delete/Update)-->
-		<script type="text/javascript">
-			document.getElementById("checkAll").onclick = function() {
-				allCheck("check", this.checked);
-			}
-			
-			document.getElementById("modify").onclick = function() {
-				modifyCheckedElement("1개의 코드 그룹");
-			}
-			
-			document.getElementById("uelete").onclick = function() {
-				ueleteCheckedElementsModal("코드 그룹을");
-			}
-			
-			document.getElementById("btnModalUelete").onclick = function () {
-				ueleteCheckedElements(goUrlXdmListUeleProc, goUrlXdmList);
-			}
-			
-			document.getElementById("delete").onclick = function() {
-				deleteCheckedElementsModal("코드 그룹을");
-			}
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<!-- card -->
+						<div class="card h-100 card-lg">
+						
+							<div th:replace="~{/xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+							
+							<!-- card body -->
+							<div class="card-body p-0">
+								<!-- table -->
+								<div class="table-responsive">
+									<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
+										<thead class="bg-light">
+											<tr>
+												<th>
+													<div class="form-check">
+														<input class="form-check-input" type="checkbox" id="checkAll" name="checkAll">
+													</div>
+												</th>
+												<th>#</th>
+												<th>사용</th>
+												<th>코드그룹 코드</th>
+												<th>코드그룹 이름</th>
+												<th>코드그룹 이름(영문)</th>
+												<th>갯수</th>
+												<th>순서</th>
+												<th>등록일</th>
+												<th>수정일</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${#lists.isEmpty(codeGroupList)}">
+												<td class="text-center" colspan="10">
+													데이터가 없습니다.
+												</td>
+											</tr> 
+											<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
+												<td>
+													<div class="form-check">
+														<input class="form-check-input" type="checkbox" name="check" th:value="${list?.cgSeq}">
+													</div>
+												</td>
+												<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+												<td th:text="${list?.cgUseNyStr}"></td>
+												<td th:text="${list?.cgSeq}"></td>
+												<td>			
+													<a href="javascript:void(0);" th:text="${list?.cgName}"
+														th:attr="onclick=|goForm('${list.cgSeq}')|"></a>
+												</td>
+												<td th:text="${list?.cgNameEng}"></td>
+												<td th:text="${list?.cCount}"></td>
+												<td th:text="${list?.cgSequence}"></td>
+												<td th:text="${list?.cgRegiDate}"></td>
+												<td th:text="${list?.cgUpdtDate}"></td>
+											</tr>
+										</tbody>
+									</table>
+							   	</div>
+							</div>
+							<div class="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
+								<div></div>
+								<nav class="mt-2 mt-md-0">
+									<ul class="pagination mb-0">
+										<!-- 타임리프 
+											gt 뜻: >
+											ne 뜻: !=
+											eq 뜻: ==
+										-->
+										<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+											<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+												th:attr="onclick=|goList('${vo.startPage - 1}')|">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+										<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+											th:classappend="${num eq vo.currPage} ? active : ''" 
+											class="page-item" style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+										</li>
+										<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+								<div></div>
+							</div>
+							<div class="d-md-flex justify-content-between align-items-center px-6 py-6">
+								<div class="d-flex flex-column flex-md-row gap-2">
+									<a href="#" class="btn btn-danger" id="uelete"><i class="bi bi-trash3"></i></a>
+									<a href="#" class="btn btn-danger" id="delete"><i class="bi bi-x-lg"></i></a>
+								</div>
+								<div class="d-flex flex-column flex-md-row gap-2">
+									<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
+									<a href="#" class="btn btn-info" id="modify">U</a>
+									<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
+								</div>
+							</div>
+						 </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</main>
+      </div>
+      
+    	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	let seq = document.querySelector("input[name=cgSeq]");
+
+	// URL
+	let fom = document.querySelector("form[name=formList]");
+	let goUrlXdmList = "/xdm/codegroup/CodeGroupXdmList";
+	let goUrlXdmForm = "/xdm/codegroup/CodeGroupXdmForm";
+	let goUrlXdmListUeleProc = "/xdm/codegroup/CodeGroupListXdmUeleProc";
+	let goUrlXdmListDeleProc = "/xdm/codegroup/CodeGroupListXdmDeleProc";
 	
-			document.getElementById("btnModalDelete").onclick = function () {
-				deleteCheckedElements(goUrlXdmListDeleProc, goUrlXdmList);
-			}
-		</script>
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- 데이터 추가/수정 -->
+<script type="text/javascript">
+	// 데이터 추가
+	document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	}
 	
-   	</body>
+	// 데이터 추가/수정
+	goForm = function (keyValue) {
+	    seq.value = keyValue;
+	    submit(goUrlXdmForm);
+	}
+</script>
+
+<!-- Search / Paging -->
+<script type="text/javascript">
+	function goList(currPage) {
+			document.querySelector("input[name=currPage]").value = currPage;
+			submit(goUrlXdmList);
+	}
+	
+	document.getElementById("changeRowNum").onchange = function () {
+	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+	    submit(goUrlXdmList);
+	}
+	
+     	document.getElementById("btnSearch").onclick = function () {
+     		submit(goUrlXdmList);
+	};
+</script>
+
+<!-- Table Check Box 처리 (Uelete/Delete/Update)-->
+<script type="text/javascript">
+	document.getElementById("checkAll").onclick = function() {
+		allCheck("check", this.checked);
+	}
+	
+	document.getElementById("modify").onclick = function() {
+		modifyCheckedElement("1개의 코드 그룹");
+	}
+	
+	document.getElementById("uelete").onclick = function() {
+		ueleteCheckedElementsModal("코드 그룹을");
+	}
+	
+	document.getElementById("btnModalUelete").onclick = function () {
+		ueleteCheckedElements(goUrlXdmListUeleProc, goUrlXdmList);
+	}
+	
+	document.getElementById("delete").onclick = function() {
+		deleteCheckedElementsModal("코드 그룹을");
+	}
+
+	document.getElementById("btnModalDelete").onclick = function () {
+		deleteCheckedElements(goUrlXdmListDeleProc, goUrlXdmList);
+	}
+</script>
+
+</body>
 </html>

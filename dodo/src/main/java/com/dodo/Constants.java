@@ -1,7 +1,5 @@
 package com.dodo;
 
-import java.text.SimpleDateFormat;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,10 +20,6 @@ public class Constants {
 	// Login Session Time
 	public static int SESSION_MINUTE_ADMIN = 60 * 30; // 30분
 	public static int SESSION_MINUTE_USER = 60 * 30; // 30분
-	
-	// Date Format
-	public final static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	public final static SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	// Member에 사용하는 코드 그룹
 	public final static int MEMBER_CODE_GROUP_SEQ_GENDER = 1; // mGenderCd

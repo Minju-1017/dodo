@@ -1,558 +1,558 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-	<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
-	
-		<div class="main-wrapper">
-			<!-- navbar vertical -->
-			<!-- navbar -->
-			<nav class="navbar-vertical-nav d-none d-xl-block">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
-						</a>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column" id="sideNavbar">
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">Home</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link active" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
-									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<!-- Nav item -->
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			
-			<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5 d-flex justify-content-between align-items-center">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
-						</a>
-						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">홈</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link active" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
-									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
-           	<!-- main wrapper -->
-			<main class="main-content-wrapper">
-				<div class="container">
-					<div class="row mb-8">
-						<div class="col-md-12">
-							<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-								<h2>Member</h2>
+<div class="main-wrapper">
+	<!-- navbar vertical -->
+	<!-- navbar -->
+	<nav class="navbar-vertical-nav d-none d-xl-block">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column" id="sideNavbar">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">Home</span>
 							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+								<span class="nav-link-text">공지사항</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/game/GameXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+								<span class="nav-link-text">커뮤니케이션</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<!-- Nav item -->
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
 						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+								<span class="nav-link-text">개인정보관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+								<span class="nav-link-text">테스트</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5 d-flex justify-content-between align-items-center">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">홈</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+								<span class="nav-link-text">공지사항</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/game/GameXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+								<span class="nav-link-text">커뮤니케이션</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+								<span class="nav-link-text">개인정보관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+								<span class="nav-link-text">테스트</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+         	<!-- main wrapper -->
+	<main class="main-content-wrapper">
+		<div class="container">
+			<div class="row mb-8">
+				<div class="col-md-12">
+					<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+						<h2>Member</h2>
 					</div>
-					<div class="row mb-8 g-5">
-						<div class="col-lg-12 col-12">
-							<div class="card card-lg border-0">
-								<div class="card-body d-flex flex-column gap-8 p-7">
-									<div class="d-flex flex-column gap-4">
-										<form class="row g-5 needs-validation" novalidate
-											method="post" id="form" name="form">
-											
-											<input type="hidden" name="mSeq" th:value="${vo.mSeq}" />
-											
-											<div class="col-lg-3 col-12">
-												<label for="mDelNy" class="form-label">
-													탈퇴여부
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" name="mDelNy" id="mDelNy" 
-													th:value="${memberItem?.mDelNyStr}" disabled />
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mGradeCd" class="form-label">회원 등급</label>
-												<select class="form-select" name="mGradeCd" id="mGradeCd">
-													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GRADE)}"
-														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
-														th:selected="${memberItem?.mGradeCd} == ${codeList?.cSeq}"></option>
-												</select>
-											</div>
-											
-											<div class="col-lg-6 col-12"></div>
-											<div class="col-lg-3 col-12">
-												<label for="mSeq" class="form-label">
-													고유번호
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" name="mSeq" id="mSeq"
-													th:value="${memberItem?.mSeq}" disabled />
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mId" class="form-label">
-													아이디
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" name="mId" id="mId"
-													th:value="${memberItem?.mId}" disabled />
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mPwd" class="form-label">
-													비밀번호
-													<span class="text-danger">*</span>
-												</label>
-												<input type="password" class="form-control" id="mPwd" name="mPwd" 
-													th:value="${memberItem?.mPwd}" required />
-												<div class="invalid-feedback"> 비밀번호를 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mRePwd" class="form-label">
-													비밀번호 확인
-													<span class="text-danger">*</span>
-												</label>
-												<input type="password" class="form-control" id="mPwdRe" name="mPwdRe"
-													th:value="${memberItem?.mPwd}" required />
-												<div class="invalid-feedback"> 비밀번호를 동일하게 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mName" class="form-label">
-													이름
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" name="mName" id="mName"
-													th:value="${memberItem?.mName}" required />
-												<div class="invalid-feedback"> 이름을 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mEmail" class="form-label">
-													이메일
-													<span class="text-danger">*</span>
-												</label>
-												<input type="email" class="form-control" id="mEmail" name="mEmail" 
-													th:value="${memberItem?.mEmail}" required />
-												<div class="invalid-feedback"> 이메일을 형식에 맞게 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mBirth" class="form-label">
-													생년월일
-													<span class="text-danger">*</span>
-												</label>
-                                   				<input type="text" class="form-control" id="mBirth" name="mBirth" 
-													th:value="${memberItem?.mBirth}" placeholder="예) 1999-01-01" required />
-												<div class="invalid-feedback"> 생년월일을 형식에 맞게 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-3 col-12"></div>
-											<div class="col-lg-3 col-12">
-												<label for="mGender" class="form-label">성별</label>
-												<select class="form-select" name="mGenderCd" id="mGenderCd">
-													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
-														th:if="${#strings.equals(codeList.cSeq, 0)}"
-														th:value="${codeList.cSeq}"
-														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}">성별</option>
-													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
-														th:unless="${#strings.equals(codeList.cSeq, 0)}"
-														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
-														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}"></option>
-												</select>
-											</div>
-											<div class="col-lg-3 col-12">
-												<label for="mPfFileName" class="form-label">프로필 이미지 파일명</label>
-                                   				<input type="text" class="form-control" id="mPfFileName" name="mPfFileName" 
-													th:value="${memberItem?.mPfFileName}" />
-											</div>
-											<div class="col-lg-6 col-12"></div>
-											<div class="col-lg-6 col-12">
-												<div class="d-flex flex-column flex-md-row gap-2">
-													<a href="/xdm/member/MemberXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
-												</div>
-											</div>
-											<div class="col-lg-6 col-12" style="text-align: right;">
-												<button th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
-													class="btn btn-danger" type="button" id="btnUelete">
-													<i class="bi bi-trash3"></i>
-												</button>
-												<button th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
-													class="btn btn-danger" type="button" id="btnDelete">
-													<i class="bi bi-x-lg"></i>
-												</button>
-												<button class="btn btn-primary" type="button" id="btnSave">
-													<i class="bi bi-database-add"></i>
-												</button>
-											</div>
-										</form>
+				</div>
+			</div>
+			<div class="row mb-8 g-5">
+				<div class="col-lg-12 col-12">
+					<div class="card card-lg border-0">
+						<div class="card-body d-flex flex-column gap-8 p-7">
+							<div class="d-flex flex-column gap-4">
+								<form class="row g-5 needs-validation" novalidate
+									method="post" id="form" name="form">
+									
+									<input type="hidden" name="mSeq" th:value="${vo.mSeq}" />
+									
+									<div class="col-lg-3 col-12">
+										<label for="mDelNy" class="form-label">
+											탈퇴여부
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="mDelNy" id="mDelNy" 
+											th:value="${memberItem?.mDelNyStr}" disabled />
 									</div>
-								</div>
+									<div class="col-lg-3 col-12">
+										<label for="mGradeCd" class="form-label">회원 등급</label>
+										<select class="form-select" name="mGradeCd" id="mGradeCd">
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GRADE)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+												th:selected="${memberItem?.mGradeCd} == ${codeList?.cSeq}"></option>
+										</select>
+									</div>
+									
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="mSeq" class="form-label">
+											고유번호
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="mSeq" id="mSeq"
+											th:value="${memberItem?.mSeq}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mId" class="form-label">
+											아이디
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="mId" id="mId"
+											th:value="${memberItem?.mId}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mPwd" class="form-label">
+											비밀번호
+											<span class="text-danger">*</span>
+										</label>
+										<input type="password" class="form-control" id="mPwd" name="mPwd" 
+											th:value="${memberItem?.mPwd}" required />
+										<div class="invalid-feedback"> 비밀번호를 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mRePwd" class="form-label">
+											비밀번호 확인
+											<span class="text-danger">*</span>
+										</label>
+										<input type="password" class="form-control" id="mPwdRe" name="mPwdRe"
+											th:value="${memberItem?.mPwd}" required />
+										<div class="invalid-feedback"> 비밀번호를 동일하게 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mName" class="form-label">
+											이름
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="mName" id="mName"
+											th:value="${memberItem?.mName}" required />
+										<div class="invalid-feedback"> 이름을 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mEmail" class="form-label">
+											이메일
+											<span class="text-danger">*</span>
+										</label>
+										<input type="email" class="form-control" id="mEmail" name="mEmail" 
+											th:value="${memberItem?.mEmail}" required />
+										<div class="invalid-feedback"> 이메일을 형식에 맞게 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mBirth" class="form-label">
+											생년월일
+											<span class="text-danger">*</span>
+										</label>
+                                 				<input type="text" class="form-control" id="mBirth" name="mBirth" 
+											th:value="${memberItem?.mBirth}" placeholder="예) 1999-01-01" readonly required />
+										<div class="invalid-feedback"> 생년월일을 형식에 맞게 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-3 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="mGender" class="form-label">성별</label>
+										<select class="form-select" name="mGenderCd" id="mGenderCd">
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+												th:if="${#strings.equals(codeList.cSeq, 0)}"
+												th:value="${codeList.cSeq}"
+												th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}">성별</option>
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+												th:unless="${#strings.equals(codeList.cSeq, 0)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+												th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}"></option>
+										</select>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mPfFileName" class="form-label">프로필 이미지 파일명</label>
+                                 				<input type="text" class="form-control" id="mPfFileName" name="mPfFileName" 
+											th:value="${memberItem?.mPfFileName}" />
+									</div>
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-6 col-12">
+										<div class="d-flex flex-column flex-md-row gap-2">
+											<a href="/xdm/member/MemberXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12" style="text-align: right;">
+										<button th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
+											class="btn btn-danger" type="button" id="btnUelete">
+											<i class="bi bi-trash3"></i>
+										</button>
+										<button th:if="${vo.mSeq != null and vo.mSeq != '' and vo.mSeq != '0'}"
+											class="btn btn-danger" type="button" id="btnDelete">
+											<i class="bi bi-x-lg"></i>
+										</button>
+										<button class="btn btn-primary" type="button" id="btnSave">
+											<i class="bi bi-database-add"></i>
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-			</main>
-        </div>
-      	
-      	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-		
-		<!-- 변수 정의 / 공통 함수 -->
-		<script type="text/javascript">
-			// Seq
-			let seq = document.querySelector("input[name=mSeq]");
-			
-			// URL
-			let fom = document.querySelector("form[name=form]");
-			let goUrlXdmUpdt = "/xdm/member/MemberXdmUpdt";
-			let goUrlXdmUele = "/xdm/member/MemberXdmUele";
-			let goUrlXdmDele = "/xdm/member/MemberXdmDele";
-		
-			// Input
-			let mPwd = document.getElementById("mPwd");
-			let mPwdRe = document.getElementById("mPwdRe");
-			let mName = document.getElementById("mName");
-			let mEmail = document.getElementById("mEmail");
-			let mBirth = document.getElementById("mBirth");
-			
-			function submit(goUrl) {
-				fom.action = goUrl;
-				fom.submit();
-			}
-		</script>
-		
-		<!-- Validation: Bootstrap -->
-		<script type="text/javascript">
-			
-			// btnSave 클릭시
-			document.getElementById("btnSave").onclick = function() {
-				var focus = false; // Validation 후 Focus 줘야 하는 Input
-				
-				// mPwd 체크
-				resetValidation(mPwd);
-				
-				if (!strValidation(mPwd)) {
-					mPwd.classList.add("is-invalid");
-					
-					if (!focus) {
-						mPwd.focus();
-						focus = true;
-					}
-				} else {
-					mPwd.classList.add("is-valid");
-				}
-				
-				// mPwdRe 체크
-				resetValidation(mPwdRe);
-				
-				if (!strValidation(mPwdRe) 
-						|| mPwd.value.trim() != mPwdRe.value.trim()) {
-					mPwdRe.classList.add("is-invalid");
-					
-					if (!focus) {
-						mPwdRe.focus();
-						focus = true;
-					}
-				} else {
-					mPwdRe.classList.add("is-valid");
-				}
-				
-				// mName 체크
-				resetValidation(mName);
-				
-				if (!strValidation(mName)) {
-					mName.classList.add("is-invalid");
-					
-					if (!focus) {
-						mName.focus();
-						focus = true;
-					}
-				} else {
-					mName.classList.add("is-valid");
-				}
-				
-				// mEmail 체크
-				resetValidation(mEmail);
-				
-				if (!emailValidation(mEmail)) {
-					mEmail.classList.add("is-invalid");
-					
-					if (!focus) {
-						mEmail.focus();
-						focus = true;
-					}
-				} else {
-					mEmail.classList.add("is-valid");
-				}
-				
-				// mBirth 체크
-				resetValidation(mBirth);
-				
-				if (!dateValidation_yyyyMMdd(mBirth)) {
-					mBirth.classList.add("is-invalid");
-					
-					if (!focus) {
-						mBirth.focus();
-						focus = true;
-					}
-				} else {
-					mBirth.classList.add("is-valid");
-				}
-				
-				// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
-				// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
-				if (focus) return false;
-				
-				if(seq.value == "0" || seq.value == "") {
-					// Insert
-				} else {
-					fom.action = goUrlXdmUpdt;
-					fom.submit();
-				}
-			}
-			
-			// mPwd Input 시 체크
-			mPwd.addEventListener("input", function() {
-				pwdCheck();
-			});
-			
-			// mPwdRe Input 시 체크
-			mPwdRe.addEventListener("input", function() {
-				pwdCheck();	
-			});
-			
-			// pwd 입력창, 재입력 창 세트로 확인
-			function pwdCheck() {
-				// mPwd 체크
-				resetValidation(mPwd);
-				
-				if (!strValidation(mPwd)) {
-					mPwd.classList.add("is-invalid");
-				} else {
-					mPwd.classList.add("is-valid");
-				}	
-				
-				// mPwdRe 체크
-				resetValidation(mPwdRe);
-				
-				if (!strValidation(mPwdRe) || mPwd.value.trim() != mPwdRe.value.trim()) {
-					mPwdRe.classList.add("is-invalid");
-				} else {
-					mPwdRe.classList.add("is-valid");
-				}
-			}
-			
-			// mName Input 시 체크
-			mName.addEventListener("input", function(){
-				resetValidation(mName);
-				
-				if (!strValidation(mName)) {
-					mName.classList.add("is-invalid");
-				} else {
-					mName.classList.add("is-valid");
-				}	
-			});
-			
-			// mEmail Input 시 체크
-			mEmail.addEventListener("input", function(){
-				resetValidation(mEmail);
-				
-				if (!emailValidation(mEmail)) {
-					mEmail.classList.add("is-invalid");
-				} else {
-					mEmail.classList.add("is-valid");
-				}	
-			});
-			
-			// mBirth Input 시 체크
-			mBirth.addEventListener("input", function(){
-				resetValidation(mBirth);
-				
-				if (!dateValidation_yyyyMMdd(mBirth)) {
-					mBirth.classList.add("is-invalid");
-				} else {
-					mBirth.classList.add("is-valid");
-				}	
-			});
-		</script>
-		
-		<!-- 삭제/삭제(업데이트) 모달 -->
-		<script type="text/javascript">
-			if(document.getElementById("btnUelete")){
-				document.getElementById("btnUelete").onclick = function () {
-					showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none'); 	
-				}
-			}
+			</div>
+		</div>
+	</main>
+      </div>
+    	
+    	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	// Seq
+	let seq = document.querySelector("input[name=mSeq]");
 	
-			document.getElementById("btnModalUelete").onclick = function () {
-				submit(goUrlXdmUele);
-			}
-			
-			if(document.getElementById("btnDelete")){
-				document.getElementById("btnDelete").onclick = function () {
-					showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');   	
-				}
-			}
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlXdmUpdt = "/xdm/member/MemberXdmUpdt";
+	let goUrlXdmUele = "/xdm/member/MemberXdmUele";
+	let goUrlXdmDele = "/xdm/member/MemberXdmDele";
+
+	// Input
+	let mPwd = document.getElementById("mPwd");
+	let mPwdRe = document.getElementById("mPwdRe");
+	let mName = document.getElementById("mName");
+	let mEmail = document.getElementById("mEmail");
+	let mBirth = document.getElementById("mBirth");
 	
-			document.getElementById("btnModalDelete").onclick = function () {
-				submit(goUrlXdmDele);
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// mPwd 체크
+		resetValidation(mPwd);
+		
+		if (!strValidation(mPwd)) {
+			mPwd.classList.add("is-invalid");
+			
+			if (!focus) {
+				mPwd.focus();
+				focus = true;
 			}
-		</script>
-      	
-   	</body>
+		} else {
+			mPwd.classList.add("is-valid");
+		}
+		
+		// mPwdRe 체크
+		resetValidation(mPwdRe);
+		
+		if (!strValidation(mPwdRe) 
+				|| mPwd.value.trim() != mPwdRe.value.trim()) {
+			mPwdRe.classList.add("is-invalid");
+			
+			if (!focus) {
+				mPwdRe.focus();
+				focus = true;
+			}
+		} else {
+			mPwdRe.classList.add("is-valid");
+		}
+		
+		// mName 체크
+		resetValidation(mName);
+		
+		if (!strValidation(mName)) {
+			mName.classList.add("is-invalid");
+			
+			if (!focus) {
+				mName.focus();
+				focus = true;
+			}
+		} else {
+			mName.classList.add("is-valid");
+		}
+		
+		// mEmail 체크
+		resetValidation(mEmail);
+		
+		if (!emailValidation(mEmail)) {
+			mEmail.classList.add("is-invalid");
+			
+			if (!focus) {
+				mEmail.focus();
+				focus = true;
+			}
+		} else {
+			mEmail.classList.add("is-valid");
+		}
+		
+		// mBirth 체크
+		resetValidation(mBirth);
+		
+		if (!dateValidation_yyyyMMdd(mBirth)) {
+			mBirth.classList.add("is-invalid");
+			
+			if (!focus) {
+				mBirth.focus();
+				focus = true;
+			}
+		} else {
+			mBirth.classList.add("is-valid");
+		}
+		
+		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+		
+		if(seq.value == "0" || seq.value == "") {
+			// Insert
+		} else {
+			fom.action = goUrlXdmUpdt;
+			fom.submit();
+		}
+	}
+	
+	// mPwd Input 시 체크
+	mPwd.addEventListener("input", function() {
+		pwdCheck();
+	});
+	
+	// mPwdRe Input 시 체크
+	mPwdRe.addEventListener("input", function() {
+		pwdCheck();	
+	});
+	
+	// pwd 입력창, 재입력 창 세트로 확인
+	function pwdCheck() {
+		// mPwd 체크
+		resetValidation(mPwd);
+		
+		if (!strValidation(mPwd)) {
+			mPwd.classList.add("is-invalid");
+		} else {
+			mPwd.classList.add("is-valid");
+		}	
+		
+		// mPwdRe 체크
+		resetValidation(mPwdRe);
+		
+		if (!strValidation(mPwdRe) || mPwd.value.trim() != mPwdRe.value.trim()) {
+			mPwdRe.classList.add("is-invalid");
+		} else {
+			mPwdRe.classList.add("is-valid");
+		}
+	}
+	
+	// mName Input 시 체크
+	mName.addEventListener("input", function(){
+		resetValidation(mName);
+		
+		if (!strValidation(mName)) {
+			mName.classList.add("is-invalid");
+		} else {
+			mName.classList.add("is-valid");
+		}	
+	});
+	
+	// mEmail Input 시 체크
+	mEmail.addEventListener("input", function(){
+		resetValidation(mEmail);
+		
+		if (!emailValidation(mEmail)) {
+			mEmail.classList.add("is-invalid");
+		} else {
+			mEmail.classList.add("is-valid");
+		}	
+	});
+	
+	// mBirth Input 시 체크
+	mBirth.addEventListener("input", function(){
+		resetValidation(mBirth);
+		
+		if (!dateValidation_yyyyMMdd(mBirth)) {
+			mBirth.classList.add("is-invalid");
+		} else {
+			mBirth.classList.add("is-valid");
+		}	
+	});
+</script>
+
+<!-- 삭제/삭제(업데이트) 모달 -->
+<script type="text/javascript">
+	if(document.getElementById("btnUelete")){
+		document.getElementById("btnUelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none'); 	
+		}
+	}
+
+	document.getElementById("btnModalUelete").onclick = function () {
+		submit(goUrlXdmUele);
+	}
+	
+	if(document.getElementById("btnDelete")){
+		document.getElementById("btnDelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');   	
+		}
+	}
+
+	document.getElementById("btnModalDelete").onclick = function () {
+		submit(goUrlXdmDele);
+	}
+</script>
+    	
+</body>
 </html>

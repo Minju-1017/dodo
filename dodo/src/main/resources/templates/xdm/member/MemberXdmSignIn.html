@@ -78,103 +78,102 @@
 			</main>
         </div>
       	
-      	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+     	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
-		<!-- 변수 정의 -->
-		<script type="text/javascript">
-			// Form
-			let mId = document.getElementById("mId");
-			let mPwd = document.getElementById("mPwd");
-		</script>
-		
-		<!-- Validation: Bootstrap -->
-		<script type="text/javascript">
-			// btnSave 클릭시
-			document.getElementById("btnSignIn").onclick = function() {
-				var focus = false; // Validation 후 Focus 줘야 하는 Input
+	<!-- 변수 정의 -->
+	<script type="text/javascript">
+		// Form
+		let mId = document.getElementById("mId");
+		let mPwd = document.getElementById("mPwd");
+	</script>
+	
+	<!-- Validation: Bootstrap -->
+	<script type="text/javascript">
+		// btnSave 클릭시
+		document.getElementById("btnSignIn").onclick = function() {
+			var focus = false; // Validation 후 Focus 줘야 하는 Input
+			
+			// mId 체크
+			resetValidation(mId);
+			
+			if (!strValidation(mId)) {
+				mId.classList.add("is-invalid");
 				
-				// mId 체크
-				resetValidation(mId);
-				
-				if (!strValidation(mId)) {
-					mId.classList.add("is-invalid");
-					
-					if (!focus) {
-						mId.focus();
-						focus = true;
-					}
-				} else {
-					mId.classList.add("is-valid");
+				if (!focus) {
+					mId.focus();
+					focus = true;
 				}
-				
-				// mPwd 체크
-				resetValidation(mPwd);
-				
-				if (!strValidation(mPwd)) {
-					mPwd.classList.add("is-invalid");
-					
-					if (!focus) {
-						mPwd.focus();
-						focus = true;
-					}
-				} else {
-					mPwd.classList.add("is-valid");
-				}
-				
-				if (focus) return false;
-				
-				mId.value = mId.value.trim();
-				mPwd.value = mPwd.value.trim();
-				
-				signIn();
+			} else {
+				mId.classList.add("is-valid");
 			}
 			
-			// mId Input 시 체크
-			mId.addEventListener("input", function() {
-				resetValidation(mId);
-				
-				if (!strValidation(mId)) {
-					mId.classList.add("is-invalid");
-				} else {
-					mId.classList.add("is-valid");
-				}		
-			});
+			// mPwd 체크
+			resetValidation(mPwd);
 			
-			// mPwd Input 시 체크
-			mPwd.addEventListener("input", function() {
-				resetValidation(mPwd);
+			if (!strValidation(mPwd)) {
+				mPwd.classList.add("is-invalid");
 				
-				if (!strValidation(mPwd)) {
-					mPwd.classList.add("is-invalid");
-				} else {
-					mPwd.classList.add("is-valid");
-				}		
-			});
-			
-			function signIn() {
-				$.ajax({
-					async: true 
-					,cache: false
-					,type: "post"
-					/* ,dataType:"json" */
-					,url: "/xdm/member/MemberXdmSignInProc"
-					/* ,data : $("#formLogin").serialize() */
-					,data : { "mId" : $("#mId").val(), "mPwd" : $("#mPwd").val(), "autoLogin" : $("#autoLogin").is(":checked")}
-					,success: function(response) {
-						if (response.rt == "success") {
-							location.href = "/xdm/index";
-						} else if (response.rt == "fail_member") {  
-							showModalAlert("확인", "관리자만 로그인 할 수 있습니다!");
-						} else {  
-							showModalAlert("확인", "일치하는 회원이 존재하지 않습니다!");
-						}
-					}
-					,error : function(jqXHR, textStatus, errorThrown){
-						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-					}
-				});
+				if (!focus) {
+					mPwd.focus();
+					focus = true;
+				}
+			} else {
+				mPwd.classList.add("is-valid");
 			}
-		</script>
+			
+			if (focus) return false;
+			
+			mId.value = mId.value.trim();
+			mPwd.value = mPwd.value.trim();
+			
+			signIn();
+		}
 		
-   	</body>
+		// mId Input 시 체크
+		mId.addEventListener("input", function() {
+			resetValidation(mId);
+			
+			if (!strValidation(mId)) {
+				mId.classList.add("is-invalid");
+			} else {
+				mId.classList.add("is-valid");
+			}		
+		});
+		
+		// mPwd Input 시 체크
+		mPwd.addEventListener("input", function() {
+			resetValidation(mPwd);
+			
+			if (!strValidation(mPwd)) {
+				mPwd.classList.add("is-invalid");
+			} else {
+				mPwd.classList.add("is-valid");
+			}		
+		});
+		
+		function signIn() {
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				/* ,dataType:"json" */
+				,url: "/xdm/member/MemberXdmSignInProc"
+				/* ,data : $("#formLogin").serialize() */
+				,data : { "mId" : $("#mId").val(), "mPwd" : $("#mPwd").val(), "autoLogin" : $("#autoLogin").is(":checked")}
+				,success: function(response) {
+					if (response.rt == "success") {
+						location.href = "/xdm/index";
+					} else if (response.rt == "fail_member") {  
+						showModalAlert("확인", "관리자만 로그인 할 수 있습니다!");
+					} else {  
+						showModalAlert("확인", "일치하는 회원이 존재하지 않습니다!");
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+	</script>
+</body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
+import com.dodo.module.code.CodeDto;
 import com.dodo.module.code.CodeService;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +41,38 @@ public class MemberController {
 	}
 	
 	/**
+	 * Ajax를 통한 회원가입 - User
+	 * @param memberDto
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberUsrInstProc")
+	public Map<String, Object> memberUsrInstProc(MemberDto memberDto) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		int cntId = service.insertCheckId(memberDto);
+		
+		if (cntId == 0) {
+			int cntEmail = service.insertCheckEmail(memberDto);
+			
+			if (cntEmail == 0) {
+				int cntSuccess = service.insert(memberDto);
+				
+				if (cntSuccess == 1) {
+					returnMap.put("rt", "success");
+				} else {
+					returnMap.put("rt", "fail");
+				}
+			} else {
+				returnMap.put("rt", "fail_email");
+			}
+		} else {
+			returnMap.put("rt", "fail_id");
+		}
+		
+		return returnMap;
+	}
+	
+	/**
 	 * 로그인 화면 이동 - User
 	 * @return
 	 */
@@ -49,7 +82,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * Ajax를 통한 로그인 처리
+	 * Ajax를 통한 로그인 처리 - User
 	 * @param memberDto
 	 * @return
 	 * @throws Exception
@@ -73,6 +106,39 @@ public class MemberController {
 					CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
 			
 			returnMap.put("rt", "success");
+		}
+		
+		return returnMap;
+	}
+	
+	/**
+	 * 비밀번호 재설정 화면 이동 - User
+	 * @return
+	 */
+	@RequestMapping(value = "MemberUsrSignInForgotPwdForm")	
+	public String memberUsrSignInForgotPwdForm() throws Exception {	
+		return path_user + "MemberUsrSignInForgotPwdForm";
+	}
+	
+	/**
+	 * Ajax를 통한 비밀번호 재설정 처리 - User
+	 * @param memberDto
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberUsrSignInForgotPwdProc")
+	public Map<String, Object> memberUsrSignInForgotPwdProc(MemberDto memberDto) throws Exception {
+		System.out.println("#################");
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		int cntSuccess = service.updatePwd(memberDto);
+		
+		if (cntSuccess == 1) { 
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
 		}
 		
 		return returnMap;

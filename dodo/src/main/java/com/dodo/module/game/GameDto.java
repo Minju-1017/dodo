@@ -1,13 +1,6 @@
 package com.dodo.module.game;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.dodo.Constants;
-
 public class GameDto {
-	
 	
 	private String gSeq;
 	private String gName;
@@ -25,15 +18,8 @@ public class GameDto {
 	private String gComuUrl1;
 	private String gComuUrl2;
 	private int gCategoryCd;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date gRegiDate;
-	private String gRegiDateStr;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date gUpdtDate;
-	private String gUpdtDateStr;
-	
+	private String gRegiDate;
+	private String gUpdtDate;
 	private double rScoreAvg; // 리뷰 테이블에서 점수 평균 가져온 값
 	
 	public String getgSeq() {
@@ -156,30 +142,20 @@ public class GameDto {
 		this.gComuUrl2 = gComuUrl2;
 	}
 	
-	public Date getgRegiDate() {
+	public String getgRegiDate() {
 		return gRegiDate;
 	}
 	
-	public void setgRegiDate(Date gRegiDate) {
+	public void setgRegiDate(String gRegiDate) {
 		this.gRegiDate = gRegiDate;
-		this.gRegiDateStr = Constants.DATETIME_FORMAT.format(gRegiDate);
 	}
 	
-	public String getgRegiDateStr() {
-		return gRegiDateStr;
-	}
-	
-	public Date getgUpdtDate() {
+	public String getgUpdtDate() {
 		return gUpdtDate;
 	}
 	
-	public void setgUpdtDate(Date gUpdtDate) {
+	public void setgUpdtDate(String gUpdtDate) {
 		this.gUpdtDate = gUpdtDate;
-		this.gUpdtDateStr = Constants.DATETIME_FORMAT.format(gUpdtDate);
-	}
-	
-	public String getgUpdtDateStr() {
-		return gUpdtDateStr;
 	}
 
 	public double getrScoreAvg() {

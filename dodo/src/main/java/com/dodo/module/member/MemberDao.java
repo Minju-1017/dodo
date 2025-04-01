@@ -11,8 +11,11 @@ public interface MemberDao {
 	public List<MemberDto> selectList(MemberVo vo);  
 	public MemberDto selectOne(MemberDto memberDto);
 	public MemberDto selectSignInMember(MemberDto memberDto);
+	public int insertCheckId(MemberDto memberDto);
+	public int insertCheckEmail(MemberDto memberDto);
 	public int insert(MemberDto memberDto);
 	public int update(MemberDto memberDto);
+	public int updatePwd(MemberDto memberDto);
 	public int delete(MemberDto memberDto);
 	public int uelete(MemberDto memberDto);
 	public int listDelete(List<String> seqList);

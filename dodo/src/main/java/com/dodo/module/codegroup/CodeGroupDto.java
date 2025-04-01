@@ -1,11 +1,5 @@
 package com.dodo.module.codegroup;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.dodo.Constants;
-
 public class CodeGroupDto {
 	
 	private String cgSeq;
@@ -13,15 +7,8 @@ public class CodeGroupDto {
 	private String cgNameEng;
 	private int cgSequence;
 	private String cgDescription;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date cgRegiDate;
-	private String cgRegiDateStr;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date cgUpdtDate;
-	private String cgUpdtDateStr;
-	
+	private String cgRegiDate;
+	private String cgUpdtDate;
 	private int cgUseNy;
 	private String cgUseNyStr;
 	private int cCount;
@@ -66,31 +53,20 @@ public class CodeGroupDto {
 		this.cgDescription = cgDescription;
 	}
 	
-	
-	public Date getCgRegiDate() {
+	public String getCgRegiDate() {
 		return cgRegiDate;
 	}
 
-	public void setCgRegiDate(Date cgRegiDate) {
+	public void setCgRegiDate(String cgRegiDate) {
 		this.cgRegiDate = cgRegiDate;
-		this.cgRegiDateStr = Constants.DATETIME_FORMAT.format(cgRegiDate);
 	}
 
-	public String getCgRegiDateStr() {
-		return cgRegiDateStr;
-	}
-
-	public Date getCgUpdtDate() {
+	public String getCgUpdtDate() {
 		return cgUpdtDate;
 	}
 
-	public void setCgUpdtDate(Date cgUpdtDate) {
+	public void setCgUpdtDate(String cgUpdtDate) {
 		this.cgUpdtDate = cgUpdtDate;
-		this.cgUpdtDateStr = Constants.DATETIME_FORMAT.format(cgUpdtDate);
-	}
-
-	public String getCgUpdtDateStr() {
-		return cgUpdtDateStr;
 	}
 
 	public int getCgUseNy() {

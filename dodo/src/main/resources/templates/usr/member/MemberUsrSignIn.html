@@ -1,23 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-   <!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta content="Codescandy" name="author">
-	<title>Boardgame Mania</title>
-	<!-- Favicon icon-->
-	<link rel="shortcut icon" type="image/x-icon" href="/assets/usr/template/FreshCart-1.4.0/images/favicon/favicon.ico">
-
-	<!-- Libs CSS -->
-	<link href="/assets/usr/template/FreshCart-1.4.0/libs/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
-	<link href="/assets/usr/template/FreshCart-1.4.0/libs/feather-webfont/dist/feather-icons.css" rel="stylesheet">
-	<link href="/assets/usr/template/FreshCart-1.4.0/libs/simplebar/dist/simplebar.min.css" rel="stylesheet">
-
-	<!-- Theme CSS -->
-	<link rel="stylesheet" href="/assets/usr/template/FreshCart-1.4.0/css/theme.min.css">
-</head>
+<div th:replace="~{/usr/include/headLogin :: head}"></div> <!-- 중복되는 head 처리 -->
 
 <body>
 	<!-- main -->
@@ -60,7 +44,7 @@
 												<label class="form-check-label" for="autoLogin">로그인 상태 유지</label>
 											</div>
 											<div>
-												<a href="../pages/forgot-password.html">비밀번호 재설정</a>
+												<a href="/usr/member/MemberUsrSignInForgotPwdForm">비밀번호 재설정</a>
 											</div>
 										</div>
 										<div class="col-6 d-grid">
@@ -82,99 +66,103 @@
 			</main>
         </div>
       	
-      	<div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+     	<div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
-		<!-- 변수 정의 -->
-		<script type="text/javascript">
-			// Form
-			let mId = document.getElementById("mId");
-			let mPwd = document.getElementById("mPwd");
-		</script>
-		
-		<!-- Validation: Bootstrap -->
-		<script type="text/javascript">
-			// btnSave 클릭시
-			document.getElementById("btnSignIn").onclick = function() {
-				var focus = false; // Validation 후 Focus 줘야 하는 Input
+	<!-- 변수 정의 -->
+	<script type="text/javascript">
+		// Form
+		let mId = document.getElementById("mId");
+		let mPwd = document.getElementById("mPwd");
+	</script>
+	
+	<!-- Validation: Bootstrap -->
+	<script type="text/javascript">
+		// btnSave 클릭시
+		document.getElementById("btnSignIn").onclick = function() {
+			var focus = false; // Validation 후 Focus 줘야 하는 Input
+			
+			// mId 체크
+			resetValidation(mId);
+			
+			if (!strValidation(mId)) {
+				mId.classList.add("is-invalid");
 				
-				// mId 체크
-				resetValidation(mId);
-				
-				if (!strValidation(mId)) {
-					mId.classList.add("is-invalid");
-					
-					if (!focus) {
-						mId.focus();
-						focus = true;
-					}
-				} else {
-					mId.classList.add("is-valid");
+				if (!focus) {
+					mId.focus();
+					focus = true;
 				}
-				
-				// mPwd 체크
-				resetValidation(mPwd);
-				
-				if (!strValidation(mPwd)) {
-					mPwd.classList.add("is-invalid");
-					
-					if (!focus) {
-						mPwd.focus();
-						focus = true;
-					}
-				} else {
-					mPwd.classList.add("is-valid");
-				}
-				
-				if (focus) return false;
-				
-				mId.value = mId.value.trim();
-				mPwd.value = mPwd.value.trim();
-				
-				signIn();
+			} else {
+				mId.classList.add("is-valid");
 			}
 			
-			// mId Input 시 체크
-			mId.addEventListener("input", function() {
-				resetValidation(mId);
-				
-				if (!strValidation(mId)) {
-					mId.classList.add("is-invalid");
-				} else {
-					mId.classList.add("is-valid");
-				}		
-			});
+			// mPwd 체크
+			resetValidation(mPwd);
 			
-			// mPwd Input 시 체크
-			mPwd.addEventListener("input", function() {
-				resetValidation(mPwd);
+			if (!strValidation(mPwd)) {
+				mPwd.classList.add("is-invalid");
 				
-				if (!strValidation(mPwd)) {
-					mPwd.classList.add("is-invalid");
-				} else {
-					mPwd.classList.add("is-valid");
-				}		
-			});
-			
-			function signIn() {
-				$.ajax({
-					async: true 
-					,cache: false
-					,type: "post"
-					,url: "/usr/member/MemberUsrSignInProc"
-					,data : { "mId" : $("#mId").val(), "mPwd" : $("#mPwd").val(), "autoLogin" : $("#autoLogin").is(":checked")}
-					,success: function(response) {
-						if (response.rt == "success") {
-							location.href = "/usr/index";
-						} else {  
-							showModalAlert("확인", "일치하는 회원이 존재하지 않습니다!");
-						}
-					}
-					,error : function(jqXHR, textStatus, errorThrown){
-						alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-					}
-				});
+				if (!focus) {
+					mPwd.focus();
+					focus = true;
+				}
+			} else {
+				mPwd.classList.add("is-valid");
 			}
-		</script>
+			
+			if (focus) return false;
+			
+			mId.value = mId.value.trim();
+			mPwd.value = mPwd.value.trim();
+			
+			signIn();
+		}
 		
-   	</body>
+		// mId Input 시 체크
+		mId.addEventListener("input", function() {
+			resetValidation(mId);
+			
+			if (!strValidation(mId)) {
+				mId.classList.add("is-invalid");
+			} else {
+				mId.classList.add("is-valid");
+			}		
+		});
+		
+		// mPwd Input 시 체크
+		mPwd.addEventListener("input", function() {
+			resetValidation(mPwd);
+			
+			if (!strValidation(mPwd)) {
+				mPwd.classList.add("is-invalid");
+			} else {
+				mPwd.classList.add("is-valid");
+			}		
+		});
+		
+		function signIn() {
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/usr/member/MemberUsrSignInProc"
+				,data : { 
+					"mId" : $("#mId").val(), 
+					"mPwd" : $("#mPwd").val(), 
+					"autoLogin" : $("#autoLogin").is(":checked") 
+				}
+				,success: function(response) {
+					if (response.rt == "success") {
+						location.href = "/usr/index";
+					} else {  
+						showModalAlert("확인", "일치하는 회원이 존재하지 않습니다!");
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+	</script>
+		
+</body>
 </html>

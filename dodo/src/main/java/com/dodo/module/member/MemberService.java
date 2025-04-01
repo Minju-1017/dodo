@@ -27,12 +27,24 @@ public class MemberService {
 		return dao.selectSignInMember(memberDto);
 	}
 	
+	public int insertCheckId(MemberDto memberDto) {
+		return dao.insertCheckId(memberDto);
+	}
+	
+	public int insertCheckEmail(MemberDto memberDto) {
+		return dao.insertCheckEmail(memberDto);
+	}
+	
 	public int insert(MemberDto memberDto) {
 		return dao.insert(memberDto);
 	}
 	
 	public int update(MemberDto memberDto) {
 		return dao.update(memberDto);
+	}
+	
+	public int updatePwd(MemberDto memberDto) {
+		return dao.updatePwd(memberDto);
 	}
 	
 	public int delete(MemberDto memberDto) {

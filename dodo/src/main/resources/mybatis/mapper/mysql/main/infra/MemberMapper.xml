@@ -80,9 +80,54 @@
 		FROM 
 			member a
 		WHERE 1=1
-			AND a.mId=#{mId}
-			AND a.mPwd=#{mPwd}
+			AND BINARY(a.mId)=#{mId}
+			AND BINARY(a.mPwd)=#{mPwd}
 	</select>
+	
+	<select id="insertCheckId" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			member 
+		WHERE 1=1
+			AND mId=#{mId}
+	</select>
+	
+	<select id="insertCheckEmail" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			member 
+		WHERE 1=1
+			AND mEmail=#{mEmail}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO member
+		(
+		    mId,
+		    mName,
+		    mEmail,
+		    mPwd,
+		    mBirth,
+		    mGenderCd,
+		    mGradeCd,
+		    mRegiDate,
+		    mDelNy
+		)
+		VALUES
+		(
+		    #{mId},
+		    #{mName},
+		    #{mEmail},
+		    #{mPwd},
+		    #{mBirth},
+		    #{mGenderCd},
+		    44,
+		    now(),
+		    0
+		)
+		
+		<selectKey resultType="String" keyProperty="mSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
 	
 	<update id="update">
 		UPDATE member
@@ -90,13 +135,24 @@
 			mName=#{mName},
 			mEmail=#{mEmail},
 			mPwd=#{mPwd},
-			mBirth=#{mBirthStr},
+			mBirth=#{mBirth},
 			mGenderCd=#{mGenderCd},
 			mPfFileName=#{mPfFileName},
 			mGradeCd=#{mGradeCd},
 			mUpdtDate=now()
-		WHERE
-			mSeq=#{mSeq}
+		WHERE 1=1
+			AND mSeq=#{mSeq}
+	</update>
+	
+	<update id="updatePwd">
+		UPDATE member
+		SET
+			mPwd=#{mPwd},
+			mUpdtDate=now()
+		WHERE 1=1
+			AND BINARY(mId)=#{mId}
+			AND BINARY(mName)=#{mName}
+			AND mBirth=#{mBirth}
 	</update>
 	
 	<delete id="delete">

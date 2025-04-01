@@ -1,10 +1,5 @@
 package com.dodo.module.member;
 
-import java.util.Date;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.dodo.Constants;
-
 public class MemberDto {
 	
 	private String mSeq;
@@ -12,23 +7,12 @@ public class MemberDto {
 	private String mName;
 	private String mEmail;
 	private String mPwd;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date mBirth;
-	private String mBirthStr;
-	
+	private String mBirth;
 	private int mGenderCd;
 	private String mPfFileName;
 	private int mGradeCd;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date mRegiDate;
-	private String mRegiDateStr;
-	
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date mUpdtDate;
-	private String mUpdtDateStr;
-	
+	private String mRegiDate;
+	private String mUpdtDate;
 	private int mDelNy;
 	private String mDelNyStr;
 
@@ -72,13 +56,12 @@ public class MemberDto {
 		this.mPwd = mPwd;
 	}
 	
-	public Date getmBirth() {
+	public String getmBirth() {
 		return mBirth;
 	}
 	
-	public void setmBirth(Date mBirth) {
+	public void setmBirth(String mBirth) {
 		this.mBirth = mBirth;
-		this.mBirthStr = Constants.DATE_FORMAT.format(mBirth);
 	}
 
 	public int getmGenderCd() {
@@ -105,30 +88,20 @@ public class MemberDto {
 		this.mGradeCd = mGradeCd;
 	}
 
-	public Date getmRegiDate() {
+	public String getmRegiDate() {
 		return mRegiDate;
 	}
 
-	public void setmRegiDate(Date mRegiDate) {
+	public void setmRegiDate(String mRegiDate) {
 		this.mRegiDate = mRegiDate;
-		this.mRegiDateStr = Constants.DATETIME_FORMAT.format(mRegiDate);
 	}
 
-	public String getmRegiDateStr() {
-		return mRegiDateStr;
-	}
-
-	public Date getmUpdtDate() {
+	public String getmUpdtDate() {
 		return mUpdtDate;
 	}
 
-	public void setmUpdtDate(Date mUpdtDate) {
+	public void setmUpdtDate(String mUpdtDate) {
 		this.mUpdtDate = mUpdtDate;
-		this.mUpdtDateStr = Constants.DATETIME_FORMAT.format(mUpdtDate);
-	}
-
-	public String getmUpdtDateStr() {
-		return mUpdtDateStr;
 	}
 
 	public int getmDelNy() {

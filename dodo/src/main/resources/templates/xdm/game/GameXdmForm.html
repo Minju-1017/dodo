@@ -1,928 +1,950 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-	<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
-		<div class="main-wrapper">
-			<!-- navbar vertical -->
-			<!-- navbar -->
-			<nav class="navbar-vertical-nav d-none d-xl-block">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+<div class="main-wrapper">
+	<!-- navbar vertical -->
+	<!-- navbar -->
+	<nav class="navbar-vertical-nav d-none d-xl-block">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column" id="sideNavbar">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">Home</span>
+							</div>
 						</a>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column" id="sideNavbar">
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">Home</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link active" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
-									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<!-- Nav item -->
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
-									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
-									</div>
-								</a>
-							</li>
-						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+								<span class="nav-link-text">공지사항</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/xdm/game/GameXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+								<span class="nav-link-text">커뮤니케이션</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<!-- Nav item -->
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+								<span class="nav-link-text">개인정보관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+								<span class="nav-link-text">테스트</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5 d-flex justify-content-between align-items-center">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">홈</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
+								<span class="nav-link-text">공지사항</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="/xdm/game/GameXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
+								<span class="nav-link-text">커뮤니케이션</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
+								<span class="nav-link-text">개인정보관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
+								<span class="nav-link-text">테스트</span>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+         	<!-- main wrapper -->
+	<main class="main-content-wrapper">
+		<div class="container">
+			<div class="row mb-8">
+				<div class="col-md-12">
+					<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+						<h2>Board Game</h2>
 					</div>
 				</div>
-			</nav>
-			
-			<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
-				<div class="navbar-vertical">
-					<div class="px-4 py-5 d-flex justify-content-between align-items-center">
-						<a href="/xdm/index" class="navbar-brand">
-							<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
-						</a>
-						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-					</div>
-					<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
-						<ul class="navbar-nav flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/index">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-house"></i></span>
-										<span class="nav-link-text">홈</span>
+			</div>
+			<div class="row mb-8 g-5">
+				<div class="col-lg-12 col-12">
+					<div class="card card-lg border-0">
+						<div class="card-body d-flex flex-column gap-8 p-7">
+							<div class="d-flex flex-column gap-4">
+								<form class="row g-5 needs-validation" novalidate
+									method="post" id="form" name="form">
+									
+									<input type="hidden" name="gSeq" th:value="${vo.gSeq}">
+									
+									<div class="col-lg-3 col-12">
+										<label for="gSeq" class="form-label">
+											고유번호
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="gSeq" id="gSeq" 
+											th:value="${gameItem?.gSeq}" placeholder="자동생성" disabled />
 									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-										<span class="nav-link-text">공지사항</span>
+									<div class="col-lg-5 col-12">
+										<label for="gName" class="form-label">
+											게임명
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="gName" id="gName"
+											th:value="${gameItem?.gName}" placeholder="한글, 영대소문자, 숫자" required />
+										<div class="invalid-feedback"> 게임명을 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
 									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/xdm/member/MemberXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-people"></i></span>
-										<span class="nav-link-text">회원관리</span>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-4 col-12">
+										<label for="gOfficialCd" class="form-label">
+											게임 카테고리
+											<span class="text-danger">*</span>
+										</label>
+										<select class="form-select" name="gCategoryCd" id="gCategoryCd" required>
+											<option value="">선택</option>
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+												th:selected="${#strings.equals(codeList.cSeq, gameItem?.gCategoryCd)}"></option>
+										</select>
+										<div class="invalid-feedback"> 게임 카테고리를 선택해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
 									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link active" href="/xdm/game/GameXdmList">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-box"></i></span>
-										<span class="nav-link-text">서비스관리</span>
+									<div class="col-lg-4 col-12">
+										<label for="gTnFileName" class="form-label">썸네일 이미지 파일명</label>
+										
+										<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper gap-2">
+											<div>
+												<img th:if="${gameItem?.gTnFileName eq null or #strings.trim(gameItem?.gTnFileName) eq ''}" 
+													class="image avatar avatar-lg rounded-3" 
+													src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
+													alt="Image" />
+												<img th:if="${gameItem?.gTnFileName ne null and #strings.trim(gameItem?.gTnFileName) ne ''}" 
+													class="image avatar avatar-lg rounded-3" 
+													th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/products/' + ${gameItem?.gTnFileName}}"
+													alt="Image" />
+											</div>
+	
+											<div class="file-upload btn btn-light ms-md-4">
+												<input type="file" class="file-input opacity-0" />
+												파일 선택
+											</div>
+	
+											<span class="ms-2">JPG, GIF or PNG. 1MB Max.</span>
+										</div>
+										
+										
+										<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
+											th:value="${gameItem?.gTnFileName}" placeholder="png, jpg, jpeg" />
 									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
-										<span class="nav-link-text">커뮤니케이션</span>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-4 col-12">
+										<label for="gLevel" class="form-label">
+											난이도
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" placeholder="0 ~ 5 사이의 실수 (소수점 두 자리)"
+											th:value="${gameItem?.gLevel}" id="gLevel" name="gLevel" required />
+										<div class="invalid-feedback"> 난이도를 숫자(0 ~ 5 사이의 실수, 소수점 두 자리)로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
 									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a
-									class="nav-link collapsed "
-									href="#"
-									data-bs-toggle="collapse"
-									data-bs-target="#navCategoriesOrders"
-									aria-expanded="false"
-									aria-controls="navCategoriesOrders"
-								>
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
-										<span class="nav-link-text">시스템관리</span>
+									<div class="col-lg-4 col-12">
+										<label for="gUseAge" class="form-label">
+											최저 사용 연령
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" placeholder="0보다 큰 정수"
+											th:value="${gameItem?.gUseAge}" id="gUseAge" name="gUseAge" required />
+										<div class="invalid-feedback"> 최저 사용 연령을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
 									</div>
-								</a>
-								<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
-									<ul class="nav flex-column">
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-										<span class="nav-link-text">개인정보관리</span>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-4 col-12">
+										<label for="gMinTime" class="form-label">
+											최소 소요 시간
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" 
+											placeholder="최대 시간보다 작거나 같고, 0보다 큰 정수 (분 단위)"
+											th:value="${gameItem?.gMinTime}" id="gMinTime" name="gMinTime" required />
+										<div class="invalid-feedback"> 최대 시간보다 작거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
 									</div>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">
-									<div class="d-flex align-items-center">
-										<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-										<span class="nav-link-text">테스트</span>
+									<div class="col-lg-4 col-12">
+										<label for="gMaxTime" class="form-label">
+											최대 소요 시간
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" 
+											placeholder="최소보다 크거나 같고, 0보다 큰 정수 (분 단위)"
+											th:value="${gameItem?.gMaxTime}" id="gMaxTime" name="gMaxTime" required />
+										<div class="invalid-feedback"> 최소 소요 시간보다 크거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
 									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-
-           	<!-- main wrapper -->
-			<main class="main-content-wrapper">
-				<div class="container">
-					<div class="row mb-8">
-						<div class="col-md-12">
-							<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-								<h2>Board Game</h2>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-4 col-12">
+										<label for="gMinPeople" class="form-label">
+											최소 인원
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" placeholder="최대보다 작고, 0보다 큰 정수"
+											th:value="${gameItem?.gMinPeople}" id="gMinPeople" name="gMinPeople" required />
+										<div class="invalid-feedback"> 최대 인원보다 작거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12">
+										<label for="gMaxPeople" class="form-label">
+											최대 인원
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" placeholder="최소보다 크고, 0보다 큰 정수"
+											th:value="${gameItem?.gMaxPeople}" id="gMaxPeople" name="gMaxPeople" required />
+										<div class="invalid-feedback"> 최소 인원보다 크거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-4 col-12">
+										<label for="gBestPeople" class="form-label">
+											최적인원
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" placeholder="0보다 큰 정수"
+											th:value="${gameItem?.gBestPeople}" id="gBestPeople" name="gBestPeople" required />
+										<div class="invalid-feedback"> 최적인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12">
+										<label for="gRecommendPeople" class="form-label">
+											추천인원
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" placeholder="0보다 큰 정수"
+											th:value="${gameItem?.gRecommendPeople}"
+											id="gRecommendPeople" name="gRecommendPeople" required />
+										<div class="invalid-feedback"> 추천인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-4 col-12">
+										<label for="gOfficialCd" class="form-label">
+											공식판매사
+											<span class="text-danger">*</span>
+										</label>
+										<select class="form-select" name="gOfficialCd" id="gOfficialCd" required>
+											<option value="">선택</option>
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+												th:selected="${#strings.equals(codeList.cSeq, gameItem?.gOfficialCd)}"></option>
+										</select>
+										<div class="invalid-feedback"> 공식판매사를 선택해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-8 col-12"></div>
+									<div class="col-lg-8 col-12">
+										<label for="gOfficialUrl" class="form-label">공식 판매 URL</label>
+										<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
+											th:value="${gameItem?.gOfficialUrl}"
+											id="gOfficialUrl" name="gOfficialUrl" required />
+										<div class="invalid-feedback"> 공식 판매 주소를 URL 형식에 맞게 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-8 col-12">
+										<label for="gComuUrl1" class="form-label">보드라이프 URL</label>
+										<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
+											th:value="${gameItem?.gComuUrl1}" id="gComuUrl1" name="gComuUrl1" required />
+										<div class="invalid-feedback"> 보드라이프 주소를 URL 형식에 맞게 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-8 col-12">
+										<label for="gComuUrl2" class="form-label">Geek URL</label>
+										<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
+											th:value="${gameItem?.gComuUrl2}" 
+											id="gComuUrl2" name="gComuUrl2" required />
+										<div class="invalid-feedback"> Geek 주소를 URL 형식에 맞게 입력해 주세요. </div>
+										<div class="valid-feedback"> Good! </div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-6 col-12">
+										<div class="d-flex flex-column flex-md-row gap-2">
+											<a href="/xdm/game/GameXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12" style="text-align: right;">
+										<button th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
+											class="btn btn-danger" type="button" id="btnUelete">
+											<i class="bi bi-trash3"></i>
+										</button>
+										<button th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
+											class="btn btn-danger" type="button" id="btnDelete">
+											<i class="bi bi-x-lg"></i>
+										</button>
+										<button class="btn btn-primary" type="button" id="btnSave">
+											<i class="bi bi-database-add"></i>
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
-					<div class="row mb-8 g-5">
-						<div class="col-lg-12 col-12">
-							<div class="card card-lg border-0">
-								<div class="card-body d-flex flex-column gap-8 p-7">
-									<div class="d-flex flex-column gap-4">
-										<form class="row g-5 needs-validation" novalidate
-											method="post" id="form" name="form">
-											
-											<input type="hidden" name="gSeq" th:value="${vo.gSeq}">
-											
-											<div class="col-lg-3 col-12">
-												<label for="gSeq" class="form-label">
-													고유번호
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" name="gSeq" id="gSeq" 
-													th:value="${gameItem?.gSeq}" placeholder="자동생성" disabled />
-											</div>
-											<div class="col-lg-5 col-12">
-												<label for="gName" class="form-label">
-													게임명
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" name="gName" id="gName"
-													th:value="${gameItem?.gName}" placeholder="한글, 영대소문자, 숫자" required />
-												<div class="invalid-feedback"> 게임명을 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-4 col-12">
-												<label for="gOfficialCd" class="form-label">
-													게임 카테고리
-													<span class="text-danger">*</span>
-												</label>
-												<select class="form-select" name="gCategoryCd" id="gCategoryCd" required>
-													<option value="">선택</option>
-													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}"
-														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
-														th:selected="${#strings.equals(codeList.cSeq, gameItem?.gCategoryCd)}"></option>
-												</select>
-												<div class="invalid-feedback"> 게임 카테고리를 선택해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12">
-												<label for="gTnFileName" class="form-label">썸네일 이미지 파일명</label>
-												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
-													th:value="${gameItem?.gTnFileName}" placeholder="png, jpg, jpeg" />
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-4 col-12">
-												<label for="gLevel" class="form-label">
-													난이도
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" placeholder="0 ~ 5 사이의 실수 (소수점 두 자리)"
-													th:value="${gameItem?.gLevel}" id="gLevel" name="gLevel" required />
-												<div class="invalid-feedback"> 난이도를 숫자(0 ~ 5 사이의 실수, 소수점 두 자리)로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12">
-												<label for="gUseAge" class="form-label">
-													최저 사용 연령
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													th:value="${gameItem?.gUseAge}" id="gUseAge" name="gUseAge" required />
-												<div class="invalid-feedback"> 최저 사용 연령을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-4 col-12">
-												<label for="gMinTime" class="form-label">
-													최소 소요 시간
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" 
-													placeholder="최대 시간보다 작거나 같고, 0보다 큰 정수 (분 단위)"
-													th:value="${gameItem?.gMinTime}" id="gMinTime" name="gMinTime" required />
-												<div class="invalid-feedback"> 최대 시간보다 작거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12">
-												<label for="gMaxTime" class="form-label">
-													최대 소요 시간
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" 
-													placeholder="최소보다 크거나 같고, 0보다 큰 정수 (분 단위)"
-													th:value="${gameItem?.gMaxTime}" id="gMaxTime" name="gMaxTime" required />
-												<div class="invalid-feedback"> 최소 소요 시간보다 크거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-4 col-12">
-												<label for="gMinPeople" class="form-label">
-													최소 인원
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" placeholder="최대보다 작고, 0보다 큰 정수"
-													th:value="${gameItem?.gMinPeople}" id="gMinPeople" name="gMinPeople" required />
-												<div class="invalid-feedback"> 최대 인원보다 작거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12">
-												<label for="gMaxPeople" class="form-label">
-													최대 인원
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" placeholder="최소보다 크고, 0보다 큰 정수"
-													th:value="${gameItem?.gMaxPeople}" id="gMaxPeople" name="gMaxPeople" required />
-												<div class="invalid-feedback"> 최소 인원보다 크거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-4 col-12">
-												<label for="gBestPeople" class="form-label">
-													최적인원
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													th:value="${gameItem?.gBestPeople}" id="gBestPeople" name="gBestPeople" required />
-												<div class="invalid-feedback"> 최적인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12">
-												<label for="gRecommendPeople" class="form-label">
-													추천인원
-													<span class="text-danger">*</span>
-												</label>
-												<input type="text" class="form-control" placeholder="0보다 큰 정수"
-													th:value="${gameItem?.gRecommendPeople}"
-													id="gRecommendPeople" name="gRecommendPeople" required />
-												<div class="invalid-feedback"> 추천인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-4 col-12">
-												<label for="gOfficialCd" class="form-label">
-													공식판매사
-													<span class="text-danger">*</span>
-												</label>
-												<select class="form-select" name="gOfficialCd" id="gOfficialCd" required>
-													<option value="">선택</option>
-													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_OFFICIAL)}"
-														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
-														th:selected="${#strings.equals(codeList.cSeq, gameItem?.gOfficialCd)}"></option>
-												</select>
-												<div class="invalid-feedback"> 공식판매사를 선택해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-8 col-12"></div>
-											<div class="col-lg-8 col-12">
-												<label for="gOfficialUrl" class="form-label">공식 판매 URL</label>
-												<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
-													th:value="${gameItem?.gOfficialUrl}"
-													id="gOfficialUrl" name="gOfficialUrl" required />
-												<div class="invalid-feedback"> 공식 판매 주소를 URL 형식에 맞게 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-8 col-12">
-												<label for="gComuUrl1" class="form-label">보드라이프 URL</label>
-												<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
-													th:value="${gameItem?.gComuUrl1}" id="gComuUrl1" name="gComuUrl1" required />
-												<div class="invalid-feedback"> 보드라이프 주소를 URL 형식에 맞게 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-8 col-12">
-												<label for="gComuUrl2" class="form-label">Geek URL</label>
-												<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
-													th:value="${gameItem?.gComuUrl2}" 
-													id="gComuUrl2" name="gComuUrl2" required />
-												<div class="invalid-feedback"> Geek 주소를 URL 형식에 맞게 입력해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
-											</div>
-											<div class="col-lg-4 col-12"></div>
-											<div class="col-lg-6 col-12">
-												<div class="d-flex flex-column flex-md-row gap-2">
-													<a href="/xdm/game/GameXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
-												</div>
-											</div>
-											<div class="col-lg-6 col-12" style="text-align: right;">
-												<button th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
-													class="btn btn-danger" type="button" id="btnUelete">
-													<i class="bi bi-trash3"></i>
-												</button>
-												<button th:if="${vo.gSeq != null and vo.gSeq != '' and vo.gSeq != '0'}"
-													class="btn btn-danger" type="button" id="btnDelete">
-													<i class="bi bi-x-lg"></i>
-												</button>
-												<button class="btn btn-primary" type="button" id="btnSave">
-													<i class="bi bi-database-add"></i>
-												</button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
-			</main>
-        </div>
-      	
-      	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-		
-		<!-- 변수 정의 / 공통 함수 -->
-		<script type="text/javascript">
-			// Seq
-			let seq = document.querySelector("input[name=gSeq]");
-			
-			// URL
-			let fom = document.querySelector("form[name=form]");
-			let goUrlXdmInst = "/xdm/game/GameXdmInst";
-			let goUrlXdmUpdt = "/xdm/game/GameXdmUpdt";
-			let goUrlXdmUele = "/xdm/game/GameXdmUele";
-			let goUrlXdmDele = "/xdm/game/GameXdmDele";
-			
-			// Input
-			let cName = document.getElementById("gName");
-			let gCategoryCd = document.getElementById("gCategoryCd");
-			let gLevel = document.getElementById("gLevel");
-			let gUseAge = document.getElementById("gUseAge");
-			let gMinTime = document.getElementById("gMinTime");
-			let gMaxTime = document.getElementById("gMaxTime");
-			let gMinPeople = document.getElementById("gMinPeople");
-			let gMaxPeople = document.getElementById("gMaxPeople");
-			let gBestPeople = document.getElementById("gBestPeople");
-			let gRecommendPeople = document.getElementById("gRecommendPeople");
-			let gOfficialCd = document.getElementById("gOfficialCd");
-			let gOfficialUrl = document.getElementById("gOfficialUrl");
-			let gComuUrl1 = document.getElementById("gComuUrl1");
-			let gComuUrl2 = document.getElementById("gComuUrl2");
-			
-			function submit(goUrl) {
-				fom.action = goUrl;
-				fom.submit();
-			}
-		</script>
-		
-		<!-- Validation: Bootstrap -->
-		<script type="text/javascript">
-			// btnSave 클릭시
-			document.getElementById("btnSave").onclick = function() {
-				var focus = false; // Validation 후 Focus 줘야 하는 Input
-				
-				// gName 체크
-				resetValidation(gName);
-				
-				if (!strValidation(gName)) {
-					gName.classList.add("is-invalid");
-					
-					if (!focus) {
-						gName.focus();
-						focus = true;
-					}
-				} else {
-					gName.classList.add("is-valid");
-				}
-				
-				// gCategoryCd 체크
-				resetValidation(gCategoryCd);
-				
-				if (!strValidation(gCategoryCd)) {
-					gCategoryCd.classList.add("is-invalid");
-					
-					if (!focus) {
-						gCategoryCd.focus();
-						focus = true;
-					}
-				} else {
-					gCategoryCd.classList.add("is-valid");
-				}
-				
-				// gLevel 체크
-				resetValidation(gLevel);
-				
-				var gLevelValue = gLevel.value.trim();
-				
-				if (!realNumberValidation(gLevel)
-						|| parseInt(gLevelValue) < 0 
-						|| parseInt(gLevelValue) > 5) {
-					gLevel.classList.add("is-invalid");
-					
-					if (!focus) {
-						gLevel.focus();
-						focus = true;
-					}
-				} else {
-					gLevel.classList.add("is-valid");
-				}
-				
-				// gUseAge 체크
-				resetValidation(gUseAge);
-				
-				if (!positiveNumberValidation(gUseAge)) {
-					gUseAge.classList.add("is-invalid");
-					
-					if (!focus) {
-						gUseAge.focus();
-						focus = true;
-					}
-				} else {
-					gUseAge.classList.add("is-valid");
-				}
-				
-				// gMinTime 체크
-				var gMinTimeValue = gMinTime.value.trim();
-				var gMaxTimeValue = gMaxTime.value.trim();
-				
-				resetValidation(gMinTime);
-				
-				if (!positiveNumberValidation(gMinTime)
-						|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
-					gMinTime.classList.add("is-invalid");
-					
-					if (!focus) {
-						gMinTime.focus();
-						focus = true;
-					}
-				} else {
-					gMinTime.classList.add("is-valid");
-				}
-				
-				// gMaxTime 체크
-				resetValidation(gMaxTime);
-				
-				if (!positiveNumberValidation(gMaxTime)
-						|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
-					gMaxTime.classList.add("is-invalid");
-					
-					if (!focus) {
-						gMaxTime.focus();
-						focus = true;
-					}
-				} else {
-					gMaxTime.classList.add("is-valid");
-				}
-				
-				// gMinPeople 체크
-				var gMinPeopleValue = gMinPeople.value.trim();
-				var gMaxPeopleValue = gMaxPeople.value.trim();
-				
-				resetValidation(gMinPeople);
-				
-				if (!positiveNumberValidation(gMinPeople)
-						|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
-					gMinPeople.classList.add("is-invalid");
-					
-					if (!focus) {
-						gMinTimgMinPeoplee.focus();
-						focus = true;
-					}
-				} else {
-					gMinPeople.classList.add("is-valid");
-				}
-				
-				// gMaxPeople 체크
-				resetValidation(gMaxPeople);
-				
-				if (!positiveNumberValidation(gMaxPeople)
-						|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
-					gMaxPeople.classList.add("is-invalid");
-					
-					if (!focus) {
-						gMaxPeople.focus();
-						focus = true;
-					}
-				} else {
-					gMaxPeople.classList.add("is-valid");
-				}
-				
-				// gBestPeople 체크
-				resetValidation(gBestPeople);
-				
-				if (!positiveNumberValidation(gBestPeople)) {
-					gBestPeople.classList.add("is-invalid");
-					
-					if (!focus) {
-						gBestPeople.focus();
-						focus = true;
-					}
-				} else {
-					gBestPeople.classList.add("is-valid");
-				}
-				
-				// gRecommendPeople 체크
-				resetValidation(gRecommendPeople);
-				
-				if (!positiveNumberValidation(gRecommendPeople)) {
-					gRecommendPeople.classList.add("is-invalid");
-					
-					if (!focus) {
-						gRecommendPeople.focus();
-						focus = true;
-					}
-				} else {
-					gRecommendPeople.classList.add("is-valid");
-				}
-				
-				// gOfficialCd 체크
-				resetValidation(gOfficialCd);
-				
-				if (!strValidation(gOfficialCd)) {
-					gOfficialCd.classList.add("is-invalid");
-					
-					if (!focus) {
-						gOfficialCd.focus();
-						focus = true;
-					}
-				} else {
-					gOfficialCd.classList.add("is-valid");
-				}
-				
-				// gOfficialUrl 체크
-				resetValidation(gOfficialUrl);
-				
-				var gOfficialUrlValue = gOfficialUrl.value.trim();
-				
-				if (gOfficialUrlValue != null && gOfficialUrlValue != "") {
-					if (!urlValidation(gOfficialUrl)) {
-						gOfficialUrl.classList.add("is-invalid");
-						
-						if (!focus) {
-							gOfficialUrl.focus();
-							focus = true;
-						}
-					} else {
-						gOfficialUrl.classList.add("is-valid");
-					}
-				}
-				
-				// gComuUrl1 체크
-				resetValidation(gComuUrl1);
-				
-				var gComuUrl1Value = gComuUrl1.value.trim();
-				
-				if (gComuUrl1Value != null && gComuUrl1Value != "") {
-					if (!urlValidation(gComuUrl1)) {
-						gComuUrl1.classList.add("is-invalid");
-						
-						if (!focus) {
-							gComuUrl1.focus();
-							focus = true;
-						}
-					} else {
-						gComuUrl1.classList.add("is-valid");
-					}
-				}
-				
-				// gComuUrl2 체크
-				resetValidation(gComuUrl2);
-				
-				var gComuUrl2Value = gComuUrl2.value.trim();
-				
-				if (gComuUrl2Value != null 
-						&& gComuUrl2Value != "") {
-					if (!urlValidation(gComuUrl2)) {
-						gComuUrl2.classList.add("is-invalid");
-						
-						if (!focus) {
-							gComuUrl2.focus();
-							focus = true;
-						}
-					} else {
-						gComuUrl2.classList.add("is-valid");
-					}
-				}
-				
-				// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
-				if (focus) return false;
-				
-				gName.value = gName.value.trim();
-				gLevel.value = gLevel.value.trim();
-				gUseAge.value = gUseAge.value.trim();
-				gMinTime.value = gMinTime.value.trim();
-				gMaxTime.value = gMaxTime.value.trim();
-				gMinPeople.value = gMinPeople.value.trim();
-				gMaxPeople.value = gMaxPeople.value.trim();
-				gBestPeople.value = gBestPeople.value.trim();
-				gRecommendPeople.value = gRecommendPeople.value.trim();
-				gOfficialUrl.value = gOfficialUrl.value.trim();
-				gComuUrl1.value = gComuUrl1.value.trim();
-				gComuUrl2.value = gComuUrl2.value.trim();
-				
-				if(seq.value == "0" || seq.value == "") {
-					submit(goUrlXdmInst);
-				} else {
-					submit(goUrlXdmUpdt);
-				}
-			}
-			
-			// gName Input 시 체크
-			gName.addEventListener("input", function() {
-				resetValidation(gName);
-				
-				if (!strValidation(gName)) {
-					gName.classList.add("is-invalid");
-				} else {
-					gName.classList.add("is-valid");
-				}		
-			});
-			
-			// gCategoryCd 체크
-			gCategoryCd.addEventListener("input", function() {
-				resetValidation(gCategoryCd);
-				
-				if (!strValidation(gCategoryCd)) {
-					gCategoryCd.classList.add("is-invalid");
-				} else {
-					gCategoryCd.classList.add("is-valid");
-				}		
-			});
-			
-			// gLevel Input 시 체크
-			gLevel.addEventListener("input", function() {
-				resetValidation(gLevel);
-				
-				var gLevelValue = gLevel.value.trim();
-				
-				if (!realNumberValidation(gLevel)
-						|| parseInt(gLevel.value.trim()) < 0 
-						|| parseInt(gLevelValue) > 5) {
-					gLevel.classList.add("is-invalid");
-				} else {
-					gLevel.classList.add("is-valid");
-				}		
-			});
-			
-			// gUseAge Input 시 체크
-			gUseAge.addEventListener("input", function() {
-				resetValidation(gUseAge);
-				
-				if (!positiveNumberValidation(gUseAge)) {
-					gUseAge.classList.add("is-invalid");
-				} else {
-					gUseAge.classList.add("is-valid");
-				}		
-			});
-			
-			// gMinTime Input 시 체크
-			gMinTime.addEventListener("input", function() {
-				timeCheck();
-			});
-			
-			// gMaxTime Input 시 체크
-			gMaxTime.addEventListener("input", function() {
-				timeCheck();	
-			});
-			
-			// gMinTime, gMaxTime Input 시 체크 세트 체크
-			function timeCheck() {
-				var gMinTimeValue = gMinTime.value.trim();
-				var gMaxTimeValue = gMaxTime.value.trim();
-				
-				// gMinTime
-				resetValidation(gMinTime);
-				
-				if (!positiveNumberValidation(gMinTime)
-						|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
-					gMinTime.classList.add("is-invalid");
-				} else {
-					gMinTime.classList.add("is-valid");
-				}	
-				
-				// gMaxTime
-				resetValidation(gMaxTime);
-				
-				if (!positiveNumberValidation(gMaxTime)
-						|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
-					gMaxTime.classList.add("is-invalid");
-				} else {
-					gMaxTime.classList.add("is-valid");
-				}	
-			}
-			
-			// gMinPeople Input 시 체크
-			gMinPeople.addEventListener("input", function() {
-				peopleCheck();
-			});
-			
-			// gMaxPeople Input 시 체크
-			gMaxPeople.addEventListener("input", function() {
-				peopleCheck();
-			});
-			
-			// gMinPeople, gMaxPeople Input 시 체크 세트 체크
-			function peopleCheck() {
-				var gMinPeopleValue = gMinPeople.value.trim();
-				var gMaxPeopleValue = gMaxPeople.value.trim();
-				
-				// gMinPeople
-				resetValidation(gMinPeople);
-				
-				if (!positiveNumberValidation(gMinPeople)
-						|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
-					gMinPeople.classList.add("is-invalid");
-				} else {
-					gMinPeople.classList.add("is-valid");
-				}		
-				
-				// gMaxPeople
-				resetValidation(gMaxPeople);
-				
-				if (!positiveNumberValidation(gMaxPeople)
-						|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
-					gMaxPeople.classList.add("is-invalid");
-				} else {
-					gMaxPeople.classList.add("is-valid");
-				}	
-			}
-			
-			// gBestPeople Input 시 체크
-			gBestPeople.addEventListener("input", function() {
-				resetValidation(gBestPeople);
-				
-				if (!positiveNumberValidation(gBestPeople)) {
-					gBestPeople.classList.add("is-invalid");
-				} else {
-					gBestPeople.classList.add("is-valid");
-				}		
-			});
-			
-			// gRecommendPeople Input 시 체크
-			gRecommendPeople.addEventListener("input", function() {
-				resetValidation(gRecommendPeople);
-				
-				if (!positiveNumberValidation(gRecommendPeople)) {
-					gRecommendPeople.classList.add("is-invalid");
-				} else {
-					gRecommendPeople.classList.add("is-valid");
-				}		
-			});
-			
-			// gOfficialCd Input 시 체크
-			gOfficialCd.addEventListener("input", function() {
-				resetValidation(gOfficialCd);
-				
-				if (!strValidation(gOfficialCd)) {
-					gOfficialCd.classList.add("is-invalid");
-				} else {
-					gOfficialCd.classList.add("is-valid");
-				}		
-			});
-			
-			// gOfficialUrl Input 시 체크
-			gOfficialUrl.addEventListener("input", function() {
-				resetValidation(gOfficialUrl);
-				
-				var gOfficialUrlValue = gOfficialUrl.value.trim();
-				
-				if (gOfficialUrlValue != null && gOfficialUrlValue != "") {
-					if (!urlValidation(gOfficialUrl)) {
-						gOfficialUrl.classList.add("is-invalid");
-					} else {
-						gOfficialUrl.classList.add("is-valid");
-					}	
-				}
-			});
-			
-			// gComuUrl1 Input 시 체크
-			gComuUrl1.addEventListener("input", function() {
-				resetValidation(gComuUrl1);
-				
-				var gComuUrl1Value = gComuUrl1.value.trim();
-				
-				if (gComuUrl1Value != null && gComuUrl1Value != "") {
-					if (!urlValidation(gComuUrl1)) {
-						gComuUrl1.classList.add("is-invalid");
-					} else {
-						gComuUrl1.classList.add("is-valid");
-					}	
-				}
-			});
-			
-			// gComuUrl2 Input 시 체크
-			gComuUrl2.addEventListener("input", function() {
-				resetValidation(gComuUrl2);
-				
-				var gComuUrl2Value = gComuUrl2.value.trim();
-				
-				if (gComuUrl2Value != null 
-						&& gComuUrl2Value != "") {
-					if (!urlValidation(gComuUrl2)) {
-						gComuUrl2.classList.add("is-invalid");
-					} else {
-						gComuUrl2.classList.add("is-valid");
-					}		
-				}
-			});
-		</script>
-		
-		<!-- 삭제/삭제(업데이트) 모달 -->
-		<script type="text/javascript">
-			if(document.getElementById("btnUelete")){
-				document.getElementById("btnUelete").onclick = function () {
-					showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none');      	
-				}
-			}
+			</div>
+		</div>
+	</main>
+      </div>
+    	
+    	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	// Seq
+	let seq = document.querySelector("input[name=gSeq]");
 	
-			document.getElementById("btnModalUelete").onclick = function () {
-				submit(goUrlXdmUele);
-			}
-			
-			if(document.getElementById("btnDelete")){
-				document.getElementById("btnDelete").onclick = function () {
-					showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');   	
-				}
-			}
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlXdmInst = "/xdm/game/GameXdmInst";
+	let goUrlXdmUpdt = "/xdm/game/GameXdmUpdt";
+	let goUrlXdmUele = "/xdm/game/GameXdmUele";
+	let goUrlXdmDele = "/xdm/game/GameXdmDele";
 	
-			document.getElementById("btnModalDelete").onclick = function () {
-				submit(goUrlXdmDele);
+	// Input
+	let cName = document.getElementById("gName");
+	let gCategoryCd = document.getElementById("gCategoryCd");
+	let gLevel = document.getElementById("gLevel");
+	let gUseAge = document.getElementById("gUseAge");
+	let gMinTime = document.getElementById("gMinTime");
+	let gMaxTime = document.getElementById("gMaxTime");
+	let gMinPeople = document.getElementById("gMinPeople");
+	let gMaxPeople = document.getElementById("gMaxPeople");
+	let gBestPeople = document.getElementById("gBestPeople");
+	let gRecommendPeople = document.getElementById("gRecommendPeople");
+	let gOfficialCd = document.getElementById("gOfficialCd");
+	let gOfficialUrl = document.getElementById("gOfficialUrl");
+	let gComuUrl1 = document.getElementById("gComuUrl1");
+	let gComuUrl2 = document.getElementById("gComuUrl2");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// gName 체크
+		resetValidation(gName);
+		
+		if (!strValidation(gName)) {
+			gName.classList.add("is-invalid");
+			
+			if (!focus) {
+				gName.focus();
+				focus = true;
 			}
-		</script>
-      	
-   	</body>
+		} else {
+			gName.classList.add("is-valid");
+		}
+		
+		// gCategoryCd 체크
+		resetValidation(gCategoryCd);
+		
+		if (!strValidation(gCategoryCd)) {
+			gCategoryCd.classList.add("is-invalid");
+			
+			if (!focus) {
+				gCategoryCd.focus();
+				focus = true;
+			}
+		} else {
+			gCategoryCd.classList.add("is-valid");
+		}
+		
+		// gLevel 체크
+		resetValidation(gLevel);
+		
+		var gLevelValue = gLevel.value.trim();
+		
+		if (!realNumberValidation(gLevel)
+				|| parseInt(gLevelValue) < 0 
+				|| parseInt(gLevelValue) > 5) {
+			gLevel.classList.add("is-invalid");
+			
+			if (!focus) {
+				gLevel.focus();
+				focus = true;
+			}
+		} else {
+			gLevel.classList.add("is-valid");
+		}
+		
+		// gUseAge 체크
+		resetValidation(gUseAge);
+		
+		if (!positiveNumberValidation(gUseAge)) {
+			gUseAge.classList.add("is-invalid");
+			
+			if (!focus) {
+				gUseAge.focus();
+				focus = true;
+			}
+		} else {
+			gUseAge.classList.add("is-valid");
+		}
+		
+		// gMinTime 체크
+		var gMinTimeValue = gMinTime.value.trim();
+		var gMaxTimeValue = gMaxTime.value.trim();
+		
+		resetValidation(gMinTime);
+		
+		if (!positiveNumberValidation(gMinTime)
+				|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
+			gMinTime.classList.add("is-invalid");
+			
+			if (!focus) {
+				gMinTime.focus();
+				focus = true;
+			}
+		} else {
+			gMinTime.classList.add("is-valid");
+		}
+		
+		// gMaxTime 체크
+		resetValidation(gMaxTime);
+		
+		if (!positiveNumberValidation(gMaxTime)
+				|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
+			gMaxTime.classList.add("is-invalid");
+			
+			if (!focus) {
+				gMaxTime.focus();
+				focus = true;
+			}
+		} else {
+			gMaxTime.classList.add("is-valid");
+		}
+		
+		// gMinPeople 체크
+		var gMinPeopleValue = gMinPeople.value.trim();
+		var gMaxPeopleValue = gMaxPeople.value.trim();
+		
+		resetValidation(gMinPeople);
+		
+		if (!positiveNumberValidation(gMinPeople)
+				|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
+			gMinPeople.classList.add("is-invalid");
+			
+			if (!focus) {
+				gMinTimgMinPeoplee.focus();
+				focus = true;
+			}
+		} else {
+			gMinPeople.classList.add("is-valid");
+		}
+		
+		// gMaxPeople 체크
+		resetValidation(gMaxPeople);
+		
+		if (!positiveNumberValidation(gMaxPeople)
+				|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
+			gMaxPeople.classList.add("is-invalid");
+			
+			if (!focus) {
+				gMaxPeople.focus();
+				focus = true;
+			}
+		} else {
+			gMaxPeople.classList.add("is-valid");
+		}
+		
+		// gBestPeople 체크
+		resetValidation(gBestPeople);
+		
+		if (!positiveNumberValidation(gBestPeople)) {
+			gBestPeople.classList.add("is-invalid");
+			
+			if (!focus) {
+				gBestPeople.focus();
+				focus = true;
+			}
+		} else {
+			gBestPeople.classList.add("is-valid");
+		}
+		
+		// gRecommendPeople 체크
+		resetValidation(gRecommendPeople);
+		
+		if (!positiveNumberValidation(gRecommendPeople)) {
+			gRecommendPeople.classList.add("is-invalid");
+			
+			if (!focus) {
+				gRecommendPeople.focus();
+				focus = true;
+			}
+		} else {
+			gRecommendPeople.classList.add("is-valid");
+		}
+		
+		// gOfficialCd 체크
+		resetValidation(gOfficialCd);
+		
+		if (!strValidation(gOfficialCd)) {
+			gOfficialCd.classList.add("is-invalid");
+			
+			if (!focus) {
+				gOfficialCd.focus();
+				focus = true;
+			}
+		} else {
+			gOfficialCd.classList.add("is-valid");
+		}
+		
+		// gOfficialUrl 체크
+		resetValidation(gOfficialUrl);
+		
+		var gOfficialUrlValue = gOfficialUrl.value.trim();
+		
+		if (gOfficialUrlValue != null && gOfficialUrlValue != "") {
+			if (!urlValidation(gOfficialUrl)) {
+				gOfficialUrl.classList.add("is-invalid");
+				
+				if (!focus) {
+					gOfficialUrl.focus();
+					focus = true;
+				}
+			} else {
+				gOfficialUrl.classList.add("is-valid");
+			}
+		}
+		
+		// gComuUrl1 체크
+		resetValidation(gComuUrl1);
+		
+		var gComuUrl1Value = gComuUrl1.value.trim();
+		
+		if (gComuUrl1Value != null && gComuUrl1Value != "") {
+			if (!urlValidation(gComuUrl1)) {
+				gComuUrl1.classList.add("is-invalid");
+				
+				if (!focus) {
+					gComuUrl1.focus();
+					focus = true;
+				}
+			} else {
+				gComuUrl1.classList.add("is-valid");
+			}
+		}
+		
+		// gComuUrl2 체크
+		resetValidation(gComuUrl2);
+		
+		var gComuUrl2Value = gComuUrl2.value.trim();
+		
+		if (gComuUrl2Value != null 
+				&& gComuUrl2Value != "") {
+			if (!urlValidation(gComuUrl2)) {
+				gComuUrl2.classList.add("is-invalid");
+				
+				if (!focus) {
+					gComuUrl2.focus();
+					focus = true;
+				}
+			} else {
+				gComuUrl2.classList.add("is-valid");
+			}
+		}
+		
+		// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+		
+		gName.value = gName.value.trim();
+		gLevel.value = gLevel.value.trim();
+		gUseAge.value = gUseAge.value.trim();
+		gMinTime.value = gMinTime.value.trim();
+		gMaxTime.value = gMaxTime.value.trim();
+		gMinPeople.value = gMinPeople.value.trim();
+		gMaxPeople.value = gMaxPeople.value.trim();
+		gBestPeople.value = gBestPeople.value.trim();
+		gRecommendPeople.value = gRecommendPeople.value.trim();
+		gOfficialUrl.value = gOfficialUrl.value.trim();
+		gComuUrl1.value = gComuUrl1.value.trim();
+		gComuUrl2.value = gComuUrl2.value.trim();
+		
+		if(seq.value == "0" || seq.value == "") {
+			submit(goUrlXdmInst);
+		} else {
+			submit(goUrlXdmUpdt);
+		}
+	}
+	
+	// gName Input 시 체크
+	gName.addEventListener("input", function() {
+		resetValidation(gName);
+		
+		if (!strValidation(gName)) {
+			gName.classList.add("is-invalid");
+		} else {
+			gName.classList.add("is-valid");
+		}		
+	});
+	
+	// gCategoryCd 체크
+	gCategoryCd.addEventListener("input", function() {
+		resetValidation(gCategoryCd);
+		
+		if (!strValidation(gCategoryCd)) {
+			gCategoryCd.classList.add("is-invalid");
+		} else {
+			gCategoryCd.classList.add("is-valid");
+		}		
+	});
+	
+	// gLevel Input 시 체크
+	gLevel.addEventListener("input", function() {
+		resetValidation(gLevel);
+		
+		var gLevelValue = gLevel.value.trim();
+		
+		if (!realNumberValidation(gLevel)
+				|| parseInt(gLevel.value.trim()) < 0 
+				|| parseInt(gLevelValue) > 5) {
+			gLevel.classList.add("is-invalid");
+		} else {
+			gLevel.classList.add("is-valid");
+		}		
+	});
+	
+	// gUseAge Input 시 체크
+	gUseAge.addEventListener("input", function() {
+		resetValidation(gUseAge);
+		
+		if (!positiveNumberValidation(gUseAge)) {
+			gUseAge.classList.add("is-invalid");
+		} else {
+			gUseAge.classList.add("is-valid");
+		}		
+	});
+	
+	// gMinTime Input 시 체크
+	gMinTime.addEventListener("input", function() {
+		timeCheck();
+	});
+	
+	// gMaxTime Input 시 체크
+	gMaxTime.addEventListener("input", function() {
+		timeCheck();	
+	});
+	
+	// gMinTime, gMaxTime Input 시 체크 세트 체크
+	function timeCheck() {
+		var gMinTimeValue = gMinTime.value.trim();
+		var gMaxTimeValue = gMaxTime.value.trim();
+		
+		// gMinTime
+		resetValidation(gMinTime);
+		
+		if (!positiveNumberValidation(gMinTime)
+				|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
+			gMinTime.classList.add("is-invalid");
+		} else {
+			gMinTime.classList.add("is-valid");
+		}	
+		
+		// gMaxTime
+		resetValidation(gMaxTime);
+		
+		if (!positiveNumberValidation(gMaxTime)
+				|| parseInt(gMinTimeValue) > parseInt(gMaxTimeValue)) {
+			gMaxTime.classList.add("is-invalid");
+		} else {
+			gMaxTime.classList.add("is-valid");
+		}	
+	}
+	
+	// gMinPeople Input 시 체크
+	gMinPeople.addEventListener("input", function() {
+		peopleCheck();
+	});
+	
+	// gMaxPeople Input 시 체크
+	gMaxPeople.addEventListener("input", function() {
+		peopleCheck();
+	});
+	
+	// gMinPeople, gMaxPeople Input 시 체크 세트 체크
+	function peopleCheck() {
+		var gMinPeopleValue = gMinPeople.value.trim();
+		var gMaxPeopleValue = gMaxPeople.value.trim();
+		
+		// gMinPeople
+		resetValidation(gMinPeople);
+		
+		if (!positiveNumberValidation(gMinPeople)
+				|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
+			gMinPeople.classList.add("is-invalid");
+		} else {
+			gMinPeople.classList.add("is-valid");
+		}		
+		
+		// gMaxPeople
+		resetValidation(gMaxPeople);
+		
+		if (!positiveNumberValidation(gMaxPeople)
+				|| parseInt(gMinPeopleValue) > parseInt(gMaxPeopleValue)) {
+			gMaxPeople.classList.add("is-invalid");
+		} else {
+			gMaxPeople.classList.add("is-valid");
+		}	
+	}
+	
+	// gBestPeople Input 시 체크
+	gBestPeople.addEventListener("input", function() {
+		resetValidation(gBestPeople);
+		
+		if (!positiveNumberValidation(gBestPeople)) {
+			gBestPeople.classList.add("is-invalid");
+		} else {
+			gBestPeople.classList.add("is-valid");
+		}		
+	});
+	
+	// gRecommendPeople Input 시 체크
+	gRecommendPeople.addEventListener("input", function() {
+		resetValidation(gRecommendPeople);
+		
+		if (!positiveNumberValidation(gRecommendPeople)) {
+			gRecommendPeople.classList.add("is-invalid");
+		} else {
+			gRecommendPeople.classList.add("is-valid");
+		}		
+	});
+	
+	// gOfficialCd Input 시 체크
+	gOfficialCd.addEventListener("input", function() {
+		resetValidation(gOfficialCd);
+		
+		if (!strValidation(gOfficialCd)) {
+			gOfficialCd.classList.add("is-invalid");
+		} else {
+			gOfficialCd.classList.add("is-valid");
+		}		
+	});
+	
+	// gOfficialUrl Input 시 체크
+	gOfficialUrl.addEventListener("input", function() {
+		resetValidation(gOfficialUrl);
+		
+		var gOfficialUrlValue = gOfficialUrl.value.trim();
+		
+		if (gOfficialUrlValue != null && gOfficialUrlValue != "") {
+			if (!urlValidation(gOfficialUrl)) {
+				gOfficialUrl.classList.add("is-invalid");
+			} else {
+				gOfficialUrl.classList.add("is-valid");
+			}	
+		}
+	});
+	
+	// gComuUrl1 Input 시 체크
+	gComuUrl1.addEventListener("input", function() {
+		resetValidation(gComuUrl1);
+		
+		var gComuUrl1Value = gComuUrl1.value.trim();
+		
+		if (gComuUrl1Value != null && gComuUrl1Value != "") {
+			if (!urlValidation(gComuUrl1)) {
+				gComuUrl1.classList.add("is-invalid");
+			} else {
+				gComuUrl1.classList.add("is-valid");
+			}	
+		}
+	});
+	
+	// gComuUrl2 Input 시 체크
+	gComuUrl2.addEventListener("input", function() {
+		resetValidation(gComuUrl2);
+		
+		var gComuUrl2Value = gComuUrl2.value.trim();
+		
+		if (gComuUrl2Value != null 
+				&& gComuUrl2Value != "") {
+			if (!urlValidation(gComuUrl2)) {
+				gComuUrl2.classList.add("is-invalid");
+			} else {
+				gComuUrl2.classList.add("is-valid");
+			}		
+		}
+	});
+</script>
+
+<!-- 삭제/삭제(업데이트) 모달 -->
+<script type="text/javascript">
+	if(document.getElementById("btnUelete")){
+		document.getElementById("btnUelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none');      	
+		}
+	}
+
+	document.getElementById("btnModalUelete").onclick = function () {
+		submit(goUrlXdmUele);
+	}
+	
+	if(document.getElementById("btnDelete")){
+		document.getElementById("btnDelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');   	
+		}
+	}
+
+	document.getElementById("btnModalDelete").onclick = function () {
+		submit(goUrlXdmDele);
+	}
+</script>
+    	
+</body>
 </html>

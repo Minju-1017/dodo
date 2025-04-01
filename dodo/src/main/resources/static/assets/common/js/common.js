@@ -217,15 +217,15 @@ function deleteCheckedElements(goUrl, successUrl) {
  */
 jQuery.datetimepicker.setLocale('ko');
 
-jQuery(function(){
+jQuery(function() {
 	jQuery('#shDateStart').datetimepicker({
 		format:'Y-m-d',
 		timepicker:false,
 		onShow:function(ct) {
 			this.setOptions({
-				maxDate:jQuery('#shDateEnd').val()?jQuery('#shDateEnd').val():false
+				maxDate: jQuery('#shDateEnd').val() ? jQuery('#shDateEnd').val() : false
 			})
-		},
+		}
 	 });
 	
 	jQuery('#shDateEnd').datetimepicker({
@@ -235,13 +235,21 @@ jQuery(function(){
 		timepicker:false,
 		onShow:function(ct) {
 			this.setOptions({
-				minDate:jQuery('#shDateStart').val()?jQuery('#shDateStart').val():false
+				minDate: jQuery('#shDateStart').val() ? jQuery('#shDateStart').val() : false
 			})
-		},
+		}
 	});
 	
 	jQuery('#mBirth').datetimepicker({
 		format:'Y-m-d',
-		timepicker:false
+		timepicker:false,
+		//minDate:'-1970/01/02',//yesterday is minimum date(for today use 0 or -1970/01/01)
+		maxDate:'+1970/01/01', //tomorrow is maximum date calendar
+		onChangeDateTime:function(dp, $input) {
+			if ($input.val() != null && $input.val() != '' 
+				&& !mBirth.classList.contains("is-valid")) {
+				mBirth.classList.add("is-valid");
+			}
+		}
 	});
 });

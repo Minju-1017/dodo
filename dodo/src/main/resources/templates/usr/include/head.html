@@ -70,7 +70,14 @@
 								<ul class="list-unstyled d-flex align-items-center">
 									<li class="dropdown ms-4">
 										<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-											<img src="/assets/xdm/template/FreshCart-1.4.0/images/avatar/avatar-1.jpg" alt="" class="avatar avatar-md rounded-circle" />
+											<img th:if="${session.sessPfFileNameUsr eq null or #strings.trim(session.sessPfFileNameUsr) eq ''}" 
+												class="avatar avatar-md rounded-circle" 
+												src="/assets/usr/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
+												alt="" />
+											<img th:if="${session.sessPfFileNameUsr ne null and #strings.trim(session.sessPfFileNameUsr) ne ''}" 
+												class="avatar avatar-md rounded-circle" 
+												th:src="@{'/assets/usr/template/FreshCart-1.4.0/images/avatar/' + ${session.sessPfFileNameUsr}}"
+												alt="" />
 										</a>
 										<div class="dropdown-menu dropdown-menu-end p-0">
 											<div class="lh-1 px-5 py-4 border-bottom">
@@ -185,7 +192,7 @@
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 										aria-expanded="false">내 정보</a>
 									<ul class="dropdown-menu">
-										<li><a class="dropdown-item" href="./pages/account-settings.html">기본 정보 변경</a></li>
+										<li><a class="dropdown-item" href="/usr/member/MemberUsrAccountForm">기본 정보 변경</a></li>
 										<li><a class="dropdown-item" href="./pages/account-settings-pwd.html">비밀번호 변경</a></li>
 										<li><a class="dropdown-item" href="./pages/account-settings-withdrawal.html">회원 탈퇴</a>
 									</ul>

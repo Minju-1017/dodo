@@ -9,25 +9,17 @@
 	<nav class="navbar-vertical-nav d-none d-xl-block">
 		<div class="navbar-vertical">
 			<div class="px-4 py-5">
-				<a href="/xdm/XdmIndex" class="navbar-brand">
+				<a href="/xdm/index" class="navbar-brand">
 					<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
 				</a>
 			</div>
 			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
 				<ul class="navbar-nav flex-column" id="sideNavbar">
 					<li class="nav-item">
-						<a class="nav-link" href="/xdm/XdmIndex">
+						<a class="nav-link" href="/xdm/index">
 							<div class="d-flex align-items-center">
 								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
 								<span class="nav-link-text">Home</span>
-							</div>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-								<span class="nav-link-text">공지사항</span>
 							</div>
 						</a>
 					</li>
@@ -40,20 +32,60 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="/xdm/game/GameXdmList">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesService"
+							aria-expanded="false"
+							aria-controls="navCategoriesService"
+						>
 							<div class="d-flex align-items-center">
 								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
 								<span class="nav-link-text">서비스관리</span>
 							</div>
 						</a>
+						<div id="navCategoriesService" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/game/GameXdmList">게임관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">리뷰관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">중고거래관리</a>
+								</li>
+							</ul>
+						</div>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesCommu"
+							aria-expanded="false"
+							aria-controls="navCategoriesCommu"
+						>
 							<div class="d-flex align-items-center">
 								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
 								<span class="nav-link-text">커뮤니케이션</span>
 							</div>
 						</a>
+						<div id="navCategoriesCommu" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="#">게임후기관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">자유게시판관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">오프라인모임관리</a>
+								</li>
+							</ul>
+						</div>
 					</li>
 					<li class="nav-item">
 						<a
@@ -81,22 +113,6 @@
 							</ul>
 						</div>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-								<span class="nav-link-text">개인정보관리</span>
-							</div>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-								<span class="nav-link-text">테스트</span>
-							</div>
-						</a>
-					</li>
 				</ul>
 			</div>
 		</div>
@@ -121,14 +137,6 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-bell"></i></span>
-								<span class="nav-link-text">공지사항</span>
-							</div>
-						</a>
-					</li>
-					<li class="nav-item">
 						<a class="nav-link" href="/xdm/member/MemberXdmList">
 							<div class="d-flex align-items-center">
 								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
@@ -137,20 +145,60 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="/xdm/game/GameXdmList">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesService"
+							aria-expanded="false"
+							aria-controls="navCategoriesService"
+						>
 							<div class="d-flex align-items-center">
 								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
 								<span class="nav-link-text">서비스관리</span>
 							</div>
 						</a>
+						<div id="navCategoriesService" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/game/GameXdmList">게임관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">리뷰관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">중고거래관리</a>
+								</li>
+							</ul>
+						</div>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesCommu"
+							aria-expanded="false"
+							aria-controls="navCategoriesCommu"
+						>
 							<div class="d-flex align-items-center">
 								<span class="nav-link-icon"><i class="bi bi-chat-dots"></i></span>
 								<span class="nav-link-text">커뮤니케이션</span>
 							</div>
 						</a>
+						<div id="navCategoriesCommu" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="#">게임후기관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">자유게시판관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">오프라인모임관리</a>
+								</li>
+							</ul>
+						</div>
 					</li>
 					<li class="nav-item">
 						<a
@@ -176,22 +224,6 @@
 								</li>
 							</ul>
 						</div>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-								<span class="nav-link-text">개인정보관리</span>
-							</div>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-layers"></i></span>
-								<span class="nav-link-text">테스트</span>
-							</div>
-						</a>
 					</li>
 				</ul>
 			</div>
@@ -358,6 +390,7 @@
 												</th>
 												<th>#</th>
 												<th>고유번호</th>
+												<th>썸네일</th>
 												<th>게임명</th>
 												<th>카테고리</th>
 												<th>평점</th>
@@ -381,6 +414,17 @@
 												</td>
 												<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 												<td th:text="${list?.gSeq}"></td>
+												<td>
+													<a href="javascript:void(0);"
+														th:attr="onclick=|goForm('${list.gSeq}')|">
+														<img th:if="${list?.gTnFileName eq null or #strings.trim(list?.gTnFileName) eq ''}" 
+															class="icon-shape icon-xxl" 
+															src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg" />
+														<img th:if="${list?.gTnFileName ne null and #strings.trim(list?.gTnFileName) ne ''}" 
+															class="icon-shape icon-xxl" 
+															th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/products/' + ${list?.gTnFileName}}" />
+													</a>
+												</td>
 												<td>
 													<a href="javascript:void(0);" th:text="${list?.gName}"
 														th:attr="onclick=|goForm('${list.gSeq}')|"></a>

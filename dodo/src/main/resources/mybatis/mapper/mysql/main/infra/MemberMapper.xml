@@ -134,7 +134,6 @@
 		SET
 			mName=#{mName},
 			mEmail=#{mEmail},
-			mPwd=#{mPwd},
 			mBirth=#{mBirth},
 			mGenderCd=#{mGenderCd},
 			mPfFileName=#{mPfFileName},

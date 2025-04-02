@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
-import com.dodo.module.code.CodeDto;
 import com.dodo.module.code.CodeService;
 
 import jakarta.servlet.http.HttpSession;
@@ -96,6 +95,11 @@ public class MemberController {
 		
 		if (mDto == null) { 
 			httpSession.setAttribute("sessSeqUsr", null);
+			httpSession.setAttribute("sessIdUsr", null);
+			httpSession.setAttribute("sessNameUsr", null);
+			httpSession.setAttribute("sessGradeUsr", null);
+			httpSession.setAttribute("sessPfFileNameUsr", null);
+			
 			returnMap.put("rt", "fail");
 		} else {
 			httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_USER);
@@ -104,6 +108,7 @@ public class MemberController {
 			httpSession.setAttribute("sessNameUsr", mDto.getmName());
 			httpSession.setAttribute("sessGradeUsr", 
 					CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
+			httpSession.setAttribute("sessPfFileNameUsr", mDto.getmPfFileName());
 			
 			returnMap.put("rt", "success");
 		}
@@ -129,8 +134,6 @@ public class MemberController {
 	@ResponseBody // Ajax 코드는 무조건 써준다.
 	@RequestMapping(value = "MemberUsrSignInForgotPwdProc")
 	public Map<String, Object> memberUsrSignInForgotPwdProc(MemberDto memberDto) throws Exception {
-		System.out.println("#################");
-		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		int cntSuccess = service.updatePwd(memberDto);
@@ -158,11 +161,29 @@ public class MemberController {
 		httpSession.setAttribute("sessIdUsr", null);
 		httpSession.setAttribute("sessNameUsr", null);
 		httpSession.setAttribute("sessGradeUsr", null);
+		httpSession.setAttribute("sessPfFileNameUsr", null);
 		
 		returnMap.put("rt", "success");
 		
 		return returnMap;
 	}
+	/**
+	 * 회원 정보 수정
+	 * @param model
+	 * @param memberDto
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping(value = "MemberUsrAccountForm")
+	public String memberUsrAccountForm(Model model, MemberDto memberDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) return "redirect:MemberUsrSignIn";
+		
+		memberDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		model.addAttribute("memberItem", service.selectOne(memberDto));
+		
+		return path_user + "MemberUsrAccountForm";
+	}
+	
 	
 	////////////////////////////////////////////////////////////////////
 	
@@ -190,6 +211,11 @@ public class MemberController {
 		
 		if (mDto == null) { 
 			httpSession.setAttribute("sessSeqXdm", null);
+			httpSession.setAttribute("sessIdXdm", null);
+			httpSession.setAttribute("sessNameXdm", null);
+			httpSession.setAttribute("sessGradeXdm", null);
+			httpSession.setAttribute("sessPfFileNameXdm", null);
+			
 			returnMap.put("rt", "fail_none");
 		} else {
 			if (mDto.getmGradeCd() != Constants.MEMBER_GRADE_CODE_ADMIN) {
@@ -202,6 +228,7 @@ public class MemberController {
 				httpSession.setAttribute("sessNameXdm", mDto.getmName());
 				httpSession.setAttribute("sessGradeXdm", 
 						CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
+				httpSession.setAttribute("sessPfFileNameXdm", mDto.getmPfFileName());
 				
 				returnMap.put("rt", "success");
 			}
@@ -224,6 +251,7 @@ public class MemberController {
 		httpSession.setAttribute("sessIdXdm", null);
 		httpSession.setAttribute("sessNameXdm", null);
 		httpSession.setAttribute("sessGradeXdm", null);
+		httpSession.setAttribute("sessPfFileNameXdm", null);
 		
 		returnMap.put("rt", "success");
 		
@@ -270,8 +298,17 @@ public class MemberController {
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "MemberXdmUpdt")
-	public String memberXdmUpdt(MemberDto memberDto) {
-		service.update(memberDto);	
+	public String memberXdmUpdt(MemberDto memberDto, HttpSession httpSession) throws Exception {
+		int successCnt = service.update(memberDto);
+		
+		if (successCnt == 1
+				 && httpSession.getAttribute("sessSeqXdm") != null
+				 && String.valueOf(httpSession.getAttribute("sessSeqXdm")).equals(memberDto.getmSeq())) {
+			httpSession.setAttribute("sessNameXdm", memberDto.getmName());
+			httpSession.setAttribute("sessGradeXdm", 
+					CodeService.selectOneCachedCode(String.valueOf(memberDto.getmGradeCd())));
+			httpSession.setAttribute("sessPfFileNameXdm", memberDto.getmPfFileName());
+		}
 
 		return "redirect:MemberXdmList";
 	}

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{/usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-12 border-end d-none d-md-block">
+					<div class="pt-10 pe-lg-10">
+						<ul class="nav flex-column nav-pills nav-pills-dark">
+							<li class="nav-item">
+								<ul class="nav flex-column nav-pills nav-pills-dark">
+									<li class="nav-item">
+										<a class="nav-link active" href="/usr/member/MemberUsrAccountForm">
+											<i class="feather-icon icon-settings me-2"></i> 기본 정보 변경
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">
+											<i class="feather-icon icon-key me-2"></i> 비밀번호 변경
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#">
+											<i class="feather-icon icon-user-x me-2"></i> 회원 탈퇴
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<hr />
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="btnSignOutAccount" href="javascript:void(0);">
+									<i class="feather-icon icon-log-out me-2"></i> 로그아웃
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-12">
+					<div class="py-6 p-md-6 p-lg-10">
+						<div class="row mb-8">
+							<div class="col-md-12">
+								<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+									<h4>기본 정보 변경</h4>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-8 g-5">
+							<div class="col-lg-12 col-12">
+								<div class="card card-lg border-0">
+									<div class="card-body d-flex flex-column gap-8 p-8">
+										<form class="row g-5 needs-validation" novalidate
+											method="post" id="form" name="form">
+											
+											<input type="hidden" name="mSeq" th:value="${memberItem?.mSeq}">
+											
+											<div class="col-lg-12 col-12">
+												<label for="mPfFile" class="form-label">프로필 이미지</label>
+												<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper">
+													<div>
+														<img th:if="${memberItem?.mPfFileName eq null or #strings.trim(memberItem?.mPfFileName) eq ''}" 
+															class="image avatar avatar-lg rounded-3" 
+															src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
+															alt="Image" />
+														<img th:if="${memberItem?.mPfFileName ne null and #strings.trim(memberItem?.mPfFileName) ne ''}" 
+															class="image avatar avatar-lg rounded-3" 
+															th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/avatar/' + ${memberItem?.mPfFileName}}"
+															alt="Image" />
+													</div>
+													<div class="file-upload btn btn-light ms-md-4">
+														<input type="file" accept=".jpeg,.jpg,.png,.gif" name="mPfFile" id="mPfFile" class="file-input opacity-0" />
+														파일 선택
+													</div>
+													<div class="ms-md-2 col-4">
+														<input type="text" class="form-control" name="mPfFileName" id="mPfFileName" 
+															th:value="${memberItem?.mPfFileName}" 
+															placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
+														<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-7 col-12">
+												<label for="mId" class="form-label">
+													아이디
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" name="mId" id="mId"
+													th:value="${memberItem?.mId}" disabled />
+											</div>
+											<div class="col-lg-5 col-12"></div>
+											<div class="col-lg-7 col-12">
+												<label for="mName" class="form-label">
+													이름
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" name="mName" id="mName"
+													th:value="${memberItem?.mName}" required />
+												<div class="invalid-feedback"> 이름을 입력해 주세요. 한글/영문/숫자만 허용</div>
+											</div>
+											<div class="col-lg-5 col-12"></div>
+											<div class="col-lg-7 col-12">
+												<label for="mEmail" class="form-label">
+													이메일
+													<span class="text-danger">*</span>
+												</label>
+												<input type="email" class="form-control" id="mEmail" name="mEmail" 
+													th:value="${memberItem?.mEmail}" required />
+												<div class="invalid-feedback"> 이메일을 형식에 맞게 입력해 주세요. </div>
+											</div>
+											<div class="col-lg-5 col-12"></div>
+											<div class="col-lg-7 col-12">
+												<label for="mBirth" class="form-label">
+													생년월일
+													<span class="text-danger">*</span>
+												</label>
+		                                 				<input type="text" class="form-control" id="mBirth" name="mBirth" 
+													th:value="${memberItem?.mBirth}" placeholder="예) 1999-01-01" readonly required />
+												<div class="invalid-feedback"> 생년월일을 형식에 맞게 입력해 주세요. </div>
+											</div>
+											<div class="col-lg-5 col-12"></div>
+											<div class="col-lg-7 col-12">
+												<label for="mGender" class="form-label">성별</label>
+												<select class="form-select" name="mGenderCd" id="mGenderCd">
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+														th:if="${#strings.equals(codeList.cSeq, 0)}"
+														th:value="${codeList.cSeq}"
+														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}">성별</option>
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.MEMBER_CODE_GROUP_SEQ_GENDER)}"
+														th:unless="${#strings.equals(codeList.cSeq, 0)}"
+														th:value="${codeList.cSeq}" th:text="${codeList.cName}"
+														th:selected="${memberItem?.mGenderCd} == ${codeList?.cSeq}"></option>
+												</select>
+											</div>
+											<div class="col-lg-7 col-12"></div>
+											<div class="col-lg-7 col-12 d-grid">
+												<button class="btn btn-primary" type="button" id="btnSave">저장</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+
+
+
+
+
+
+<!-- TODO -->
+
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	// Seq
+	let seq = document.querySelector("input[name=mSeq]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlXdmUpdt = "/xdm/member/MemberXdmUpdt";
+	let goUrlXdmUele = "/xdm/member/MemberXdmUele";
+	let goUrlXdmDele = "/xdm/member/MemberXdmDele";
+
+	// Input
+	let mName = document.getElementById("mName");
+	let mEmail = document.getElementById("mEmail");
+	let mBirth = document.getElementById("mBirth");
+	let mPfFile = document.getElementById("mPfFile");
+	let mPfFileName = document.getElementById("mPfFileName");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// mName 체크
+		resetValidation(mName);
+		
+		if (!strKorEngNumberValidation(mName)) {
+			mName.classList.add("is-invalid");
+			
+			if (!focus) {
+				mName.focus();
+				focus = true;
+			}
+		} else {
+			mName.classList.add("is-valid");
+		}
+		
+		// mEmail 체크
+		resetValidation(mEmail);
+		
+		if (!emailValidation(mEmail)) {
+			mEmail.classList.add("is-invalid");
+			
+			if (!focus) {
+				mEmail.focus();
+				focus = true;
+			}
+		} else {
+			mEmail.classList.add("is-valid");
+		}
+		
+		// mBirth 체크
+		resetValidation(mBirth);
+		
+		if (!dateValidation_yyyyMMdd(mBirth)) {
+			mBirth.classList.add("is-invalid");
+			
+			if (!focus) {
+				mBirth.focus();
+				focus = true;
+			}
+		} else {
+			mBirth.classList.add("is-valid");
+		}
+		
+		// mPfFile, mPfFileName 체크
+		resetValidation(mPfFileName);
+		
+		var file = mPfFile.files[0];
+		
+		// mPfFile이 빈값이나 null이면 허용하므로, 아닐때만 Validation
+		if (file != null && file.name != null && file.name.trim() != ""
+				&& mPfFileName.value != null && mPfFileName.value.trim() != "") {
+			if (!imgFileValidation(file, mPfFileName)) {
+				mPfFileName.classList.add("is-invalid");
+				
+				if (!focus) {
+					mPfFileName.focus();
+					focus = true;
+				}
+			} else {
+				mPfFileName.classList.add("is-valid");
+			}
+		}
+		
+		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+
+		mName.value = mName.value.trim();
+		mEmail.value = mEmail.value.trim();
+		mPfFileName.value = mPfFileName.value.trim();
+		
+		if(seq.value == "0" || seq.value == "") {
+			// Insert
+		} else {
+			fom.action = goUrlXdmUpdt;
+			fom.submit();
+		}
+	}
+	
+	// mName Input 시 체크
+	mName.addEventListener("input", function(){
+		resetValidation(mName);
+		
+		if (!strKorEngNumberValidation(mName)) {
+			mName.classList.add("is-invalid");
+		} else {
+			mName.classList.add("is-valid");
+		}	
+	});
+	
+	// mEmail Input 시 체크
+	mEmail.addEventListener("input", function(){
+		resetValidation(mEmail);
+		
+		if (!emailValidation(mEmail)) {
+			mEmail.classList.add("is-invalid");
+		} else {
+			mEmail.classList.add("is-valid");
+		}	
+	});
+	
+	// mBirth Input 시 체크
+	mBirth.addEventListener("input", function(){
+		resetValidation(mBirth);
+		
+		if (!dateValidation_yyyyMMdd(mBirth)) {
+			mBirth.classList.add("is-invalid");
+		} else {
+			mBirth.classList.add("is-valid");
+		}	
+	});
+	
+	// mPfFile, mPfFileName Change 시 체크
+	mPfFile.addEventListener("change", function() {
+		resetValidation(mPfFileName);
+		
+		var file = mPfFile.files[0];
+		
+		// mPfFile이 빈값이나 null이면 허용하므로 리턴
+		if (file == null 
+				|| (file != null && file.name == null)
+				|| (file != null && file.name != null && file.name.trim() == "")) return;
+		
+		// 선택한 파일명 gTnFileName에 보여주기
+		mPfFileName.value = file.name.trim();
+		
+		// gTnFileName이 빈값이나 null이면 허용하므로 리턴
+		if (mPfFileName.value == null
+				|| (mPfFileName.value != null && mPfFileName.value.trim() == "")) return;
+		
+		// Validation
+		if (!imgFileValidation(file, mPfFileName)) {
+			mPfFileName.classList.add("is-invalid");
+		} else {
+			mPfFileName.classList.add("is-valid");
+		}
+	});
+</script>
+
+<!-- 로그아웃 -->
+<script type="text/javascript">
+	$("#btnSignOutAccount").on("click", function(){
+		signOut();
+	});
+</script>
+
+</body>

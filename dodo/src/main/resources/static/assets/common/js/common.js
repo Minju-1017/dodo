@@ -3,11 +3,17 @@
  */
 
 // 정규식
+const REGEX_KOR_ENG_NUMBER = /^[a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]+$/;
+const REGEX_ENG_NUMBER = /^[a-z|A-Z|0-9]+$/;
 const REGEX_NUMBER = /^[0-9]+$/; // 정수
 const REGEX_REAL_NUMBER = /^[\d]*\.?[\d]{0,2}$/; // 소수점 두자리 실수
 const REGEX_yyyyMMdd = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
 const REGEX_EMAIL = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; // Email
 const REGEX_URL = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
+const REGEX_IMG_FILE = /(.*?)\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$/;
+
+// 이미지 파일 최대 사이즈
+const IMG_MAX_SIZE = 2 * 1024 * 1024; // 2MB
 
 // Validation 초기화
 function resetValidation(obj) {
@@ -17,43 +23,68 @@ function resetValidation(obj) {
 
 // 문자열 체크 - 빈값, null
 function strValidation(obj) {
-	var value = obj.value.trim();
+	if (obj == null || (obj != null && obj.value == null)) return false;
 	
-	if (value == null || value == "") return false;
+	var value = obj.value.trim();
+	if (value == "") return false;
 	
 	return true;
 }
 
-// URL 체크
-function urlValidation(obj) {
-	var value = obj.value.trim();
+// 문자열 체크 - 빈값, null, 한글/영어/숫자만
+function strKorEngNumberValidation(obj) {
+	if (obj == null || (obj != null && obj.value == null)) return false;
 	
+	var value = obj.value.trim();
+	if (value == "" || !REGEX_KOR_ENG_NUMBER.test(value)) return false;
+	
+	return true;
+}
+
+// 문자열 체크 - 빈값, null, 영어/숫자만
+function strEngNumberValidation(obj) {
+	if (obj == null || (obj != null && obj.value == null)) return false;
+	
+	var value = obj.value.trim();
+	if (value == "" || !REGEX_ENG_NUMBER.test(value)) return false;
+	
+	return true;
+}
+
+// URL 체크 - null, 빈값 허용
+function urlValidation(obj) {
+	if (obj == null || (obj != null && obj.value == null)) return true;
+	
+	var value = obj.value.trim();
 	return REGEX_URL.test(value);
 }
 
-// Email 체크
+// Email 체크 - null, 빈값
 function emailValidation(obj) {
-	var value = obj.value.trim();
+	if (obj == null || (obj != null && obj.value == null)) return false;
 	
-	if (value == null || value == "" || !REGEX_EMAIL.test(value)) return false;
+	var value = obj.value.trim();
+	if (value == "" || !REGEX_EMAIL.test(value)) return false;
 	
 	return true;
 }
 
-// 날짜 체크(yyyy-MM-dd)
+// 날짜 체크(yyyy-MM-dd) - null, 빈값
 function dateValidation_yyyyMMdd(obj) {
-	var value = obj.value.trim();
+	if (obj == null || (obj != null && obj.value == null)) return false;
 	
-	if (value == null || value == "" || !REGEX_yyyyMMdd.test(value)) return false;
+	var value = obj.value.trim();
+	if (value == "" || !REGEX_yyyyMMdd.test(value)) return false;
 	
 	return true;
 }
 
 // 숫자 체크 - 정수, 빈값, null, 0이하(양의 정수만 가능)
 function positiveNumberValidation(obj) {
-	var value = obj.value.trim();
-							
-	if (value == null || value == ""
+	if (obj == null || (obj != null && obj.value == null)) return false;
+	
+	var value = obj.value.trim();				
+	if (value == ""
 			|| !REGEX_NUMBER.test(value) || parseInt(value) < 1 || isNaN(value)) return false;
 	
 	return true;
@@ -61,10 +92,20 @@ function positiveNumberValidation(obj) {
 
 // 숫자 체크 - 실수, 빈값, null
 function realNumberValidation(obj) {
-	var value = obj.value.trim();
-						
-	if (value == null || value == ""
+	if (obj == null || (obj != null && obj.value == null)) return false;
+	
+	var value = obj.value.trim();		
+	if (value == ""
 			|| !REGEX_REAL_NUMBER.test(value) || isNaN(value)) return false;
+	
+	return true;
+}
+
+// 이미지 파일 체크 - 이미지 파일 형식(jpg, jpeg, gif, png), 사이즈(2MB), null/빈값 허용
+// Object null, "" 체크는 호출전에 함
+function imgFileValidation(fileObj, fileNameInputObj) {
+	var value = fileNameInputObj.value.trim();
+	if(!value.match(REGEX_IMG_FILE) || fileObj.size >= IMG_MAX_SIZE) return false;
 	
 	return true;
 }

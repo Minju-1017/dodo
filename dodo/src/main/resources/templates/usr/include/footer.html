@@ -162,6 +162,10 @@
 
 <script type="text/javascript">
 	$("#btnSignOut").on("click", function(){
+		signOut();
+	});
+	
+	function signOut() {
 		$.ajax({
 			async: true 
 			,cache: false
@@ -179,7 +183,7 @@
 				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 			}
 		});
-	});
+	}
 </script>
 	
 </th:block>

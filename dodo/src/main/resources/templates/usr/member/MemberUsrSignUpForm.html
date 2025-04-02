@@ -34,13 +34,13 @@
 							<div class="col-12">
 								<label for="mId" class="form-label visually-hidden">아이디</label>
 								<input type="text" class="form-control" name="mId" id="mId" placeholder="아이디" required />
-								<div class="invalid-feedback">아이디를 입력해 주세요.</div>
+								<div class="invalid-feedback">아이디를 입력해 주세요. 영문/숫자만 허용</div>
 								<div class="valid-feedback">Good!</div>
 							</div>
 							<div class="col-12">
 								<label for="mName" class="form-label visually-hidden">이름</label>
 								<input type="text" class="form-control" id="mName" placeholder="이름" required />
-								<div class="invalid-feedback">이름을 입력해 주세요.</div>
+								<div class="invalid-feedback">이름을 입력해 주세요. 한글/영문/숫자만 허용</div>
 								<div class="valid-feedback">Good!</div>
 							</div>
 							<div class="col-12">
@@ -124,7 +124,7 @@
 		// mId 체크
 		resetValidation(mId);
 
-		if (!strValidation(mId)) {
+		if (!strEngNumberValidation(mId)) {
 			mId.classList.add("is-invalid");
 			
 			if (!focus) {
@@ -138,7 +138,7 @@
 		// mName 체크
 		resetValidation(mName);
 		
-		if (!strValidation(mName)) {
+		if (!strKorEngNumberValidation(mName)) {
 			mName.classList.add("is-invalid");
 			
 			if (!focus) {
@@ -212,8 +212,6 @@
 		mName.value = mName.value.trim();
 		mEmail.value = mEmail.value.trim();
 		mPwd.value = mPwd.value.trim();
-		mPwdRe.value = mPwdRe.value.trim();
-		mBirth.value = mBirth.value.trim();
 		
 		signUp();
 	}	
@@ -222,7 +220,7 @@
 	mId.addEventListener("input", function() {
 		resetValidation(mId);
 		
-		if (!strValidation(mId)) {
+		if (!strEngNumberValidation(mId)) {
 			mId.classList.add("is-invalid");
 		} else {
 			mId.classList.add("is-valid");
@@ -233,7 +231,7 @@
 	mName.addEventListener("input", function() {
 		resetValidation(mName);
 		
-		if (!strValidation(mName)) {
+		if (!strKorEngNumberValidation(mName)) {
 			mName.classList.add("is-invalid");
 		} else {
 			mName.classList.add("is-valid");

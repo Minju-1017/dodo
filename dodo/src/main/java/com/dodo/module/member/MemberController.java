@@ -31,6 +31,62 @@ public class MemberController {
 	CodeService codeService;
 	
 	/**
+	 * 로그인 세션 처리 - User
+	 * @param httpSession
+	 * @param memberDto
+	 * @throws Exception
+	 */
+	private void usrSignIn(HttpSession httpSession, MemberDto memberDto) throws Exception {
+		httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_USER);
+		httpSession.setAttribute("sessSeqUsr", memberDto.getmSeq());
+		httpSession.setAttribute("sessIdUsr", memberDto.getmId());
+		httpSession.setAttribute("sessNameUsr", memberDto.getmName());
+		httpSession.setAttribute("sessGradeUsr", 
+				CodeService.selectOneCachedCode(String.valueOf(memberDto.getmGradeCd())));
+		httpSession.setAttribute("sessPfFileNameUsr", memberDto.getmPfFileName());
+	}
+	
+	/**
+	 * 로그아웃 세션 처리 - User
+	 * @param httpSession
+	 */
+	private void usrSignOut(HttpSession httpSession) {
+		httpSession.setAttribute("sessSeqUsr", null);
+		httpSession.setAttribute("sessIdUsr", null);
+		httpSession.setAttribute("sessNameUsr", null);
+		httpSession.setAttribute("sessGradeUsr", null);
+		httpSession.setAttribute("sessPfFileNameUsr", null);
+	}
+	
+	/**
+	 * 로그인 세션 처리 - Xdm
+	 * @param httpSession
+	 * @param memberDto
+	 * @throws Exception
+	 */
+	private void xdmSignIn(HttpSession httpSession, MemberDto memberDto) throws Exception {
+		httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_ADMIN);
+		httpSession.setAttribute("sessSeqXdm", memberDto.getmSeq());
+		httpSession.setAttribute("sessIdXdm", memberDto.getmId());
+		httpSession.setAttribute("sessNameXdm", memberDto.getmName());
+		httpSession.setAttribute("sessGradeXdm", 
+				CodeService.selectOneCachedCode(String.valueOf(memberDto.getmGradeCd())));
+		httpSession.setAttribute("sessPfFileNameXdm", memberDto.getmPfFileName());
+	}
+	
+	/**
+	 * 로그아웃 세션 처리 - Xdm
+	 * @param httpSession
+	 */
+	private void xdmSignOut(HttpSession httpSession) {
+		httpSession.setAttribute("sessSeqXdm", null);
+		httpSession.setAttribute("sessIdXdm", null);
+		httpSession.setAttribute("sessNameXdm", null);
+		httpSession.setAttribute("sessGradeXdm", null);
+		httpSession.setAttribute("sessPfFileNameXdm", null);
+	}
+	
+	/**
 	 * 회원가입 화면 이동 - User
 	 * @return
 	 */
@@ -94,22 +150,10 @@ public class MemberController {
 		MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
 		
 		if (mDto == null) { 
-			httpSession.setAttribute("sessSeqUsr", null);
-			httpSession.setAttribute("sessIdUsr", null);
-			httpSession.setAttribute("sessNameUsr", null);
-			httpSession.setAttribute("sessGradeUsr", null);
-			httpSession.setAttribute("sessPfFileNameUsr", null);
-			
+			usrSignOut(httpSession);
 			returnMap.put("rt", "fail");
 		} else {
-			httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_USER);
-			httpSession.setAttribute("sessSeqUsr", mDto.getmSeq());
-			httpSession.setAttribute("sessIdUsr", mDto.getmId());
-			httpSession.setAttribute("sessNameUsr", mDto.getmName());
-			httpSession.setAttribute("sessGradeUsr", 
-					CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
-			httpSession.setAttribute("sessPfFileNameUsr", mDto.getmPfFileName());
-			
+			usrSignIn(httpSession, mDto);
 			returnMap.put("rt", "success");
 		}
 		
@@ -136,7 +180,7 @@ public class MemberController {
 	public Map<String, Object> memberUsrSignInForgotPwdProc(MemberDto memberDto) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		int cntSuccess = service.updatePwd(memberDto);
+		int cntSuccess = service.updateForgotPwd(memberDto);
 		
 		if (cntSuccess == 1) { 
 			returnMap.put("rt", "success");
@@ -148,7 +192,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * Ajax를 통한 로그아웃 처리
+	 * Ajax를 통한 로그아웃 처리 - User
 	 * @return
 	 * @throws Exception
 	 */
@@ -157,18 +201,14 @@ public class MemberController {
 	public Map<String, Object> memberUsrSignOutProc(HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		httpSession.setAttribute("sessSeqUsr", null);
-		httpSession.setAttribute("sessIdUsr", null);
-		httpSession.setAttribute("sessNameUsr", null);
-		httpSession.setAttribute("sessGradeUsr", null);
-		httpSession.setAttribute("sessPfFileNameUsr", null);
-		
+		usrSignOut(httpSession);
 		returnMap.put("rt", "success");
 		
 		return returnMap;
 	}
+	
 	/**
-	 * 회원 정보 수정
+	 * 회원 기본 정보 수정 화면 - User
 	 * @param model
 	 * @param memberDto
 	 * @param httpSession
@@ -176,7 +216,10 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "MemberUsrAccountForm")
 	public String memberUsrAccountForm(Model model, MemberDto memberDto, HttpSession httpSession) {
-		if (httpSession.getAttribute("sessSeqUsr") == null) return "redirect:MemberUsrSignIn";
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
 		
 		memberDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 		model.addAttribute("memberItem", service.selectOne(memberDto));
@@ -184,6 +227,122 @@ public class MemberController {
 		return path_user + "MemberUsrAccountForm";
 	}
 	
+	/**
+	 * Ajax를 통한 회원 기본 정보 수정 - User
+	 * @param memberDto
+	 * @param httpSession
+	 * @return redirect: 데이터 저장 후 돌아갈 주소
+	 * @throws Exception
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberUsrUpdt")
+	public Map<String, Object> memberUsrUpdt(MemberDto memberDto, HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		int successCnt = service.update(memberDto);
+		
+		if (successCnt == 1) {
+			if (httpSession.getAttribute("sessSeqUsr") != null
+					 && String.valueOf(httpSession.getAttribute("sessSeqUsr")).equals(memberDto.getmSeq())) {
+				httpSession.setAttribute("sessNameUsr", memberDto.getmName());
+				httpSession.setAttribute("sessPfFileNameUsr", memberDto.getmPfFileName());
+			}
+			
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+
+		return returnMap;
+	}
+	
+	/**
+	 * 회원 비밀번호 수정 화면 - User
+	 * @param model
+	 * @param memberDto
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping(value = "MemberUsrAccountPwdForm")
+	public String memberUsrAccountPwdForm(Model model, MemberDto memberDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		return path_user + "MemberUsrAccountPwdForm";
+	}
+	
+	/**
+	 * Ajax를 통한 회원 비밀번호 수정 처리 - User
+	 * @param memberDto
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberUsrPwdUpdtProc")
+	public Map<String, Object> memberUsrPwdUpdtProc(
+			MemberDto memberDto, @RequestParam(value="mPwdNew") String mPwdNew) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+
+		if (mPwdNew == null || (mPwdNew != null && mPwdNew.equals(""))) {
+			returnMap.put("rt", "fail");
+		} else {
+			int checkCnt = service.updatePwdCheck(memberDto);
+			
+			if (checkCnt == 1) {
+				memberDto.setmPwd(mPwdNew);
+				int successCnt = service.updatePwd(memberDto);
+				
+				if (successCnt == 1) {
+					returnMap.put("rt", "success");
+				} else {
+					returnMap.put("rt", "fail");
+				}
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
+	
+	/**
+	 * 회원 탈퇴 화면 - User
+	 * @param model
+	 * @param memberDto
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping(value = "MemberUsrWithdrawal")
+	public String memberUsrWithdrawal(Model model, MemberDto memberDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		return path_user + "MemberUsrWithdrawal";
+	}
+	
+	/**
+	 * Ajax를 통한 회원 탈퇴 처리 - User(update 이용)
+	 * @param memberDto
+	 * @param httpSession
+	 * @return
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberUsrUeleProc")
+	public Map<String, Object> memberUsrUeleProc(MemberDto memberDto, HttpSession httpSession) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		int successCnt = service.uelete(memberDto);	
+		
+		if (successCnt == 1) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+
+		return returnMap;
+	}
 	
 	////////////////////////////////////////////////////////////////////
 	
@@ -210,11 +369,7 @@ public class MemberController {
 		MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
 		
 		if (mDto == null) { 
-			httpSession.setAttribute("sessSeqXdm", null);
-			httpSession.setAttribute("sessIdXdm", null);
-			httpSession.setAttribute("sessNameXdm", null);
-			httpSession.setAttribute("sessGradeXdm", null);
-			httpSession.setAttribute("sessPfFileNameXdm", null);
+			
 			
 			returnMap.put("rt", "fail_none");
 		} else {
@@ -222,14 +377,7 @@ public class MemberController {
 				returnMap.put("rt", "fail_member");
 				mDto = null;
 			} else {
-				httpSession.setMaxInactiveInterval(Constants.SESSION_MINUTE_ADMIN);
-				httpSession.setAttribute("sessSeqXdm", mDto.getmSeq());
-				httpSession.setAttribute("sessIdXdm", mDto.getmId());
-				httpSession.setAttribute("sessNameXdm", mDto.getmName());
-				httpSession.setAttribute("sessGradeXdm", 
-						CodeService.selectOneCachedCode(String.valueOf(mDto.getmGradeCd())));
-				httpSession.setAttribute("sessPfFileNameXdm", mDto.getmPfFileName());
-				
+				xdmSignIn(httpSession, mDto);
 				returnMap.put("rt", "success");
 			}
 		}
@@ -247,12 +395,7 @@ public class MemberController {
 	public Map<String, Object> memberXdmSignOutProc(HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		httpSession.setAttribute("sessSeqXdm", null);
-		httpSession.setAttribute("sessIdXdm", null);
-		httpSession.setAttribute("sessNameXdm", null);
-		httpSession.setAttribute("sessGradeXdm", null);
-		httpSession.setAttribute("sessPfFileNameXdm", null);
-		
+		xdmSignOut(httpSession);
 		returnMap.put("rt", "success");
 		
 		return returnMap;

@@ -41,7 +41,6 @@
 	    a.mId,
 	    a.mName,
 	    a.mEmail,
-	    a.mPwd,
 	    a.mBirth,
 	    a.mGenderCd,
 	    a.mRegiDate,
@@ -80,6 +79,7 @@
 		FROM 
 			member a
 		WHERE 1=1
+			AND a.mDelNy=0
 			AND BINARY(a.mId)=#{mId}
 			AND BINARY(a.mPwd)=#{mPwd}
 	</select>
@@ -143,15 +143,33 @@
 			AND mSeq=#{mSeq}
 	</update>
 	
+	<update id="updateForgotPwd">
+		UPDATE member
+		SET
+			mPwd=#{mPwd},
+			mUpdtDate=now()
+		WHERE 1=1
+			AND mDelNy=0
+			AND BINARY(mId)=#{mId}
+			AND BINARY(mName)=#{mName}
+			AND mBirth=#{mBirth}
+	</update>
+	
+	<select id="updatePwdCheck" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			member 
+		WHERE 1=1
+			AND mSeq=#{mSeq}
+			AND mPwd=#{mPwd}
+	</select>
+	
 	<update id="updatePwd">
 		UPDATE member
 		SET
 			mPwd=#{mPwd},
 			mUpdtDate=now()
 		WHERE 1=1
-			AND BINARY(mId)=#{mId}
-			AND BINARY(mName)=#{mName}
-			AND mBirth=#{mBirth}
+			AND mSeq=#{mSeq}
 	</update>
 	
 	<delete id="delete">

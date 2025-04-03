@@ -27,6 +27,9 @@
 				<button type="button" class="btn btn-danger" name="" id="btnModalDelete">
 					삭제
 				</button>
+				<button type="button" class="btn btn-danger" name="" id="btnModalWithdrawal">
+					회원 탈퇴
+				</button>
 			</div>
 		</div>
 	</div>
@@ -39,10 +42,12 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="modalAlertTitle">알림</h5>
+				<input type="hidden" id="modalAlertCloseGoUrl" name="modalAlertCloseGoUrl" />
 				<button type="button" class="btn-close"
 					data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body" id="modalAlertBody"></div>
+			<div class="modal-body" id="modalAlertBody">
+			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">
 					닫기
@@ -162,10 +167,14 @@
 
 <script type="text/javascript">
 	$("#btnSignOut").on("click", function(){
-		signOut();
+		signOut("/usr/index");
 	});
 	
-	function signOut() {
+	$("#btnSignOutDropdown").on("click", function(){
+		signOut("/usr/index");
+	});
+	
+	function signOut(goUrl) {
 		$.ajax({
 			async: true 
 			,cache: false
@@ -174,7 +183,7 @@
 			,data: {}
 			,success: function(response) {
 				if(response.rt == "success") {
-					location.href = "/usr/index";
+					location.href = goUrl;
 				} else {
 					// by pass
 				}

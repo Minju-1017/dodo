@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{/usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-12 border-end d-none d-md-block">
+					<div class="pt-10 pe-lg-10">
+						<ul class="nav flex-column nav-pills nav-pills-dark">
+							<li class="nav-item">
+								<ul class="nav flex-column nav-pills nav-pills-dark">
+									<li class="nav-item">
+										<a class="nav-link" href="/usr/member/MemberUsrAccountForm">
+											<i class="feather-icon icon-settings me-2"></i> 기본 정보 변경
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" href="/usr/member/MemberUsrAccountPwdForm">
+											<i class="feather-icon icon-key me-2"></i> 비밀번호 변경
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="/usr/member/MemberUsrWithdrawal">
+											<i class="feather-icon icon-user-x me-2"></i> 회원 탈퇴
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<hr />
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="btnSignOutAccount" href="javascript:void(0);">
+									<i class="feather-icon icon-log-out me-2"></i> 로그아웃
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-12">
+					<div class="py-6 p-md-6 p-lg-10">
+						<div class="row mb-8">
+							<div class="col-md-12">
+								<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+									<h4>비밀번호 변경</h4>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-8 g-5">
+							<div class="col-lg-12 col-12">
+								<div class="card card-lg border-0">
+									<div class="card-body d-flex flex-column gap-8 p-8">
+										<form class="row g-5 needs-validation" novalidate
+											method="post" id="form" name="form">
+											
+											<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
+											
+											<div class="col-lg-6 col-12">
+												<div class="password-field position-relative">
+													<label for="mPwd" class="form-label">
+														현재 비밀번호
+														<span class="text-danger">*</span>
+													</label>
+													<div class="password-field position-relative">
+														<input type="password" class="form-control fakePassword" id="mPwd" name="mPwd" required />
+														<span><i class="bi bi-eye-slash passwordToggler"></i></span>
+														<div class="invalid-feedback">현재 비밀번호를 입력해 주세요.</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-12"></div>
+											<div class="col-lg-6 col-12">
+												<div class="password-field position-relative">
+													<label for="mPwdNew" class="form-label">
+														새로운 비밀번호
+														<span class="text-danger">*</span>
+													</label>
+													<div class="password-field position-relative">
+														<input type="password" class="form-control fakePassword" id="mPwdNew" name="mPwdNew" required />
+														<span><i class="bi bi-eye-slash passwordToggler"></i></span>
+														<div class="invalid-feedback">새로운 비밀번호를 이전 비밀번호와 다르게 입력해 주세요.</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-12"></div>
+											<div class="col-lg-6 col-12">
+												<div class="password-field position-relative">
+													<label for="mPwdNewRe" class="form-label">
+														새로운 비밀번호 확인
+														<span class="text-danger">*</span>
+													</label>
+													<div class="password-field position-relative">
+														<input type="password" class="form-control fakePassword" id="mPwdNewRe" name="mPwdNewRe" required />
+														<span><i class="bi bi-eye-slash passwordToggler"></i></span>
+														<div class="invalid-feedback">새로운 비밀번호를 동일하게 입력해 주세요.</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-12"></div>
+											<div class="col-lg-6 col-12 d-grid">
+												<button class="btn btn-primary" type="button" id="btnSave">저장</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	// Input
+	let mPwd = document.getElementById("mPwd");
+	let mPwdNew = document.getElementById("mPwdNew");
+	let mPwdNewRe = document.getElementById("mPwdNewRe");
+	
+	// DB 체크 후 Focus 줘야 하는 Object
+	let focusObj = null;
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// mPwd 체크
+		resetValidation(mPwd);
+		
+		if (!strValidation(mPwd)) {
+			mPwd.classList.add("is-invalid");
+			
+			if (!focus) {
+				mPwd.focus();
+				focus = true;
+			}
+		} else {
+			mPwd.classList.add("is-valid");
+		}
+		
+		// mPwdNew 체크
+		resetValidation(mPwdNew);
+		
+		if (!strValidation(mPwdNew)) {
+			mPwdNew.classList.add("is-invalid");
+			
+			if (!focus) {
+				mPwdNew.focus();
+				focus = true;
+			}
+		} else {
+			mPwdNew.classList.add("is-valid");
+		}
+		
+		// mPwdNewRe 체크
+		resetValidation(mPwdNewRe);
+		
+		if (!strValidation(mPwdNewRe) 
+				|| mPwdNew.value.trim() != mPwdNewRe.value.trim()) {
+			mPwdNewRe.classList.add("is-invalid");
+			
+			if (!focus) {
+				mPwdNewRe.focus();
+				focus = true;
+			}
+		} else {
+			mPwdNewRe.classList.add("is-valid");
+		}
+		
+		if (focus) return false;
+		
+		mPwd.value = mPwd.value.trim();
+		mPwdNew.value = mPwdNew.value.trim();
+		mPwdNewRe.value = mPwdNewRe.value.trim();
+		
+		setPassword();
+	}	
+	
+	// mPwd Input 시 체크
+	mPwd.addEventListener("input", function() {
+		resetValidation(mPwd);
+		
+		if (!strValidation(mPwd)) {
+			mPwd.classList.add("is-invalid");
+		} else {
+			mPwd.classList.add("is-valid");
+		}	
+	});
+	
+	// mPwdNew Input 시 체크
+	mPwdNew.addEventListener("input", function() {
+		newPwdCheck();
+	});
+	
+	// mPwdNewRe Input 시 체크
+	mPwdNewRe.addEventListener("input", function() {
+		newPwdCheck();	
+	});
+	
+	// newPwd 입력창, 재입력 창 세트로 확인
+	function newPwdCheck() {
+		// mPwdNew 체크
+		resetValidation(mPwdNew);
+		
+		if (!strValidation(mPwdNew) || mPwd.value.trim() == mPwdNew.value.trim()) {
+			mPwdNew.classList.add("is-invalid");
+		} else {
+			mPwdNew.classList.add("is-valid");
+		}	
+		
+		// mPwdNewRe 체크
+		resetValidation(mPwdNewRe);
+		
+		if (!strValidation(mPwdNewRe) || mPwdNew.value.trim() != mPwdNewRe.value.trim()) {
+			mPwdNewRe.classList.add("is-invalid");
+		} else {
+			mPwdNewRe.classList.add("is-valid");
+		}
+	}
+	
+	function setPassword() {
+		focusObj = null;
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/member/MemberUsrPwdUpdtProc"
+			,data : { 
+				"mSeq" : $("#mSeq").val(),
+				"mPwd" : $("#mPwd").val(),
+				"mPwdNew" : $("#mPwdNew").val()
+			}
+			,success: function(response) {
+				if (response.rt == "success") {
+					document.getElementById("modalAlertCloseGoUrl").value = "/usr/member/MemberUsrSignIn";
+					showModalAlert("확인", "비밀번호를 변경하였습니다. 다시 로그인해 주세요.");
+				} else {
+					focusObj = mPwd;
+					showModalAlert("확인", "비밀번호 변경 실패하였습니다. 정확한 정보를 입력해 주세요.");
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	$("#modalAlert").on("hidden.bs.modal", function (e) {
+		var closeGoUrl = document.getElementById("modalAlertCloseGoUrl");
+
+		if (closeGoUrl != null && closeGoUrl.value != null && closeGoUrl.value.trim() != "") {
+			signOut(closeGoUrl.value.trim());
+		} else {
+			if (focusObj != null) {
+				resetValidation(mPwd);
+				resetValidation(mPwdNew);
+				resetValidation(mPwdNewRe);
+				
+				mPwd.value = '';
+				mPwdNew.value = '';
+				mPwdNewRe.value = '';
+				
+				focusObj.focus();
+			}
+		}
+	});
+</script>
+
+<!-- 로그아웃 -->
+<script type="text/javascript">
+	$("#btnSignOutAccount").on("click", function(){
+		signOut("/usr/index");
+	});
+</script>
+
+</body>

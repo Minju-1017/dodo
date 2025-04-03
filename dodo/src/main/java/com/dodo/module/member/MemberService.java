@@ -43,6 +43,14 @@ public class MemberService {
 		return dao.update(memberDto);
 	}
 	
+	public int updateForgotPwd(MemberDto memberDto) {
+		return dao.updateForgotPwd(memberDto);
+	}
+	
+	public int updatePwdCheck(MemberDto memberDto) {
+		return dao.updatePwdCheck(memberDto);
+	}
+	
 	public int updatePwd(MemberDto memberDto) {
 		return dao.updatePwd(memberDto);
 	}

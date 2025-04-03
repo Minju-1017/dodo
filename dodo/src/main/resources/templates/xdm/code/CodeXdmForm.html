@@ -274,7 +274,6 @@
 												th:selected="${list?.cgSeq} == ${codeItem?.codeGroup_cgSeq}"></option>
 										</select>
 										<div class="invalid-feedback"> 코드그룹을 선택해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-9 col-12"></div>
 									<div class="col-lg-3 col-12">
@@ -293,14 +292,12 @@
 										<input type="text" class="form-control" name="cName" id="cName"
 											th:value="${codeItem?.cName}" placeholder="한글, 영대소문자, 숫자" required />
 										<div class="invalid-feedback"> 코드 이름을 입력해 주세요. 한글/영문/숫자만 허용</div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-3 col-12">
 										<label for="cNameEng" class="form-label">코드 이름(영문)</label>
 										<input type="text" class="form-control" name="cNameEng" id="cNameEng"
 											th:value="${codeItem?.cNameEng}" placeholder="영대소문자, 숫자" required />
 										<div class="invalid-feedback"> 코드 이름(영문)을 영문/숫자만 입력해 주세요.</div>
-										<div class="valid-feedback"> Good! </div>
 									</div>		
 									<div class="col-lg-3 col-12"></div>
 									<div class="col-lg-3 col-12">
@@ -315,7 +312,6 @@
 											<option value="0" th:selected="${codeItem?.cUseNy} == 0">N</option>
 										</select>
 										<div class="invalid-feedback"> 코드 사용여부를 선택해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>				
 									<div class="col-lg-3 col-12">
 										<label for="cSequence" class="form-label">
@@ -325,7 +321,6 @@
 										<input type="text" class="form-control" id="cSequence" name="cSequence" 
 											th:value="${codeItem?.cSequence}" placeholder="숫자(0보다 큰 정수)" required />
 										<div class="invalid-feedback"> 코드의 순서를 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>				
 									<div class="col-lg-6 col-12"></div>
 									<div class="col-lg-6 col-12">

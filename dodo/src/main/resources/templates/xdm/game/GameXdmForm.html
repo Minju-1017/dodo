@@ -280,7 +280,6 @@
 												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
 													th:value="${gameItem?.gTnFileName}" placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
 												<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>
-												<div class="valid-feedback"> Good! </div>
 											</div>
 										</div>
 									</div>
@@ -292,7 +291,6 @@
 										<input type="text" class="form-control" name="gName" id="gName"
 											th:value="${gameItem?.gName}" placeholder="한글, 영대소문자, 숫자" required />
 										<div class="invalid-feedback"> 게임명을 입력해 주세요. 한글/영문/숫자만 허용 </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12">
 										<label for="gOfficialCd" class="form-label">
@@ -306,7 +304,6 @@
 												th:selected="${#strings.equals(codeList.cSeq, gameItem?.gCategoryCd)}"></option>
 										</select>
 										<div class="invalid-feedback"> 게임 카테고리를 선택해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-2 col-12"></div>
 									<div class="col-lg-4 col-12">
@@ -317,7 +314,6 @@
 										<input type="text" class="form-control" placeholder="0 ~ 5 사이의 실수 (소수점 두 자리)"
 											th:value="${gameItem?.gLevel}" id="gLevel" name="gLevel" required />
 										<div class="invalid-feedback"> 난이도를 숫자(0 ~ 5 사이의 실수, 소수점 두 자리)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12">
 										<label for="gUseAge" class="form-label">
@@ -327,7 +323,6 @@
 										<input type="text" class="form-control" placeholder="0보다 큰 정수"
 											th:value="${gameItem?.gUseAge}" id="gUseAge" name="gUseAge" required />
 										<div class="invalid-feedback"> 최저 사용 연령을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-4 col-12">
@@ -339,7 +334,6 @@
 											placeholder="최대 시간보다 작거나 같고, 0보다 큰 정수 (분 단위)"
 											th:value="${gameItem?.gMinTime}" id="gMinTime" name="gMinTime" required />
 										<div class="invalid-feedback"> 최대 시간보다 작거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12">
 										<label for="gMaxTime" class="form-label">
@@ -350,7 +344,6 @@
 											placeholder="최소보다 크거나 같고, 0보다 큰 정수 (분 단위)"
 											th:value="${gameItem?.gMaxTime}" id="gMaxTime" name="gMaxTime" required />
 										<div class="invalid-feedback"> 최소 소요 시간보다 크거나 같고, 0보다 큰 정수(분 단위)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-4 col-12">
@@ -361,7 +354,6 @@
 										<input type="text" class="form-control" placeholder="최대보다 작고, 0보다 큰 정수"
 											th:value="${gameItem?.gMinPeople}" id="gMinPeople" name="gMinPeople" required />
 										<div class="invalid-feedback"> 최대 인원보다 작거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12">
 										<label for="gMaxPeople" class="form-label">
@@ -371,7 +363,6 @@
 										<input type="text" class="form-control" placeholder="최소보다 크고, 0보다 큰 정수"
 											th:value="${gameItem?.gMaxPeople}" id="gMaxPeople" name="gMaxPeople" required />
 										<div class="invalid-feedback"> 최소 인원보다 크거나 같고, 0보다 큰 정수로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-4 col-12">
@@ -382,7 +373,6 @@
 										<input type="text" class="form-control" placeholder="0보다 큰 정수"
 											th:value="${gameItem?.gBestPeople}" id="gBestPeople" name="gBestPeople" required />
 										<div class="invalid-feedback"> 최적인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12">
 										<label for="gRecommendPeople" class="form-label">
@@ -393,7 +383,6 @@
 											th:value="${gameItem?.gRecommendPeople}"
 											id="gRecommendPeople" name="gRecommendPeople" required />
 										<div class="invalid-feedback"> 추천인원을 숫자(0보다 큰 정수)로 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-4 col-12">
@@ -408,7 +397,6 @@
 												th:selected="${#strings.equals(codeList.cSeq, gameItem?.gOfficialCd)}"></option>
 										</select>
 										<div class="invalid-feedback"> 공식판매사를 선택해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-8 col-12"></div>
 									<div class="col-lg-8 col-12">
@@ -417,7 +405,6 @@
 											th:value="${gameItem?.gOfficialUrl}"
 											id="gOfficialUrl" name="gOfficialUrl" required />
 										<div class="invalid-feedback"> 공식 판매 주소를 URL 형식에 맞게 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-8 col-12">
@@ -425,7 +412,6 @@
 										<input type="text" class="form-control" placeholder="http://example.com 또는 https://example.com"
 											th:value="${gameItem?.gComuUrl1}" id="gComuUrl1" name="gComuUrl1" required />
 										<div class="invalid-feedback"> 보드라이프 주소를 URL 형식에 맞게 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-8 col-12">
@@ -434,7 +420,6 @@
 											th:value="${gameItem?.gComuUrl2}" 
 											id="gComuUrl2" name="gComuUrl2" required />
 										<div class="invalid-feedback"> Geek 주소를 URL 형식에 맞게 입력해 주세요. </div>
-										<div class="valid-feedback"> Good! </div>
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-6 col-12">

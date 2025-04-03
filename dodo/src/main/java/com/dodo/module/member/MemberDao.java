@@ -15,6 +15,8 @@ public interface MemberDao {
 	public int insertCheckEmail(MemberDto memberDto);
 	public int insert(MemberDto memberDto);
 	public int update(MemberDto memberDto);
+	public int updateForgotPwd(MemberDto memberDto);
+	public int updatePwdCheck(MemberDto memberDto);
 	public int updatePwd(MemberDto memberDto);
 	public int delete(MemberDto memberDto);
 	public int uelete(MemberDto memberDto);

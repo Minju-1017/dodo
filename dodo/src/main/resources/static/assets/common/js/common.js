@@ -128,6 +128,17 @@ function showModalDeleteConfirm(title, body, showBtnUelete, showBtnDelete) {
 	document.querySelector("#modalConfirmBody").textContent = body;
 	document.querySelector("#btnModalUelete").style.display = showBtnUelete;
 	document.querySelector("#btnModalDelete").style.display = showBtnDelete;
+	document.querySelector("#btnModalWithdrawal").style.display = 'none';
+	$("#modalConfirm").modal("show");      	
+}
+
+// 데이터 삭제 알림 모달(회원탈퇴)
+function showModalWithdrawalConfirm(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalUelete").style.display = 'none';
+	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalWithdrawal").style.display = '';
 	$("#modalConfirm").modal("show");      	
 }
 

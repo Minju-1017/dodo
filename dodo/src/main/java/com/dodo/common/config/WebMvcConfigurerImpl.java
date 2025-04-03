@@ -17,13 +17,11 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 					"/assets/**", // static/assets 폴더안 모든 것은 허용하겠다는 것
 					"/xdm/member/MemberXdmSignIn",
 					"/xdm/member/MemberXdmSignInProc",
-					"/xdm/member/MemberUsrSignOutProc",
 					"/usr/index",
 					"/usr/member/MemberUsrSignUpForm",
+					"/usr/member/MemberUsrInstProc",
 					"/usr/member/MemberUsrSignIn",
 					"/usr/member/MemberUsrSignInProc",
-					"/usr/member/MemberUsrSignOutProc",
-					"/usr/member/MemberUsrInstProc",
 					"/usr/member/MemberUsrSignInForgotPwdForm",
 					"/usr/member/MemberUsrSignInForgotPwdProc"
 		);

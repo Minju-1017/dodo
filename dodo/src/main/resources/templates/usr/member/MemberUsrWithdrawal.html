@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{/usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-12 border-end d-none d-md-block">
+					<div class="pt-10 pe-lg-10">
+						<ul class="nav flex-column nav-pills nav-pills-dark">
+							<li class="nav-item">
+								<ul class="nav flex-column nav-pills nav-pills-dark">
+									<li class="nav-item">
+										<a class="nav-link" href="/usr/member/MemberUsrAccountForm">
+											<i class="feather-icon icon-settings me-2"></i> 기본 정보 변경
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="/usr/member/MemberUsrAccountPwdForm">
+											<i class="feather-icon icon-key me-2"></i> 비밀번호 변경
+										</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link active" href="/usr/member/MemberUsrWithdrawal">
+											<i class="feather-icon icon-user-x me-2"></i> 회원 탈퇴
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<hr />
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="btnSignOutAccount" href="javascript:void(0);">
+									<i class="feather-icon icon-log-out me-2"></i> 로그아웃
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-12">
+					<div class="py-6 p-md-6 p-lg-10">
+						<div class="row mb-8">
+							<div class="col-md-12">
+								<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+									<h4>회원 탈퇴</h4>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-8 g-5">
+							<div class="col-lg-12 col-12">
+								<div class="card card-lg border-0">
+									<div class="card-body d-flex flex-column gap-8 p-8">
+										<form class="row g-5 needs-validation" novalidate
+											method="post" id="form" name="form">
+											
+											<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
+											
+											<div class="col-lg-12 col-12">
+												<p class="mb-2">계정을 삭제하시겠습니까?</p>
+												<p class="mb-5">계정을 삭제하면 모든 정보가 사라지며 복구할 수 없습니다. 그래도 탈퇴 하시겠습니까?</p>
+												<a class="btn btn-outline-danger" type="button" id="btnSave">회원 탈퇴 하기</a>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{/usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		showModalWithdrawalConfirm("확인", "정말 탈퇴하시겠습니까?"); 
+	}
+	
+	document.getElementById("btnModalWithdrawal").onclick = function () {
+		$("#modalConfirm").modal("hide");
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/member/MemberUsrUeleProc"
+			,data : { 
+				"mSeq" : $("#mSeq").val()
+			}
+			,success: function(response) {
+				if (response.rt == "success") {
+					document.getElementById("modalAlertCloseGoUrl").value = "/usr/index";
+					showModalAlert("확인", "회원 탈퇴되었습니다.");
+				} else {
+					showModalAlert("확인", "회원 탈퇴 실패하였습니다. 다시 시도해 주세요.");
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	$("#modalAlert").on("hidden.bs.modal", function (e) {
+		var closeGoUrl = document.getElementById("modalAlertCloseGoUrl");
+
+		if (closeGoUrl != null && closeGoUrl.value != null && closeGoUrl.value.trim() != "") {
+			signOut(closeGoUrl.value.trim());
+		}
+	});
+</script>
+
+<!-- 로그아웃 -->
+<script type="text/javascript">
+	$("#btnSignOutAccount").on("click", function(){
+		signOut("/usr/index");
+	});
+</script>
+
+</body>

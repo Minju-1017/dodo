@@ -264,13 +264,15 @@
 											<span class="text-danger">*</span>
 										</label>
 										<input type="text" class="form-control" name="cgName" id="cgName"
-											th:value="${codeGroupItem?.cgName}" placeholder="한글, 영대소문자, 숫자" required />
+											th:value="${codeGroupItem?.cgName}" autocomplete="off" 
+											placeholder="한글, 영대소문자, 숫자" required />
 										<div class="invalid-feedback"> 코드그룹 이름을 입력해 주세요. 한글/영문/숫자만 허용</div>
 									</div>
 									<div class="col-lg-3 col-12">
 										<label for="cgNameEng" class="form-label">코드그룹 이름(영문)</label>
 										<input type="text" class="form-control" name="cgNameEng" id="cgNameEng"
-											th:value="${codeGroupItem?.cgNameEng}" placeholder="영대소문자, 숫자" required />
+											th:value="${codeGroupItem?.cgNameEng}" autocomplete="off" 
+											placeholder="영대소문자, 숫자" required />
 										<div class="invalid-feedback"> 코드그룹 이름(영문)을 영문/숫자만 입력해 주세요.</div>
 									</div>
 									<div class="col-lg-3 col-12"></div>
@@ -293,7 +295,8 @@
 											<span class="text-danger">*</span>
 										</label>
 										<input type="text" class="form-control" id="cgSequence" name="cgSequence" 
-											th:value="${codeGroupItem?.cgSequence}" placeholder="숫자(0보다 큰 정수)" required />
+											th:value="${codeGroupItem?.cgSequence}" placeholder="숫자(0보다 큰 정수)" 
+											autocomplete="off" required />
 										<div class="invalid-feedback"> 코드 그룹의 순서를 숫자(0보다 큰 정수)로 입력해 주세요. </div>
 									</div>
 									<div class="col-lg-3 col-12">
@@ -305,7 +308,7 @@
 									<div class="col-lg-6 col-12">
 										<label for="cgDescription" class="form-label">설명</label>
                                  				<textarea class="form-control" rows="5" style="resize: none;"
-										 	id="cgDescription" name="cgDescription"
+										 	id="cgDescription" name="cgDescription" autocomplete="off" 
 											th:text="${codeGroupItem?.cgDescription}"></textarea>
 									</div>
 									<div class="col-lg-6 col-12"></div>

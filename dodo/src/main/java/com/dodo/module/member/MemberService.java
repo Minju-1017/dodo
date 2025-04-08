@@ -31,10 +31,6 @@ public class MemberService {
 		return dao.insertCheckId(memberDto);
 	}
 	
-	public int insertCheckEmail(MemberDto memberDto) {
-		return dao.insertCheckEmail(memberDto);
-	}
-	
 	public int insert(MemberDto memberDto) {
 		return dao.insert(memberDto);
 	}

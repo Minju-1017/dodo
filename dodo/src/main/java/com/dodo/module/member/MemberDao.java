@@ -12,7 +12,6 @@ public interface MemberDao {
 	public MemberDto selectOne(MemberDto memberDto);
 	public MemberDto selectSignInMember(MemberDto memberDto);
 	public int insertCheckId(MemberDto memberDto);
-	public int insertCheckEmail(MemberDto memberDto);
 	public int insert(MemberDto memberDto);
 	public int update(MemberDto memberDto);
 	public int updateForgotPwd(MemberDto memberDto);

@@ -91,13 +91,6 @@
 			AND mId=#{mId}
 	</select>
 	
-	<select id="insertCheckEmail" resultType="Integer">
-		SELECT COUNT(*) FROM 
-			member 
-		WHERE 1=1
-			AND mEmail=#{mEmail}
-	</select>
-	
 	<insert id="insert">
 		INSERT INTO member
 		(

@@ -98,7 +98,7 @@
 													<span class="text-danger">*</span>
 												</label>
 												<input type="text" class="form-control" name="mName" id="mName"
-													th:value="${memberItem?.mName}" required />
+													autocomplete="off" th:value="${memberItem?.mName}" required />
 												<div class="invalid-feedback"> 이름을 입력해 주세요. 한글/영문/숫자만 허용</div>
 											</div>
 											<div class="col-lg-5 col-12"></div>
@@ -108,7 +108,7 @@
 													<span class="text-danger">*</span>
 												</label>
 												<input type="email" class="form-control" id="mEmail" name="mEmail" 
-													th:value="${memberItem?.mEmail}" required />
+													autocomplete="off" th:value="${memberItem?.mEmail}" required />
 												<div class="invalid-feedback"> 이메일을 형식에 맞게 입력해 주세요. </div>
 											</div>
 											<div class="col-lg-5 col-12"></div>
@@ -117,8 +117,8 @@
 													생년월일
 													<span class="text-danger">*</span>
 												</label>
-		                                 				<input type="text" class="form-control" id="mBirth" name="mBirth" 
-													th:value="${memberItem?.mBirth}" placeholder="예) 1999-01-01" readonly required />
+		                                 			<input type="text" class="form-control" id="mBirth" name="mBirth" 
+														th:value="${memberItem?.mBirth}" placeholder="예) 1999-01-01" readonly required />
 												<div class="invalid-feedback"> 생년월일을 형식에 맞게 입력해 주세요. </div>
 											</div>
 											<div class="col-lg-5 col-12"></div>

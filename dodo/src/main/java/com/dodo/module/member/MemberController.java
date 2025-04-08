@@ -96,6 +96,26 @@ public class MemberController {
 	}
 	
 	/**
+	 * Ajax를 통한 회원가입 Id 체크 - User
+	 * @param memberDto
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberUsrInstIdCheckProc")
+	public Map<String, Object> memberUsrInstIdCheckProc(MemberDto memberDto) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		int cntId = service.insertCheckId(memberDto);
+		
+		if (cntId == 0) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail_id");
+		}
+		
+		return returnMap;
+	}
+	
+	/**
 	 * Ajax를 통한 회원가입 - User
 	 * @param memberDto
 	 * @return
@@ -107,18 +127,12 @@ public class MemberController {
 		int cntId = service.insertCheckId(memberDto);
 		
 		if (cntId == 0) {
-			int cntEmail = service.insertCheckEmail(memberDto);
+			int cntSuccess = service.insert(memberDto);
 			
-			if (cntEmail == 0) {
-				int cntSuccess = service.insert(memberDto);
-				
-				if (cntSuccess == 1) {
-					returnMap.put("rt", "success");
-				} else {
-					returnMap.put("rt", "fail");
-				}
+			if (cntSuccess == 1) {
+				returnMap.put("rt", "success");
 			} else {
-				returnMap.put("rt", "fail_email");
+				returnMap.put("rt", "fail");
 			}
 		} else {
 			returnMap.put("rt", "fail_id");

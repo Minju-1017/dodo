@@ -30,12 +30,14 @@
 							<div class="row g-3">
 								<div class="col-12">
 									<label for="mId" class="form-label visually-hidden">아이디</label>
-									<input type="text" class="form-control" name="mId" id="mId" placeholder="아이디" required />
+									<input type="text" class="form-control" name="mId" id="mId" 
+										autocomplete="off" placeholder="아이디" required />
 									<div class="invalid-feedback">아이디를 입력해 주세요.</div>
 								</div>
 								<div class="col-12">
 									<label for="mName" class="form-label visually-hidden">이름</label>
-									<input type="text" class="form-control" id="mName" placeholder="이름" required />
+									<input type="text" class="form-control" id="mName" 
+										autocomplete="off" placeholder="이름" required />
 									<div class="invalid-feedback">이름을 입력해 주세요.</div>
 								</div>
 								<div class="col-12">
@@ -48,7 +50,8 @@
 									<div class="password-field position-relative">
 										<label for="mPwd" class="form-label visually-hidden">새로운 비밀번호</label>
 										<div class="password-field position-relative">
-											<input type="password" class="form-control fakePassword" id="mPwd" name="mPwd" placeholder="비밀번호" required />
+											<input type="password" class="form-control fakePassword" autocomplete="off" 
+												id="mPwd" name="mPwd" placeholder="비밀번호" required />
 											<span><i class="bi bi-eye-slash passwordToggler"></i></span>
 											<div class="invalid-feedback">비밀번호를 입력해 주세요.</div>
 										</div>
@@ -58,7 +61,8 @@
 									<div class="password-field position-relative">
 										<label for="mPwdRe" class="form-label visually-hidden">비밀번호 확인</label>
 										<div class="password-field position-relative">
-											<input type="password" class="form-control fakePassword" id="mPwdRe" name="mPwdRe" placeholder="비밀번호 확인" required />
+											<input type="password" class="form-control fakePassword" autocomplete="off" 
+												id="mPwdRe" name="mPwdRe" placeholder="비밀번호 확인" required />
 											<span><i class="bi bi-eye-slash passwordToggler"></i></span>
 											<div class="invalid-feedback">비밀번호를 동일하게 입력해 주세요.</div>
 										</div>

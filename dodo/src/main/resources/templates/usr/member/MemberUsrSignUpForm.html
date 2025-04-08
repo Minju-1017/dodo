@@ -33,24 +33,27 @@
 						<div class="row g-3">
 							<div class="col-12">
 								<label for="mId" class="form-label visually-hidden">아이디</label>
-								<input type="text" class="form-control" name="mId" id="mId" placeholder="아이디" required />
-								<div class="invalid-feedback">아이디를 입력해 주세요. 영문/숫자만 허용</div>
+								<input type="text" class="form-control" name="mId" id="mId" 
+									placeholder="아이디" autocomplete="off" onblur="onblurEventId();" required />
+								<div class="invalid-feedback">중복된 아이디거나, 잘못 입력 되었습니다. 영문/숫자만 허용</div>
 							</div>
 							<div class="col-12">
 								<label for="mName" class="form-label visually-hidden">이름</label>
-								<input type="text" class="form-control" id="mName" placeholder="이름" required />
+								<input type="text" class="form-control" id="mName" autocomplete="off" placeholder="이름" required />
 								<div class="invalid-feedback">이름을 입력해 주세요. 한글/영문/숫자만 허용</div>
 							</div>
 							<div class="col-12">
 								<label for="mEmail" class="form-label visually-hidden">이메일</label>
-								<input type="email" class="form-control" id="mEmail" placeholder="이메일" required />
+								<input type="email" class="form-control" id="mEmail" 
+									autocomplete="off" placeholder="이메일" required />
 								<div class="invalid-feedback">이메일을 형식에 맞게 입력해 주세요.</div>
 							</div>
 							<div class="col-12">
 								<div class="password-field position-relative">
 									<label for="mPwd" class="form-label visually-hidden">비밀번호</label>
 									<div class="password-field position-relative">
-										<input type="password" class="form-control fakePassword" id="mPwd" name="mPwd" placeholder="비밀번호" required />
+										<input type="password" class="form-control fakePassword" id="mPwd" name="mPwd" 
+											autocomplete="off" placeholder="비밀번호" required />
 										<span><i class="bi bi-eye-slash passwordToggler"></i></span>
 										<div class="invalid-feedback">비밀번호를 입력해 주세요.</div>
 									</div>
@@ -60,7 +63,8 @@
 								<div class="password-field position-relative">
 									<label for="mPwdRe" class="form-label visually-hidden">비밀번호 확인</label>
 									<div class="password-field position-relative">
-										<input type="password" class="form-control fakePassword" id="mPwdRe" name="mPwdRe" placeholder="비밀번호 확인" required />
+										<input type="password" class="form-control fakePassword" id="mPwdRe" name="mPwdRe" 
+											autocomplete="off" placeholder="비밀번호 확인" required />
 										<span><i class="bi bi-eye-slash passwordToggler"></i></span>
 										<div class="invalid-feedback">비밀번호를 동일하게 입력해 주세요.</div>
 									</div>
@@ -104,9 +108,6 @@
 	let mPwd = document.getElementById("mPwd");
 	let mPwdRe = document.getElementById("mPwdRe");
 	let mBirth = document.getElementById("mBirth");
-	
-	// DB 체크 후 Focus 줘야 하는 Object
-	let focusObj = null;
 </script>
 
 <!-- Validation: Bootstrap -->
@@ -116,6 +117,7 @@
 		var focus = false; // Validation 후 Focus 줘야 하는 Input
 		
 		// mId 체크
+		// submit 시 ajax로 체크하므로, else 패스
 		resetValidation(mId);
 
 		if (!strEngNumberValidation(mId)) {
@@ -125,8 +127,6 @@
 				mId.focus();
 				focus = true;
 			}
-		} else {
-			mId.classList.add("is-valid");
 		}
 		
 		// mName 체크
@@ -214,10 +214,9 @@
 	mId.addEventListener("input", function() {
 		resetValidation(mId);
 		
+		// onblur 시 ajax로 체크하므로, else 패스
 		if (!strEngNumberValidation(mId)) {
 			mId.classList.add("is-invalid");
-		} else {
-			mId.classList.add("is-valid");
 		}
 	});
 	
@@ -240,7 +239,7 @@
 			mEmail.classList.add("is-invalid");
 		} else {
 			mEmail.classList.add("is-valid");
-		}	
+		}
 	});
 	
 	// mPwd Input 시 체크
@@ -285,9 +284,43 @@
 		}	
 	});
 	
-	function signUp() {
-		focusObj = null;
+	// mId Focus Out 시 체크
+	function onblurEventId() {
+		resetValidation(mId);
 		
+		if (!strEngNumberValidation(mId)) {
+			mId.classList.add("is-invalid");
+			return;
+		}
+		
+		signUpCheckId();
+	}
+	
+	function signUpCheckId() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/member/MemberUsrInstIdCheckProc"
+			,data : { 
+				"mId" : $("#mId").val()
+			}
+			,success: function(response) {
+				if (response.rt == "success") {
+					mId.classList.add("is-valid");
+				} else if (response.rt == "fail_id") {
+					mId.classList.add("is-invalid");
+					mId.value = '';
+					mId.focus();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function signUp() {
 		$.ajax({
 			async: true 
 			,cache: false
@@ -305,13 +338,11 @@
 				if (response.rt == "success") {
 					location.href = "/usr/member/MemberUsrSignIn";
 				} else if (response.rt == "fail_id") {
-					focusObj = mId;
-					showModalAlert("확인", "중복된 아이디가 존재합니다.");
-				} else if (response.rt == "fail_email") {
-					focusObj = mEmail;
-					showModalAlert("확인", "중복된 이메일이 존재합니다.");
+					mId.classList.add("is-invalid");
+					mId.value = '';
+					mId.focus();
 				} else {
-					showModalAlert("확인", "회원가입 실패하였습니다. 관리자에게 문의해 주세요.");
+					showModalAlert("확인", "회원가입 실패하였습니다. 다시 시도해 주세요.");
 				}
 			}
 			,error : function(jqXHR, textStatus, errorThrown){
@@ -319,16 +350,6 @@
 			}
 		});
 	}
-	
-	$("#modalAlert").on("hidden.bs.modal", function (e) {
-		if (focusObj != null) {
-			resetValidation(focusObj);
-			focusObj.classList.add("is-invalid");
-			focusObj.value = '';
-			focusObj.focus();
-		}
-		
-	});
 </script>
     
 </body>

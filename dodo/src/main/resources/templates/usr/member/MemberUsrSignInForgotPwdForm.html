@@ -265,6 +265,11 @@
 					location.href = "/usr/member/MemberUsrSignIn";
 				} else {
 					focusObj = mId;
+					resetValidation(mId);
+					resetValidation(mName);
+					resetValidation(mBirth);
+					resetValidation(mPwd);
+					resetValidation(mPwdRe);
 					showModalAlert("확인", "비밀번호 재설정 실패하였습니다. 정확한 정보를 입력해 주세요.");
 				}
 			}

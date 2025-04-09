@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -87,6 +88,28 @@ public class MemberController {
 	}
 	
 	/**
+	 * 암호화
+	 * @param str
+	 * @param length
+	 * @return
+	 */
+	public String encodeBcrypt(String str, int length) {
+		return new BCryptPasswordEncoder(length).encode(str);
+	}
+	
+	/**
+	 * 암호화된 문자열 체크
+	 * @param str
+	 * @param length
+	 * @return
+	 */
+	public boolean matchesBcrypt(String inputStr, String str, int length) {
+		return new BCryptPasswordEncoder(length).matches(inputStr, str);
+	}
+	
+	///////////////////////////////////////////////////////////////////
+	
+	/**
 	 * 회원가입 화면 이동 - User
 	 * @return
 	 */
@@ -127,6 +150,7 @@ public class MemberController {
 		int cntId = service.insertCheckId(memberDto);
 		
 		if (cntId == 0) {
+			memberDto.setmPwd(encodeBcrypt(memberDto.getmPwd(), 10)); // 패스워드 암호화
 			int cntSuccess = service.insert(memberDto);
 			
 			if (cntSuccess == 1) {
@@ -166,9 +190,16 @@ public class MemberController {
 		if (mDto == null) { 
 			usrSignOut(httpSession);
 			returnMap.put("rt", "fail");
+			mDto = null;
 		} else {
-			usrSignIn(httpSession, mDto);
-			returnMap.put("rt", "success");
+			if (matchesBcrypt(memberDto.getmPwd(), mDto.getmPwd(), 10)) {
+				usrSignIn(httpSession, mDto);
+				returnMap.put("rt", "success");
+			} else {
+				usrSignOut(httpSession);
+				returnMap.put("rt", "fail");
+				mDto = null;
+			}
 		}
 		
 		return returnMap;
@@ -194,6 +225,7 @@ public class MemberController {
 	public Map<String, Object> memberUsrSignInForgotPwdProc(MemberDto memberDto) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
+		memberDto.setmPwd(encodeBcrypt(memberDto.getmPwd(), 10)); // 패스워드 암호화
 		int cntSuccess = service.updateForgotPwd(memberDto);
 		
 		if (cntSuccess == 1) { 
@@ -301,14 +333,18 @@ public class MemberController {
 		if (mPwdNew == null || (mPwdNew != null && mPwdNew.equals(""))) {
 			returnMap.put("rt", "fail");
 		} else {
-			int checkCnt = service.updatePwdCheck(memberDto);
+			MemberDto mDto = service.updatePwdCheck(memberDto);
 			
-			if (checkCnt == 1) {
-				memberDto.setmPwd(mPwdNew);
-				int successCnt = service.updatePwd(memberDto);
-				
-				if (successCnt == 1) {
-					returnMap.put("rt", "success");
+			if (mDto != null) {
+				if (matchesBcrypt(memberDto.getmPwd(), mDto.getmPwd(), 10)) {
+					memberDto.setmPwd(encodeBcrypt(mPwdNew, 10)); // 패스워드 암호화
+					int successCnt = service.updatePwd(memberDto);
+					
+					if (successCnt == 1) {
+						returnMap.put("rt", "success");
+					} else {
+						returnMap.put("rt", "fail");
+					}
 				} else {
 					returnMap.put("rt", "fail");
 				}
@@ -383,11 +419,12 @@ public class MemberController {
 		MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
 		
 		if (mDto == null) { 
-			
-			
 			returnMap.put("rt", "fail_none");
 		} else {
-			if (mDto.getmGradeCd() != Constants.MEMBER_GRADE_CODE_ADMIN) {
+			if (!matchesBcrypt(memberDto.getmPwd(), mDto.getmPwd(), 10)) {
+				returnMap.put("rt", "fail_none");
+				mDto = null;
+			} else if (mDto.getmGradeCd() != Constants.MEMBER_GRADE_CODE_ADMIN) {
 				returnMap.put("rt", "fail_member");
 				mDto = null;
 			} else {

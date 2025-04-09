@@ -76,12 +76,12 @@
 	<select id="selectSignInMember" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
+			,a.mPwd
 		FROM 
 			member a
 		WHERE 1=1
 			AND a.mDelNy=0
 			AND BINARY(a.mId)=#{mId}
-			AND BINARY(a.mPwd)=#{mPwd}
 	</select>
 	
 	<select id="insertCheckId" resultType="Integer">
@@ -148,12 +148,13 @@
 			AND mBirth=#{mBirth}
 	</update>
 	
-	<select id="updatePwdCheck" resultType="Integer">
-		SELECT COUNT(*) FROM 
-			member 
+	<select id="updatePwdCheck" resultMap="resultMapObj">
+		SELECT
+			a.mPwd
+		FROM 
+			member a
 		WHERE 1=1
 			AND mSeq=#{mSeq}
-			AND mPwd=#{mPwd}
 	</select>
 	
 	<update id="updatePwd">

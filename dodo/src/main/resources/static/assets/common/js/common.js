@@ -3,8 +3,8 @@
  */
 
 // 정규식
-const REGEX_KOR_ENG_NUMBER = /^[a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]+$/;
-const REGEX_ENG_NUMBER = /^[a-z|A-Z|0-9]+$/;
+const REGEX_KOR_ENG_NUMBER = /^[a-z|A-Z|0-9|ㄱ-ㅎ|가-힣|\s]+$/;
+const REGEX_ENG_NUMBER = /^[a-z|A-Z|0-9|\s]+$/;
 const REGEX_NUMBER = /^[0-9]+$/; // 정수
 const REGEX_REAL_NUMBER = /^[\d]*\.?[\d]{0,2}$/; // 소수점 두자리 실수
 const REGEX_yyyyMMdd = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);

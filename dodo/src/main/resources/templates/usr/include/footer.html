@@ -167,14 +167,14 @@
 
 <script type="text/javascript">
 	$("#btnSignOut").on("click", function(){
-		signOut("/usr/index");
+		signOut();
 	});
 	
 	$("#btnSignOutDropdown").on("click", function(){
-		signOut("/usr/index");
+		signOut();
 	});
 	
-	function signOut(goUrl) {
+	function signOut() {
 		$.ajax({
 			async: true 
 			,cache: false
@@ -183,7 +183,7 @@
 			,data: {}
 			,success: function(response) {
 				if(response.rt == "success") {
-					location.href = goUrl;
+					location.href = "/usr/member/MemberUsrSignIn";
 				} else {
 					// by pass
 				}

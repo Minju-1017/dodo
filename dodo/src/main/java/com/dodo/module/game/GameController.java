@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping(value="/xdm/game/")
+@RequestMapping(value={"/xdm/game/", "/usr/game/"})
 public class GameController {
 	
-	private String path = "xdm/game/";
+	private String path_admin = "xdm/game/";
+	private String path_user = "usr/game/";
 	
 	@Autowired
 	GameService service;
@@ -38,7 +39,7 @@ public class GameController {
 			model.addAttribute("gameList", service.selectList(vo));
 		}
 		
-		return path + "GameXdmList";
+		return path_admin + "GameXdmList";
 	}
 	
 	/**
@@ -55,7 +56,7 @@ public class GameController {
 			model.addAttribute("gameItem", service.selectOne(gameDto));
 		}
 		
-		return path + "GameXdmForm";
+		return path_admin + "GameXdmForm";
 	}
 	
 	/**
@@ -152,6 +153,26 @@ public class GameController {
 		}
 
 		return returnMap;
+	}
+	
+	/////////////////////////////////////////////////////////////////
+	
+	/**
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "GameTop10UsrList")
+	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo,
+			HttpSession httpSession) throws Exception {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectOneCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("gameList", service.selectList(vo));
+		}
+		
+		return path_user + "GameTop10UsrList";
 	}
 
 }

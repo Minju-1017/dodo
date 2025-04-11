@@ -645,11 +645,10 @@
 		}
 		
 		// gBestPeople 체크
-		var gBestPeopleValue = gBestPeople.value.trim();
 		resetValidation(gBestPeople);
 		
 		if (!positiveNumberValidation(gBestPeople)
-				|| parseInt(gBestPeopleValue) > parseInt(gMaxPeopleValue)) {
+				|| parseInt(gBestPeople.value.trim()) > parseInt(gMaxPeopleValue)) {
 			gBestPeople.classList.add("is-invalid");
 			
 			if (!focus) {
@@ -661,11 +660,10 @@
 		}
 		
 		// gRecommendPeople 체크
-		var gRecommendPeopleValue = gRecommendPeople.value.trim();
 		resetValidation(gRecommendPeople);
 		
 		if (!positiveNumberValidation(gRecommendPeople)
-				|| parseInt(gRecommendPeopleValue) > parseInt(gMaxPeopleValue)) {
+				|| parseInt(gRecommendPeople.value.trim()) > parseInt(gMaxPeopleValue)) {
 			gRecommendPeople.classList.add("is-invalid");
 			
 			if (!focus) {
@@ -889,7 +887,17 @@
 		peopleCheck();
 	});
 	
-	// gMinPeople, gMaxPeople Input 시 체크 세트 체크
+	// gBestPeople Input 시 체크
+	gBestPeople.addEventListener("input", function() {
+		peopleCheck();
+	});
+	
+	// gRecommendPeople Input 시 체크
+	gRecommendPeople.addEventListener("input", function() {
+		peopleCheck();
+	});
+	
+	// gMinPeople, gMaxPeople, gBestPeople, gRecommendPeople Input 시 체크 세트 체크
 	function peopleCheck() {
 		var gMinPeopleValue = gMinPeople.value.trim();
 		var gMaxPeopleValue = gMaxPeople.value.trim();
@@ -913,29 +921,27 @@
 		} else {
 			gMaxPeople.classList.add("is-valid");
 		}	
-	}
-	
-	// gBestPeople Input 시 체크
-	gBestPeople.addEventListener("input", function() {
+		
+		// gBestPeople
 		resetValidation(gBestPeople);
 		
-		if (!positiveNumberValidation(gBestPeople)) {
+		if (!positiveNumberValidation(gBestPeople)
+				|| parseInt(gBestPeople.value.trim()) > parseInt(gMaxPeopleValue)) {
 			gBestPeople.classList.add("is-invalid");
 		} else {
 			gBestPeople.classList.add("is-valid");
-		}		
-	});
-	
-	// gRecommendPeople Input 시 체크
-	gRecommendPeople.addEventListener("input", function() {
+		}
+		
+		// gRecommendPeople
 		resetValidation(gRecommendPeople);
 		
-		if (!positiveNumberValidation(gRecommendPeople)) {
+		if (!positiveNumberValidation(gRecommendPeople)
+				|| parseInt(gRecommendPeople.value.trim()) > parseInt(gMaxPeopleValue)) {
 			gRecommendPeople.classList.add("is-invalid");
 		} else {
 			gRecommendPeople.classList.add("is-valid");
-		}		
-	});
+		}
+	}
 	
 	// gOfficialCd Input 시 체크
 	gOfficialCd.addEventListener("input", function() {

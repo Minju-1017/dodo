@@ -230,7 +230,7 @@
 		</div>
 	</nav>
 
-         	<!-- main wrapper -->
+    <!-- main wrapper -->
 	<main class="main-content-wrapper">
 		<form name="formList" id="formList" method="post" autocomplete="off">
 			
@@ -371,14 +371,11 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 text-center">
-						<!-- card -->
 						<div class="card h-100 card-lg">
 							
 							<div th:replace="~{/xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
-							
-							<!-- card body -->
+
 							<div class="card-body p-0">
-								<!-- table -->
 								<div class="table-responsive">
 									<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
 										<thead class="bg-light">
@@ -488,13 +485,13 @@
 			</div>
 		</form>
 	</main>
-      </div>
+</div>
       
-    	<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
     	
-    	<!-- 변수 정의 / 공통 함수 -->
-    	<script type="text/javascript">
-    		let seq = document.querySelector("input[name=gSeq]");
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+  	let seq = document.querySelector("input[name=gSeq]");
     	
 	let fom = document.querySelector("form[name=formList]");
 	let goUrlXdmList = "/xdm/game/GameXdmList";

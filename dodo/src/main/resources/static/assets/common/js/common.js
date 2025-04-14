@@ -273,6 +273,7 @@ jQuery(function() {
 	jQuery('#shDateStart').datetimepicker({
 		format:'Y-m-d',
 		timepicker:false,
+		maxDate:'+1970/01/01', //tomorrow is maximum date calendar
 		onShow:function(ct) {
 			this.setOptions({
 				maxDate: jQuery('#shDateEnd').val() ? jQuery('#shDateEnd').val() : false
@@ -285,9 +286,10 @@ jQuery(function() {
 		format:'H:i',*/
 		format:'Y-m-d',
 		timepicker:false,
+		maxDate:'+1970/01/01', //tomorrow is maximum date calendar
 		onShow:function(ct) {
 			this.setOptions({
-				minDate: jQuery('#shDateStart').val() ? jQuery('#shDateStart').val() : false
+				minDate: jQuery('#shDateStart').val() ? jQuery('#shDateStart').val() : '+1970/01/01'
 			})
 		}
 	});

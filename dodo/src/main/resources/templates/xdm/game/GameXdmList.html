@@ -268,11 +268,11 @@
 										</div>
 										<div class="col-lg-2 col-12">
 											<input type="text" class="form-control" id="shDateStart" name="shDateStart" 
-												placeholder="시작일" autocomplete="off" readonly>
+												th:value="${vo.shDateStart}" placeholder="시작일" autocomplete="off" readonly>
 										</div>
 										<div class="col-lg-2 col-12">
 											<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
-												placeholder="종료일" autocomplete="off" readonly>
+												th:value="${vo.shDateEnd}" placeholder="종료일" autocomplete="off" readonly>
 										</div>
 										<div class="col-lg-4 col-12"></div>
 										<div class="col-lg-2 col-12">
@@ -392,7 +392,7 @@
 												<th>카테고리</th>
 												<th>평점</th>
 												<th>난이도</th>
-												<th>공식판매처</th>
+												<th>공식판매사</th>
 												<th>등록일</th>
 												<th>수정일</th>
 											</tr>
@@ -415,10 +415,10 @@
 													<a href="javascript:void(0);"
 														th:attr="onclick=|goForm('${list.gSeq}')|">
 														<img th:if="${list?.gTnFileName eq null or #strings.trim(list?.gTnFileName) eq ''}" 
-															class="icon-shape icon-xxl" 
+															class="icon-shape icon-lg" 
 															src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg" />
 														<img th:if="${list?.gTnFileName ne null and #strings.trim(list?.gTnFileName) ne ''}" 
-															class="icon-shape icon-xxl" 
+															class="icon-shape icon-lg" 
 															th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/products/' + ${list?.gTnFileName}}" />
 													</a>
 												</td>

@@ -39,7 +39,6 @@
 	            <when test="shOption == 3">AND a.gBestPeople = #{shValue}</when>
 	            <when test="shOption == 4">AND a.ggRecommendPeople = #{shValue}</when>
 	        </choose>
-		ORDER BY a.gSeq DESC
 	</sql>
 	
 	<sql id="selectCommonColumn">
@@ -59,6 +58,9 @@
 	    a.gComuUrl1,
 	    a.gComuUrl2,
 	    a.gCategoryCd,
+	    a.gGDName,
+	    a.gGAAName,
+	    a.gGPName,
 	    a.gRegiDate,
 	    a.gUpdtDate,
 	    (SELECT IFNULL(AVG(b.rScore),0)
@@ -73,14 +75,22 @@
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon"/>
+		ORDER BY a.gSeq DESC
 	</select>
 
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
+		ORDER BY a.gSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
-		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
+	<select id="selectTop10List" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectCommon"/>
+		ORDER BY rScoreAvg DESC LIMIT 0, 10
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
@@ -110,6 +120,9 @@
 		    gComuUrl1,
 		    gComuUrl2,
 		    gCategoryCd,
+		    gGDName,
+		    gGAAName,
+		    gGPName,
 		    gRegiDate,
 			gDelNy	
 		)
@@ -130,6 +143,9 @@
 		    #{gComuUrl1},
 		    #{gComuUrl2},
 		    #{gCategoryCd},
+		    #{gGDName},
+		    #{gGAAName},
+		    #{gGPName},
 		   	now(),
 		    0
 		)
@@ -157,6 +173,9 @@
 		    gComuUrl1=#{gComuUrl1},
 		    gComuUrl2=#{gComuUrl2},
 		    gCategoryCd=#{gCategoryCd},
+		    gGDName=#{gGDName},
+		    gGAAName=#{gGAAName},
+		    gGPName=#{gGPName},
 		    gUpdtDate=now()
 		WHERE
 			gSeq=#{gSeq}

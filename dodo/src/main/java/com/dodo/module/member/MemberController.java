@@ -266,7 +266,7 @@ public class MemberController {
 			usrSignOut(httpSession);
 			return "redirect:MemberUsrSignIn";
 		}
-		
+
 		memberDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 		model.addAttribute("memberItem", service.selectOne(memberDto));
 		

@@ -166,13 +166,25 @@ public class GameController {
 	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo,
 			HttpSession httpSession) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount(vo));
+		vo.setRowNumToShow(10);
+		vo.setParamsPaging(10);
 		
 		if (vo.getTotalRows() > 0) {
-			model.addAttribute("gameList", service.selectList(vo));
+			model.addAttribute("gameList", service.selectTop10List(vo));
 		}
 		
 		return path_user + "GameTop10UsrList";
+	}
+	
+	/**
+	 * 데이터 상세보기
+	 * @return
+	 */
+	@RequestMapping(value = "GameUsrDetail")
+	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {	
+		model.addAttribute("gameItem", service.selectOne(gameDto));
+		
+		return path_user + "GameUsrDetail";
 	}
 
 }

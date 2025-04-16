@@ -427,6 +427,39 @@
 									</div>
 									<div class="col-lg-4 col-12"></div>
 									<div class="col-lg-6 col-12">
+										<label for="gGDName" class="form-label">
+											디자이너
+											<span class="text-danger">*</span>
+										</label>
+										<textarea class="form-control" id="gGDName" name="gGDName"
+											rows="5" style="resize: none;" placeholder="여러명일 경우 줄바꿈(엔터)으로 구분"
+											autocomplete="off" th:text="${gameItem?.gGDName}" required></textarea>
+										<div class="invalid-feedback"> 디자이너 이름을 입력해 주세요. (여러명일 경우 줄바꿈으로 구분)</div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-6 col-12">
+										<label for="gGAAName" class="form-label">
+											아트웍 작가
+											<span class="text-danger">*</span>
+										</label>
+										<textarea class="form-control" id="gGAAName" name="gGAAName"
+											rows="5" style="resize: none;" placeholder="여러명일 경우 줄바꿈(엔터)으로 구분"
+											autocomplete="off" th:text="${gameItem?.gGAAName}" required></textarea>
+										<div class="invalid-feedback"> 아트웍 작가 이름을 입력해 주세요. (여러명일 경우 줄바꿈으로 구분) </div>
+									</div>
+									<div class="col-lg-4 col-12"></div>
+									<div class="col-lg-6 col-12">
+										<label for="gGPName" class="form-label">
+											출판사
+											<span class="text-danger">*</span>
+										</label>
+										<textarea class="form-control" id="gGPName" name="gGPName"
+											rows="5" style="resize: none;" placeholder="여러곳일 경우 줄바꿈(엔터)으로 구분"
+											autocomplete="off" th:text="${gameItem?.gGPName}" required></textarea>
+										<div class="invalid-feedback"> 출판사 이름을 입력해 주세요. (여러곳일 경우 줄바꿈으로 구분)</div>
+									</div>
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-6 col-12">
 										<div class="d-flex flex-column flex-md-row gap-2">
 											<a href="/xdm/game/GameXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
 										</div>
@@ -485,6 +518,9 @@
 	let gOfficialUrl = document.getElementById("gOfficialUrl");
 	let gComuUrl1 = document.getElementById("gComuUrl1");
 	let gComuUrl2 = document.getElementById("gComuUrl2");
+	let gGDName = document.getElementById("gGDName");
+	let gGAAName = document.getElementById("gGAAName");
+	let gGPName = document.getElementById("gGPName");
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -743,6 +779,48 @@
 			}
 		}
 		
+		// gGDName 체크
+		resetValidation(gGDName);
+
+		if (!strValidation(gGDName)) {
+			gGDName.classList.add("is-invalid");
+			
+			if (!focus) {
+				gGDName.focus();
+				focus = true;
+			}
+		} else {
+			gGDName.classList.add("is-valid");
+		}
+		
+		// gGAAName 체크
+		resetValidation(gGAAName);
+
+		if (!strValidation(gGAAName)) {
+			gGAAName.classList.add("is-invalid");
+			
+			if (!focus) {
+				gGAAName.focus();
+				focus = true;
+			}
+		} else {
+			gGAAName.classList.add("is-valid");
+		}
+		
+		// gGPName 체크
+		resetValidation(gGPName);
+
+		if (!strValidation(gGPName)) {
+			gGPName.classList.add("is-invalid");
+			
+			if (!focus) {
+				gGPName.focus();
+				focus = true;
+			}
+		} else {
+			gGPName.classList.add("is-valid");
+		}
+		
 		// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 		if (focus) return false;
 		
@@ -759,6 +837,9 @@
 		gOfficialUrl.value = gOfficialUrl.value.trim();
 		gComuUrl1.value = gComuUrl1.value.trim();
 		gComuUrl2.value = gComuUrl2.value.trim();
+		gGDName.value = gGDName.value.trim();
+		gGAAName.value = gGAAName.value.trim();
+		gGPName.value = gGPName.value.trim();
 		
 		if(seq.value == "0" || seq.value == "") {
 			submit(goUrlXdmInst);
@@ -998,6 +1079,39 @@
 				gComuUrl2.classList.add("is-valid");
 			}		
 		}
+	});
+	
+	// gGDName Input 시 체크
+	gGDName.addEventListener("input", function() {
+		resetValidation(gGDName);
+		
+		if (!strValidation(gGDName)) {
+			gGDName.classList.add("is-invalid");
+		} else {
+			gGDName.classList.add("is-valid");
+		}		
+	});
+	
+	// gGAAName Input 시 체크
+	gGAAName.addEventListener("input", function() {
+		resetValidation(gGAAName);
+		
+		if (!strValidation(gGAAName)) {
+			gGAAName.classList.add("is-invalid");
+		} else {
+			gGAAName.classList.add("is-valid");
+		}		
+	});
+	
+	// gGPName Input 시 체크
+	gGPName.addEventListener("input", function() {
+		resetValidation(gGPName);
+		
+		if (!strValidation(gGPName)) {
+			gGPName.classList.add("is-invalid");
+		} else {
+			gGPName.classList.add("is-valid");
+		}		
 	});
 </script>
 

@@ -18,6 +18,9 @@ public class GameDto {
 	private String gComuUrl1;
 	private String gComuUrl2;
 	private int gCategoryCd;
+	private String gGDName;
+	private String gGAAName;
+	private String gGPName;
 	private String gRegiDate;
 	private String gUpdtDate;
 	private double rScoreAvg; // 리뷰 테이블에서 점수 평균 가져온 값
@@ -172,6 +175,30 @@ public class GameDto {
 
 	public void setgCategoryCd(int gCategoryCd) {
 		this.gCategoryCd = gCategoryCd;
+	}
+
+	public String getgGDName() {
+		return gGDName;
+	}
+
+	public void setgGDName(String gGDName) {
+		this.gGDName = gGDName;
+	}
+
+	public String getgGAAName() {
+		return gGAAName;
+	}
+
+	public void setgGAAName(String gGAAName) {
+		this.gGAAName = gGAAName;
+	}
+
+	public String getgGPName() {
+		return gGPName;
+	}
+
+	public void setgGPName(String gGPName) {
+		this.gGPName = gGPName;
 	}
 	
 }

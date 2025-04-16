@@ -19,29 +19,23 @@
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
-								
-								<div th:replace="~{/usr/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
-	
 								<div class="card-body p-0">
 									<div class="table-responsive">
 										<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
 											<thead class="bg-light">
 												<tr>
-													<th>
-														<div class="form-check">
-															<input class="form-check-input" type="checkbox" id="checkAll" name="checkAll">
-														</div>
-													</th>
-													<th>#</th>
-													<th>고유번호</th>
-													<th>썸네일</th>
+													<th>순위</th>
+													<th></th>
 													<th>게임명</th>
 													<th>카테고리</th>
 													<th>평점</th>
 													<th>난이도</th>
+													<th>인원</th>
+													<th>소요시간</th>
 													<th>공식판매처</th>
-													<th>등록일</th>
-													<th>수정일</th>
+													<th>중고거래</th>
+													<th>내게임</th>
+													<th>위시리스트</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -52,15 +46,12 @@
 												</tr> 
 												<tr th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}">
 													<td>
-														<div class="form-check">
-															<input class="form-check-input" type="checkbox" name="check" th:value="${list?.gSeq}">
-														</div>
-													</td>
-													<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-													<td th:text="${list?.gSeq}"></td>
+														<h5 class="fs-6 mb-0">
+															<span th:text="${(listStat.index + 1) + '위'}" class="text-inherit"></span>
+														</h5>
 													<td>
 														<a href="javascript:void(0);"
-															th:attr="onclick=|goForm('${list.gSeq}')|">
+															th:attr="onclick=|goDetail('${list.gSeq}')|">
 															<img th:if="${list?.gTnFileName eq null or #strings.trim(list?.gTnFileName) eq ''}" 
 																class="icon-shape icon-xxl" 
 																src="/assets/usr/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg" />
@@ -70,61 +61,39 @@
 														</a>
 													</td>
 													<td>
-														<a href="javascript:void(0);" th:text="${list?.gName}"
-															th:attr="onclick=|goForm('${list.gSeq}')|"></a>
+														<a class="fw-bold text-inherit" href="javascript:void(0);" th:text="${list?.gName}"
+															th:attr="onclick=|goDetail('${list.gSeq}')|"></a>
 													</td>
-													<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}">
-													</td>
+													<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></td>
 													<td th:text="${list?.rScoreAvg}"></td>	
 													<td th:text="${list?.gLevel}"></td>
-													<td th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}">
+													<td th:if="${list?.gMinPeople eq list?.gMaxPeople}"
+														th:text="${list?.gMinPeople + '명'}"></td>
+													<td th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
+														th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명'}"></td>		
+													<td th:if="${list?.gMinTime eq list?.gMaxTime}"
+														th:text="${list?.gMinTime + '분'}"></td>
+													<td th:unless="${list?.gMinTime eq list?.gMaxTime}"
+														th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></td>	
+													<td>
+														<a th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank"
+															th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}"></a>
 													</td>
-													<td th:text="${list?.gRegiDate}"></td>
-													<td th:text="${list?.gUpdtDate}"></td>
+													<td><a href="#"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
+													<td>
+														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="내 게임 등록">
+															<i class="feather-icon icon-smile"></i>
+														</a>
+													</td>
+													<td>
+														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="위시리스트 등록">
+															<i class="feather-icon icon-heart"></i>
+														</a>
+													</td>
 												</tr>
 											</tbody>
 										</table>
 								   	</div>
-								</div>
-								<div class="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
-									<div></div>
-									<nav class="mt-2 mt-md-0">
-										<ul class="pagination mb-0">
-											<!-- 타임리프 
-												gt 뜻: >
-												ne 뜻: !=
-												eq 뜻: ==
-											-->
-											<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
-												<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
-													th:attr="onclick=|goList('${vo.startPage - 1}')|">
-													<span aria-hidden="true">&laquo;</span>
-												</a>
-											</li>
-											<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
-												th:classappend="${num eq vo.currPage} ? active : ''" 
-												class="page-item" style="cursor: pointer;">
-												<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
-											</li>
-											<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
-												<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
-													<span aria-hidden="true">&raquo;</span>
-												</a>
-											</li>
-										</ul>
-									</nav>
-									<div></div>
-								</div>
-								<div class="d-md-flex justify-content-between align-items-center px-6 py-6">
-									<div class="d-flex flex-column flex-md-row gap-2">
-										<a href="#" class="btn btn-danger" id="uelete"><i class="bi bi-trash3"></i></a>
-										<a href="#" class="btn btn-danger" id="delete"><i class="bi bi-x-lg"></i></a>
-									</div>
-									<div class="d-flex flex-column flex-md-row gap-2">
-										<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
-										<a href="#" class="btn btn-info" id="modify">U</a>
-										<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
-									</div>
 								</div>
 							 </div>
 						</div>
@@ -142,74 +111,12 @@
   	let seq = document.querySelector("input[name=gSeq]");
     	
 	let fom = document.querySelector("form[name=formList]");
-	let goUrlXdmList = "/usr/game/GameTop10UsrList";
-	let goUrlXdmForm = "/usr/game/GameUsrForm";
-	let goUrlXdmListUeleProc = "/xdm/game/GameListXdmUeleProc";
-	let goUrlXdmListDeleProc = "/xdm/game/GameListXdmDeleProc";
+	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
 	
-	function submit(goUrl) {
-		fom.action = goUrl;
+	function goDetail(keyValue) {
+		seq.value = keyValue;
+		fom.action = goUrlUsrDetail;
 		fom.submit();
-	}
-</script>
-
-<!-- 데이터 추가/수정 -->
-<script type="text/javascript">
-	// 데이터 추가
-	document.getElementById("btnForm").onclick = function () {
-	    goForm(0);
-	}
-
-	// 데이터 추가/수정
-	goForm = function (keyValue) {
-	    seq.value = keyValue;
-	    submit(goUrlXdmForm);
-	}
-</script>
-
-<!-- Search / Paging -->
-<script type="text/javascript">
-	function goList(currPage) {
-			document.querySelector("input[name=currPage]").value = currPage;
-			submit(goUrlXdmList);
-	}
-	
-	document.getElementById("changeRowNum").onchange = function () {
-	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-	    fom.action = goUrlXdmList;
-	    fom.submit();
-	}
-	
-	document.getElementById("btnSearch").onclick = function () {
-     		fom.action = goUrlXdmList;
-     		fom.submit();
-	};
-</script>
-
-<!-- Table Check Box 처리 (Uelete/Delete/Update)-->
-    	<script type="text/javascript">
-     	document.getElementById("checkAll").onclick = function() {
-		allCheck("check", this.checked);
-	}
-	
-	document.getElementById("modify").onclick = function() {
-		modifyCheckedElement("1개의 게임");
-	}
-	
-	document.getElementById("uelete").onclick = function() {
-		ueleteCheckedElementsModal("게임을");
-	}
-	
-	document.getElementById("btnModalUelete").onclick = function () {
-		ueleteCheckedElements(goUrlXdmListUeleProc, goUrlXdmList);
-	}
-	
-	document.getElementById("delete").onclick = function() {
-		deleteCheckedElementsModal("게임을");
-	}
-
-	document.getElementById("btnModalDelete").onclick = function () {
-		deleteCheckedElements(goUrlXdmListDeleProc, goUrlXdmList);
 	}
 </script>
 

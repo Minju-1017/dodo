@@ -43,6 +43,11 @@
 	    a.mEmail,
 	    a.mBirth,
 	    a.mGenderCd,
+	    a.mPostcode,
+		a.mRoadAddress,
+		a.mDetailAddress,
+		a.mLatitude,
+		a.mLongitude,
 	    a.mRegiDate,
 	    a.mUpdtDate,
 	    a.mPfFileName,
@@ -101,6 +106,11 @@
 		    mBirth,
 		    mGenderCd,
 		    mGradeCd,
+		    mPostcode,
+			mRoadAddress,
+			mDetailAddress,
+			mLatitude,
+			mLongitude,
 		    mRegiDate,
 		    mDelNy
 		)
@@ -112,6 +122,11 @@
 		    #{mPwd},
 		    #{mBirth},
 		    #{mGenderCd},
+		    #{mPostcode},
+			#{mRoadAddress},
+			#{mDetailAddress},
+			#{mLatitude},
+			#{mLongitude},
 		    44,
 		    now(),
 		    0
@@ -131,6 +146,11 @@
 			mGenderCd=#{mGenderCd},
 			mPfFileName=#{mPfFileName},
 			mGradeCd=#{mGradeCd},
+			mPostcode=#{mPostcode},
+			mRoadAddress=#{mRoadAddress},
+			mDetailAddress=#{mDetailAddress},
+			mLatitude=#{mLatitude},
+			mLongitude=#{mLongitude},
 			mUpdtDate=now()
 		WHERE 1=1
 			AND mSeq=#{mSeq}

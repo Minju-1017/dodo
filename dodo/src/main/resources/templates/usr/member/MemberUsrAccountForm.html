@@ -57,6 +57,8 @@
 											method="post" id="form" name="form">
 											
 											<input type="hidden" name="mSeq" id="mSeq" th:value="${memberItem?.mSeq}">
+											<input type="hidden" id="mLatitude" name="mLatitude" th:value="${memberItem?.mLatitude}" />
+											<input type="hidden" id="mLongitude" name="mLongitude" th:value="${memberItem?.mLongitude}" />
 											
 											<div class="col-lg-12 col-12">
 												<label for="mPfFile" class="form-label">프로필 이미지</label>
@@ -136,6 +138,34 @@
 												</select>
 											</div>
 											<div class="col-lg-7 col-12"></div>
+											<div class="col-lg-7 col-12">
+												<label class="form-label">
+													주소
+													<span class="text-danger">*</span>
+												</label>
+												<div class="d-flex gap-2">
+													<div>
+			                                 			<input type="text" class="form-control" id="mPostcode" name="mPostcode" 
+															th:value="${memberItem?.mPostcode}" placeholder="우편번호" readonly required />
+														<div class="invalid-feedback"> 우편번호를 입력해 주세요. </div>
+													</div>
+													<div>
+														<button class="btn btn-secondary" type="button" onclick="clickBtnPostcode()">우편번호 찾기</button>
+													</div>
+												</div>
+												<div class="mt-2">
+													<input type="text" class="form-control" id="mRoadAddress" name="mRoadAddress" 
+														th:value="${memberItem?.mRoadAddress}" placeholder="도로명주소" readonly required />
+													<div class="invalid-feedback"> 도로명 주소를 입력해 주세요. </div>
+												</div>
+												<div class="mt-2">
+													<input type="text" class="form-control" id="mDetailAddress" name="mDetailAddress" 
+														autocomplete="off" th:value="${memberItem?.mDetailAddress}" placeholder="상세주소" required />
+													<div class="invalid-feedback"> 상세 주소를 입력해 주세요. </div>
+												</div>
+												<div class="mt-2" id="map" style="width:300px;height:300px;display:none"></div>
+											</div>
+											<div class="col-lg-5 col-12"></div>
 											<div class="col-lg-7 col-12 d-grid">
 												<button class="btn btn-primary" type="button" id="btnSave">저장</button>
 											</div>
@@ -161,11 +191,86 @@
 	let mName = document.getElementById("mName");
 	let mEmail = document.getElementById("mEmail");
 	let mBirth = document.getElementById("mBirth");
+	let mPostcode = document.getElementById("mPostcode");
+	let mRoadAddress = document.getElementById("mRoadAddress");
+	let mDetailAddress = document.getElementById("mDetailAddress");
+</script>
+
+<!-- 주소 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=73d5a4f6e79c017e97e6ec3b058999cd&libraries=services"></script>
+
+<script type="text/javascript">
+	var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+		mapOption = {
+		    center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+		    level: 5 // 지도의 확대 레벨
+		};	
+	
+	var map = new daum.maps.Map(mapContainer, mapOption); //지도를 미리 생성
+	
+	//마커를 미리 생성
+	var marker = new daum.maps.Marker({
+		position: new daum.maps.LatLng(37.537187, 127.005476),
+		map: map
+	});
+
+    function clickBtnPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = data.address; // 최종 주소 변수
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                mPostcode.value = data.zonecode;
+                mRoadAddress.value = roadAddr;
+                
+                // 위도, 경도값 가져오기
+                var geocoder = new kakao.maps.services.Geocoder();
+
+                geocoder.addressSearch(addr, function(results, status) {
+                    if(status === daum.maps.services.Status.OK){
+                    	var result = results[0]; //첫번째 결과의 값을 활용
+                    	
+                    	// 위도, 경도
+                    	document.getElementById("mLongitude").value = result.x;
+                    	document.getElementById("mLatitude").value = result.y;
+                    	
+                    	// 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                    	
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+                
+                // 상세주소 초기화
+                mDetailAddress.value = "";
+                
+                // Validation
+                resetValidation(mPostcode);
+                resetValidation(mRoadAddress);
+                resetValidation(mDetailAddress);
+                mPostcode.classList.add("is-valid");
+                mRoadAddress.classList.add("is-valid");
+            }
+        }).open();
+    }
 </script>
 
 <!-- Validation: Bootstrap -->
 <script type="text/javascript">
-	
 	// btnSave 클릭시
 	document.getElementById("btnSave").onclick = function() {
 		var focus = false; // Validation 후 Focus 줘야 하는 Input
@@ -232,6 +337,48 @@
 			mBirth.classList.add("is-valid");
 		}
 		
+		// mPostcode 체크
+		resetValidation(mPostcode);
+		
+		if (!strValidation(mPostcode)) {
+			mPostcode.classList.add("is-invalid");
+			
+			if (!focus) {
+				mPostcode.focus();
+				focus = true;
+			}
+		} else {
+			mPostcode.classList.add("is-valid");
+		}
+		
+		// mRoadAddress 체크
+		resetValidation(mRoadAddress);
+		
+		if (!strValidation(mRoadAddress)) {
+			mRoadAddress.classList.add("is-invalid");
+			
+			if (!focus) {
+				mRoadAddress.focus();
+				focus = true;
+			}
+		} else {
+			mRoadAddress.classList.add("is-valid");
+		}
+		
+		// mDetailAddress 체크
+		resetValidation(mDetailAddress);
+		
+		if (!strValidation(mDetailAddress)) {
+			mDetailAddress.classList.add("is-invalid");
+			
+			if (!focus) {
+				mDetailAddress.focus();
+				focus = true;
+			}
+		} else {
+			mDetailAddress.classList.add("is-valid");
+		}
+		
 		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
 		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 		if (focus) return false;
@@ -239,6 +386,7 @@
 		mName.value = mName.value.trim();
 		mEmail.value = mEmail.value.trim();
 		mPfFileName.value = mPfFileName.value.trim();
+		mDetailAddress.value = mDetailAddress.value.trim();
 		
 		setAccount();
 	}
@@ -302,6 +450,17 @@
 		}	
 	});
 	
+	// mDetailAddress Input 시 체크
+	mDetailAddress.addEventListener("input", function(){
+		resetValidation(mDetailAddress);
+		
+		if (!strValidation(mDetailAddress)) {
+			mDetailAddress.classList.add("is-invalid");
+		} else {
+			mDetailAddress.classList.add("is-valid");
+		}	
+	});
+	
 	function setAccount() {
 		$.ajax({
 			async: true 
@@ -315,7 +474,12 @@
 				"mBirth" : $("#mBirth").val(),
 				"mGenderCd" : $("#mGenderCd").val(), 
 				"mPfFileName" : $("#mPfFileName").val(),
-				"mGradeCd" : $("#mGradeCd").val()
+				"mGradeCd" : $("#mGradeCd").val(),
+				"mPostcode" : $("#mPostcode").val(),
+				"mRoadAddress" : $("#mRoadAddress").val(),
+				"mDetailAddress" : $("#mDetailAddress").val(),
+				"mLatitude" : $("#mLatitude").val(),
+				"mLongitude" : $("#mLongitude").val()
 			}
 			,success: function(response) {
 				if (response.rt == "success") {

@@ -300,8 +300,11 @@ jQuery(function() {
 		//minDate:'-1970/01/02',//yesterday is minimum date(for today use 0 or -1970/01/01)
 		maxDate:'+1970/01/01', //tomorrow is maximum date calendar
 		onChangeDateTime:function(dp, $input) {
-			if ($input.val() != null && $input.val() != '' 
-				&& !mBirth.classList.contains("is-valid")) {
+			resetValidation(mBirth);
+			
+			if (!strValidation(mBirth)) {
+				mBirth.classList.add("is-invalid");
+			} else {
 				mBirth.classList.add("is-valid");
 			}
 		}

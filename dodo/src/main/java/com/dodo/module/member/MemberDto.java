@@ -15,6 +15,11 @@ public class MemberDto {
 	private String mUpdtDate;
 	private int mDelNy;
 	private String mDelNyStr;
+	private String mPostcode;
+	private String mRoadAddress;
+	private String mDetailAddress;
+	private Double mLatitude;
+	private Double mLongitude;
 
 	public String getmSeq() {
 		return mSeq;
@@ -115,6 +120,46 @@ public class MemberDto {
 
 	public String getmDelNyStr() {
 		return mDelNyStr;
+	}
+
+	public String getmPostcode() {
+		return mPostcode;
+	}
+
+	public void setmPostcode(String mPostcode) {
+		this.mPostcode = mPostcode;
+	}
+
+	public String getmRoadAddress() {
+		return mRoadAddress;
+	}
+
+	public void setmRoadAddress(String mRoadAddress) {
+		this.mRoadAddress = mRoadAddress;
+	}
+
+	public String getmDetailAddress() {
+		return mDetailAddress;
+	}
+
+	public void setmDetailAddress(String mDetailAddress) {
+		this.mDetailAddress = mDetailAddress;
+	}
+
+	public Double getmLatitude() {
+		return mLatitude;
+	}
+
+	public void setmLatitude(Double mLatitude) {
+		this.mLatitude = mLatitude;
+	}
+
+	public Double getmLongitude() {
+		return mLongitude;
+	}
+
+	public void setmLongitude(Double mLongitude) {
+		this.mLongitude = mLongitude;
 	}
 	
 }

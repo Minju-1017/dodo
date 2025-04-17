@@ -8,10 +8,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-5 col-xl-5">
-					<div class="product" id="product">
-						<div class="zoom" onmousemove="zoom(event)"
-							style="background-image: url(/assets/usr/template/FreshCart-1.4.0/images/products_detail/product-img-1.jpg)">
-							<img src="/assets/usr/template/FreshCart-1.4.0/images/products_detail/product-img-1.jpg" alt="" />
+					<div class="product" id="product">																
+						<div th:unless="${gameItem?.gTnFileName eq null or #strings.trim(gameItem?.gTnFileName) eq ''}" 
+							class="zoom" onmousemove="zoom(event)"
+							th:style="@{'background-image: url(/assets/usr/template/FreshCart-1.4.0/images/products_detail/' + ${gameItem?.gTnFileName} + ')'}">
+							<img th:src="@{'/assets/usr/template/FreshCart-1.4.0/images/products_detail/' + ${gameItem?.gTnFileName}}" />
 						</div>
 					</div>
 					

@@ -19,13 +19,14 @@
 				</div>
 				<div class="col-md-7 col-xl-6">
 					<div class="ps-lg-10 mt-6 mt-md-0">
-						<!-- content -->
-						<div class="mb-2">
-							<i class="bi bi-trophy" data-bs-toggle="tooltip" data-bs-html="true" title="순위"></i> 243&nbsp;&nbsp;
-							<i class="bi bi-star" data-bs-toggle="tooltip" data-bs-html="true" title="평점"></i> 6.38&nbsp;&nbsp;
-							<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19
+						<div class="d-flex mb-2 gap-3">
+							<div>
+								<i class="bi bi-trophy" data-bs-toggle="tooltip" data-bs-html="true" title="순위"></i> 
+								<span th:value="${}"></span>
+							</div>
+							<div><i class="bi bi-star" data-bs-toggle="tooltip" data-bs-html="true" title="평점"></i> 6.38</div>
+							<div><i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19</div>
 						</div>
-						<!-- heading -->
 						<h2 class="mb-1">캘리코</h2>
 						<div class="mb-4">
 							<!-- rating -->

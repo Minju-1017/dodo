@@ -182,6 +182,8 @@ public class GameController {
 	 */
 	@RequestMapping(value = "GameUsrDetail")
 	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {	
+		// TODO: 순위 가져오기
+		
 		model.addAttribute("gameItem", service.selectOne(gameDto));
 		
 		return path_user + "GameUsrDetail";

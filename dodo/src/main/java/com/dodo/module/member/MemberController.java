@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
+import com.dodo.common.mail.MailService;
 import com.dodo.module.code.CodeService;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,9 @@ public class MemberController {
 	
 	@Autowired
 	CodeService codeService;
+	
+	@Autowired
+	MailService mailService;
 	
 	/**
 	 * 로그인 세션 처리 - User
@@ -142,10 +146,11 @@ public class MemberController {
 	 * Ajax를 통한 회원가입 - User
 	 * @param memberDto
 	 * @return
+	 * @throws Exception 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "MemberUsrInstProc")
-	public Map<String, Object> memberUsrInstProc(MemberDto memberDto) {
+	public Map<String, Object> memberUsrInstProc(MemberDto memberDto) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		int cntId = service.insertCheckId(memberDto);
 		
@@ -155,6 +160,18 @@ public class MemberController {
 			
 			if (cntSuccess == 1) {
 				returnMap.put("rt", "success");
+				
+				// 가입 축하 메일 보내기(SMTP 이용) - 오래 걸리므로, 새로운 쓰레드에서 보낸다.
+				new Thread() {
+					public void run() {
+						try {
+							mailService.sendMailWelcome(memberDto);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}.start();
+				
 			} else {
 				returnMap.put("rt", "fail");
 			}

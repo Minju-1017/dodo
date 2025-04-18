@@ -10,6 +10,7 @@ public interface GameDao {
 	public int selectOneCount(GameVo vo);
 	public List<GameDto> selectList(GameVo vo); 
 	public List<GameDto> selectTop10List(GameVo vo);
+	public List<GameDto> selectOrderList(GameDto gameDto);
 	public List<GameDto> selectListWithoutPaging(); 
 	public GameDto selectOne(GameDto gameDto);
 	public int insert(GameDto gameDto);

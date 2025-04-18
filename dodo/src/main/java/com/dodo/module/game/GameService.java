@@ -23,28 +23,32 @@ public class GameService {
 		return dao.selectTop10List(vo);
 	}
 	
+	public List<GameDto> selectOrderList(GameDto gameDto) {
+		return dao.selectOrderList(gameDto);
+	}
+	
 	public List<GameDto> selectListWithoutPaging() {
 		return dao.selectListWithoutPaging();
 	}
 	
-	public GameDto selectOne(GameDto codeGroupDto) {
-		return dao.selectOne(codeGroupDto);
+	public GameDto selectOne(GameDto gameDto) {
+		return dao.selectOne(gameDto);
 	}
 	
-	public int insert(GameDto codeGroupDto) {
-		return dao.insert(codeGroupDto);
+	public int insert(GameDto gameDto) {
+		return dao.insert(gameDto);
 	}
 	
-	public int update(GameDto codeGroupDto) {
-		return dao.update(codeGroupDto);
+	public int update(GameDto gameDto) {
+		return dao.update(gameDto);
 	}
 	
-	public int delete(GameDto codeGroupDto) {
-		return dao.delete(codeGroupDto);
+	public int delete(GameDto gameDto) {
+		return dao.delete(gameDto);
 	}
 	
-	public int uelete(GameDto codeGroupDto) {
-		return dao.uelete(codeGroupDto);
+	public int uelete(GameDto gameDto) {
+		return dao.uelete(gameDto);
 	}
 	
 	public int listDelete(List<String> seqList) {

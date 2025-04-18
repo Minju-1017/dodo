@@ -182,9 +182,19 @@ public class GameController {
 	 */
 	@RequestMapping(value = "GameUsrDetail")
 	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {	
-		// TODO: 순위 가져오기
+		// 순위 리스트
+		List<GameDto> dtoOrderList = service.selectOrderList(gameDto);
+		GameDto dto = service.selectOne(gameDto);
 		
-		model.addAttribute("gameItem", service.selectOne(gameDto));
+		// 순위 설정
+		for (GameDto orderDto : dtoOrderList) {
+			if (orderDto.getgSeq().equals(dto.getgSeq())) {
+				dto.setrOrder(orderDto.getrOrder());
+				break;
+			}
+		}
+		
+		model.addAttribute("gameItem", dto);
 		
 		return path_user + "GameUsrDetail";
 	}

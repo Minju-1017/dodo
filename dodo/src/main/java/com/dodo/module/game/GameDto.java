@@ -23,7 +23,15 @@ public class GameDto {
 	private String gGPName;
 	private String gRegiDate;
 	private String gUpdtDate;
-	private double rScoreAvg; // 리뷰 테이블에서 점수 평균 가져온 값
+	
+	private double rScoreAvg; 	// 리뷰 테이블에서 점수 평균 가져온 값
+	private int rCount; 		// 리뷰 갯수
+	private int rOrder; 		// 리뷰 테이블 점수 평균으로 매긴 순위
+	
+	// 평점 별 표시를 위한 값
+	private int fillStarCount; 	// 다 채운 별
+	private int harfStarCount; 	// 반 채운 별
+	private int emptyStarCount; // 빈 별
 	
 	public String getgSeq() {
 		return gSeq;
@@ -167,6 +175,12 @@ public class GameDto {
 
 	public void setrScoreAvg(double rScoreAvg) {
 		this.rScoreAvg = rScoreAvg;
+		
+		// 별표 셋팅
+		double scoreAvg = rScoreAvg / 2.0;
+		this.fillStarCount = (int) scoreAvg;
+		this.harfStarCount = (scoreAvg - this.fillStarCount) > 0 ? 1 : 0;
+		this.emptyStarCount = 5 - this.fillStarCount - this.harfStarCount;
 	}
 
 	public int getgCategoryCd() {
@@ -200,5 +214,45 @@ public class GameDto {
 	public void setgGPName(String gGPName) {
 		this.gGPName = gGPName;
 	}
-	
+
+	public int getrOrder() {
+		return rOrder;
+	}
+
+	public void setrOrder(int rOrder) {
+		this.rOrder = rOrder;
+	}
+
+	public int getrCount() {
+		return rCount;
+	}
+
+	public void setrCount(int rCount) {
+		this.rCount = rCount;
+	}
+
+	public int getFillStarCount() {
+		return fillStarCount;
+	}
+
+	public void setFillStarCount(int fillStarCount) {
+		this.fillStarCount = fillStarCount;
+	}
+
+	public int getHarfStarCount() {
+		return harfStarCount;
+	}
+
+	public void setHarfStarCount(int harfStarCount) {
+		this.harfStarCount = harfStarCount;
+	}
+
+	public int getEmptyStarCount() {
+		return emptyStarCount;
+	}
+
+	public void setEmptyStarCount(int emptyStarCount) {
+		this.emptyStarCount = emptyStarCount;
+	}
+
 }

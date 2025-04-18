@@ -22,24 +22,33 @@
 						<div class="d-flex mb-2 gap-3">
 							<div>
 								<i class="bi bi-trophy" data-bs-toggle="tooltip" data-bs-html="true" title="순위"></i> 
-								<span th:value="${}"></span>
+								<span th:text="${gameItem?.rOrder}"></span>
 							</div>
-							<div><i class="bi bi-star" data-bs-toggle="tooltip" data-bs-html="true" title="평점"></i> 6.38</div>
-							<div><i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19</div>
+							<div>
+								<i class="bi bi-star" data-bs-toggle="tooltip" data-bs-html="true" title="평점"></i>
+								<span th:text="${gameItem?.rScoreAvg}"></span>
+							</div>
+							<div>
+								<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
+								<span th:text="${gameItem?.gLevel}"></span>
+							</div>
 						</div>
-						<h2 class="mb-1">캘리코</h2>
+						<h2 class="mb-1" th:text="${gameItem?.gName}"></h2>
 						<div class="mb-4">
-							<!-- rating -->
 							<small class="text-warning">
-								<i class="bi bi-star-fill"></i>
-								<i class="bi bi-star-fill"></i>
-								<i class="bi bi-star-fill"></i>
-								<i class="bi bi-star-half"></i>
-								<i class="bi bi-star"></i>
+								<i th:unless="${gameItem?.fillStarCount eq 0}" 
+									th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
+									class="bi bi-star-fill"></i>
+								<i th:unless="${gameItem?.harfStarCount eq 0}"  
+									th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
+									class="bi bi-star-half"></i>
+								<i th:unless="${gameItem?.emptyStarCount eq 0}"   
+									th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
+									class="bi bi-star"></i>
 							</small>
-							<a href="#" class="ms-2">(1,111 리뷰 보기)</a>
-						</div>
-						<!-- hr -->
+							<a href="#" class="ms-2" id="linkReviews"
+								th:text="${'(' + @doDoUtil.formatNumberComma(gameItem?.rCount) + ' 리뷰 보기)'}"></a>
+						</div>  
 						<hr class="my-6" />
 						<div>
 							<!-- table -->
@@ -47,31 +56,45 @@
 								<tbody>
 									<tr>
 										<th>인원</th>
-										<td>1 ~ 4명 (2인 최적 , 3인 추천)</td>
+										<td th:if="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
+											th:text="${gameItem?.gMinPeople + '명 (' + gameItem?.gBestPeople + '인 최적, ' 
+												+ gameItem?.gRecommendPeople + '인 추천)'}"></td>
+										<td th:unless="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
+											th:text="${gameItem?.gMinPeople + ' ~ ' + gameItem?.gMaxPeople + 
+												'명 (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
 									</tr>
 									<tr>
 										<th>사용연령</th>
-										<td>10세 이상</td>
+										<td th:text="${gameItem?.gUseAge + '세 이상'}"></td>
 									</tr>
 									<tr>
 										<th>소요시간</th>
-										<td>30 ~ 45분</td>
+										<td th:if="${gameItem?.gMinTime == gameItem?.gMaxTime}"
+											th:text="${gameItem?.gMinTime + '분'}"></td>
+										<td th:unless="${gameItem?.gMinTime == gameItem?.gMaxTime}"
+											th:text="${gameItem?.gMinTime + ' ~ ' + gameItem?.gMaxTime + '분'}"></td>	
 									</tr>
 									<tr>
 										<th>공식판매처</th>
-										<td><a href="https://www.popcone.co.kr/goods/goods_view.php?goodsNo=76525" class= "d-block" target="_blank">팝콘에듀</a></td>
+										<td>
+											<a th:href="${gameItem?.gOfficialUrl}" class= "d-block" target="_blank"
+												th:text="${@codeService.selectOneCachedCode(gameItem?.gOfficialCd)}"></a>
+										</td>
 									</tr>
 									<tr>
 										<th>커뮤니티</th>
 										<td>
-											<a href="https://boardlife.co.kr/bbs_detail.php?bbs_num=12473&tb=boardgame_strategy" class="text-inherit" target="_blank" style="text-decoration: underline;">BoardLife</a>&nbsp;&nbsp;&nbsp;
-											<a href="https://www.boardgamegeek.com/boardgame/283155/calico" class="text-inherit" target="_blank" style="text-decoration: underline;">BoardgameGeek</a>
+											<div class="d-flex gap-3">
+												<a th:href="${gameItem?.gComuUrl1}" class="text-inherit" target="_blank" 
+													style="text-decoration: underline;">BoardLife</a>
+												<a th:href="${gameItem?.gComuUrl2}" class="text-inherit" target="_blank"
+													style="text-decoration: underline;">BoardgameGeek</a>
+											</div>
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<!-- hr -->
 						<hr class="my-6" />
 						<div class="mt-3 row justify-content-start g-2 align-items-center">
 							<div class="col-xxl-3 col-lg-4 col-md-5 col-5 d-grid">
@@ -85,12 +108,10 @@
 								</a>
 							</div>
 							<div class="col-xxl-2 col-lg-4 col-md-2 col-2 d-grid">
-								<!-- btn -->
 								<a class="btn btn-outline-danger" href="#" data-bs-toggle="tooltip"
 									data-bs-html="true" aria-label="위시리스트"><i class="feather-icon icon-heart"></i></a>
 							</div>
 							<div class="col-xxl-3 col-lg-4 col-md-3 col-3 d-grid">
-								<!-- dropdown -->
 								<div class="dropdown">
 									<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
 										data-bs-toggle="dropdown" aria-expanded="false">Share</a>
@@ -565,6 +586,24 @@
 		fom.action = goUrlXdmDetail;
 		fom.submit();
 	}
+</script>
+
+<script type="text/javascript">
+	$('#linkReviews').on('click', function(event) {
+		// 링크 클릭 기본 동작을 막음
+		event.preventDefault();  
+		
+		// 리뷰 버튼 클릭
+		$('#reviews-tab').click();
+	});
+	
+	// 리뷰 버튼으로 스크롤 이동
+	$('#reviews-tab').on('click', function() {
+		$('#reviews-tab')[0].scrollIntoView({
+			behavior: 'smooth',  // 부드럽게 스크롤
+			block: 'start'       // 해당 요소의 상단으로 이동
+		});
+	});
 </script>
 
 </body>

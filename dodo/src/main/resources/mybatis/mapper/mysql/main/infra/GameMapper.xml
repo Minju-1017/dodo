@@ -68,7 +68,12 @@
 			WHERE 1=1 
 				AND b.rDelNy = 0 
 				AND b.game_gSeq = a.gSeq
-	    ) as rScoreAvg
+	    ) as rScoreAvg,
+	    (SELECT COUNT(*) FROM review b
+			WHERE 1=1 
+				AND b.rDelNy = 0 
+				AND b.game_gSeq = a.gSeq
+		) as rCount
 	</sql>
 	<!-- End -->
 	
@@ -91,6 +96,25 @@
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
 		ORDER BY rScoreAvg DESC LIMIT 0, 10
+	</select>
+	
+	<select id="selectOrderList" resultMap="resultMapObj">
+		SELECT
+			a.gSeq,
+        	ROW_NUMBER() OVER(
+        		ORDER BY 
+					(SELECT IFNULL(AVG(b.rScore), 0)
+				FROM review b
+				WHERE 1=1 
+					AND b.rDelNy = 0 
+					AND b.game_gSeq = a.gSeq
+		    ) 
+	        DESC) rOrder
+		FROM 
+			game a
+		WHERE 1=1
+       		 AND a.gDelNy = 0  
+		ORDER BY rOrder
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

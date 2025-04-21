@@ -16,7 +16,7 @@ public class MailService {
 	JavaMailSender javaMailSender;
 	
 	//	회원가입 축하 메일
-    public void sendMailWelcome(MemberDto memberDto) throws Exception{
+    public void sendMailWelcome(MemberDto memberDto) throws Exception {
     	MimeMessage mimeMessage = javaMailSender.createMimeMessage();
     	MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
     	

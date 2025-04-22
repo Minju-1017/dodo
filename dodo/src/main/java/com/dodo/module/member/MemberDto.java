@@ -1,6 +1,8 @@
 package com.dodo.module.member;
 
-public class MemberDto {
+import com.dodo.module.file.FileDto;
+
+public class MemberDto extends FileDto {
 	
 	private String mSeq;
 	private String mId;

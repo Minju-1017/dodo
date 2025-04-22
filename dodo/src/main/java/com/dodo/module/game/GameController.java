@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dodo.module.file.FileService;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -23,6 +25,9 @@ public class GameController {
 	
 	@Autowired
 	GameService service;
+	
+	@Autowired
+	FileService fileService;
 	
 	/**
 	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
@@ -62,10 +67,15 @@ public class GameController {
 	/**
 	 * 입력한 데이터 추가하기
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "GameXdmInst")
-	public String gameXdmInst(GameDto gameDto) {
+	public String gameXdmInst(GameDto gameDto) throws Exception {
 		service.insert(gameDto);
+		
+		// gSeq로 파일이름을 만들 것이므로 Game Table 먼저 insert 후 해야함 
+		fileService.uploadFilesToS3(gameDto, "gameSmallTnFile", gameDto.getgSeq(),
+				(gameDto.getfSeq() == null || gameDto.getfSeq().equals("")));
 		
 		return "redirect:GameXdmList";
 	}
@@ -73,10 +83,15 @@ public class GameController {
 	/**
 	 * 입력한 데이터 수정하기
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "GameXdmUpdt")
-	public String gameXdmUpdt(GameDto gameDto) {
+	public String gameXdmUpdt(GameDto gameDto) throws Exception {
 		service.update(gameDto);	
+		
+		// gSeq로 파일이름을 만들 것이므로 Game Table 먼저 update 후 해야함 
+		fileService.uploadFilesToS3(gameDto, "gameSmallTnFile", gameDto.getgSeq(), 
+				(gameDto.getfSeq() == null || gameDto.getfSeq().equals("")));
 
 		return "redirect:GameXdmList";
 	}

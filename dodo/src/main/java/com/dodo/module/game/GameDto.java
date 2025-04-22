@@ -1,10 +1,13 @@
 package com.dodo.module.game;
 
-public class GameDto {
+import org.springframework.web.multipart.MultipartFile;
+
+import com.dodo.module.file.FileDto;
+
+public class GameDto extends FileDto {
 	
 	private String gSeq;
 	private String gName;
-	private String gTnFileName;
 	private double gLevel;
 	private int gMinPeople;
 	private int gMaxPeople;
@@ -28,6 +31,16 @@ public class GameDto {
 	private int rCount; 		// 리뷰 갯수
 	private int rOrder; 		// 리뷰 테이블 점수 평균으로 매긴 순위
 	
+	// Image File uploaded
+	private String gtfSeq;
+	private int gtfTypeCd;
+	private String gtfPath;
+	private String gtfOriginalName;
+	private String gtfUuidName;
+	private String gtfExt;
+	private long gtfSize;
+	private MultipartFile gtfUploadImg;
+	
 	// 평점 별 표시를 위한 값
 	private int fillStarCount; 	// 다 채운 별
 	private int harfStarCount; 	// 반 채운 별
@@ -47,14 +60,6 @@ public class GameDto {
 	
 	public void setgName(String gName) {
 		this.gName = gName;
-	}
-	
-	public String getgTnFileName() {
-		return gTnFileName;
-	}
-	
-	public void setgTnFileName(String gTnFileName) {
-		this.gTnFileName = gTnFileName;
 	}
 	
 	public double getgLevel() {
@@ -229,6 +234,70 @@ public class GameDto {
 
 	public void setrCount(int rCount) {
 		this.rCount = rCount;
+	}
+
+	public String getGtfSeq() {
+		return gtfSeq;
+	}
+
+	public void setGtfSeq(String gtfSeq) {
+		this.gtfSeq = gtfSeq;
+	}
+
+	public int getGtfTypeCd() {
+		return gtfTypeCd;
+	}
+
+	public void setGtfTypeCd(int gtfTypeCd) {
+		this.gtfTypeCd = gtfTypeCd;
+	}
+
+	public String getGtfPath() {
+		return gtfPath;
+	}
+
+	public void setGtfPath(String gtfPath) {
+		this.gtfPath = gtfPath;
+	}
+
+	public String getGtfOriginalName() {
+		return gtfOriginalName;
+	}
+
+	public void setGtfOriginalName(String gtfOriginalName) {
+		this.gtfOriginalName = gtfOriginalName;
+	}
+
+	public String getGtfUuidName() {
+		return gtfUuidName;
+	}
+
+	public void setGtfUuidName(String gtfUuidName) {
+		this.gtfUuidName = gtfUuidName;
+	}
+
+	public String getGtfExt() {
+		return gtfExt;
+	}
+
+	public void setGtfExt(String gtfExt) {
+		this.gtfExt = gtfExt;
+	}
+
+	public long getGtfSize() {
+		return gtfSize;
+	}
+
+	public void setGtfSize(long gtfSize) {
+		this.gtfSize = gtfSize;
+	}
+
+	public MultipartFile getGtfUploadImg() {
+		return gtfUploadImg;
+	}
+
+	public void setGtfUploadImg(MultipartFile gtfUploadImg) {
+		this.gtfUploadImg = gtfUploadImg;
 	}
 
 	public int getFillStarCount() {

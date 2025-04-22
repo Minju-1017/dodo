@@ -441,8 +441,13 @@
 														<div class="py-2 mb-1">
 															<label class="form-label">
 																<h6>리뷰 작성<span style="color: red;"> *</span></h6>
+																<span class="length">
+																	<span class="comment_length">0</span>
+																	/ 200
+																</span>
 															</label>
-															<textarea class="form-control" rows="3" placeholder="500자 내로 입력해주세요." style="resize: none;" required></textarea>
+															<textarea id="rContent" class="form-control" rows="3" placeholder="200자 내로 입력해주세요." 
+																maxlength="200" style="resize: none;" required></textarea>
 															<div class="invalid-feedback">리뷰 내용을 입력해 주세요.</div>
 														</div>
 														<div class="d-flex justify-content-end">
@@ -558,6 +563,21 @@
 			block: 'start'       // 해당 요소의 상단으로 이동
 		});
 	});
+	
+	$("#rContent").keyup(function (e) {
+	    var content = $(this).val();
+
+	    //글자수 세기
+	    if(content.length == 0 || content == ""){
+	        $(".comment_length").text('0');
+	    }else{
+	        $(".comment_length").text(content.length);
+	    }
+
+	    if (content.length > 200) {
+	    	$(this).val($(this).val().substring(0, 200));
+	    }
+	 });
 </script>
 
 </body>

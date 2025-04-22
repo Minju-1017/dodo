@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 	
+	// AWS Bucket
+	public static String AWS_BUCKET = "dodomimi-bucket";
+	
 	// Url Path
 	public static String ABBREVIATION_ADMIN = "xdm";
 	public static String ABBREVIATION_USER = "usr";

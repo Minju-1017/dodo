@@ -8,6 +8,8 @@
 	<sql id="selectCommon">
 		FROM 
 			game a
+		LEFT JOIN gameSmallTnFile c ON a.gSeq = c.rSeq
+		LEFT JOIN gameLargeTnFile d ON a.gSeq = d.rSeq
 		WHERE 1=1
        		<if test="shDelNy != null and !shDelNy.equals('')">AND a.gDelNy = #{shDelNy}</if> 				
 			<choose>
@@ -44,7 +46,6 @@
 	<sql id="selectCommonColumn">
 		a.gSeq,
 	    a.gName,
-	    a.gTnFileName,
 	    a.gLevel,
 	    a.gMinPeople,
 	    a.gMaxPeople,
@@ -63,6 +64,18 @@
 	    a.gGPName,
 	    a.gRegiDate,
 	    a.gUpdtDate,
+	    c.fSeq,
+	    c.fPath,
+		c.fFileName,
+		c.fExt,
+		c.fSize,
+		c.rSeq,
+		d.fSeq,
+		d.fPath,
+		d.fFileName,
+		d.fExt,
+		d.fSize,
+		d.rSeq,
 	    (SELECT IFNULL(AVG(b.rScore),0)
 			FROM review b
 			WHERE 1=1 
@@ -122,6 +135,8 @@
 			<include refid="selectCommonColumn"/>
 		FROM 
 			game a
+		LEFT JOIN gameSmallTnFile c ON a.gSeq = c.rSeq
+		LEFT JOIN gameLargeTnFile d ON a.gSeq = d.rSeq
 		WHERE 1=1
 			AND a.gSeq=#{gSeq}
 	</select>
@@ -130,7 +145,6 @@
 		INSERT INTO game
 		(
 		    gName,
-		    gTnFileName,
 		    gLevel,
 		    gMinPeople,
 		    gMaxPeople,
@@ -153,7 +167,6 @@
 		VALUES
 		(
 			#{gName},
-		    #{gTnFileName},
 		    #{gLevel},
 		    #{gMinPeople},
 		    #{gMaxPeople},
@@ -183,7 +196,6 @@
 		UPDATE game
 		SET
 			gName=#{gName},
-		    gTnFileName=#{gTnFileName},
 		    gLevel=#{gLevel},
 		    gMinPeople=#{gMinPeople},
 		    gMaxPeople=#{gMaxPeople},

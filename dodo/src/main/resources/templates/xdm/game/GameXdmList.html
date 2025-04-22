@@ -414,12 +414,11 @@
 												<td>
 													<a href="javascript:void(0);"
 														th:attr="onclick=|goForm('${list.gSeq}')|">
-														<img th:if="${list?.gTnFileName eq null or #strings.trim(list?.gTnFileName) eq ''}" 
+														<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
 															class="icon-shape icon-lg" 
-															src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg" />
-														<img th:if="${list?.gTnFileName ne null and #strings.trim(list?.gTnFileName) ne ''}" 
-															class="icon-shape icon-lg" 
-															th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/products/' + ${list?.gTnFileName}}" />
+															src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"/>
+														<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+															class="icon-shape icon-lg" th:src="${list?.fPath}" />
 													</a>
 												</td>
 												<td>

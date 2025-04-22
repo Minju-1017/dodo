@@ -246,7 +246,7 @@
 						<div class="card-body d-flex flex-column gap-8 p-7">
 							<div class="d-flex flex-column gap-4">
 								<form class="row g-5 needs-validation" novalidate
-									method="post" id="form" name="form">
+									method="post" enctype="multipart/form-data" id="form" name="form">
 									
 									<input type="hidden" name="gSeq" th:value="${vo.gSeq}">
 									
@@ -260,25 +260,25 @@
 									</div>
 									<div class="col-lg-9 col-12"></div>
 									<div class="col-lg-12 col-12">
-										<label for="gTnFile" class="form-label">썸네일 이미지</label>
+										<label for="fUploadFiles" class="form-label">썸네일 이미지</label>
 										<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper gap-1">
 											<div>
-												<img th:if="${gameItem?.gTnFileName eq null or #strings.trim(gameItem?.gTnFileName) eq ''}" 
+												<img th:if="${gameItem?.fPath eq null or #strings.trim(gameItem?.fPath) eq ''}" 
 													class="image icon-shape icon-xxxl bg-light rounded-3" 
 													src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
 													alt="Image" />
-												<img th:if="${gameItem?.gTnFileName ne null and #strings.trim(gameItem?.gTnFileName) ne ''}" 
+												<img th:if="${gameItem?.fPath ne null and #strings.trim(gameItem?.fPath) ne ''}" 
 													class="image icon-shape icon-xxxl bg-light rounded-3" 
-													th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/products/' + ${gameItem?.gTnFileName}}"
+													th:src="${gameItem?.fPath}"
 													alt="Image" />
 											</div>
 											<div class="file-upload btn btn-light ms-md-4">
-												<input type="file" accept=".jpeg,.jpg,.png,.gif" name="gTnFile" id="gTnFile" class="file-input opacity-0" />
+												<input type="file" accept=".jpeg,.jpg,.png,.gif" name="fUploadFiles" id="fUploadFiles" class="file-input opacity-0" />
 												파일 선택
 											</div>
 											<div class="ms-md-2 col-4">
-												<input type="text" class="form-control" name="gTnFileName" id="gTnFileName" 
-													th:value="${gameItem?.gTnFileName}" placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
+												<input type="text" class="form-control" name="fFileName" id="fFileName" 
+													th:value="${gameItem?.fFileName}" placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
 												<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>
 											</div>
 										</div>
@@ -502,8 +502,8 @@
 	let goUrlXdmDele = "/xdm/game/GameXdmDele";
 	
 	// Input
-	let gTnFile = document.getElementById("gTnFile");
-	let gTnFileName = document.getElementById("gTnFileName");
+	let fUploadFiles = document.getElementById("fUploadFiles");
+	let fFileName = document.getElementById("fFileName");
 	let cName = document.getElementById("gName");
 	let gCategoryCd = document.getElementById("gCategoryCd");
 	let gLevel = document.getElementById("gLevel");
@@ -534,23 +534,23 @@
 	document.getElementById("btnSave").onclick = function() {
 		var focus = false; // Validation 후 Focus 줘야 하는 Input
 		
-		// gTnFile, gTnFileName 체크
-		resetValidation(gTnFileName);
+		// fUploadFiles, fFileName 체크
+		resetValidation(fFileName);
 		
-		var file = gTnFile.files[0];
+		var file = fUploadFiles.files[0];
 		
-		// gTnFile이 빈값이나 null이면 허용하므로, 아닐때만 Validation
+		// fUploadFiles가 빈값이나 null이면 허용하므로, 아닐때만 Validation
 		if (file != null && file.name != null && file.name.trim() != ""
-				&& gTnFileName.value != null && gTnFileName.value.trim() != "") {
-			if (!imgFileValidation(file, gTnFileName)) {
-				gTnFileName.classList.add("is-invalid");
+				&& fFileName.value != null && fFileName.value.trim() != "") {
+			if (!imgFileValidation(file, fFileName)) {
+				fFileName.classList.add("is-invalid");
 				
 				if (!focus) {
-					gTnFileName.focus();
+					fFileName.focus();
 					focus = true;
 				}
 			} else {
-				gTnFileName.classList.add("is-valid");
+				fFileName.classList.add("is-valid");
 			}
 		}
 		
@@ -824,7 +824,7 @@
 		// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 		if (focus) return false;
 		
-		gTnFileName.value = gTnFileName.value.trim();
+		fFileName.value = fFileName.value.trim();
 		gName.value = gName.value.trim();
 		gLevel.value = gLevel.value.trim();
 		gUseAge.value = gUseAge.value.trim();
@@ -848,29 +848,29 @@
 		}
 	}
 	
-	// gTnFile, gTnFileName Change 시 체크
-	gTnFile.addEventListener("change", function() {
-		resetValidation(gTnFileName);
+	// fUploadFiles, fFileName Change 시 체크
+	fUploadFiles.addEventListener("change", function() {
+		resetValidation(fFileName);
 		
-		var file = gTnFile.files[0];
+		var file = fUploadFiles.files[0];
 		
-		// gTnFile이 빈값이나 null이면 허용하므로 리턴
+		// fUploadFiles가 빈값이나 null이면 허용하므로 리턴
 		if (file == null 
 				|| (file != null && file.name == null)
 				|| (file != null && file.name != null && file.name.trim() == "")) return;
 		
-		// 선택한 파일명 gTnFileName에 보여주기
-		gTnFileName.value = file.name.trim();
+		// 선택한 파일명 fFileName에 보여주기
+		fFileName.value = file.name.trim();
 		
-		// gTnFileName이 빈값이나 null이면 허용하므로 리턴
-		if (gTnFileName.value == null
-				|| (gTnFileName.value != null && gTnFileName.value.trim() == "")) return;
+		// fFileName이 빈값이나 null이면 허용하므로 리턴
+		if (fFileName.value == null
+				|| (fFileName.value != null && fFileName.value.trim() == "")) return;
 		
 		// Validation
-		if (!imgFileValidation(file, gTnFileName)) {
-			gTnFileName.classList.add("is-invalid");
+		if (!imgFileValidation(file, fFileName)) {
+			fFileName.classList.add("is-invalid");
 		} else {
-			gTnFileName.classList.add("is-valid");
+			fFileName.classList.add("is-valid");
 		}
 	});
 	

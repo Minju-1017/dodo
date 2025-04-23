@@ -38,10 +38,8 @@ public class FileService {
 	 * @throws Exception
 	 */
 	public void uploadFilesToS3(FileDto fileDto, String[] fDbTableNames, String rSeq) throws Exception {
-		
 		// fileDto.getfUploadFiles()의 length는 fDbTableNames length와 일치함
 		MultipartFile[] fUploadFiles = fileDto.getfUploadFiles(); 
-		
 		if (fUploadFiles == null || fUploadFiles.length == 0 || fUploadFiles.length != fDbTableNames.length) return;
 		
 		for (int i = 0; i < fUploadFiles.length; i++) {

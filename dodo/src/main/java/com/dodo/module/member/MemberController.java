@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dodo.Constants;
 import com.dodo.common.mail.MailService;
 import com.dodo.module.code.CodeService;
+import com.dodo.module.file.FileService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,6 +37,9 @@ public class MemberController {
 	@Autowired
 	MailService mailService;
 	
+	@Autowired
+	FileService fileService;
+	
 	/**
 	 * 로그인 세션 처리 - User
 	 * @param httpSession
@@ -48,7 +53,7 @@ public class MemberController {
 		httpSession.setAttribute("sessNameUsr", memberDto.getmName());
 		httpSession.setAttribute("sessGradeUsr", 
 				CodeService.selectOneCachedCode(String.valueOf(memberDto.getmGradeCd())));
-		httpSession.setAttribute("sessPfFileNameUsr", memberDto.getmPfFileName());
+		httpSession.setAttribute("sessPfFileNameUsr", memberDto.getfPath());
 	}
 	
 	/**
@@ -76,7 +81,7 @@ public class MemberController {
 		httpSession.setAttribute("sessNameXdm", memberDto.getmName());
 		httpSession.setAttribute("sessGradeXdm", 
 				CodeService.selectOneCachedCode(String.valueOf(memberDto.getmGradeCd())));
-		httpSession.setAttribute("sessPfFileNameXdm", memberDto.getmPfFileName());
+		httpSession.setAttribute("sessPfFileNameXdm", memberDto.getfPath());
 	}
 	
 	/**
@@ -283,8 +288,11 @@ public class MemberController {
 			usrSignOut(httpSession);
 			return "redirect:MemberUsrSignIn";
 		}
-
+		
 		memberDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		memberDto.setrSeq(memberDto.getmSeq());
+		
+		model.addAttribute("memberPfFile", fileService.selectOne(memberDto, "memberPfFile"));
 		model.addAttribute("memberItem", service.selectOne(memberDto));
 		
 		return path_user + "MemberUsrAccountForm";
@@ -294,7 +302,7 @@ public class MemberController {
 	 * Ajax를 통한 회원 기본 정보 수정 - User
 	 * @param memberDto
 	 * @param httpSession
-	 * @return redirect: 데이터 저장 후 돌아갈 주소
+	 * @return 
 	 * @throws Exception
 	 */
 	@ResponseBody // Ajax 코드는 무조건 써준다.
@@ -307,7 +315,6 @@ public class MemberController {
 			if (httpSession.getAttribute("sessSeqUsr") != null
 					 && String.valueOf(httpSession.getAttribute("sessSeqUsr")).equals(memberDto.getmSeq())) {
 				httpSession.setAttribute("sessNameUsr", memberDto.getmName());
-				httpSession.setAttribute("sessPfFileNameUsr", memberDto.getmPfFileName());
 			}
 			
 			returnMap.put("rt", "success");
@@ -315,6 +322,43 @@ public class MemberController {
 			returnMap.put("rt", "fail");
 		}
 
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 회원 기본 정보 수정(프로필 사진) - User
+	 * @param memberDto
+	 * @param httpSession
+	 * @return 
+	 * @throws Exception
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberUsrPfUpdt")
+	public Map<String, Object> memberUsrPfUpdt(
+			@RequestParam("fUploadFiles") MultipartFile file,
+			@RequestParam("mSeq") String mSeq,
+			MemberDto memberDto, HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		memberDto.setmSeq(mSeq);
+		memberDto.setfUploadFiles(new MultipartFile[]{file});
+		
+		fileService.uploadFilesToS3(
+				memberDto, 
+				new String[]{"memberPfFile"}, 
+				memberDto.getmSeq()
+		);
+		
+		if (httpSession.getAttribute("sessSeqUsr") != null
+				 && String.valueOf(httpSession.getAttribute("sessSeqUsr")).equals(memberDto.getmSeq())
+				 && memberDto.getfPath() != null
+				 && !memberDto.getfPath().equals("")) {
+			httpSession.setAttribute("sessPfFileNameUsr", memberDto.getfPath());
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
 		return returnMap;
 	}
 	
@@ -498,6 +542,9 @@ public class MemberController {
 			// insert mode
 		} else {
 			// update mode
+			memberDto.setrSeq(memberDto.getmSeq());
+			model.addAttribute("memberPfFile", fileService.selectOne(memberDto, "memberPfFile"));
+						
 			model.addAttribute("memberItem", service.selectOne(memberDto));
 		}
 		
@@ -512,13 +559,20 @@ public class MemberController {
 	public String memberXdmUpdt(MemberDto memberDto, HttpSession httpSession) throws Exception {
 		int successCnt = service.update(memberDto);
 		
+		// gSeq로 파일이름을 만들 것이므로 Game Table 먼저 insert 후 해야함 
+		fileService.uploadFilesToS3(
+				memberDto, 
+				new String[]{"memberPfFile"}, 
+				memberDto.getmSeq()
+		);
+		
 		if (successCnt == 1
 				 && httpSession.getAttribute("sessSeqXdm") != null
 				 && String.valueOf(httpSession.getAttribute("sessSeqXdm")).equals(memberDto.getmSeq())) {
 			httpSession.setAttribute("sessNameXdm", memberDto.getmName());
 			httpSession.setAttribute("sessGradeXdm", 
 					CodeService.selectOneCachedCode(String.valueOf(memberDto.getmGradeCd())));
-			httpSession.setAttribute("sessPfFileNameXdm", memberDto.getmPfFileName());
+			httpSession.setAttribute("sessPfFileNameXdm", memberDto.getfPath());
 		}
 
 		return "redirect:MemberXdmList";

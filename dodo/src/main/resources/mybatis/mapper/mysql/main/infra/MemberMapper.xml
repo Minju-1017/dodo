@@ -50,9 +50,13 @@
 		a.mLongitude,
 	    a.mRegiDate,
 	    a.mUpdtDate,
-	    a.mPfFileName,
 	    a.mGradeCd,
-	    a.mDelNy
+	    a.mDelNy,
+	    (SELECT b.fPath
+			FROM memberPfFile b
+			WHERE 1=1 
+				AND a.mSeq = b.rSeq
+	    ) as fPath
 	</sql>
 	<!-- End -->
 	
@@ -122,12 +126,12 @@
 		    #{mPwd},
 		    #{mBirth},
 		    #{mGenderCd},
+		    44,
 		    #{mPostcode},
 			#{mRoadAddress},
 			#{mDetailAddress},
 			#{mLatitude},
 			#{mLongitude},
-		    44,
 		    now(),
 		    0
 		)
@@ -144,7 +148,6 @@
 			mEmail=#{mEmail},
 			mBirth=#{mBirth},
 			mGenderCd=#{mGenderCd},
-			mPfFileName=#{mPfFileName},
 			mGradeCd=#{mGradeCd},
 			mPostcode=#{mPostcode},
 			mRoadAddress=#{mRoadAddress},

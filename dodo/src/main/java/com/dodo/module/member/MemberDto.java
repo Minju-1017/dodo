@@ -11,7 +11,6 @@ public class MemberDto extends FileDto {
 	private String mPwd;
 	private String mBirth;
 	private int mGenderCd;
-	private String mPfFileName;
 	private int mGradeCd;
 	private String mRegiDate;
 	private String mUpdtDate;
@@ -77,14 +76,6 @@ public class MemberDto extends FileDto {
 	
 	public void setmGenderCd(int mGenderCd) {
 		this.mGenderCd = mGenderCd;
-	}
-
-	public String getmPfFileName() {
-		return mPfFileName;
-	}
-	
-	public void setmPfFileName(String mPfFileName) {
-		this.mPfFileName = mPfFileName;
 	}
 
 	public int getmGradeCd() {

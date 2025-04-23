@@ -54,32 +54,32 @@
 								<div class="card card-lg border-0">
 									<div class="card-body d-flex flex-column gap-8 p-8">
 										<form class="row g-5 needs-validation" novalidate
-											method="post" id="form" name="form">
+											method="post" enctype="multipart/form-data" id="form" name="form">
 											
 											<input type="hidden" name="mSeq" id="mSeq" th:value="${memberItem?.mSeq}">
 											<input type="hidden" id="mLatitude" name="mLatitude" th:value="${memberItem?.mLatitude}" />
 											<input type="hidden" id="mLongitude" name="mLongitude" th:value="${memberItem?.mLongitude}" />
 											
 											<div class="col-lg-12 col-12">
-												<label for="mPfFile" class="form-label">프로필 이미지</label>
+												<label for="fUploadFiles" class="form-label">프로필 이미지</label>
 												<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper">
 													<div>
-														<img th:if="${memberItem?.mPfFileName eq null or #strings.trim(memberItem?.mPfFileName) eq ''}" 
+														<img th:if="${memberPfFile?.fPath eq null or #strings.trim(memberPfFile?.fPath) eq ''}" 
 															class="image avatar avatar-lg rounded-3" 
 															src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
 															alt="Image" />
-														<img th:if="${memberItem?.mPfFileName ne null and #strings.trim(memberItem?.mPfFileName) ne ''}" 
+														<img th:if="${memberPfFile?.fPath ne null and #strings.trim(memberPfFile?.fPath) ne ''}" 
 															class="image avatar avatar-lg rounded-3" 
-															th:src="@{'/assets/xdm/template/FreshCart-1.4.0/images/avatar/' + ${memberItem?.mPfFileName}}"
+															th:src="${memberPfFile?.fPath}"
 															alt="Image" />
 													</div>
 													<div class="file-upload btn btn-light ms-md-4">
-														<input type="file" accept=".jpeg,.jpg,.png,.gif" name="mPfFile" id="mPfFile" class="file-input opacity-0" />
+														<input type="file" accept=".jpeg,.jpg,.png,.gif" name="fUploadFiles" id="fUploadFiles" class="file-input opacity-0" />
 														파일 선택
 													</div>
 													<div class="ms-md-2 col-4">
-														<input type="text" class="form-control" name="mPfFileName" id="mPfFileName" 
-															th:value="${memberItem?.mPfFileName}" 
+														<input type="text" class="form-control" name="fFileName" id="fFileName" 
+															th:value="${memberPfFile?.fFileName}" 
 															placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
 														<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>
 													</div>
@@ -186,8 +186,8 @@
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
 	// Input
-	let mPfFile = document.getElementById("mPfFile");
-	let mPfFileName = document.getElementById("mPfFileName");
+	let fUploadFiles = document.getElementById("fUploadFiles");
+	let fFileName = document.getElementById("fFileName");
 	let mName = document.getElementById("mName");
 	let mEmail = document.getElementById("mEmail");
 	let mBirth = document.getElementById("mBirth");
@@ -275,23 +275,23 @@
 	document.getElementById("btnSave").onclick = function() {
 		var focus = false; // Validation 후 Focus 줘야 하는 Input
 		
-		// mPfFile, mPfFileName 체크
-		resetValidation(mPfFileName);
+		// fUploadFiles, fFileName 체크
+		resetValidation(fFileName);
 		
-		var file = mPfFile.files[0];
+		var file = fUploadFiles.files[0];
 		
-		// mPfFile이 빈값이나 null이면 허용하므로, 아닐때만 Validation
+		// fUploadFiles이 빈값이나 null이면 허용하므로, 아닐때만 Validation
 		if (file != null && file.name != null && file.name.trim() != ""
-				&& mPfFileName.value != null && mPfFileName.value.trim() != "") {
-			if (!imgFileValidation(file, mPfFileName)) {
-				mPfFileName.classList.add("is-invalid");
+				&& fFileName.value != null && fFileName.value.trim() != "") {
+			if (!imgFileValidation(file, fFileName)) {
+				fFileName.classList.add("is-invalid");
 				
 				if (!focus) {
-					mPfFileName.focus();
+					fFileName.focus();
 					focus = true;
 				}
 			} else {
-				mPfFileName.classList.add("is-valid");
+				fFileName.classList.add("is-valid");
 			}
 		}
 		
@@ -385,35 +385,34 @@
 
 		mName.value = mName.value.trim();
 		mEmail.value = mEmail.value.trim();
-		mPfFileName.value = mPfFileName.value.trim();
 		mDetailAddress.value = mDetailAddress.value.trim();
 		
 		setAccount();
 	}
 	
-	// mPfFile, mPfFileName Change 시 체크
-	mPfFile.addEventListener("change", function() {
-		resetValidation(mPfFileName);
+	// fUploadFiles, fFileName Change 시 체크
+	fUploadFiles.addEventListener("change", function() {
+		resetValidation(fFileName);
 		
-		var file = mPfFile.files[0];
+		var file = fUploadFiles.files[0];
 		
-		// mPfFile이 빈값이나 null이면 허용하므로 리턴
+		// fUploadFiles이 빈값이나 null이면 허용하므로 리턴
 		if (file == null 
 				|| (file != null && file.name == null)
 				|| (file != null && file.name != null && file.name.trim() == "")) return;
 		
 		// 선택한 파일명 gTnFileName에 보여주기
-		mPfFileName.value = file.name.trim();
+		fFileName.value = file.name.trim();
 		
 		// gTnFileName이 빈값이나 null이면 허용하므로 리턴
-		if (mPfFileName.value == null
-				|| (mPfFileName.value != null && mPfFileName.value.trim() == "")) return;
+		if (fFileName.value == null
+				|| (fFileName.value != null && fFileName.value.trim() == "")) return;
 		
 		// Validation
-		if (!imgFileValidation(file, mPfFileName)) {
-			mPfFileName.classList.add("is-invalid");
+		if (!imgFileValidation(file, fFileName)) {
+			fFileName.classList.add("is-invalid");
 		} else {
-			mPfFileName.classList.add("is-valid");
+			fFileName.classList.add("is-valid");
 		}
 	});
 	
@@ -473,7 +472,7 @@
 				"mEmail" : $("#mEmail").val(), 
 				"mBirth" : $("#mBirth").val(),
 				"mGenderCd" : $("#mGenderCd").val(), 
-				"mPfFileName" : $("#mPfFileName").val(),
+				"fFileName" : $("#fFileName").val(),
 				"mGradeCd" : $("#mGradeCd").val(),
 				"mPostcode" : $("#mPostcode").val(),
 				"mRoadAddress" : $("#mRoadAddress").val(),
@@ -483,18 +482,58 @@
 			}
 			,success: function(response) {
 				if (response.rt == "success") {
-					showModalAlert("확인", "회원 정보를 변경하였습니다.");
+					setProfileFileUpload();
 				} else {
 					resetValidation(mName);
 					resetValidation(mEmail);
 					resetValidation(mBirth);
-					showModalAlert("확인", "회원 정보를 변경을 실패하였습니다. 다시 시도해 주세요.");
+					resetValidation(fFileName);
+					resetValidation(mPostcode);
+	                resetValidation(mRoadAddress);
+	                resetValidation(mDetailAddress);
+					showModalAlert("확인", "회원 정보 변경을 실패하였습니다. 다시 시도해 주세요.");
 				}
 			}
 			,error : function(jqXHR, textStatus, errorThrown){
 				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 			}
 		});
+	}
+	
+	function setProfileFileUpload() {
+		var file = fUploadFiles.files[0];
+		
+		// fUploadFiles 빈값이나 null이면 허용하므로, 아닐때만 파일 업로드 처리
+		if (file == null 
+				|| (file != null && file.name == null)
+				|| (file != null && file.name != null && file.name.trim() == "")) {
+			showModalAlert("확인", "회원 정보를 변경하였습니다.");
+		} else {
+			var formData = new FormData();
+			formData.append("fUploadFiles", file);
+			formData.append("mSeq", $("#mSeq").val());
+			
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/usr/member/MemberUsrPfUpdt"
+				,data: formData
+			    ,contentType: false
+			    ,processData: false
+				,success: function(response) {
+					if (response.rt == "success") {
+						showModalAlert("확인", "회원 정보를 변경하였습니다.");
+					} else {
+						resetValidation(fFileName);
+						showModalAlert("확인", "회원 프로필 사진 변경을 실패하였습니다. 다시 시도해 주세요.");
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
 	}
 	
 	$("#modalAlert").on("hidden.bs.modal", function (e) {

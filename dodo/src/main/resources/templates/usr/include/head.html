@@ -76,7 +76,7 @@
 												alt="" />
 											<img th:if="${session.sessPfFileNameUsr ne null and #strings.trim(session.sessPfFileNameUsr) ne ''}" 
 												class="avatar avatar-md rounded-circle" 
-												th:src="@{'/assets/usr/template/FreshCart-1.4.0/images/avatar/' + ${session.sessPfFileNameUsr}}"
+												th:src="${session.sessPfFileNameUsr}"
 												alt="" />
 										</a>
 										<div class="dropdown-menu dropdown-menu-end p-0">

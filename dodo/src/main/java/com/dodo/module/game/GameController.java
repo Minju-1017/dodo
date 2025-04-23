@@ -182,7 +182,7 @@ public class GameController {
 	/////////////////////////////////////////////////////////////////
 	
 	/**
-	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
 	 * @param model
 	 * @return
 	 */
@@ -201,7 +201,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 데이터 상세보기
+	 * 데이터 상세보기 - User
 	 * @return
 	 */
 	@RequestMapping(value = "GameUsrDetail")
@@ -217,6 +217,9 @@ public class GameController {
 				break;
 			}
 		}
+		
+		gameDto.setrSeq(gameDto.getgSeq());
+		model.addAttribute("gameLargeTnFile", fileService.selectOne(gameDto, "gameLargeTnFile"));
 		
 		model.addAttribute("gameItem", dto);
 		

@@ -58,6 +58,10 @@ public class GameController {
 			// insert mode
 		} else {
 			// update mode
+			gameDto.setrSeq(gameDto.getgSeq());
+			model.addAttribute("gameSmallTnFile", fileService.selectOne(gameDto, "gameSmallTnFile"));
+			model.addAttribute("gameLargeTnFile", fileService.selectOne(gameDto, "gameLargeTnFile"));
+			
 			model.addAttribute("gameItem", service.selectOne(gameDto));
 		}
 		
@@ -72,10 +76,13 @@ public class GameController {
 	@RequestMapping(value = "GameXdmInst")
 	public String gameXdmInst(GameDto gameDto) throws Exception {
 		service.insert(gameDto);
-		
+		 
 		// gSeq로 파일이름을 만들 것이므로 Game Table 먼저 insert 후 해야함 
-		fileService.uploadFilesToS3(gameDto, "gameSmallTnFile", gameDto.getgSeq(),
-				(gameDto.getfSeq() == null || gameDto.getfSeq().equals("")));
+		fileService.uploadFilesToS3(
+				gameDto, 
+				new String[]{"gameSmallTnFile", "gameLargeTnFile"}, 
+				gameDto.getgSeq()
+		);
 		
 		return "redirect:GameXdmList";
 	}
@@ -90,8 +97,10 @@ public class GameController {
 		service.update(gameDto);	
 		
 		// gSeq로 파일이름을 만들 것이므로 Game Table 먼저 update 후 해야함 
-		fileService.uploadFilesToS3(gameDto, "gameSmallTnFile", gameDto.getgSeq(), 
-				(gameDto.getfSeq() == null || gameDto.getfSeq().equals("")));
+		fileService.uploadFilesToS3(gameDto, 
+				new String[]{"gameSmallTnFile", "gameLargeTnFile"}, 
+				gameDto.getgSeq()
+		);
 
 		return "redirect:GameXdmList";
 	}

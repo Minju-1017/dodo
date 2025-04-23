@@ -260,25 +260,49 @@
 									</div>
 									<div class="col-lg-9 col-12"></div>
 									<div class="col-lg-12 col-12">
-										<label for="fUploadFiles" class="form-label">썸네일 이미지</label>
+										<label for="fUploadFiles1" class="form-label">썸네일 이미지</label>
 										<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper gap-1">
 											<div>
-												<img th:if="${gameItem?.fPath eq null or #strings.trim(gameItem?.fPath) eq ''}" 
+												<img th:if="${gameSmallTnFile?.fPath eq null or #strings.trim(gameSmallTnFile?.fPath) eq ''}" 
 													class="image icon-shape icon-xxxl bg-light rounded-3" 
 													src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
 													alt="Image" />
-												<img th:if="${gameItem?.fPath ne null and #strings.trim(gameItem?.fPath) ne ''}" 
+												<img th:if="${gameSmallTnFile?.fPath ne null and #strings.trim(gameSmallTnFile?.fPath) ne ''}" 
 													class="image icon-shape icon-xxxl bg-light rounded-3" 
-													th:src="${gameItem?.fPath}"
+													th:src="${gameSmallTnFile?.fPath}"
 													alt="Image" />
 											</div>
 											<div class="file-upload btn btn-light ms-md-4">
-												<input type="file" accept=".jpeg,.jpg,.png,.gif" name="fUploadFiles" id="fUploadFiles" class="file-input opacity-0" />
+												<input type="file" accept=".jpeg,.jpg,.png,.gif" name="fUploadFiles" id="fUploadFiles1" class="file-input opacity-0" />
 												파일 선택
 											</div>
 											<div class="ms-md-2 col-4">
-												<input type="text" class="form-control" name="fFileName" id="fFileName" 
-													th:value="${gameItem?.fFileName}" placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
+												<input type="text" class="form-control" name="fFileName1" id="fFileName1" 
+													th:value="${gameSmallTnFile?.fFileName}" placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
+												<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-12 col-12">
+										<label for="fUploadFiles2" class="form-label">상세보기 이미지</label>
+										<div class="d-flex flex-column flex-md-row align-items-center mb-4 file-input-wrapper gap-1">
+											<div>
+												<img th:if="${gameLargeTnFile?.fPath eq null or #strings.trim(gameLargeTnFile?.fPath) eq ''}" 
+													class="image icon-shape icon-xxxl bg-light rounded-3" 
+													src="/assets/xdm/template/FreshCart-1.4.0/images/docs/placeholder-img.jpg"
+													alt="Image" />
+												<img th:if="${gameLargeTnFile?.fPath ne null and #strings.trim(gameLargeTnFile?.fPath) ne ''}" 
+													class="image icon-shape icon-xxxl bg-light rounded-3" 
+													th:src="${gameLargeTnFile?.fPath}"
+													alt="Image" />
+											</div>
+											<div class="file-upload btn btn-light ms-md-4">
+												<input type="file" accept=".jpeg,.jpg,.png,.gif" name="fUploadFiles" id="fUploadFiles2" class="file-input opacity-0" />
+												파일 선택
+											</div>
+											<div class="ms-md-2 col-4">
+												<input type="text" class="form-control" name="fFileName2" id="fFileName2" 
+													th:value="${gameLargeTnFile?.fFileName}" placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
 												<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>
 											</div>
 										</div>
@@ -502,8 +526,10 @@
 	let goUrlXdmDele = "/xdm/game/GameXdmDele";
 	
 	// Input
-	let fUploadFiles = document.getElementById("fUploadFiles");
-	let fFileName = document.getElementById("fFileName");
+	let fUploadFiles1 = document.getElementById("fUploadFiles1");
+	let fFileName1 = document.getElementById("fFileName1");
+	let fUploadFiles2 = document.getElementById("fUploadFiles2");
+	let fFileName2 = document.getElementById("fFileName2");
 	let cName = document.getElementById("gName");
 	let gCategoryCd = document.getElementById("gCategoryCd");
 	let gLevel = document.getElementById("gLevel");
@@ -534,23 +560,43 @@
 	document.getElementById("btnSave").onclick = function() {
 		var focus = false; // Validation 후 Focus 줘야 하는 Input
 		
-		// fUploadFiles, fFileName 체크
-		resetValidation(fFileName);
+		// fUploadFiles1, fFileName1 체크
+		resetValidation(fFileName1);
 		
-		var file = fUploadFiles.files[0];
+		var file1 = fUploadFiles1.files[0];
 		
 		// fUploadFiles가 빈값이나 null이면 허용하므로, 아닐때만 Validation
-		if (file != null && file.name != null && file.name.trim() != ""
-				&& fFileName.value != null && fFileName.value.trim() != "") {
-			if (!imgFileValidation(file, fFileName)) {
-				fFileName.classList.add("is-invalid");
+		if (file1 != null && file1.name != null && file1.name.trim() != ""
+				&& fFileName1.value != null && fFileName1.value.trim() != "") {
+			if (!imgFileValidation(file1, fFileName1)) {
+				fFileName1.classList.add("is-invalid");
 				
 				if (!focus) {
-					fFileName.focus();
+					fFileName1.focus();
 					focus = true;
 				}
 			} else {
-				fFileName.classList.add("is-valid");
+				fFileName1.classList.add("is-valid");
+			}
+		}
+		
+		// fUploadFiles2, fFileName2 체크
+		resetValidation(fFileName2);
+		
+		var file2 = fUploadFiles2.files[0];
+		
+		// fUploadFiles2가 빈값이나 null이면 허용하므로, 아닐때만 Validation
+		if (file2 != null && file2.name != null && file2.name.trim() != ""
+				&& fFileName2.value != null && fFileName2.value.trim() != "") {
+			if (!imgFileValidation(file2, fFileName2)) {
+				fFileName2.classList.add("is-invalid");
+				
+				if (!focus) {
+					fFileName2.focus();
+					focus = true;
+				}
+			} else {
+				fFileName2.classList.add("is-valid");
 			}
 		}
 		
@@ -824,7 +870,6 @@
 		// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 		if (focus) return false;
 		
-		fFileName.value = fFileName.value.trim();
 		gName.value = gName.value.trim();
 		gLevel.value = gLevel.value.trim();
 		gUseAge.value = gUseAge.value.trim();
@@ -848,29 +893,55 @@
 		}
 	}
 	
-	// fUploadFiles, fFileName Change 시 체크
-	fUploadFiles.addEventListener("change", function() {
-		resetValidation(fFileName);
+	// fUploadFiles1, fFileName1 Change 시 체크
+	fUploadFiles1.addEventListener("change", function() {
+		resetValidation(fFileName1);
 		
-		var file = fUploadFiles.files[0];
+		var file1 = fUploadFiles1.files[0];
 		
 		// fUploadFiles가 빈값이나 null이면 허용하므로 리턴
-		if (file == null 
-				|| (file != null && file.name == null)
-				|| (file != null && file.name != null && file.name.trim() == "")) return;
+		if (file1 == null 
+				|| (file1 != null && file1.name == null)
+				|| (file1 != null && file1.name != null && file1.name.trim() == "")) return;
 		
-		// 선택한 파일명 fFileName에 보여주기
-		fFileName.value = file.name.trim();
+		// 선택한 파일명 fFileName1에 보여주기
+		fFileName1.value = file1.name.trim();
 		
-		// fFileName이 빈값이나 null이면 허용하므로 리턴
-		if (fFileName.value == null
-				|| (fFileName.value != null && fFileName.value.trim() == "")) return;
+		// fFileName1이 빈값이나 null이면 허용하므로 리턴
+		if (fFileName1.value == null
+				|| (fFileName1.value != null && fFileName1.value.trim() == "")) return;
 		
 		// Validation
-		if (!imgFileValidation(file, fFileName)) {
-			fFileName.classList.add("is-invalid");
+		if (!imgFileValidation(file1, fFileName1)) {
+			fFileName1.classList.add("is-invalid");
 		} else {
-			fFileName.classList.add("is-valid");
+			fFileName1.classList.add("is-valid");
+		}
+	});
+	
+	// fUploadFiles2, fFileName2 Change 시 체크
+	fUploadFiles2.addEventListener("change", function() {
+		resetValidation(fFileName2);
+		
+		var file2 = fUploadFiles2.files[0];
+		
+		// fUploadFiles2가 빈값이나 null이면 허용하므로 리턴
+		if (file2 == null 
+				|| (file2 != null && file2.name == null)
+				|| (file2 != null && file2.name != null && file2.name.trim() == "")) return;
+		
+		// 선택한 파일명 fFileName2에 보여주기
+		fFileName2.value = file2.name.trim();
+		
+		// fFileName2이 빈값이나 null이면 허용하므로 리턴
+		if (fFileName2.value == null
+				|| (fFileName2.value != null && fFileName2.value.trim() == "")) return;
+		
+		// Validation
+		if (!imgFileValidation(file2, fFileName2)) {
+			fFileName2.classList.add("is-invalid");
+		} else {
+			fFileName2.classList.add("is-valid");
 		}
 	});
 	

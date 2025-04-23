@@ -4,6 +4,28 @@
 <mapper namespace="com.dodo.module.file.FileDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.file.FileDto"></resultMap>
 
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM 
+			${fDbTableName}
+		WHERE 1=1
+			AND rSeq=#{rSeq}
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			fSeq,
+		    fPath,
+			fFileName,
+			fExt,
+			fSize,
+			rSeq
+		FROM 
+			${fDbTableName}
+		WHERE 1=1
+			AND rSeq=#{rSeq}
+	</select>
+	
 	<insert id="insertFile">
 		INSERT INTO ${fDbTableName} (
 			fPath,
@@ -25,10 +47,11 @@
 	<update id="updateFile">
 		UPDATE ${fDbTableName}
 		SET
-			#{fExt},
-			#{fSize}
+			fUuidName=#{fUuidName},
+			fExt=#{fExt},
+			fSize=#{fSize}
 		WHERE
-			fSeq=#{fSeq}
+			rSeq=#{rSeq}
 	</update>
 	
 </mapper>

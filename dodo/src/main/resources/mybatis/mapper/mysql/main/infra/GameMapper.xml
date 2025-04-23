@@ -8,8 +8,6 @@
 	<sql id="selectCommon">
 		FROM 
 			game a
-		LEFT JOIN gameSmallTnFile c ON a.gSeq = c.rSeq
-		LEFT JOIN gameLargeTnFile d ON a.gSeq = d.rSeq
 		WHERE 1=1
        		<if test="shDelNy != null and !shDelNy.equals('')">AND a.gDelNy = #{shDelNy}</if> 				
 			<choose>
@@ -64,18 +62,6 @@
 	    a.gGPName,
 	    a.gRegiDate,
 	    a.gUpdtDate,
-	    c.fSeq,
-	    c.fPath,
-		c.fFileName,
-		c.fExt,
-		c.fSize,
-		c.rSeq,
-		d.fSeq,
-		d.fPath,
-		d.fFileName,
-		d.fExt,
-		d.fSize,
-		d.rSeq,
 	    (SELECT IFNULL(AVG(b.rScore),0)
 			FROM review b
 			WHERE 1=1 
@@ -86,7 +72,12 @@
 			WHERE 1=1 
 				AND b.rDelNy = 0 
 				AND b.game_gSeq = a.gSeq
-		) as rCount
+		) as rCount,
+		(SELECT c.fPath
+			FROM gameSmallTnFile c
+			WHERE 1=1 
+				AND a.gSeq = c.rSeq
+	    ) as fPath
 	</sql>
 	<!-- End -->
 	
@@ -135,8 +126,6 @@
 			<include refid="selectCommonColumn"/>
 		FROM 
 			game a
-		LEFT JOIN gameSmallTnFile c ON a.gSeq = c.rSeq
-		LEFT JOIN gameLargeTnFile d ON a.gSeq = d.rSeq
 		WHERE 1=1
 			AND a.gSeq=#{gSeq}
 	</select>

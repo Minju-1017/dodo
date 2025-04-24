@@ -3,6 +3,7 @@
 
 <mapper namespace="com.dodo.module.game.GameDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.game.GameDto"></resultMap>
+	<resultMap id="resultMapObj_GR" type="com.dodo.module.game.GameReviewDto"></resultMap>
 
 	<!-- 공통 구문 selectCommon으로 선언 -->
 	<sql id="selectCommon">
@@ -63,12 +64,12 @@
 	    a.gRegiDate,
 	    a.gUpdtDate,
 	    (SELECT IFNULL(AVG(b.rScore),0)
-			FROM review b
+			FROM gameReview b
 			WHERE 1=1 
 				AND b.rDelNy = 0 
 				AND b.game_gSeq = a.gSeq
 	    ) as rScoreAvg,
-	    (SELECT COUNT(*) FROM review b
+	    (SELECT COUNT(*) FROM gameReview b
 			WHERE 1=1 
 				AND b.rDelNy = 0 
 				AND b.game_gSeq = a.gSeq
@@ -95,6 +96,34 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
+	<select id="selectReviewOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM 
+			gameReview a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+       		<if test="shDelNy != null and !shDelNy.equals('')">AND a.grDelNy = #{shDelNy}</if> 				
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.grRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
+				</when>
+			</choose>	
+	        <choose>
+	            <when test="shOption == 1">AND a.grSeq = #{shValue}</when>
+	            <when test="shOption == 2">AND b.gSeq = #{shValue}</when>
+	            <when test="shOption == 3">AND b.gName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 4">AND c.mSeq = #{shValue}</when>
+	            <when test="shOption == 5">AND c.mId LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 6">AND c.mName LIKE CONCAT('%',#{shValue},'%')</when>
+	            
+	        </choose>
+		ORDER BY a.grSeq DESC
+	</select>
+	
 	<select id="selectTop10List" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
@@ -108,7 +137,7 @@
         	ROW_NUMBER() OVER(
         		ORDER BY 
 					(SELECT IFNULL(AVG(b.rScore), 0)
-				FROM review b
+				FROM gameReview b
 				WHERE 1=1 
 					AND b.rDelNy = 0 
 					AND b.game_gSeq = a.gSeq

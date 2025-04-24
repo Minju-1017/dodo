@@ -65,8 +65,11 @@ public class FileService {
 		        metadata.setContentLength(fUploadFile.getSize());
 		        metadata.setContentType(fUploadFile.getContentType());
 		        
-		        // AWS 파일 업로드 - 오래 걸릴 수 있으므로 Thread 이용
-		        new Thread() {
+		        // AWS 파일 업로드
+		        amazonS3Client.putObject(Constants.AWS_BUCKET, fPath + fFileName, fUploadFile.getInputStream(), metadata);
+		        
+		        // AWS 파일 업로드 - 오래 걸릴 수 있으므로 Thread 이용 - 보류(저장 후 갱신 시 이미지가 바로 변경되지 않아 오류처럼 보임)
+		        /*new Thread() {
 		        	public void run() {
 		        		try {
 		        			// https://dodomimi-bucket.s3.ap-northeast-2.amazonaws.com/DB Table명/파일명.확장자 => 파일명은 고유값인 rSeq
@@ -79,7 +82,7 @@ public class FileService {
 							e.printStackTrace();
 						}
 		        	}
-		        }.start();
+		        }.start();*/
 		    
 		        String objectUrl = 
 		        		amazonS3Client.getUrl(Constants.AWS_BUCKET, fPath + fFileName).toString(); // AWS 파일 Full Path

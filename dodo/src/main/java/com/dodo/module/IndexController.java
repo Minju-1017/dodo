@@ -18,4 +18,5 @@ public class IndexController {
 	public String usrIndex() {	
 		return path_user + "index";
 	}
+	
 }

@@ -30,7 +30,7 @@ public class GameController {
 	FileService fileService;
 	
 	/**
-	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감 - Admin
 	 * @param model
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 데이터 추가/수정 폼
+	 * 데이터 추가/수정 폼 - Admin
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmForm")
@@ -69,7 +69,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 입력한 데이터 추가하기
+	 * 입력한 데이터 추가하기 - Admin
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 * @throws Exception 
 	 */
@@ -88,7 +88,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 입력한 데이터 수정하기
+	 * 입력한 데이터 수정하기 - Admin
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 * @throws Exception 
 	 */
@@ -106,7 +106,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 데이터 삭제하기
+	 * 데이터 삭제하기 - Admin
 	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "GameXdmDele")
@@ -117,7 +117,7 @@ public class GameController {
 	}
 	
 	/**
-	 * 데이터 삭제 옵션 세팅 - update 이용
+	 * 데이터 삭제 옵션 세팅 - update 이용 - Admin
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 */
 	@RequestMapping(value = "GameXdmUele")
@@ -128,7 +128,7 @@ public class GameController {
 	}
 	
 	/**
-	 * Ajax를 통한 여러건 데이터 삭제
+	 * Ajax를 통한 여러건 데이터 삭제 - Admin
 	 * @param seqList
 	 * @return
 	 * @throws Exception
@@ -154,7 +154,7 @@ public class GameController {
 	}
 	
 	/**
-	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
+	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용 - Admin
 	 * @param seqList
 	 * @return
 	 * @throws Exception
@@ -177,6 +177,25 @@ public class GameController {
 		}
 
 		return returnMap;
+	}
+	
+	/**
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감 - Admin
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "GameReviewXdmList")
+	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo,
+			HttpSession httpSession) throws Exception {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectReviewOneCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			//TODO
+			model.addAttribute("gameReviewList", service.selectList(vo));
+		}
+		
+		return path_admin + "GameXdmList";
 	}
 	
 	/////////////////////////////////////////////////////////////////

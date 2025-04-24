@@ -1,5 +1,7 @@
 package com.dodo.module.game;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dodo.module.file.FileDto;
@@ -45,6 +47,10 @@ public class GameDto extends FileDto {
 	private int fillStarCount; 	// 다 채운 별
 	private int harfStarCount; 	// 반 채운 별
 	private int emptyStarCount; // 빈 별
+	
+	private List<GameReviewDto> gameReviewDtos;
+	private int gameReviewDtosSize = 5; 	// 보여줄 리뷰 개수
+	private int gameReviewDtosTotalSize; 	// 리뷰 총 개수
 	
 	public String getgSeq() {
 		return gSeq;
@@ -322,6 +328,30 @@ public class GameDto extends FileDto {
 
 	public void setEmptyStarCount(int emptyStarCount) {
 		this.emptyStarCount = emptyStarCount;
+	}
+
+	public List<GameReviewDto> getGameReviewDtos() {
+		return gameReviewDtos;
+	}
+
+	public void setGameReviewDtos(List<GameReviewDto> gameReviewDtos) {
+		this.gameReviewDtos = gameReviewDtos;
+	}
+
+	public int getGameReviewDtosSize() {
+		return gameReviewDtosSize;
+	}
+
+	public void setGameReviewDtosSize(int gameReviewDtosSize) {
+		this.gameReviewDtosSize = gameReviewDtosSize;
+	}
+
+	public int getGameReviewDtosTotalSize() {
+		return gameReviewDtosTotalSize;
+	}
+
+	public void setGameReviewDtosTotalSize(int gameReviewDtosTotalSize) {
+		this.gameReviewDtosTotalSize = gameReviewDtosTotalSize;
 	}
 
 }

@@ -22,11 +22,11 @@
 						<div class="d-flex mb-2 gap-3">
 							<div>
 								<i class="bi bi-trophy" data-bs-toggle="tooltip" data-bs-html="true" title="순위"></i> 
-								<span th:text="${gameItem?.rOrder}"></span>
+								<span th:text="${gameItem?.grOrder}"></span>
 							</div>
 							<div>
 								<i class="bi bi-star" data-bs-toggle="tooltip" data-bs-html="true" title="평점"></i>
-								<span th:text="${gameItem?.rScoreAvg}"></span>
+								<span th:text="${gameItem?.grScoreAvg}"></span>
 							</div>
 							<div>
 								<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
@@ -47,7 +47,7 @@
 									class="bi bi-star"></i>
 							</small>
 							<a href="#" class="ms-2" id="linkReviews"
-								th:text="${'(' + @doDoUtil.formatNumberComma(gameItem?.rCount) + ' 리뷰 보기)'}"></a>
+								th:text="${'(' + @doDoUtil.formatNumberComma(gameItem?.grCount) + ' 리뷰 보기)'}"></a>
 						</div>  
 						<hr class="my-6" />
 						<div>
@@ -215,8 +215,8 @@
 															th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
 															class="bi bi-star"></i>
 													</small>
-													<span class="ms-3" th:text="${gameItem?.rScoreAvg + '/ 10'}"></span>
-													<small class="ms-3" th:text="${'리뷰 합계 ' + @doDoUtil.formatNumberComma(gameItem?.rCount)}"></small>
+													<span class="ms-3" th:text="${gameItem?.grScoreAvg + '/ 10'}"></span>
+													<small class="ms-3" th:text="${'리뷰 합계 ' + @doDoUtil.formatNumberComma(gameItem?.grCount)}"></small>
 												</span>
 											</div>
 											<div class="mb-8">

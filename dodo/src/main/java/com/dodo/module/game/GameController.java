@@ -192,10 +192,10 @@ public class GameController {
 		
 		if (vo.getTotalRows() > 0) {
 			//TODO
-			model.addAttribute("gameReviewList", service.selectList(vo));
+			model.addAttribute("gameReviewList", service.selectReviewList(vo));
 		}
 		
-		return path_admin + "GameXdmList";
+		return path_admin + "GameReviewXdmList";
 	}
 	
 	/////////////////////////////////////////////////////////////////
@@ -232,7 +232,7 @@ public class GameController {
 		// 순위 설정
 		for (GameDto orderDto : dtoOrderList) {
 			if (orderDto.getgSeq().equals(dto.getgSeq())) {
-				dto.setrOrder(orderDto.getrOrder());
+				dto.setGrOrder(orderDto.getGrOrder());
 				break;
 			}
 		}

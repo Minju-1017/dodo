@@ -65,7 +65,7 @@
 															th:attr="onclick=|goDetail('${list.gSeq}')|"></a>
 													</td>
 													<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></td>
-													<td th:text="${list?.rScoreAvg}"></td>	
+													<td th:text="${list?.grScoreAvg}"></td>	
 													<td th:text="${list?.gLevel}"></td>
 													<td th:if="${list?.gMinPeople eq list?.gMaxPeople}"
 														th:text="${list?.gMinPeople + '명'}"></td>

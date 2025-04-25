@@ -9,6 +9,11 @@ public class GameReviewDto {
 	private String grComment;
 	private String grRegiDate;
 	
+	private String gName;
+	
+	private String mId;
+	private String mName;
+	
 	public String getGrSeq() {
 		return grSeq;
 	}
@@ -55,6 +60,30 @@ public class GameReviewDto {
 	
 	public void setGrRegiDate(String grRegiDate) {
 		this.grRegiDate = grRegiDate;
+	}
+
+	public String getgName() {
+		return gName;
+	}
+
+	public void setgName(String gName) {
+		this.gName = gName;
+	}
+
+	public String getmId() {
+		return mId;
+	}
+
+	public void setmId(String mId) {
+		this.mId = mId;
+	}
+
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 	
 }

@@ -43,7 +43,7 @@
 									<a class="nav-link active" href="/xdm/game/GameXdmList">게임관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">리뷰관리</a>
+									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">중고거래관리</a>
@@ -164,7 +164,7 @@
 									<a class="nav-link active" href="/xdm/game/GameXdmList">게임관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">리뷰관리</a>
+									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">중고거래관리</a>
@@ -427,7 +427,7 @@
 												</td>
 												<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}">
 												</td>
-												<td th:text="${list?.rScoreAvg}"></td>	
+												<td th:text="${list?.grScoreAvg}"></td>	
 												<td th:text="${list?.gLevel}"></td>
 												<td th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}">
 												</td>

@@ -29,9 +29,9 @@ public class GameDto extends FileDto {
 	private String gRegiDate;
 	private String gUpdtDate;
 	
-	private double rScoreAvg; 	// 리뷰 테이블에서 점수 평균 가져온 값
-	private int rCount; 		// 리뷰 갯수
-	private int rOrder; 		// 리뷰 테이블 점수 평균으로 매긴 순위
+	private double grScoreAvg; 	// 리뷰 테이블에서 점수 평균 가져온 값
+	private int grCount; 		// 리뷰 갯수
+	private int grOrder; 		// 리뷰 테이블 점수 평균으로 매긴 순위
 	
 	// Image File uploaded
 	private String gtfSeq;
@@ -180,15 +180,15 @@ public class GameDto extends FileDto {
 		this.gUpdtDate = gUpdtDate;
 	}
 
-	public double getrScoreAvg() {
-		return rScoreAvg;
+	public double getGrScoreAvg() {
+		return grScoreAvg;
 	}
 
-	public void setrScoreAvg(double rScoreAvg) {
-		this.rScoreAvg = rScoreAvg;
+	public void setGrScoreAvg(double grScoreAvg) {
+		this.grScoreAvg = grScoreAvg;
 		
 		// 별표 셋팅
-		double scoreAvg = rScoreAvg / 2.0;
+		double scoreAvg = grScoreAvg / 2.0;
 		this.fillStarCount = (int) scoreAvg;
 		this.harfStarCount = (scoreAvg - this.fillStarCount) > 0 ? 1 : 0;
 		this.emptyStarCount = 5 - this.fillStarCount - this.harfStarCount;
@@ -226,20 +226,20 @@ public class GameDto extends FileDto {
 		this.gGPName = gGPName;
 	}
 
-	public int getrOrder() {
-		return rOrder;
+	public int getGrOrder() {
+		return grOrder;
 	}
 
-	public void setrOrder(int rOrder) {
-		this.rOrder = rOrder;
+	public void setGrOrder(int grOrder) {
+		this.grOrder = grOrder;
 	}
 
-	public int getrCount() {
-		return rCount;
+	public int getGrCount() {
+		return grCount;
 	}
 
-	public void setrCount(int rCount) {
-		this.rCount = rCount;
+	public void setGrCount(int grCount) {
+		this.grCount = grCount;
 	}
 
 	public String getGtfSeq() {

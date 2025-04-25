@@ -23,6 +23,10 @@ public class GameService {
 		return dao.selectReviewOneCount(vo);
 	}
 	
+	public List<GameReviewDto> selectReviewList(GameVo vo) {
+		return dao.selectReviewList(vo);
+	}
+	
 	public List<GameDto> selectTop10List(GameVo vo) {
 		return dao.selectTop10List(vo);
 	}

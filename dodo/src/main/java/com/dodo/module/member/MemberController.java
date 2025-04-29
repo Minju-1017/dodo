@@ -467,7 +467,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * Ajax를 통한 로그인 처리
+	 * Ajax를 통한 로그인 처리 - Admin
 	 * @param memberDto
 	 * @return
 	 * @throws Exception
@@ -498,7 +498,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * Ajax를 통한 로그아웃 처리
+	 * Ajax를 통한 로그아웃 처리 - Admin
 	 * @return
 	 * @throws Exception
 	 */

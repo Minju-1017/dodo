@@ -48,9 +48,9 @@ public class GameDto extends FileDto {
 	private int harfStarCount; 	// 반 채운 별
 	private int emptyStarCount; // 빈 별
 	
-	private List<GameReviewDto> gameReviewDtos;
-	private int gameReviewDtosSize = 5; 	// 보여줄 리뷰 개수
-	private int gameReviewDtosTotalSize; 	// 리뷰 총 개수
+	private int grDtosSize = 5; 		// 보여줄 리뷰 개수
+	private int grDtosTotalSize; 		// 리뷰 총 개수
+	private Integer grShOption = 1;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 / 1: 최신순, 2: 평점 높은순
 	
 	public String getgSeq() {
 		return gSeq;
@@ -330,28 +330,28 @@ public class GameDto extends FileDto {
 		this.emptyStarCount = emptyStarCount;
 	}
 
-	public List<GameReviewDto> getGameReviewDtos() {
-		return gameReviewDtos;
+	public int getGrDtosSize() {
+		return grDtosSize;
 	}
 
-	public void setGameReviewDtos(List<GameReviewDto> gameReviewDtos) {
-		this.gameReviewDtos = gameReviewDtos;
+	public void setGrDtosSize(int grDtosSize) {
+		this.grDtosSize = grDtosSize;
 	}
 
-	public int getGameReviewDtosSize() {
-		return gameReviewDtosSize;
+	public int getGrDtosTotalSize() {
+		return grDtosTotalSize;
 	}
 
-	public void setGameReviewDtosSize(int gameReviewDtosSize) {
-		this.gameReviewDtosSize = gameReviewDtosSize;
+	public void setGrDtosTotalSize(int grDtosTotalSize) {
+		this.grDtosTotalSize = grDtosTotalSize;
 	}
 
-	public int getGameReviewDtosTotalSize() {
-		return gameReviewDtosTotalSize;
+	public Integer getGrShOption() {
+		return grShOption;
 	}
 
-	public void setGameReviewDtosTotalSize(int gameReviewDtosTotalSize) {
-		this.gameReviewDtosTotalSize = gameReviewDtosTotalSize;
+	public void setGrShOption(Integer grShOption) {
+		this.grShOption = grShOption;
 	}
 
 }

@@ -19,6 +19,10 @@ public class GameService {
 		return dao.selectList(vo);
 	}
 	
+	public List<GameDto> selectListWithoutPaging() {
+		return dao.selectListWithoutPaging();
+	}
+	
 	public int selectReviewOneCount(GameVo vo) {
 		return dao.selectReviewOneCount(vo);
 	}
@@ -35,12 +39,12 @@ public class GameService {
 		return dao.selectOrderList(gameDto);
 	}
 	
-	public List<GameDto> selectListWithoutPaging() {
-		return dao.selectListWithoutPaging();
-	}
-	
 	public GameDto selectOne(GameDto gameDto) {
 		return dao.selectOne(gameDto);
+	}
+	
+	public int selectReviewTotalCount(GameDto gameDto) {
+		return dao.selectReviewTotalCount(gameDto);
 	}
 	
 	public int insert(GameDto gameDto) {

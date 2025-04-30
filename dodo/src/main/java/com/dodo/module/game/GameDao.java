@@ -10,17 +10,19 @@ public interface GameDao {
 	public int selectOneCount(GameVo vo);
 	public List<GameDto> selectList(GameVo vo); 
 	public List<GameDto> selectListWithoutPaging(); 
-	public int selectReviewOneCount(GameVo vo);
-	public List<GameReviewDto> selectReviewList(GameVo vo); 
 	public List<GameDto> selectTop10List(GameVo vo);
 	public List<GameDto> selectOrderList(GameDto gameDto);
 	public GameDto selectOne(GameDto gameDto);
-	public int selectReviewTotalCount(GameDto gameDto);
 	public int insert(GameDto gameDto);
 	public int update(GameDto gameDto);
 	public int delete(GameDto gameDto);
 	public int uelete(GameDto gameDto);
 	public int listDelete(List<String> seqList);
 	public int listUelete(List<String> seqList);
+	
+	public int selectReviewOneCount(GameVo vo);
+	public List<GameReviewDto> selectReviewList(GameVo vo); 
+	public int selectReviewTotalCount(GameDto gameDto);
+	public List<GameReviewDto> selectGameDetailReviewList(GameDto gameDto); 
 	
 }

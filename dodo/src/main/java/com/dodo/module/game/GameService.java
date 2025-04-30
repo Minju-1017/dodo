@@ -23,14 +23,6 @@ public class GameService {
 		return dao.selectListWithoutPaging();
 	}
 	
-	public int selectReviewOneCount(GameVo vo) {
-		return dao.selectReviewOneCount(vo);
-	}
-	
-	public List<GameReviewDto> selectReviewList(GameVo vo) {
-		return dao.selectReviewList(vo);
-	}
-	
 	public List<GameDto> selectTop10List(GameVo vo) {
 		return dao.selectTop10List(vo);
 	}
@@ -41,10 +33,6 @@ public class GameService {
 	
 	public GameDto selectOne(GameDto gameDto) {
 		return dao.selectOne(gameDto);
-	}
-	
-	public int selectReviewTotalCount(GameDto gameDto) {
-		return dao.selectReviewTotalCount(gameDto);
 	}
 	
 	public int insert(GameDto gameDto) {
@@ -70,4 +58,21 @@ public class GameService {
 	public int listUelete(List<String> seqList) {
 		return dao.listUelete(seqList);
 	}
+	
+	public int selectReviewOneCount(GameVo vo) {
+		return dao.selectReviewOneCount(vo);
+	}
+	
+	public List<GameReviewDto> selectReviewList(GameVo vo) {
+		return dao.selectReviewList(vo);
+	}
+	
+	public int selectReviewTotalCount(GameDto gameDto) {
+		return dao.selectReviewTotalCount(gameDto);
+	}
+	
+	public List<GameReviewDto> selectGameDetailReviewList(GameDto gameDto) {
+		return dao.selectGameDetailReviewList(gameDto);
+	}
+	
 }

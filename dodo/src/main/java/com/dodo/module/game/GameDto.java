@@ -335,6 +335,11 @@ public class GameDto extends FileDto {
 	}
 
 	public void setGrDtosSize(int grDtosSize) {
+		if (grDtosSize > grDtosTotalSize) {
+			this.grDtosSize = grDtosTotalSize;
+			return;
+		}
+		
 		this.grDtosSize = grDtosSize;
 	}
 
@@ -344,6 +349,10 @@ public class GameDto extends FileDto {
 
 	public void setGrDtosTotalSize(int grDtosTotalSize) {
 		this.grDtosTotalSize = grDtosTotalSize;
+		
+		if (grDtosSize > grDtosTotalSize) {
+			grDtosSize = grDtosTotalSize;
+		}
 	}
 
 	public Integer getGrShOption() {

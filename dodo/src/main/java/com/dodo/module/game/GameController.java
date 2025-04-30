@@ -243,31 +243,13 @@ public class GameController {
 		
 		// 리뷰 리스트
 		int reviewTotalCount = service.selectReviewTotalCount(dto);
+		dto.setGrDtosTotalSize(reviewTotalCount);
 		
 		if (reviewTotalCount > 0) {
 			model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(dto));
 		}
 		
 		return path_user + "GameUsrDetail";
-	}
-	
-	/**
-	 * 전체 데이터 읽어오기 - 페이징 기능 들어감 - Admin
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "GameReviewXdmList")
-	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo,
-			HttpSession httpSession) throws Exception {
-		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectReviewOneCount(vo));
-		
-		if (vo.getTotalRows() > 0) {
-			//TODO
-			model.addAttribute("gameReviewList", service.selectReviewList(vo));
-		}
-		
-		return path_admin + "GameReviewXdmList";
 	}
 
 }

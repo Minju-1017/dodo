@@ -45,6 +45,11 @@
 								<i th:unless="${gameItem?.emptyStarCount eq 0}"   
 									th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
 									class="bi bi-star"></i>
+								<i th:if="${gameItem?.emptyStarCount eq 0 
+									and gameItem?.harfStarCount eq 0 
+									and gameItem?.fillStarCount eq 0}"   
+									th:each="i : ${#numbers.sequence(0, 4)}"
+									class="bi bi-star"></i>
 							</small>
 							<a href="#" class="ms-2" id="linkReviews"
 								th:text="${'(' + @doDoUtil.formatNumberComma(gameItem?.grCount) + ' 리뷰 보기)'}"></a>
@@ -213,6 +218,11 @@
 															class="bi bi-star-half"></i>
 														<i th:unless="${gameItem?.emptyStarCount eq 0}"   
 															th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
+															class="bi bi-star"></i>
+														<i th:if="${gameItem?.emptyStarCount eq 0 
+															and gameItem?.harfStarCount eq 0 
+															and gameItem?.fillStarCount eq 0}"   
+															th:each="i : ${#numbers.sequence(0, 4)}"
 															class="bi bi-star"></i>
 													</small>
 													<span class="ms-3" th:text="${gameItem?.grScoreAvg + '/ 10'}"></span>
@@ -386,32 +396,39 @@
 													</select>
 												</div>
 											</div>
-											<div class="d-flex border-bottom pb-6 mb-6">
-												<img src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar-10.jpg" alt=""
-													class="rounded-circle avatar-lg" />
+											<div th:if="${#lists.isEmpty(gameDetailReviewList)}"
+												class="d-flex pb-6 mb-6">리뷰가 없습니다.</div>
+											<div th:if="${!#lists.isEmpty(gameDetailReviewList)}" th:each="list : ${gameDetailReviewList}"
+												class="d-flex border-bottom pb-6 mb-6">
+												<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+													class="rounded-circle avatar-lg"
+													src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar.jpg" />
+												<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+													class="rounded-circle avatar-lg" th:src="${list?.fPath}" />
+													
 												<div class="ms-5">
-													<h6 class="mb-1">김개똥</h6>
+													<h6 class="mb-1" th:value="${list?.mName}"></h6>
 													<p class="small">
-														<span class="text-muted">2025-02-25 23:00</span>
+														<span class="text-muted" th:value="${list?.grRegiDate}"></span>
 													</p>
 													<div class="mb-2">
-														<i class="bi bi-star-fill text-warning"></i>
-														<i class="bi bi-star-fill text-warning"></i>
-														<i class="bi bi-star-fill text-warning"></i>
-														<i class="bi bi-star-half text-warning"></i>
-														<i class="bi bi-star text-warning"></i>
-														<span class="ms-3 text-dark fw-bold">6.7</span>
+														<i th:unless="${list?.fillStarCount eq 0}" 
+															th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+															class="bi bi-star-fill text-warning"></i>
+														<i th:unless="${list?.harfStarCount eq 0}"  
+															th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+															class="bi bi-star-half text-warning"></i>
+														<i th:unless="${list?.emptyStarCount eq 0}"   
+															th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+															class="bi bi-star text-warning"></i>
+														<span class="ms-3 text-dark fw-bold" th:value="${list?.grScore}">6.7</span>
 													</div>
-													<p>
-														재미있습니다!!! 재미있습니다!!! 재미있습니다!!! 재미있습니다!!!
-														재미있습니다!!! 재미있습니다!!! 재미있습니다!!! 재미있습니다!!!
-														재미있습니다!!! 재미있습니다!!! 재미있습니다!!! 재미있습니다!!!
-														재미있습니다!!! 재미있습니다!!! 재미있습니다!!! 재미있습니다!!!
-													</p>
+													<p th:value="${list?.grComment}"></p>
 												</div>
 											</div>
 											<div>
-												<a href="#" class="btn btn-outline-gray-400 text-muted">리뷰 더 보기</a>
+												<a th:if="${!#lists.isEmpty(gameDetailReviewList)}" 
+													href="#" class="btn btn-outline-gray-400 text-muted">리뷰 더 보기</a>
 											</div>
 										</div>
 										<div>

@@ -343,6 +343,7 @@
 			LEFT JOIN member b ON a.member_mSeq = b.mSeq
 			LEFT JOIN memberPfFile c ON a.member_mSeq = c.rSeq
 		WHERE 1=1
+			AND a.grDelNy = 0
 		ORDER BY 
 			<choose>
 				<when test="grShOption == 1">

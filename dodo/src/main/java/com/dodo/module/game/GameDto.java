@@ -1,7 +1,5 @@
 package com.dodo.module.game;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dodo.module.file.FileDto;

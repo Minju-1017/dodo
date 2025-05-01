@@ -14,6 +14,13 @@ public class GameReviewDto {
 	private String mId;
 	private String mName;
 	
+	private String fPath;
+	
+	// 평점 별 표시를 위한 값
+	private int fillStarCount; 	// 다 채운 별
+	private int harfStarCount; 	// 반 채운 별
+	private int emptyStarCount; // 빈 별
+	
 	public String getGrSeq() {
 		return grSeq;
 	}
@@ -44,6 +51,12 @@ public class GameReviewDto {
 	
 	public void setGrScore(double grScore) {
 		this.grScore = grScore;
+		
+		// 별표 셋팅
+		double score = grScore / 2.0;
+		this.fillStarCount = (int) score;
+		this.harfStarCount = (score - this.fillStarCount) > 0 ? 1 : 0;
+		this.emptyStarCount = 5 - this.fillStarCount - this.harfStarCount;
 	}
 	
 	public String getGrComment() {
@@ -84,6 +97,38 @@ public class GameReviewDto {
 
 	public void setmName(String mName) {
 		this.mName = mName;
+	}
+
+	public String getfPath() {
+		return fPath;
+	}
+
+	public void setfPath(String fPath) {
+		this.fPath = fPath;
+	}
+
+	public int getFillStarCount() {
+		return fillStarCount;
+	}
+
+	public void setFillStarCount(int fillStarCount) {
+		this.fillStarCount = fillStarCount;
+	}
+
+	public int getHarfStarCount() {
+		return harfStarCount;
+	}
+
+	public void setHarfStarCount(int harfStarCount) {
+		this.harfStarCount = harfStarCount;
+	}
+
+	public int getEmptyStarCount() {
+		return emptyStarCount;
+	}
+
+	public void setEmptyStarCount(int emptyStarCount) {
+		this.emptyStarCount = emptyStarCount;
 	}
 	
 }

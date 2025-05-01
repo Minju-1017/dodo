@@ -407,7 +407,7 @@
 													class="rounded-circle avatar-lg" th:src="${list?.fPath}" />
 													
 												<div class="ms-5">
-													<h6 class="mb-1" th:value="${list?.mName}"></h6>
+													<h6 class="mb-1" th:text="${list?.mName}"></h6>
 													<p class="small">
 														<span class="text-muted" th:value="${list?.grRegiDate}"></span>
 													</p>
@@ -421,9 +421,9 @@
 														<i th:unless="${list?.emptyStarCount eq 0}"   
 															th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
 															class="bi bi-star text-warning"></i>
-														<span class="ms-3 text-dark fw-bold" th:value="${list?.grScore}">6.7</span>
+														<span class="ms-3 text-dark fw-bold" th:text="${list?.grScore}"></span>
 													</div>
-													<p th:value="${list?.grComment}"></p>
+													<p th:text="${list?.grComment}"></p>
 												</div>
 											</div>
 											<div>

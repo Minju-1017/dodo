@@ -236,20 +236,41 @@ public class GameController {
 			}
 		}
 		
+		// 썸네일
 		gameDto.setrSeq(gameDto.getgSeq());
 		model.addAttribute("gameLargeTnFile", fileService.selectOne(gameDto, "gameLargeTnFile"));
 		
+		// 게임 정보
 		model.addAttribute("gameItem", dto);
 		
 		// 리뷰 리스트
-		int reviewTotalCount = service.selectReviewTotalCount(dto);
-		dto.setGrDtosTotalSize(reviewTotalCount);
-		
-		if (reviewTotalCount > 0) {
+		if (dto.getGrCount() > 0) {
 			model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(dto));
 		}
 		
 		return path_user + "GameUsrDetail";
+	}
+	
+	/**
+	 * Ajax를 입력한 데이터 추가하기(리뷰) - User
+	 * @param gameReviewDto
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "GameUsrDetailReviewInst")
+	public Map<String, Object> gameUsrDetailReviewInst(GameReviewDto gameReviewDto) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		int successCnt = service.insertReview(gameReviewDto);
+			
+		if (successCnt > 0) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+
+		return returnMap;
 	}
 
 }

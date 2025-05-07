@@ -67,12 +67,12 @@ public class GameService {
 		return dao.selectReviewList(vo);
 	}
 	
-	public int selectReviewTotalCount(GameDto gameDto) {
-		return dao.selectReviewTotalCount(gameDto);
-	}
-	
 	public List<GameReviewDto> selectGameDetailReviewList(GameDto gameDto) {
 		return dao.selectGameDetailReviewList(gameDto);
+	}
+	
+	public int insertReview(GameReviewDto gameReviewDto) {
+		return dao.insertReview(gameReviewDto);
 	}
 	
 }

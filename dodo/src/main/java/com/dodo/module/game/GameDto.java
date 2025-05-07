@@ -28,7 +28,7 @@ public class GameDto extends FileDto {
 	private String gUpdtDate;
 	
 	private double grScoreAvg; 	// 리뷰 테이블에서 점수 평균 가져온 값
-	private int grCount; 		// 리뷰 갯수
+	private int grCount; 		// 리뷰 총 갯수
 	private int grOrder; 		// 리뷰 테이블 점수 평균으로 매긴 순위
 	
 	// Image File uploaded
@@ -46,8 +46,20 @@ public class GameDto extends FileDto {
 	private int harfStarCount; 	// 반 채운 별
 	private int emptyStarCount; // 빈 별
 	
+	// 리뷰 분포 백분율
+	private int score10;
+	private int score9;
+	private int score8;
+	private int score7;
+	private int score6;
+	private int score5;
+	private int score4;
+	private int score3;
+	private int score2;
+	private int score1;
+	
+	// 보여줄 리뷰 개수, 정렬 조건
 	private int grDtosSize = 5; 		// 보여줄 리뷰 개수
-	private int grDtosTotalSize; 		// 리뷰 총 개수
 	private Integer grShOption = 1;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 / 1: 최신순, 2: 평점 높은순
 	
 	public String getgSeq() {
@@ -183,7 +195,7 @@ public class GameDto extends FileDto {
 	}
 
 	public void setGrScoreAvg(double grScoreAvg) {
-		this.grScoreAvg = grScoreAvg;
+		this.grScoreAvg = Math.round(grScoreAvg * 100) / 100.0;
 		
 		// 별표 셋팅
 		double scoreAvg = grScoreAvg / 2.0;
@@ -333,24 +345,12 @@ public class GameDto extends FileDto {
 	}
 
 	public void setGrDtosSize(int grDtosSize) {
-		if (grDtosSize > grDtosTotalSize) {
-			this.grDtosSize = grDtosTotalSize;
+		if (grDtosSize > grCount) {
+			this.grDtosSize = grCount;
 			return;
 		}
 		
 		this.grDtosSize = grDtosSize;
-	}
-
-	public int getGrDtosTotalSize() {
-		return grDtosTotalSize;
-	}
-
-	public void setGrDtosTotalSize(int grDtosTotalSize) {
-		this.grDtosTotalSize = grDtosTotalSize;
-		
-		if (grDtosSize > grDtosTotalSize) {
-			grDtosSize = grDtosTotalSize;
-		}
 	}
 
 	public Integer getGrShOption() {

@@ -68,12 +68,12 @@
 			WHERE 1=1 
 				AND b.grDelNy = 0 
 				AND b.game_gSeq = a.gSeq
-	    ) as rScoreAvg,
+	    ) as grScoreAvg,
 	    (SELECT COUNT(*) FROM gameReview b
 			WHERE 1=1 
 				AND b.grDelNy = 0 
 				AND b.game_gSeq = a.gSeq
-		) as rCount,
+		) as grCount,
 		(SELECT c.fPath
 			FROM gameSmallTnFile c
 			WHERE 1=1 
@@ -100,7 +100,7 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-		ORDER BY rScoreAvg DESC LIMIT 0, 10
+		ORDER BY grScoreAvg DESC LIMIT 0, 10
 	</select>
 	
 	<select id="selectOrderList" resultMap="resultMapObj">
@@ -114,12 +114,12 @@
 					AND b.grDelNy = 0 
 					AND b.game_gSeq = a.gSeq
 		    ) 
-	        DESC) rOrder
+	        DESC) grOrder
 		FROM 
 			game a
 		WHERE 1=1
        		 AND a.gDelNy = 0  
-		ORDER BY rOrder
+		ORDER BY grOrder
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
@@ -309,25 +309,6 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
-	<select id="selectReviewTotalCount" resultType="Integer">
-		SELECT COUNT(*)
-		FROM 
-			gameReview a
-			LEFT JOIN game b ON a.game_gSeq = b.gSeq
-			LEFT JOIN member c ON a.member_mSeq = c.mSeq
-		WHERE 1=1
-		ORDER BY 
-			<choose>
-				<when test="grShOption == 1">
-					a.grRegiDate DESC
-				</when>
-				<when test="grShOption == 2">
-					a.grScore DESC
-				</when>
-			</choose>
-		LIMIT #{grDtosSize} OFFSET 0
-	</select>
-	
 	<select id="selectGameDetailReviewList" resultMap="resultMapObj_GR">
 		SELECT
 			a.grSeq,
@@ -336,13 +317,15 @@
 		    a.grScore,
 		    a.grComment,
 		    a.grRegiDate,
-		    b.mName,
-		    c.fPath
+		    c.mName,
+		    d.fPath
 		FROM 
 			gameReview a
-			LEFT JOIN member b ON a.member_mSeq = b.mSeq
-			LEFT JOIN memberPfFile c ON a.member_mSeq = c.rSeq
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+			LEFT JOIN memberPfFile d ON a.member_mSeq = d.rSeq
 		WHERE 1=1
+			AND a.game_gSeq = #{gSeq}
 			AND a.grDelNy = 0
 		ORDER BY 
 			<choose>
@@ -355,5 +338,30 @@
 			</choose>
 		LIMIT #{grDtosSize} OFFSET 0
 	</select>
+	
+	<insert id="insertReview">
+		INSERT INTO gameReview
+		(
+		    member_mSeq,
+		    game_gSeq,
+		    grScore,
+		    grComment,
+		    grRegiDate,
+		    grDelNy
+		)
+		VALUES
+		(
+			#{member_mSeq},
+		    #{game_gSeq},
+		    #{grScore},
+		    #{grComment},
+		    now(),
+		    0
+		)
+		
+		<selectKey resultType="String" keyProperty="grSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
 	
 </mapper>

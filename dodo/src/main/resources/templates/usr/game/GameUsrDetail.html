@@ -38,14 +38,11 @@
 							<small class="text-warning">
 								<i th:unless="${gameItem?.fillStarCount eq 0}" 
 									th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
-									class="bi bi-star-fill"></i>
-								<i th:unless="${gameItem?.harfStarCount eq 0}"  
+									class="bi bi-star-fill"></i><i th:unless="${gameItem?.harfStarCount eq 0}"  
 									th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
-									class="bi bi-star-half"></i>
-								<i th:unless="${gameItem?.emptyStarCount eq 0}"   
+									class="bi bi-star-half"></i><i th:unless="${gameItem?.emptyStarCount eq 0}"   
 									th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
-									class="bi bi-star"></i>
-								<i th:if="${gameItem?.emptyStarCount eq 0 
+									class="bi bi-star"></i><i th:if="${gameItem?.emptyStarCount eq 0 
 									and gameItem?.harfStarCount eq 0 
 									and gameItem?.fillStarCount eq 0}"   
 									th:each="i : ${#numbers.sequence(0, 4)}"
@@ -212,14 +209,11 @@
 													<small class="text-warning">
 														<i th:unless="${gameItem?.fillStarCount eq 0}" 
 															th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
-															class="bi bi-star-fill"></i>
-														<i th:unless="${gameItem?.harfStarCount eq 0}"  
+															class="bi bi-star-fill"></i><i th:unless="${gameItem?.harfStarCount eq 0}"  
 															th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
-															class="bi bi-star-half"></i>
-														<i th:unless="${gameItem?.emptyStarCount eq 0}"   
+															class="bi bi-star-half"></i><i th:unless="${gameItem?.emptyStarCount eq 0}"   
 															th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
-															class="bi bi-star"></i>
-														<i th:if="${gameItem?.emptyStarCount eq 0 
+															class="bi bi-star"></i><i th:if="${gameItem?.emptyStarCount eq 0 
 															and gameItem?.harfStarCount eq 0 
 															and gameItem?.fillStarCount eq 0}"   
 															th:each="i : ${#numbers.sequence(0, 4)}"
@@ -232,8 +226,7 @@
 											<div class="mb-8">
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">10</span>
+														<span class="d-inline-block align-middle text-muted" style="width:13px">10</span>
 														<i class="bi bi-star-fill ms-1 small text-warning"></i>
 													</div>
 													<div class="w-100">
@@ -243,142 +236,133 @@
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3">53%</span>
+													<span class="text-muted ms-3" style="width:13px">53%</span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">9</span>
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;9</span>
 														<i class="bi bi-star-fill ms-1 small text-warning"></i>
 													</div>
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 50%" aria-valuenow="50"
-																aria-valuemin="0" aria-valuemax="50"></div>
-														</div>
-													</div>
-													<span class="text-muted ms-3">22%</span>
-												</div>
-												<div class="d-flex align-items-center mb-2">
-													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">8</span>
-														<i class="bi bi-star-fill ms-1 small text-warning"></i>
-													</div>
-													<div class="w-100">
-														<div class="progress" style="height: 6px">
-															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 35%" aria-valuenow="35"
-																aria-valuemin="0" aria-valuemax="35"></div>
-														</div>
-													</div>
-													<span class="text-muted ms-3">14%</span>
-												</div>
-												<div class="d-flex align-items-center mb-2">
-													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">7</span>
-														<i class="bi bi-star-fill ms-1 small text-warning"></i>
-													</div>
-													<div class="w-100">
-														<div class="progress" style="height: 6px">
-															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 22%" aria-valuenow="22"
-																aria-valuemin="0" aria-valuemax="22"></div>
-														</div>
-													</div>
-													<span class="text-muted ms-3">5%</span>
-												</div>
-												<div class="d-flex align-items-center mb-2">
-													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">6</span>
-														<i class="bi bi-star-fill ms-1 small text-warning"></i>
-													</div>
-													<div class="w-100">
-														<div class="progress" style="height: 6px">
-															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 14%" aria-valuenow="14"
-																aria-valuemin="0" aria-valuemax="14"></div>
-														</div>
-													</div>
-													<span class="text-muted ms-3">7%</span>
-												</div>
-												<div class="d-flex align-items-center mb-2">
-													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">5</span>
-														<i class="bi bi-star-fill ms-1 small text-warning"></i>
-													</div>
-													<div class="w-100">
-														<div class="progress" style="height: 6px">
-															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 60%" aria-valuenow="60"
+																style="width: 0%" aria-valuenow="0"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3">53%</span>
+													<span class="text-muted ms-3" style="width:13px">0%</span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">4</span>
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;8</span>
 														<i class="bi bi-star-fill ms-1 small text-warning"></i>
 													</div>
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
 																style="width: 50%" aria-valuenow="50"
-																aria-valuemin="0" aria-valuemax="50"></div>
+																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3">22%</span>
+													<span class="text-muted ms-3" style="width:13px">22%</span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">3</span>
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;7</span>
 														<i class="bi bi-star-fill ms-1 small text-warning"></i>
 													</div>
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 35%" aria-valuenow="35"
-																aria-valuemin="0" aria-valuemax="35"></div>
+																style="width: 9%" aria-valuenow="9"
+																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3">14%</span>
+													<span class="text-muted ms-3" style="width:13px">9%</span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">2</span>
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;6</span>
 														<i class="bi bi-star-fill ms-1 small text-warning"></i>
 													</div>
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 22%" aria-valuenow="22"
-																aria-valuemin="0" aria-valuemax="22"></div>
+																style="width: 30%" aria-valuenow="30"
+																aria-valuemin="0" aria-valuemax="30"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3">5%</span>
+													<span class="text-muted ms-3" style="width:13px">30%</span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
-														<span
-															class="d-inline-block align-middle text-muted">1</span>
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;5</span>
 														<i class="bi bi-star-fill ms-1 small text-warning"></i>
 													</div>
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 14%" aria-valuenow="14"
-																aria-valuemin="0" aria-valuemax="14"></div>
+																style="width: 15%" aria-valuenow="15"
+																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3">7%</span>
+													<span class="text-muted ms-3" style="width:13px">15%</span>
+												</div>
+												<div class="d-flex align-items-center mb-2">
+													<div class="text-nowrap me-3 text-muted">
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;4</span>
+														<i class="bi bi-star-fill ms-1 small text-warning"></i>
+													</div>
+													<div class="w-100">
+														<div class="progress" style="height: 6px">
+															<div class="progress-bar bg-warning" role="progressbar"
+																style="width: 7%" aria-valuenow="7"
+																aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+													<span class="text-muted ms-3" style="width:13px">7%</span>
+												</div>
+												<div class="d-flex align-items-center mb-2">
+													<div class="text-nowrap me-3 text-muted">
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;3</span>
+														<i class="bi bi-star-fill ms-1 small text-warning"></i>
+													</div>
+													<div class="w-100">
+														<div class="progress" style="height: 6px">
+															<div class="progress-bar bg-warning" role="progressbar"
+																style="width: 10%" aria-valuenow="10"
+																aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+													<span class="text-muted ms-3" style="width:13px">10%</span>
+												</div>
+												<div class="d-flex align-items-center mb-2">
+													<div class="text-nowrap me-3 text-muted">
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;2</span>
+														<i class="bi bi-star-fill ms-1 small text-warning"></i>
+													</div>
+													<div class="w-100">
+														<div class="progress" style="height: 6px">
+															<div class="progress-bar bg-warning" role="progressbar"
+																style="width: 0%" aria-valuenow="0"
+																aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+													<span class="text-muted ms-3" style="width:13px">0%</span>
+												</div>
+												<div class="d-flex align-items-center mb-2">
+													<div class="text-nowrap me-3 text-muted">
+														<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;1</span>
+														<i class="bi bi-star-fill ms-1 small text-warning"></i>
+													</div>
+													<div class="w-100">
+														<div class="progress" style="height: 6px">
+															<div class="progress-bar bg-warning" role="progressbar"
+																style="width: 50%" aria-valuenow="50"
+																aria-valuemin="0" aria-valuemax="100"></div>
+														</div>
+													</div>
+													<span class="text-muted ms-3" style="width:13px">22%</span>
 												</div>
 											</div>
 										</div>
@@ -409,16 +393,14 @@
 												<div class="ms-5">
 													<h6 class="mb-1" th:text="${list?.mName}"></h6>
 													<p class="small">
-														<span class="text-muted" th:value="${list?.grRegiDate}"></span>
+														<span class="text-muted" th:text="${list?.grRegiDate}"></span>
 													</p>
 													<div class="mb-2">
 														<i th:unless="${list?.fillStarCount eq 0}" 
 															th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
-															class="bi bi-star-fill text-warning"></i>
-														<i th:unless="${list?.harfStarCount eq 0}"  
+															class="bi bi-star-fill text-warning"></i><i th:unless="${list?.harfStarCount eq 0}"  
 															th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
-															class="bi bi-star-half text-warning"></i>
-														<i th:unless="${list?.emptyStarCount eq 0}"   
+															class="bi bi-star-half text-warning"></i><i th:unless="${list?.emptyStarCount eq 0}"   
 															th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
 															class="bi bi-star text-warning"></i>
 														<span class="ms-3 text-dark fw-bold" th:text="${list?.grScore}"></span>
@@ -426,13 +408,16 @@
 													<p th:text="${list?.grComment}"></p>
 												</div>
 											</div>
-											<div>
-												<a th:if="${!#lists.isEmpty(gameDetailReviewList)}" 
-													href="#" class="btn btn-outline-gray-400 text-muted">리뷰 더 보기</a>
+											<div th:if="${!#lists.isEmpty(gameDetailReviewList)}">
+												<a href="#" class="btn btn-outline-gray-400 text-muted">리뷰 더 보기</a>
 											</div>
 										</div>
 										<div>
-											<form class="row g-6 needs-validation" novalidate>
+											<form class="row g-6 needs-validation" novalidate method="post" id="form" name="form">
+											
+												<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${session.sessSeqUsr}">
+												<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${gameItem?.gSeq}">
+												
 												<div class="card card-lg">
 													<div class="card-body p-6 d-flex flex-column gap-3">
 														<h4 class="mb-1">리뷰 작성</h4>
@@ -441,17 +426,17 @@
 																<label class="form-label">
 																	<h6>평점<span style="color: red;"> *</span></h6>
 																</label>
-																<select class="form-select" required>
-																	<option value="score_10" selected>10</option>
-																	<option value="score_9">9</option>
-																	<option value="score_8">8</option>
-																	<option value="score_7">7</option>
-																	<option value="score_6">6</option>
-																	<option value="score_5">5</option>
-																	<option value="score_4">4</option>
-																	<option value="score_3">3</option>
-																	<option value="score_2">2</option>
-																	<option value="score_1">1</option>
+																<select class="form-select" name="grScore" id="grScore" required>
+																	<option value="10" selected>10</option>
+																	<option value="9">9</option>
+																	<option value="8">8</option>
+																	<option value="7">7</option>
+																	<option value="6">6</option>
+																	<option value="5">5</option>
+																	<option value="4">4</option>
+																	<option value="3">3</option>
+																	<option value="2">2</option>
+																	<option value="1">1</option>
 																</select>
 															</div>
 														</div>
@@ -469,12 +454,13 @@
 																	</span>
 																</div>
 															</div>
-															<textarea id="rContent" class="form-control" rows="3" placeholder="200자 내로 입력해주세요." 
+															<textarea class="form-control" id="grComment" name="grComment" 
+																rows="3" placeholder="200자 내로 입력해주세요." 
 																maxlength="200" style="resize: none;" required></textarea>
 															<div class="invalid-feedback">리뷰 내용을 입력해 주세요.</div>
 														</div>
 														<div class="d-flex justify-content-end">
-															<button class="btn btn-primary" type="submit">리뷰 등록</button>
+															<button class="btn btn-primary" type="button" id="btnSave">리뷰 등록</button>
 														</div>
 													</div>
 												</div>
@@ -558,18 +544,11 @@
 
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
-  	let seq = document.querySelector("input[name=gSeq]");
-    	
-	let fom = document.querySelector("form[name=formList]");
-	let goUrlXdmDetail = "/usr/game/GameUsrDetail";
-	
-	function goDetail(keyValue) {
-		seq.value = keyValue;
-		fom.action = goUrlXdmDetail;
-		fom.submit();
-	}
+	let grScore = document.getElementById("grScore");
+	let grComment = document.getElementById("grComment");
 </script>
 
+<!-- Review -->
 <script type="text/javascript">
 	$('#linkReviews').on('click', function(event) {
 		// 링크 클릭 기본 동작을 막음
@@ -585,12 +564,19 @@
 			behavior: 'smooth',  // 부드럽게 스크롤
 			block: 'start'       // 해당 요소의 상단으로 이동
 		});
+		
+		// 리뷰 입력 부분 초기화
+		resetValidation(grScore);
+		resetValidation(grComment);
+		
+		grScore.options[0].selected = true;
+		grComment.value = "";
 	});
 	
-	$("#rContent").keyup(function (e) {
+	// 리뷰 입력 시 글자 수 세기
+	$("#grComment").keyup(function (e) {
 	    var content = $(this).val();
-
-	    //글자수 세기
+	    
 	    if(content.length == 0 || content == ""){
 	        $(".comment_length").text('0');
 	    }else{
@@ -601,6 +587,89 @@
 	    	$(this).val($(this).val().substring(0, 200));
 	    }
 	 });
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var member_mSeq = document.getElementById("member_mSeq").value;
+		if (member_mSeq == null || member_mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// grScore 체크
+		grScore.classList.add("is-valid");	
+		
+		// grComment 체크
+		resetValidation(grComment);
+		
+		if (!strValidation(grComment)) {
+			grComment.classList.add("is-invalid");
+			
+			if (!focus) {
+				grComment.focus();
+				focus = true;
+			}
+		} else {
+			grComment.classList.add("is-valid");
+		}
+		
+		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+
+		grComment.value = grComment.value.trim();
+		
+		setReview();
+	}
+	
+	// grScore Input 시 체크
+	grScore.addEventListener("input", function(){
+		grScore.classList.add("is-valid");	
+	});
+	
+	// grComment Input 시 체크
+	grComment.addEventListener("input", function(){
+		resetValidation(grComment);
+		
+		if (!strValidation(grComment)) {
+			grComment.classList.add("is-invalid");
+		} else {
+			grComment.classList.add("is-valid");
+		}	
+	});
+	
+	function setReview() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/game/GameUsrDetailReviewInst"
+			,data : {
+				"member_mSeq" : $("#member_mSeq").val(),
+				"game_gSeq" : $("#game_gSeq").val(),
+				"grScore" : $("#grScore").val(), 
+				"grComment" : $("#grComment").val()
+			}
+			,success: function(response) {
+				if (response.rt == "success") {
+					
+				} else {
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	document.getElementById("btnModalLogin").onclick = function() {
+		location.href = "/usr/member/MemberXdmSignIn";
+	}
 </script>
 
 </body>

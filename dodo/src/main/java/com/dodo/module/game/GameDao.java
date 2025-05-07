@@ -22,7 +22,7 @@ public interface GameDao {
 	
 	public int selectReviewOneCount(GameVo vo);
 	public List<GameReviewDto> selectReviewList(GameVo vo); 
-	public int selectReviewTotalCount(GameDto gameDto);
 	public List<GameReviewDto> selectGameDetailReviewList(GameDto gameDto); 
+	public int insertReview(GameReviewDto gameReviewDto);
 	
 }

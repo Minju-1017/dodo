@@ -140,6 +140,7 @@ function showModalDeleteConfirm(title, body, showBtnUelete, showBtnDelete) {
 	document.querySelector("#btnModalUelete").style.display = showBtnUelete;
 	document.querySelector("#btnModalDelete").style.display = showBtnDelete;
 	document.querySelector("#btnModalWithdrawal").style.display = 'none';
+	document.querySelector("#btnModalLogin").style.display = 'none';
 	$("#modalConfirm").modal("show");      	
 }
 
@@ -149,7 +150,19 @@ function showModalWithdrawalConfirm(title, body) {
 	document.querySelector("#modalConfirmBody").textContent = body;
 	document.querySelector("#btnModalUelete").style.display = 'none';
 	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalLogin").style.display = 'none';
 	document.querySelector("#btnModalWithdrawal").style.display = '';
+	$("#modalConfirm").modal("show");      	
+}
+
+// 로그인창 이동 알림 모달
+function showModalMoveLoginConfirm(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalUelete").style.display = 'none';
+	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalWithdrawal").style.display = 'none';
+	document.querySelector("#btnModalLogin").style.display = '';
 	$("#modalConfirm").modal("show");      	
 }
 

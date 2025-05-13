@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -223,15 +224,15 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameUsrDetail")
-	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {	
+	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {
 		// 순위 리스트
 		List<GameDto> dtoOrderList = service.selectOrderList(gameDto);
-		GameDto dto = service.selectOne(gameDto);
+		GameDto dto1 = service.selectOne(gameDto);
 		
 		// 순위 설정
 		for (GameDto orderDto : dtoOrderList) {
-			if (orderDto.getgSeq().equals(dto.getgSeq())) {
-				dto.setGrOrder(orderDto.getGrOrder());
+			if (orderDto.getgSeq().equals(dto1.getgSeq())) {
+				dto1.setGrOrder(orderDto.getGrOrder());
 				break;
 			}
 		}
@@ -241,14 +242,31 @@ public class GameController {
 		model.addAttribute("gameLargeTnFile", fileService.selectOne(gameDto, "gameLargeTnFile"));
 		
 		// 게임 정보
-		model.addAttribute("gameItem", dto);
+		model.addAttribute("gameItem", dto1);
 		
 		// 리뷰 리스트
-		if (dto.getGrCount() > 0) {
-			model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(dto));
+		GameDto dto2 = service.selectGameDetailReviewDistribution(gameDto);
+		if (dto2 == null) {
+			dto2 = new GameDto();
 		}
 		
+		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(dto1));
+		model.addAttribute("gameDetailReviewDistribution", dto2);
+		
 		return path_user + "GameUsrDetail";
+	}
+	
+	/**
+	 * 리뷰 더보기 - User
+	 * @return
+	 */
+	@RequestMapping(value = "GameUsrDetailReviewMore", method = RequestMethod.POST)
+	public String gameUsrDetailReviewMore(Model model, GameDto gameDto) {
+	    gameDto.plusGrDtosSize();
+	    model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
+	    
+	    // Thymeleaf fragment만 리턴
+	    return path_user + "GameUsrDetail :: #reviewList";
 	}
 	
 	/**
@@ -257,20 +275,19 @@ public class GameController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ResponseBody
-	@RequestMapping(value = "GameUsrDetailReviewInst")
-	public Map<String, Object> gameUsrDetailReviewInst(GameReviewDto gameReviewDto) throws Exception {
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
+	@RequestMapping(value = "GameUsrDetailReviewInst", method = RequestMethod.POST)
+	public String gameUsrDetailReviewInst(Model model, GameReviewDto gameReviewDto, GameDto gameDto) {
 		int successCnt = service.insertReview(gameReviewDto);
 			
 		if (successCnt > 0) {
-			returnMap.put("rt", "success");
+			gameDto.setGrCount(gameDto.getGrCount() + 1);
+			model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
+			
+			// Thymeleaf fragment만 리턴
+		    return path_user + "GameUsrDetail :: #reviewList";
 		} else {
-			returnMap.put("rt", "fail");
+		    return "";
 		}
-
-		return returnMap;
 	}
 
 }

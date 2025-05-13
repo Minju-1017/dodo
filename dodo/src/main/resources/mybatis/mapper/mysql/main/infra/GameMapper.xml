@@ -339,6 +339,24 @@
 		LIMIT #{grDtosSize} OFFSET 0
 	</select>
 	
+	<select id="selectGameDetailReviewDistribution" resultMap="resultMapObj">
+		SELECT
+			ROUND(100.0 * COUNT(CASE WHEN grScore > 9 AND 10 >= grScore THEN 1 END) / COUNT(*)) AS score10,
+			ROUND(100.0 * COUNT(CASE WHEN grScore > 8 AND 9 >= grScore THEN 1 END) / COUNT(*)) AS score9,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 7 AND 8 >= grScore THEN 1 END) / COUNT(*)) AS score8,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 6 AND 7 >= grScore THEN 1 END) / COUNT(*)) AS score7,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 5 AND 6 >= grScore THEN 1 END) / COUNT(*)) AS score6,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 4 AND 5 >= grScore THEN 1 END) / COUNT(*)) AS score5,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 3 AND 4 >= grScore THEN 1 END) / COUNT(*)) AS score4,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 2 AND 3 >= grScore THEN 1 END) / COUNT(*)) AS score3,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 1 AND 2 >= grScore THEN 1 END) / COUNT(*)) AS score2,
+		    ROUND(100.0 * COUNT(CASE WHEN grScore > 0 AND 1 >= grScore THEN 1 END) / COUNT(*)) AS score1
+		FROM gameReview
+		WHERE 1=1
+			AND game_gSeq = #{gSeq}
+			AND grDelNy = 0
+	</select>
+	
 	<insert id="insertReview">
 		INSERT INTO gameReview
 		(

@@ -232,11 +232,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 53%" aria-valuenow="53"
+																th:style="|width: ${gameDetailReviewDistribution?.score10}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score10}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">53%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score10 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -246,11 +248,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 0%" aria-valuenow="0"
+																th:style="|width: ${gameDetailReviewDistribution?.score9}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score9}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">0%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score9 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -260,11 +264,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 50%" aria-valuenow="50"
+																th:style="|width: ${gameDetailReviewDistribution?.score8}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score8}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">22%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score8 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -274,11 +280,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 9%" aria-valuenow="9"
+																th:style="|width: ${gameDetailReviewDistribution?.score7}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score7}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">9%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score7 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -288,11 +296,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 30%" aria-valuenow="30"
-																aria-valuemin="0" aria-valuemax="30"></div>
+																th:style="|width: ${gameDetailReviewDistribution?.score6}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score6}"
+																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">30%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score6 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -302,11 +312,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 15%" aria-valuenow="15"
+																th:style="|width: ${gameDetailReviewDistribution?.score5}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score5}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">15%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score5 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -316,11 +328,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 7%" aria-valuenow="7"
+																th:style="|width: ${gameDetailReviewDistribution?.score4}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score4}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">7%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score4 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -330,11 +344,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 10%" aria-valuenow="10"
+																th:style="|width: ${gameDetailReviewDistribution?.score3}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score3}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">10%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score3 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -344,11 +360,13 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 0%" aria-valuenow="0"
+																th:style="|width: ${gameDetailReviewDistribution?.score2}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score2}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">0%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score2 + '%'}"></span>
 												</div>
 												<div class="d-flex align-items-center mb-2">
 													<div class="text-nowrap me-3 text-muted">
@@ -358,66 +376,75 @@
 													<div class="w-100">
 														<div class="progress" style="height: 6px">
 															<div class="progress-bar bg-warning" role="progressbar"
-																style="width: 50%" aria-valuenow="50"
+																th:style="|width: ${gameDetailReviewDistribution?.score1}%|" 
+																th:aria-valuenow="${gameDetailReviewDistribution?.score1}"
 																aria-valuemin="0" aria-valuemax="100"></div>
 														</div>
 													</div>
-													<span class="text-muted ms-3" style="width:13px">22%</span>
+													<span class="text-muted ms-3" style="width:13px" 
+														th:text="${gameDetailReviewDistribution?.score1 + '%'}"></span>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-8">
-										<div class="mb-10">
-											<div class="d-flex justify-content-between align-items-center mb-8">
-												<div>
-													<h4>리뷰</h4>
-												</div>
-												<div>
-													<select class="form-select">
-														<option selected value="Most Recent">최신순</option>
-														<option>평점 높은순</option>
-													</select>
-												</div>
-											</div>
-											<div th:if="${#lists.isEmpty(gameDetailReviewList)}"
-												class="d-flex pb-6 mb-6">리뷰가 없습니다.</div>
-											<div th:if="${!#lists.isEmpty(gameDetailReviewList)}" th:each="list : ${gameDetailReviewList}"
-												class="d-flex border-bottom pb-6 mb-6">
-												<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
-													class="rounded-circle avatar-lg"
-													src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar.jpg" />
-												<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
-													class="rounded-circle avatar-lg" th:src="${list?.fPath}" />
-													
-												<div class="ms-5">
-													<h6 class="mb-1" th:text="${list?.mName}"></h6>
-													<p class="small">
-														<span class="text-muted" th:text="${list?.grRegiDate}"></span>
-													</p>
-													<div class="mb-2">
-														<i th:unless="${list?.fillStarCount eq 0}" 
-															th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
-															class="bi bi-star-fill text-warning"></i><i th:unless="${list?.harfStarCount eq 0}"  
-															th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
-															class="bi bi-star-half text-warning"></i><i th:unless="${list?.emptyStarCount eq 0}"   
-															th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
-															class="bi bi-star text-warning"></i>
-														<span class="ms-3 text-dark fw-bold" th:text="${list?.grScore}"></span>
-													</div>
-													<p th:text="${list?.grComment}"></p>
-												</div>
-											</div>
-											<div th:if="${!#lists.isEmpty(gameDetailReviewList)}">
-												<a href="#" class="btn btn-outline-gray-400 text-muted">리뷰 더 보기</a>
-											</div>
-										</div>
-										<div>
-											<form class="row g-6 needs-validation" novalidate method="post" id="form" name="form">
+										<form class="row g-6 needs-validation" novalidate method="post" id="form" name="form">
+										
+											<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${session.sessSeqUsr}">
+											<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${gameItem?.gSeq}">
+											<input type="hidden" id="gSeq" name="gSeq" th:value="${gameItem?.gSeq}">
+											<input type="hidden" id="grDtosSize" name="grDtosSize" th:value="${gameItem?.grDtosSize}">
+											<input type="hidden" id="grCount" name="grCount" th:value="${gameItem?.grCount}">
 											
-												<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${session.sessSeqUsr}">
-												<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${gameItem?.gSeq}">
-												
+											<div class="mb-10">
+												<div class="d-flex justify-content-between align-items-center mb-8">
+													<div>
+														<h4>리뷰</h4>
+													</div>
+													<div>
+														<select class="form-select">
+															<option selected value="Most Recent">최신순</option>
+															<option>평점 높은순</option>
+														</select>
+													</div>
+												</div>
+												<div id="reviewList" th:fragment="reviewList">
+													<div th:if="${#lists.isEmpty(gameDetailReviewList)}"
+														class="d-flex pb-6 mb-6">리뷰가 없습니다.</div>
+													<div th:if="${!#lists.isEmpty(gameDetailReviewList)}" th:each="list : ${gameDetailReviewList}"
+														class="d-flex border-bottom pb-6 mb-6">
+														<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+															class="rounded-circle avatar-lg"
+															src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar.jpg" />
+														<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+															class="rounded-circle avatar-lg" th:src="${list?.fPath}" />
+															
+														<div class="ms-5">
+															<h6 class="mb-1" th:text="${list?.mName}"></h6>
+															<p class="small">
+																<span class="text-muted" th:text="${list?.grRegiDate}"></span>
+															</p>
+															<div class="mb-2">
+																<i th:unless="${list?.fillStarCount eq 0}" 
+																	th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+																	class="bi bi-star-fill text-warning"></i><i th:unless="${list?.harfStarCount eq 0}"  
+																	th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+																	class="bi bi-star-half text-warning"></i><i th:unless="${list?.emptyStarCount eq 0}"   
+																	th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+																	class="bi bi-star text-warning"></i>
+																<span class="ms-3 text-dark fw-bold" th:text="${list?.grScore}"></span>
+															</div>
+															<div class="col-lg-12">
+																<p th:text="${list?.grComment}" style="word-break: break-all;"></p>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div th:if="${!#lists.isEmpty(gameDetailReviewList)}">
+													<button class="btn btn-outline-gray-400 text-muted" type="button" id="btnMoreReview">리뷰 더 보기</button>
+												</div>
+											</div>
+											<div>
 												<div class="card card-lg">
 													<div class="card-body p-6 d-flex flex-column gap-3">
 														<h4 class="mb-1">리뷰 작성</h4>
@@ -464,8 +491,8 @@
 														</div>
 													</div>
 												</div>
-											</form>
-										</div>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -586,7 +613,28 @@
 	    if (content.length > 200) {
 	    	$(this).val($(this).val().substring(0, 200));
 	    }
-	 });
+	});
+	
+	// 리뷰 더보기
+	document.getElementById("btnMoreReview").onclick = function() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/game/GameUsrDetailReviewMore"
+			,data : {
+				"gSeq" : $("#gSeq").val(),
+				"grDtosSize" : $("#grDtosSize").val(),
+				"grCount" : $("#grCount").val()
+			}
+			,success: function(fragmentHtml) {
+				$('#reviewList').replaceWith(fragmentHtml); // fragmentHtml은 렌더링된 HTML fragment
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
 </script>
 
 <!-- Validation: Bootstrap -->
@@ -653,12 +701,14 @@
 				"member_mSeq" : $("#member_mSeq").val(),
 				"game_gSeq" : $("#game_gSeq").val(),
 				"grScore" : $("#grScore").val(), 
-				"grComment" : $("#grComment").val()
+				"grComment" : $("#grComment").val(),
+				"gSeq" : $("#gSeq").val(),
+				"grDtosSize" : $("#grDtosSize").val(),
+				"grCount" : $("#grCount").val()
 			}
-			,success: function(response) {
-				if (response.rt == "success") {
-					
-				} else {
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != "") {
+					$('#reviewList').replaceWith(fragmentHtml); // fragmentHtml은 렌더링된 HTML fragment
 				}
 			}
 			,error : function(jqXHR, textStatus, errorThrown){

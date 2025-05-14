@@ -244,14 +244,13 @@ public class GameController {
 		// 게임 정보
 		model.addAttribute("gameItem", dto1);
 		
-		// 리뷰 리스트
+		// 리뷰 분포
 		GameDto dto2 = service.selectGameDetailReviewDistribution(gameDto);
-		if (dto2 == null) {
-			dto2 = new GameDto();
-		}
-		
-		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(dto1));
+		if (dto2 == null) dto2 = new GameDto();
 		model.addAttribute("gameDetailReviewDistribution", dto2);
+		
+		// 리뷰 리스트
+		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
 		
 		return path_user + "GameUsrDetail";
 	}
@@ -262,10 +261,9 @@ public class GameController {
 	 */
 	@RequestMapping(value = "GameUsrDetailReviewMore", method = RequestMethod.POST)
 	public String gameUsrDetailReviewMore(Model model, GameDto gameDto) {
-	    gameDto.plusGrDtosSize();
-	    model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
-	    
-	    // Thymeleaf fragment만 리턴
+    	model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
+    	
+    	 // Thymeleaf fragment만 리턴
 	    return path_user + "GameUsrDetail :: #reviewList";
 	}
 	
@@ -280,14 +278,52 @@ public class GameController {
 		int successCnt = service.insertReview(gameReviewDto);
 			
 		if (successCnt > 0) {
-			gameDto.setGrCount(gameDto.getGrCount() + 1);
-			model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
+			// 순위 리스트
+			List<GameDto> dtoOrderList = service.selectOrderList(gameDto);
+			GameDto dto = service.selectOne(gameDto);
+			dto.setGrDtosSize(gameDto.getGrDtosSize());
+			
+			// 순위 설정
+			for (GameDto orderDto : dtoOrderList) {
+				if (orderDto.getgSeq().equals(dto.getgSeq())) {
+					dto.setGrOrder(orderDto.getGrOrder());
+					break;
+				}
+			}
+			
+			// 게임 정보
+			model.addAttribute("gameItem", dto);
 			
 			// Thymeleaf fragment만 리턴
-		    return path_user + "GameUsrDetail :: #reviewList";
+		    return path_user + "GameUsrDetail :: #reviewInstRefresh1";
 		} else {
 		    return "";
 		}
+	}
+	
+	/**
+	 * Ajax를 입력한 데이터 추가 후 화면 갱신(리뷰) - User
+	 * @param gameReviewDto
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "GameUsrDetailReviewRefresh", method = RequestMethod.POST)
+	public String gameUsrDetailReviewRefresh(Model model, GameReviewDto gameReviewDto, GameDto gameDto) {
+		// 게임 정보
+		GameDto dto1 = service.selectOne(gameDto);
+		dto1.setGrDtosSize(gameDto.getGrDtosSize());
+		model.addAttribute("gameItem", dto1);
+		
+		// 리뷰 분포
+		GameDto dto2 = service.selectGameDetailReviewDistribution(gameDto);
+		if (dto2 == null) dto2 = new GameDto();
+		model.addAttribute("gameDetailReviewDistribution", dto2);
+		
+		// 리뷰 리스트
+		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
+		
+		// Thymeleaf fragment만 리턴
+	    return path_user + "GameUsrDetail :: #reviewInstRefresh2";
 	}
 
 }

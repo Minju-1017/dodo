@@ -6,8 +6,6 @@ import com.dodo.module.file.FileDto;
 
 public class GameDto extends FileDto {
 	
-	private final int REVIEW_ONE_PAGE_SIZE = 5;
-	
 	private String gSeq;
 	private String gName;
 	private double gLevel;
@@ -346,8 +344,8 @@ public class GameDto extends FileDto {
 		return grDtosSize;
 	}
 
-	public void plusGrDtosSize() {
-		grDtosSize = grDtosSize + REVIEW_ONE_PAGE_SIZE;
+	public void setGrDtosSize(int grDtosSize) {
+		this.grDtosSize = grDtosSize;
 	}
 
 	public Integer getGrShOption() {

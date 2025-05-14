@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{/xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+<div th:replace="~{xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
 <div class="main-wrapper">
 	<nav class="navbar-vertical-nav d-none d-xl-block">
@@ -304,7 +304,7 @@
 					<div class="col-md-12 text-center">
 						<div class="card h-100 card-lg">
 							
-							<div th:replace="~{/xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+							<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
 
 							<div class="card-body p-0">
 								<div class="table-responsive">
@@ -396,7 +396,7 @@
 	</main>
 </div>
       
-<div th:replace="~{/xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+<div th:replace="~{xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
     	
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">

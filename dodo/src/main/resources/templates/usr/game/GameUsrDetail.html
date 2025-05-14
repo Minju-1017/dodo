@@ -723,7 +723,7 @@
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
 					$('#reviewInstRefresh1').replaceWith(fragmentHtml);
-					reviewInstRefresh();
+					reviewInstRefresh2();
 				}
 			}
 			,error : function(jqXHR, textStatus, errorThrown){
@@ -732,17 +732,35 @@
 		});
 	}
 	
-	function reviewInstRefresh() {
+	function reviewInstRefresh2() {
 		$.ajax({
 			async: true 
 			,cache: false
 			,type: "post"
-			,url: "/usr/game/GameUsrDetailReviewRefresh"
+			,url: "/usr/game/GameUsrDetailReviewRefresh2"
 			,data : {
-				"member_mSeq" : $("#member_mSeq").val(),
-				"game_gSeq" : $("#game_gSeq").val(),
-				"grScore" : $("#grScore").val(), 
-				"grComment" : $("#grComment").val(),
+				"gSeq" : $("#gSeq").val()
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					$('#reviewInstRefresh2').replaceWith(fragmentHtml);
+					reviewInstRefresh3();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function reviewInstRefresh3() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/game/GameUsrDetailReviewRefresh3"
+			,data : {
 				"gSeq" : $("#gSeq").val(),
 				"grDtosSize" : $("#grDtosSize").val(),
 				"grCount" : $("#grCount").val()
@@ -750,7 +768,7 @@
 			,success: function(fragmentHtml) {
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
-					$('#reviewInstRefresh2').replaceWith(fragmentHtml);
+					$('#reviewList').replaceWith(fragmentHtml);
 					
 					$('#reviews-tab')[0].scrollIntoView({
 						behavior: 'smooth',  // 부드럽게 스크롤

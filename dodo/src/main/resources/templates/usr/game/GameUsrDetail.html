@@ -580,30 +580,7 @@
 
 <!-- Review -->
 <script type="text/javascript">
-	$('#linkReviews').on('click', function(event) {
-		// 링크 클릭 기본 동작을 막음
-		event.preventDefault();  
-		
-		// 리뷰 버튼 클릭
-		$('#reviews-tab').click();
-	});
-	
-	// 리뷰 버튼으로 스크롤 이동
-	$('#reviews-tab').on('click', function() {
-		$('#reviews-tab')[0].scrollIntoView({
-			behavior: 'smooth',  // 부드럽게 스크롤
-			block: 'start'       // 해당 요소의 상단으로 이동
-		});
-		
-		// 리뷰 입력 부분 초기화
-		resetValidation(grScore);
-		resetValidation(grComment);
-		
-		grScore.options[0].selected = true;
-		grComment.value = "";
-	});
-	
-	// 리뷰 입력 시 글자 수 세기
+	//리뷰 입력 시 글자 수 세기
 	$("#grComment").keyup(function (e) {
 	    var content = $(this).val();
 	    
@@ -612,11 +589,55 @@
 	    }else{
 	        $(".comment_length").text(content.length);
 	    }
-
+	
 	    if (content.length > 200) {
 	    	$(this).val($(this).val().substring(0, 200));
 	    }
 	});
+
+	$(document).on('click', '#linkReviews', function(event) {
+		// 링크 클릭 기본 동작을 막음
+		event.preventDefault();  
+		
+		// 탭이 이미 활성화돼 있는지 확인
+	    const isActive = $('#reviews-tab').hasClass('active');
+
+	    if (!isActive) {
+	        // 탭이 비활성화 상태면 클릭하여 활성화
+	        $('#reviews-tab').click();
+
+	        // 탭이 전환된 후 실행되도록 약간의 지연을 줌
+	        setTimeout(() => {
+	        	reviewBtnClick();
+	        }, 100);
+	    } else {
+	        // 이미 활성화돼 있다면 바로 실행
+	    	reviewBtnClick();
+	    }
+	});
+	
+	// 리뷰 버튼으로 스크롤 이동
+	$(document).on('click', '#reviews', function() {
+		reviewBtnClick();
+	});
+	
+	function reviewBtnClick() {
+		$('#reviews-tab')[0].scrollIntoView({
+			behavior: 'smooth',  // 부드럽게 스크롤
+			block: 'start'       // 해당 요소의 상단으로 이동
+		});
+		
+		// 리뷰 입력 부분 초기화
+		reviewReset();
+	}
+	
+	function reviewReset() {
+		resetValidation(grScore);
+		resetValidation(grComment);
+		
+		grScore.options[0].selected = true;
+		grComment.value = "";
+	}
 	
 	// 리뷰 더보기
 	document.getElementById("btnMoreReview").onclick = function() {
@@ -720,6 +741,9 @@
 				"grCount" : $("#grCount").val()
 			}
 			,success: function(fragmentHtml) {
+				// 입력창 초기화
+				reviewReset();
+				
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
 					$('#reviewInstRefresh1').replaceWith(fragmentHtml);

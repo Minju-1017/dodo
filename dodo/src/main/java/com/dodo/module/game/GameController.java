@@ -295,20 +295,20 @@ public class GameController {
 			model.addAttribute("gameItem", dto);
 			
 			// Thymeleaf fragment만 리턴
-		    return path_user + "GameUsrDetail :: #reviewInstRefresh1";
+		    return path_user + "GameUsrDetail :: #gameInfoRefresh";
 		} else {
 		    return "";
 		}
 	}
 	
 	/**
-	 * Ajax를 입력한 데이터 추가 후 화면 갱신2(리뷰) - User
+	 * Ajax를 게임 디테일 화면 갱신(리뷰 분포) - User
 	 * @param gameReviewDto
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "GameUsrDetailReviewRefresh2", method = RequestMethod.POST)
-	public String gameUsrDetailReviewRefresh2(Model model, GameDto gameDto) {
+	@RequestMapping(value = "GameUsrDetailReviewDistributionRefresh", method = RequestMethod.POST)
+	public String gameUsrDetailReviewDistributionRefresh(Model model, GameDto gameDto) {
 		// 게임 정보
 		model.addAttribute("gameItem", service.selectOne(gameDto));
 		
@@ -318,7 +318,7 @@ public class GameController {
 		model.addAttribute("gameDetailReviewDistribution", dto);
 		
 		// Thymeleaf fragment만 리턴
-	    return path_user + "GameUsrDetail :: #reviewInstRefresh2";
+	    return path_user + "GameUsrDetail :: #reviewDistributionRefresh";
 	}
 	
 	/**
@@ -327,8 +327,8 @@ public class GameController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "GameUsrDetailReviewRefresh3", method = RequestMethod.POST)
-	public String gameUsrDetailReviewRefresh3(Model model, GameDto gameDto) {	
+	@RequestMapping(value = "GameUsrDetailReviewListRefresh", method = RequestMethod.POST)
+	public String gameUsrDetailReviewListRefresh(Model model, GameDto gameDto) {	
 		// 리뷰 리스트
 		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
 		

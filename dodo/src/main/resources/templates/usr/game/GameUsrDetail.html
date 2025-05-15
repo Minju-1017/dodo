@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-md-7 col-xl-6">
 					<div class="ps-lg-10 mt-6 mt-md-0">
-						<div id="reviewInstRefresh1" th:fragment="reviewInstRefresh1">
+						<div id="gameInfoRefresh" th:fragment="gameInfoRefresh">
 							<div class="d-flex mb-2 gap-3">
 								<div>
 									<i class="bi bi-trophy" data-bs-toggle="tooltip" data-bs-html="true" title="순위"></i> 
@@ -204,7 +204,7 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="me-lg-12 mb-6 mb-md-0">
-											<div id="reviewInstRefresh2" th:fragment="reviewInstRefresh2">
+											<div id="reviewDistributionRefresh" th:fragment="reviewDistributionRefresh">
 												<div class="mb-5">
 													<h4 class="mb-3">평점</h4>
 													<span>
@@ -405,9 +405,9 @@
 														<h4>리뷰</h4>
 													</div>
 													<div>
-														<select class="form-select">
-															<option selected value="Most Recent">최신순</option>
-															<option>평점 높은순</option>
+														<select class="form-select" id="grShOption" name="grShOption" onchange="reviewSort(this.value)">
+															<option value="1" th:selected="${gameItem?.grShOption == 1}">최신순</option>
+															<option value="2" th:selected="${gameItem?.grShOption == 2}">평점 높은순</option>            
 														</select>
 													</div>
 												</div>
@@ -746,8 +746,8 @@
 				
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
-					$('#reviewInstRefresh1').replaceWith(fragmentHtml);
-					reviewInstRefresh2();
+					$('#gameInfoRefresh').replaceWith(fragmentHtml);
+					reviewDistributionRefresh();
 				}
 			}
 			,error : function(jqXHR, textStatus, errorThrown){
@@ -756,20 +756,20 @@
 		});
 	}
 	
-	function reviewInstRefresh2() {
+	function reviewDistributionRefresh() {
 		$.ajax({
 			async: true 
 			,cache: false
 			,type: "post"
-			,url: "/usr/game/GameUsrDetailReviewRefresh2"
+			,url: "/usr/game/GameUsrDetailReviewDistributionRefresh"
 			,data : {
 				"gSeq" : $("#gSeq").val()
 			}
 			,success: function(fragmentHtml) {
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
-					$('#reviewInstRefresh2').replaceWith(fragmentHtml);
-					reviewInstRefresh3();
+					$('#reviewDistributionRefresh').replaceWith(fragmentHtml);
+					reviewListRefresh();
 				}
 			}
 			,error : function(jqXHR, textStatus, errorThrown){
@@ -778,16 +778,17 @@
 		});
 	}
 	
-	function reviewInstRefresh3() {
+	function reviewListRefresh() {
 		$.ajax({
 			async: true 
 			,cache: false
 			,type: "post"
-			,url: "/usr/game/GameUsrDetailReviewRefresh3"
+			,url: "/usr/game/GameUsrDetailReviewListRefresh"
 			,data : {
 				"gSeq" : $("#gSeq").val(),
 				"grDtosSize" : $("#grDtosSize").val(),
-				"grCount" : $("#grCount").val()
+				"grCount" : $("#grCount").val(),
+				"grShOption" : $("#grShOption").val()
 			}
 			,success: function(fragmentHtml) {
 				if (fragmentHtml != null && fragmentHtml != "") {

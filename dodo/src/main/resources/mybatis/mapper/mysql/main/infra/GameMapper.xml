@@ -99,7 +99,10 @@
 	<select id="selectTop10List" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
+		FROM 
+			game a
+		WHERE 1=1
+			AND a.gDelNy = 0
 		ORDER BY grScoreAvg DESC LIMIT 0, 10
 	</select>
 	
@@ -120,6 +123,23 @@
 		WHERE 1=1
        		 AND a.gDelNy = 0  
 		ORDER BY grOrder
+	</select>
+	
+	<select id="selectGameRelationList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+			, (SELECT b.fPath
+				FROM gameSmallTnFile b
+				WHERE 1=1 
+					AND a.gSeq = b.rSeq
+		    ) as fPath
+		FROM 
+			game a
+		WHERE 1=1
+			AND a.gSeq != #{gSeq}
+			AND a.gDelNy = 0
+			AND a.gCategoryCd = #{gCategoryCd}
+		LIMIT 5 OFFSET 0
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

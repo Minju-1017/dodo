@@ -12,6 +12,7 @@ public interface GameDao {
 	public List<GameDto> selectListWithoutPaging(); 
 	public List<GameDto> selectTop10List(GameVo vo);
 	public List<GameDto> selectOrderList(GameDto gameDto);
+	public List<GameDto> selectGameRelationList(GameDto gameDto);
 	public GameDto selectOne(GameDto gameDto);
 	public int insert(GameDto gameDto);
 	public int update(GameDto gameDto);

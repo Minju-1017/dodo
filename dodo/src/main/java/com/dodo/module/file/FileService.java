@@ -1,19 +1,14 @@
 package com.dodo.module.file;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.dodo.Constants;
-import com.dodo.module.game.GameDto;
 
 @Service
 public class FileService {

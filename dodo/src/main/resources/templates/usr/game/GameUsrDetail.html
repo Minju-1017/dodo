@@ -405,7 +405,7 @@
 														<h4>리뷰</h4>
 													</div>
 													<div>
-														<select class="form-select" id="grShOption" name="grShOption" onchange="reviewSort(this.value)">
+														<select class="form-select" id="grShOption" name="grShOption" onchange="reviewListRefresh()">
 															<option value="1" th:selected="${gameItem?.grShOption == 1}">최신순</option>
 															<option value="2" th:selected="${gameItem?.grShOption == 2}">평점 높은순</option>            
 														</select>
@@ -507,29 +507,29 @@
 			</div>
 		</div>
 	</section>
-	
-	<!-- section -->
 	<section class="my-lg-14 my-14">
 		<div class="container">
-			<!-- row -->
 			<div class="row">
 				<div class="col-12">
-					<!-- heading -->
 					<h3>연관 게임</h3>
 				</div>
 			</div>
-			<!-- row -->
 			<div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-2 mt-2">
-				<!-- col -->
-				<div class="col">
+				<div th:if="${#lists.isEmpty(gameRelationList)}" class="col">
+					데이터가 없습니다.
+				</div>
+				<div th:if="${!#lists.isEmpty(gameRelationList)}" class="col" th:each="list : ${gameRelationList}">
 					<div class="card card-product">
 						<div class="card-body">
 							<div class="text-center position-relative">
-								<div class="position-absolute top-0 start-0">
-									<span class="badge bg-danger">1</span>
-								</div>
-								<a href="./boardgame-detail.html"><img src="/assets/usr/template/FreshCart-1.4.0/images/products/product-img-1.jpg"
-										class="mb-3 img-fluid" /></a>
+								<a href="javascript:void(0);"
+									th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
+									<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+										class="mb-3 img-fluid" 
+										src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
+									<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+										class="mb-3 img-fluid" th:src="${list?.fPath}" />
+								</a>
 
 								<div class="card-product-action">
 									<a href="./myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip" 
@@ -541,15 +541,26 @@
 								</div>
 							</div>
 							<div class="text-small mb-1">
-								<small class="text-muted">추상</small>
+								<small class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></small>
 							</div>
-							<h2 class="fs-6"><a href="./boardgame-detail.html"
-									class="text-inherit text-decoration-none">캘리코</a></h2>
+							<h2 class="fs-6">
+								<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
+									th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
+							</h2>
 							<div>
 								<span class="small">
-									<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
-									<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4&nbsp;&nbsp;
-									<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
+									<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
+									<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
+									<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
+									<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
+										th:text="${list?.gMinPeople + '명'}"></span>
+									<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
+										th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명'}"></span>&nbsp;&nbsp;
+									<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
+									<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
+										th:text="${list?.gMinTime + '분'}"></span>
+									<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
+										th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
 								</span>
 							</div>
 							<div>
@@ -657,7 +668,8 @@
 			,data : {
 				"gSeq" : $("#gSeq").val(),
 				"grDtosSize" : $("#grDtosSize").val(),
-				"grCount" : $("#grCount").val()
+				"grCount" : $("#grCount").val(),
+				"grShOption" : $("#grShOption").val()
 			}
 			,success: function(fragmentHtml) {
 				if (fragmentHtml != null && fragmentHtml != "") {

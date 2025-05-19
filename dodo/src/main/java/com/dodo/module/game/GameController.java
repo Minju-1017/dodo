@@ -252,6 +252,9 @@ public class GameController {
 		// 리뷰 리스트
 		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
 		
+		// 연관 게임 리스트
+		model.addAttribute("gameRelationList", service.selectGameRelationList(gameDto));
+		
 		return path_user + "GameUsrDetail";
 	}
 	

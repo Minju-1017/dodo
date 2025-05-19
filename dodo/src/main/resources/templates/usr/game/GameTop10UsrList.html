@@ -16,6 +16,7 @@
 						<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 						<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
 						<input type="hidden" name="gSeq">
+						<input type="hidden" name="gCategoryCd">
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
@@ -51,18 +52,17 @@
 														</h5>
 													<td>
 														<a href="javascript:void(0);"
-															th:attr="onclick=|goDetail('${list.gSeq}')|">
+															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
 															<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
 																class="icon-shape icon-xxl" 
 																src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
 															<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
-																class="icon-shape icon-xxl" 
-																th:src="${list?.fPath}" />
+																class="icon-shape icon-xxl" th:src="${list?.fPath}" />
 														</a>
 													</td>
 													<td>
 														<a class="fw-bold text-inherit" href="javascript:void(0);" th:text="${list?.gName}"
-															th:attr="onclick=|goDetail('${list.gSeq}')|"></a>
+															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
 													</td>
 													<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></td>
 													<td th:text="${list?.grScoreAvg}"></td>	
@@ -109,12 +109,14 @@
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
   	let seq = document.querySelector("input[name=gSeq]");
+  	let cate = document.querySelector("input[name=gCategoryCd]");
     	
 	let fom = document.querySelector("form[name=formList]");
 	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
 	
-	function goDetail(keyValue) {
-		seq.value = keyValue;
+	function goDetail(keyValue1, keyValue2) {
+		seq.value = keyValue1;
+		cate.value = keyValue2;
 		fom.action = goUrlUsrDetail;
 		fom.submit();
 	}

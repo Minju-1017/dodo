@@ -139,7 +139,7 @@
 			AND a.gSeq != #{gSeq}
 			AND a.gDelNy = 0
 			AND a.gCategoryCd = #{gCategoryCd}
-		LIMIT 5 OFFSET 0
+		ORDER BY grScoreAvg DESC LIMIT 0, 5
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">

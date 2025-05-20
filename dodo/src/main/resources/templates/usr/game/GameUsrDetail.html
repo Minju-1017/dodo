@@ -564,14 +564,22 @@
 								</span>
 							</div>
 							<div>
-								<small class="text-warning">
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-fill"></i>
-									<i class="bi bi-star-half"></i>
-								</small>
-								<span class="text-muted small">9.87(2333)</span>
+								<span>
+									<small class="text-warning">
+										<i th:unless="${list?.fillStarCount eq 0}" 
+											th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+											class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
+											th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+											class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
+											th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+											class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
+											and list?.harfStarCount eq 0 
+											and list?.fillStarCount eq 0}"   
+											th:each="i : ${#numbers.sequence(0, 4)}"
+											class="bi bi-star"></i>
+									</small>
+									<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + @doDoUtil.formatNumberComma(list?.grCount) + ')'}"></span>
+								</span>
 							</div>
 						</div>
 					</div>

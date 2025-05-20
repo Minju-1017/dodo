@@ -201,7 +201,7 @@ public class GameController {
 	/////////////////////////////////////////////////////////////////
 	
 	/**
-	 * 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
+	 * Top10 데이터 읽어오기 - 페이징 기능 들어감 - User
 	 * @param model
 	 * @return
 	 */
@@ -217,6 +217,24 @@ public class GameController {
 		}
 		
 		return path_user + "GameTop10UsrList";
+	}
+	
+	/**
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "GameInfoUsrList")
+	public String gameInfoUsrList(Model model, @ModelAttribute("vo") GameVo vo,
+			HttpSession httpSession) throws Exception {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectOneCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("gameList", service.selectList(vo));
+		}
+		
+		return path_user + "GameInfoUsrList";
 	}
 	
 	/**

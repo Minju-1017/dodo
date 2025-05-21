@@ -11,7 +11,7 @@ public interface CodeDao {
 
 	public List<CodeDto> selectListCachedCodeArrayList();
 	
-	public int selectOneCount(CodeVo vo);
+	public int selectListCount(CodeVo vo);
 	public List<CodeDto> selectList(CodeVo vo); 
 	public List<CodeDto> selectListWithoutPaging(MemberDto memberDto); 
 	public CodeDto selectOne(CodeDto codeDto);

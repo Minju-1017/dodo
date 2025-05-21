@@ -16,6 +16,9 @@ public class GameVo extends BaseVo {
 	private Integer shTime;
 	private Integer shOfficialCd;
 	private Integer shCategoryCd;
+	
+	private Integer shOrderOption = 1; 	// 1: 평점 높은순, 2: 평점 낮은순, 3: 난이도 낮은순, 4: 난이도 높은순, 
+										// 5: 소요시간 짧은순, 6: 소요시간 긴순, 7: 인원 적은순, 8: 인원 많은순
 
 	public String getgSeq() {
 		return gSeq;
@@ -95,6 +98,14 @@ public class GameVo extends BaseVo {
 
 	public void setShCategoryCd(Integer shCategoryCd) {
 		this.shCategoryCd = shCategoryCd;
+	}
+
+	public Integer getShOrderOption() {
+		return shOrderOption;
+	}
+
+	public void setShOrderOption(Integer shOrderOption) {
+		this.shOrderOption = shOrderOption;
 	}
 
 }

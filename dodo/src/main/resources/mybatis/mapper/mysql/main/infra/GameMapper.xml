@@ -32,13 +32,31 @@
 	        <if test="shTime != null and !shTime.equals('')">AND #{shTime} >= a.gMinTime AND a.gMaxTime >= #{shTime}</if>				
 			<if test="shMinLevel != null and !shMinLevel.equals('')">AND a.gLevel >= #{shMinLevel}</if>	
 			<if test="shMaxLevel != null and !shMaxLevel.equals('')">AND #{shMaxLevel} >= a.gLevel</if>	
-			<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND a.grScoreAvg >= #{shMinScoreAvg}</if>	
-			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= a.grScoreAvg</if>		
+			<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND grScoreAvg >= #{shMinScoreAvg}</if>	
+			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= grScoreAvg</if>		
 	        <choose>
 	            <when test="shOption == 1">AND a.gSeq = #{shValue}</when>
 	            <when test="shOption == 2">AND a.gName LIKE CONCAT('%',#{shValue},'%')</when>
 	            <when test="shOption == 3">AND a.gBestPeople = #{shValue}</when>
 	            <when test="shOption == 4">AND a.ggRecommendPeople = #{shValue}</when>
+	        </choose>
+	</sql>
+	
+	<sql id="selectGameInfoCommon">
+		FROM 
+			game a
+		WHERE 1=1		
+			AND a.gDelNy = 0
+			<if test="shCategoryCd != null and !shCategoryCd.equals('')">AND a.gCategoryCd = #{shCategoryCd}</if>
+			<choose>
+	            <when test="shOrderOption == 1">ORDER BY grScoreAvg DESC</when>
+	            <when test="shOrderOption == 2">ORDER BY grScoreAvg ASC</when>
+	            <when test="shOrderOption == 3">ORDER BY a.gLevel ASC</when>
+	            <when test="shOrderOption == 4">ORDER BY a.gLevel DESC</when>
+	            <when test="shOrderOption == 5">ORDER BY a.gMaxTime ASC</when>
+	            <when test="shOrderOption == 6">ORDER BY a.gMaxTime DESC</when>
+	            <when test="shOrderOption == 7">ORDER BY a.gMaxPeople ASC</when>
+	            <when test="shOrderOption == 8">ORDER BY a.gMaxPeople DESC</when>
 	        </choose>
 	</sql>
 	
@@ -82,9 +100,9 @@
 	</sql>
 	<!-- End -->
 	
-	<select id="selectOneCount" resultType="Integer">
+	<select id="selectListCount" resultType="Integer">
 		SELECT COUNT(*)
-		<include refid="selectCommon"/>
+			<include refid="selectCommon"/>
 		ORDER BY a.gSeq DESC
 	</select>
 
@@ -104,6 +122,27 @@
 		WHERE 1=1
 			AND a.gDelNy = 0
 		ORDER BY grScoreAvg DESC LIMIT 0, 10
+	</select>
+	
+	<select id="selectGameInfoListCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM (
+			SELECT
+				a.gSeq,
+				(SELECT IFNULL(AVG(b.grScore), 0)
+					FROM gameReview b
+					WHERE b.grDelNy = 0
+						AND b.game_gSeq = a.gSeq
+				) AS grScoreAvg
+		    <include refid="selectGameInfoCommon"/>
+		) AS sorted_games
+	</select>
+
+	<select id="selectGameInfoList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		<include refid="selectGameInfoCommon"/>
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
 	<select id="selectOrderList" resultMap="resultMapObj">

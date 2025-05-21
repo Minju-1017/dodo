@@ -69,7 +69,7 @@
 		    AND cUseNy = 1
    </select>
 	
-	<select id="selectOneCount" resultType="Integer">
+	<select id="selectListCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon"/>
 	</select>

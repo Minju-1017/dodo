@@ -56,8 +56,8 @@ public class CodeService {
 	}
 	//-->
 	
-	public int selectOneCount(CodeVo vo) {
-		return dao.selectOneCount(vo);
+	public int selectListCount(CodeVo vo) {
+		return dao.selectListCount(vo);
 	}
 	
 	public List<CodeDto> selectList(CodeVo vo) {

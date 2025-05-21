@@ -6,570 +6,396 @@
 <main>
 	<div class="mt-8 mb-lg-14 mb-8">
 		<div class="container">
-               <!-- row -->
-               <div class="row gx-10">
-                  <!-- col -->
-                  <aside class="col-lg-3 col-md-4 mb-6 mb-md-0">
-                     <div class="offcanvas offcanvas-start offcanvas-collapse w-md-50" tabindex="-1" id="offcanvasCategory"
-                        aria-labelledby="offcanvasCategoryLabel">
-                        <div class="offcanvas-header d-lg-none">
-                           <h5 class="offcanvas-title" id="offcanvasCategoryLabel">Filter</h5>
-                           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body ps-lg-2 pt-lg-0">
-                           <div class="mb-8">
-                              <ul class="nav nav-category">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">전체 보기</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">전략</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">추상</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">컬렉터블</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">가족</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">어린이</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">파티</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">테마</a>
-                                 </li>
-                              </ul>
-                              <ul class="nav">
-                                 <li class="nav-item border-bottom w-100">
-                                    <a href="./boardgame-info.html" class="nav-link">워게임</a>
-                                 </li>
-                              </ul>
-                           </div>
-
-                           <div class="mb-8">
-                              <!-- <h5 class="mb-3">Stores</h5> -->
-                              <div class="my-4">
-                                 <!-- input -->
-                                 <input type="search" class="form-control" placeholder="게임 검색" />
-                              </div>
-                           </div>
-                           <div class="mb-8">
-                              <h5 class="mb-3">인원</h5>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="1p" />
-                                 <label class="form-check-label" for="1p">1인</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="2p" />
-                                 <label class="form-check-label" for="1p">2인</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="3p" />
-                                 <label class="form-check-label" for="3p">3인</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="4p" />
-                                 <label class="form-check-label" for="4p">4인</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="5p" />
-                                 <label class="form-check-label" for="5p">5인</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="6p" />
-                                 <label class="form-check-label" for="6p">6인</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="7p" />
-                                 <label class="form-check-label" for="7p">7인 이상</label>
-                              </div>
-                           </div>
-                           <div class="mb-8">
-                              <h5 class="mb-3">소요 시간</h5>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="10m" />
-                                 <label class="form-check-label" for="10m">10분 이내</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="20m" />
-                                 <label class="form-check-label" for="20m">10 - 20분</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="30m" />
-                                 <label class="form-check-label" for="30m">20 - 30분</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="60m" />
-                                 <label class="form-check-label" for="60m">30 - 60분</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="90m" />
-                                 <label class="form-check-label" for="90m">60 - 90분</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="90+" />
-                                 <label class="form-check-label" for="90+">90분 이상</label>
-                              </div>
-                              <!-- form check -->
-                              <div class="form-check mb-2">
-                                 <!-- input -->
-                                 <input class="form-check-input" type="checkbox" value="" id="7p" />
-                                 <label class="form-check-label" for="7p">7인 이상</label>
-                              </div>
-                           </div>
-                           <div class="mb-8">
-                              <h5 class="mb-3">난이도 (최상 5)</h5>
-                              <div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingFive" />
-                                    <label class="form-check-label" for="ratingFive">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <span class="small"></span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingFour" />
-                                    <label class="form-check-label" for="ratingFour">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small"></span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingThree" />
-                                    <label class="form-check-label" for="ratingThree">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small"></span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
-                                    <label class="form-check-label" for="ratingTwo">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small"></span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingOne" />
-                                    <label class="form-check-label" for="ratingOne">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small"></span>
-                                    </label>
-                                 </div>
-                              </div>
-                           </div>
-                           <!-- rating -->
-                           <div class="mb-8">
-                              <h5 class="mb-3">평점 (최고 10점)</h5>
-                              <div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingFive" />
-                                    <label class="form-check-label" for="ratingFive">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <span class="small">(8점 - 10점)</span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingFour" />
-                                    <label class="form-check-label" for="ratingFour">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small">(6점 - 8점)</span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingThree" />
-                                    <label class="form-check-label" for="ratingThree">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small">(4점 - 6점)</span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
-                                    <label class="form-check-label" for="ratingTwo">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small">(2점 - 4점)</span>
-                                    </label>
-                                 </div>
-                                 <!-- form check -->
-                                 <div class="form-check mb-2">
-                                    <!-- input -->
-                                    <input class="form-check-input" type="checkbox" value="" id="ratingOne" />
-                                    <label class="form-check-label" for="ratingOne">
-                                       <i class="bi bi-star-fill text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <i class="bi bi-star text-warning"></i>
-                                       <span class="small">(0점 - 2점)</span>
-                                    </label>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </aside>
-                  <section class="col-lg-9 col-md-12">
-                     <!-- card -->
-                     <div class="card mb-4 bg-light border-0">
-                        <!-- card body -->
-                        <div class="card-body p-7">
-                           <h3 class="mb-0">전체 게임</h3>
-                        </div>
-                     </div>
-                     <!-- list icon -->
-                     <div class="d-lg-flex justify-content-between align-items-center">
-                        <div class="mb-3 mb-lg-0">
-                           <p class="mb-0">
-                              <span class="text-dark">10</span>
-                              게임
-                           </p>
-                        </div>
-
-                        <!-- icon -->
-                        <div class="d-md-flex justify-content-between align-items-center">
-                           <div class="d-flex align-items-center justify-content-between">
-                              <div>
-                                 <a href="./boardgame-info.html" class="me-3 active"><i class="bi bi-list-ul"></i></a>
-                                 <a href="./boardgame-info-grid.html" class="text-muted me-3"><i class="bi bi-grid"></i></a>
-                              </div>
-                              <div class="ms-2 d-lg-none">
-                                 <a class="btn btn-outline-gray-400 text-muted" data-bs-toggle="offcanvas"
-                                    href="#offcanvasCategory" role="button" aria-controls="offcanvasCategory">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                       fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                       stroke-linejoin="round" class="feather feather-filter me-2">
-                                       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                                    </svg>
-                                    Filters
-                                 </a>
-                              </div>
-                           </div>
-
-                           <div class="d-flex mt-2 mt-lg-0">
-                              <div class="me-2 flex-grow-1">
-                                 <!-- select option -->
-                                 <select class="form-select">
-                                    <option selected>50개씩 보기</option>
-                                    <option value="10">10개씩 보기</option>
-                                    <option value="20">20개씩 보기</option>
-                                    <option value="30">30개씩 보기</option>
-                                 </select>
-                              </div>
-                              <div>
-                                 <!-- select option -->
-                                 <select class="form-select">
-                                    <option value="Score High to Low" selected>평점(순위) 높은순</option>
-                                    <option value="Score Low to High">평점(순위) 낮은순</option>
-                                    <option value="Level Low to High">난이도 낮은순</option>
-                                    <option value="Level High to Low">난이도 높은순</option>
-                                    <option value="Time Low to High">소요시간 짧은순</option>
-                                    <option value="Time High to Low">소요시간 긴순</option>
-                                    <option value="People Low to High">인원 적은순</option>
-                                    <option value="People High to Low">인원 많은순</option>
-                                 </select>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- row -->
-                     <div class="row g-4 row-cols-1 mt-2">
-                        <div class="col card card-product card-body">
-                           <div class="row align-items-center">
-                              <div class="col-md-4 col-12">
-                                 <div class="text-center position-relative">
-                                    <div class="position-absolute top-0">
-                                       <span class="badge bg-danger">1</span>
-                                    </div>
-                                    <a href="./boardgame-detail.html"><img src="../assets/images/products/product-img-1.jpg"
-                                          class="mb-3 img-fluid" /></a>
-                                 </div>
-                              </div>
-                              <div class="col-md-8 col-12 flex-grow-1">
-                                 <div class="text-small mb-1">
-                                    <span class="text-muted">추상</span>
-                                 </div>
-                                 <h2 class="fs-5"><a href="./boardgame-detail.html"
-                                       class="text-inherit text-decoration-none">캘리코</a></h2>
-                                 <div>
-                                    <!-- rating -->
-                                    <span class="text-warning">
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-half"></i>
-                                    </span>
-                                    <span class="text-muted small">9.87(2333)</span>
-                                 </div>
-                                 <div class="mt-1">
-                                    <i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
-                                    <i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4 (2인 최적)&nbsp;&nbsp;
-                                    <i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i> 10세 이상&nbsp;&nbsp;
-                                    <i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
-                                 </div>
-                                 <div class="mt-2">
-                                    <a href="https://www.popcone.co.kr/goods/goods_view.php?goodsNo=76525" class= "d-block" target="_blank">공식 판매처</a>
-                                 </div>
-                                 <div class="mt-3">
-                                    <div class="mt-3">
-                                       <a href="./myboardgame-holding-write.html"
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
-                                          <i class="bi bi-emoji-smile"></i></a>
-                                       <a href="#!"
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
-                                          <i class="bi bi-heart"></i></a>
-                                       <a href="./usedgame-shopping.html" 
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
-                                          <i class="bi bi-cart"></i></a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col card card-product card-body">
-                           <div class="row align-items-center">
-                              <div class="col-md-4 col-12">
-                                 <div class="text-center position-relative">
-                                    <div class="position-absolute top-0">
-                                       <span class="badge bg-danger">2</span>
-                                    </div>
-                                    <a href="./boardgame-detail.html"><img src="../assets/images/products/product-img-2.jpg"
-                                          class="mb-3 img-fluid" /></a>
-                                 </div>
-                              </div>
-                              <div class="col-md-8 col-12 flex-grow-1">
-                                 <div class="text-small mb-1">
-                                    <span class="text-muted">추상</span>
-                                 </div>
-                                 <h2 class="fs-5"><a href="./boardgame-detail.html"
-                                       class="text-inherit text-decoration-none">캐스캐디아</a></h2>
-                                 <div>
-                                    <!-- rating -->
-                                    <span class="text-warning">
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-half"></i>
-                                    </span>
-                                    <span class="text-muted small">9.2(1589)</span>
-                                 </div>
-                                 <div class="mt-1">
-                                    <i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
-                                    <i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4 (2인 최적)&nbsp;&nbsp;
-                                    <i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i> 10세 이상&nbsp;&nbsp;
-                                    <i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
-                                 </div>
-                                 <div class="mt-2">
-                                    <a href="https://www.popcone.co.kr/goods/goods_view.php?goodsNo=76525" class= "d-block" target="_blank">공식 판매처</a>
-                                 </div>
-                                 <div class="mt-3">
-                                    <div class="mt-3">
-                                       <a href="./myboardgame-holding-write.html"
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
-                                          <i class="bi bi-emoji-smile"></i></a>
-                                       <a href="#!"
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
-                                          <i class="bi bi-heart"></i></a>
-                                       <a href="./usedgame-shopping.html" 
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
-                                          <i class="bi bi-cart"></i></a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col card card-product card-body">
-                           <div class="row align-items-center">
-                              <div class="col-md-4 col-12">
-                                 <div class="text-center position-relative">
-                                    <div class="position-absolute top-0">
-                                       <span class="badge bg-danger">3</span>
-                                    </div>
-                                    <a href="./boardgame-detail.html"><img src="../assets/images/products/product-img-3.jpg"
-                                          class="mb-3 img-fluid" /></a>
-                                 </div>
-                              </div>
-                              <div class="col-md-8 col-12 flex-grow-1">
-                                 <div class="text-small mb-1">
-                                    <span class="text-muted">가족</span>
-                                 </div>
-                                 <h2 class="fs-5"><a href="./boardgame-detail.html"
-                                       class="text-inherit text-decoration-none">크라스 카리어트</a></h2>
-                                 <div>
-                                    <!-- rating -->
-                                    <span class="text-warning">
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-fill"></i>
-                                       <i class="bi bi-star-half"></i>
-                                    </span>
-                                    <span class="text-muted small">9.01(1322)</span>
-                                 </div>
-                                 <div class="mt-1">
-                                    <i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i> 2.19&nbsp;&nbsp;
-                                    <i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i> 1-4 (2인 최적)&nbsp;&nbsp;
-                                    <i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i> 10세 이상&nbsp;&nbsp;
-                                    <i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i> 30-45
-                                 </div>
-                                 <div class="mt-2">
-                                    <a href="https://www.popcone.co.kr/goods/goods_view.php?goodsNo=76525" class= "d-block" target="_blank">공식 판매처</a>
-                                 </div>
-                                 <div class="mt-3">
-                                    <div class="mt-3">
-                                       <a href="./myboardgame-holding-write.html"
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
-                                          <i class="bi bi-emoji-smile"></i></a>
-                                       <a href="#!"
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
-                                          <i class="bi bi-heart"></i></a>
-                                       <a href="./usedgame-shopping.html" 
-                                          class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-                                          data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
-                                          <i class="bi bi-cart"></i></a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- row -->
-                     <div class="row mt-8">
-                        <div class="col">
-                           <!-- nav -->
-                           <nav>
-                              <ul class="pagination">
-                                 <li class="page-item disabled">
-                                    <a class="page-link mx-1" href="#" aria-label="Previous">
-                                       <i class="feather-icon icon-chevron-left"></i>
-                                    </a>
-                                 </li>
-                                 <li class="page-item"><a class="page-link mx-1 active" href="#">1</a></li>
-                                 <li class="page-item"><a class="page-link mx-1" href="#">2</a></li>
-
-                                 <li class="page-item"><a class="page-link mx-1" href="#">...</a></li>
-                                 <li class="page-item"><a class="page-link mx-1" href="#">12</a></li>
-                                 <li class="page-item">
-                                    <a class="page-link mx-1" href="#" aria-label="Next">
-                                       <i class="feather-icon icon-chevron-right"></i>
-                                    </a>
-                                 </li>
-                              </ul>
-                           </nav>
-                        </div>
-                     </div>
-                  </section>
-               </div>
-            </div>
-         </div>
-      </main>
+			<form name="formList" id="formList" method="post" autocomplete="off">
+			
+				<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
+				<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+				<input type="hidden" name="shCategoryCd" id="shCategoryCd"/>
+			
+				<div class="row gx-10">
+					<aside class="col-lg-3 col-md-4 mb-6 mb-md-0">
+						<div class="offcanvas offcanvas-start offcanvas-collapse w-md-50" 
+							tabindex="-1" id="offcanvasCategory" aria-labelledby="offcanvasCategoryLabel">
+							<div class="offcanvas-header d-lg-none">
+								<h5 class="offcanvas-title" id="offcanvasCategoryLabel">검색</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+							</div>
+							<div class="offcanvas-body ps-lg-2 pt-lg-0">				
+								<div class="mb-8">
+									<ul class="nav nav-category">
+										<li class="nav-item border-bottom w-100">
+											<a href="javascript:void(0);" class="nav-link" onclick="goCateList('')">전체 보기</a>
+										</li>
+									</ul>
+									<ul class="nav" 
+										th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}">
+										<li class="nav-item border-bottom w-100">
+											<a href="javascript:void(0);" class="nav-link" th:text="${codeList.cName}" th:attr="onclick=|goCateList('${codeList.cSeq}')|"></a>
+										</li>
+									</ul>
+								</div>
+	
+								<div class="mb-8">
+									<div class="my-4">
+										<input type="search" class="form-control" placeholder="게임 검색" />
+									</div>
+								</div>
+								<div class="mb-8">
+									<h5 class="mb-3">인원</h5>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="1p" />
+										<label class="form-check-label" for="1p">1인</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="2p" />
+										<label class="form-check-label" for="2p">2인</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="3p" />
+										<label class="form-check-label" for="3p">3인</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="4p" />
+										<label class="form-check-label" for="4p">4인</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="5p" />
+										<label class="form-check-label" for="5p">5인</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="6p" />
+										<label class="form-check-label" for="6p">6인</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="7p" />
+										<label class="form-check-label" for="7p">7인 이상</label>
+									</div>
+								</div>
+								<div class="mb-8">
+									<h5 class="mb-3">소요 시간</h5>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="10m" />
+										<label class="form-check-label" for="10m">10분 이내</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="20m" />
+										<label class="form-check-label" for="20m">10 - 20분</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="30m" />
+										<label class="form-check-label" for="30m">20 - 30분</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="60m" />
+										<label class="form-check-label" for="60m">30 - 60분</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="90m" />
+										<label class="form-check-label" for="90m">60 - 90분</label>
+									</div>
+									<div class="form-check mb-2">
+										<input class="form-check-input" type="checkbox" value="" id="90+" />
+										<label class="form-check-label" for="90+">90분 이상</label>
+									</div>
+								</div>
+								<div class="mb-8">
+									<h5 class="mb-3">난이도 (최상 5)</h5>
+									<div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingFive" />
+											<label class="form-check-label" for="ratingFive">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<span class="small"></span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingFour" />
+											<label class="form-check-label" for="ratingFour">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small"></span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingThree" />
+											<label class="form-check-label" for="ratingThree">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small"></span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
+											<label class="form-check-label" for="ratingTwo">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small"></span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingOne" />
+											<label class="form-check-label" for="ratingOne">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="mb-8">
+									<h5 class="mb-3">평점 (최고 10점)</h5>
+									<div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingFive" />
+											<label class="form-check-label" for="ratingFive">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<span class="small">(8점 - 10점)</span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingFour" />
+											<label class="form-check-label" for="ratingFour">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small">(6점 - 8점)</span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingThree" />
+											<label class="form-check-label" for="ratingThree">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small">(4점 - 6점)</span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
+											<label class="form-check-label" for="ratingTwo">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small">(2점 - 4점)</span>
+											</label>
+										</div>
+										<div class="form-check mb-2">
+											<input class="form-check-input" type="checkbox" value="" id="ratingOne" />
+											<label class="form-check-label" for="ratingOne">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<span class="small">(0점 - 2점)</span>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</aside>
+					<section class="col-lg-9 col-md-12">
+						<div class="row g-4 row-cols-1">
+							<div class="card mb-4 bg-light border-0">
+								<div class="card-body p-7">
+									<h3 class="mb-0">전체 게임</h3>
+								</div>
+							</div>
+							<div class="d-lg-flex justify-content-between align-items-center">
+								<div class="mb-3 mb-lg-0">
+									<p class="mb-0">
+										Total: <span class="text-dark" th:text="${vo.totalRows}"></span>
+									</p>
+								</div>
+	
+								<div class="d-md-flex justify-content-between align-items-center">
+									<div class="d-flex align-items-center justify-content-between">
+										<div>
+											<a href="./boardgame-info.html" class="me-3 active"><i class="bi bi-list-ul"></i></a>
+											<a href="./boardgame-info-grid.html" class="text-muted me-3"><i class="bi bi-grid"></i></a>
+										</div>
+										<div class="ms-2 d-lg-none">
+											<a class="btn btn-outline-gray-400 text-muted" data-bs-toggle="offcanvas"
+												href="#offcanvasCategory" role="button" aria-controls="offcanvasCategory">
+												<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+													fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+													stroke-linejoin="round" class="feather feather-filter me-2">
+													<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+												</svg>
+												검색
+											</a>
+										</div>
+									</div>
+	
+									<div class="d-flex mt-2 mt-lg-0">
+										<div class="me-2 flex-grow-1">
+											<select class="form-select" id="changeRowNum" name="changeRowNum">
+												<option value="5" th:selected="${vo.rowNumToShow eq 5}">5개씩 보기</option>
+												<option value="10" th:selected="${vo.rowNumToShow eq 10}">10개씩 보기</option>
+												<option value="30" th:selected="${vo.rowNumToShow eq 30}">30개씩 보기</option>
+												<option value="50" th:selected="${vo.rowNumToShow eq 50}">50개씩 보기</option>
+												<option value="80" th:selected="${vo.rowNumToShow eq 80}">80개씩 보기</option>
+												<option value="100" th:selected="${vo.rowNumToShow eq 100}">100개씩 보기</option>       
+											</select>
+										</div>
+										<div>
+											<select class="form-select" id="shOrderOption" name="shOrderOption">
+												<option value="1" th:selected="${vo.shOrderOption eq 1}">평점 높은순</option>
+												<option value="2" th:selected="${vo.shOrderOption eq 2}">평점 낮은순</option>
+												<option value="3" th:selected="${vo.shOrderOption eq 3}">난이도 낮은순</option>
+												<option value="4" th:selected="${vo.shOrderOption eq 4}">난이도 높은순</option>
+												<option value="5" th:selected="${vo.shOrderOption eq 5}">소요시간 짧은순</option>
+												<option value="6" th:selected="${vo.shOrderOption eq 6}">소요시간 긴순</option>
+												<option value="7" th:selected="${vo.shOrderOption eq 7}">인원 적은순</option>
+												<option value="8" th:selected="${vo.shOrderOption eq 8}">인원 많은순</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row g-4 row-cols-1 mt-2">
+							<div th:if="${#lists.isEmpty(gameList)}">데이터가 없습니다.</div> 
+							<div th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}"
+								class="col card card-product card-body">
+								<div class="row align-items-center">
+									<div class="col-md-4 col-12">
+										<div class="text-center position-relative">
+											<div class="position-absolute top-0">
+												<span class="badge bg-danger" th:text="${(listStat.index + 1)}"></span>
+											</div>
+											<a href="javascript:void(0);"
+												th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
+												<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+													class="img-fluid" 
+													src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
+												<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+													class="img-fluid" th:src="${list?.fPath}" />
+											</a>
+										</div>
+									</div>
+									<div class="col-md-8 col-12 flex-grow-1">
+										<div class="text-small mb-1">
+											<span class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></span>
+										</div>
+										<h2 class="fs-5">
+											<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
+												th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
+										</h2>
+										<div>
+											<span class="text-warning">
+												<i th:unless="${list?.fillStarCount eq 0}" 
+													th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+													class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
+													th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+													class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
+													th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+													class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
+													and list?.harfStarCount eq 0 
+													and list?.fillStarCount eq 0}"   
+													th:each="i : ${#numbers.sequence(0, 4)}"
+													class="bi bi-star"></i>
+											</span>
+											
+											<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + list?.grCount + ')'}"></span>
+										</div>
+										<div class="mt-1">
+											<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
+											<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
+											<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
+											<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
+												th:text="${list?.gMinPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>
+											<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
+												th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>&nbsp;&nbsp;
+											<i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i>
+											<span th:text="${list?.gUseAge + '세 이상'}"></span>&nbsp;&nbsp;
+											<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
+											<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
+												th:text="${list?.gMinTime + '분'}"></span>
+											<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
+												th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
+										</div>
+										<div class="mt-2">
+											<a th:if="${list?.gOfficialUrl ne null and #strings.trim(list?.gOfficialUrl) ne ''}" 
+												th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank">공식판매처</a>
+											<span th:unless="${list?.gOfficialUrl ne null and #strings.trim(list?.gOfficialUrl) ne ''}" 
+												class= "d-block">공식판매처 정보없음</span>
+										</div>
+										<div class="mt-3">
+											<a href="./myboardgame-holding-write.html"
+												class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+												data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
+												<i class="bi bi-emoji-smile"></i></a>
+											<a href="#!"
+												class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+												data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
+												<i class="bi bi-heart"></i></a>
+											<a href="./usedgame-shopping.html" 
+												class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+												data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
+												<i class="bi bi-cart"></i></a>
+										</div>
+									</div>
+								</div>
+	                        </div>
+						</div>
+						<div class="row mt-8">
+							<div class="col">
+								<nav>
+									<ul class="pagination">
+										<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+											<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+												th:attr="onclick=|goList('${vo.startPage - 1}')|">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+										<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+											th:classappend="${num eq vo.currPage} ? active : ''" 
+											class="page-item" style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+										</li>
+										<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+											<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</section>
+				</div>
+			</form>
+		</div>
+	</div>
+</main>
 
 <div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
@@ -579,13 +405,31 @@
   	let cate = document.querySelector("input[name=gCategoryCd]");
     	
 	let fom = document.querySelector("form[name=formList]");
+	let goUrlUsrGameInfoList = "/usr/game/gameInfoUsrList";
 	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
 	
-	function goDetail(keyValue1, keyValue2) {
-		seq.value = keyValue1;
-		cate.value = keyValue2;
-		fom.action = goUrlUsrDetail;
+	function submit(goUrl) {
+		fom.action = goUrl;
 		fom.submit();
+	}
+</script>
+
+<!-- Search / Paging -->
+<script type="text/javascript">
+	function goCateList(keyValue) {
+		cate.value = keyValue;
+		submit(goUrlUsrGameInfoList);
+	}
+
+	function goList(currPage) {
+		document.querySelector("input[name=currPage]").value = currPage;
+		submit(goUrlUsrGameInfoList);
+	}
+	
+	document.getElementById("changeRowNum").onchange = function () {
+	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+	    fom.action = goUrlXdmList;
+	    fom.submit();
 	}
 </script>
 

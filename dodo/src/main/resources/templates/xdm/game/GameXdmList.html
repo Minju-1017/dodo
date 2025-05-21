@@ -527,13 +527,11 @@
 	
 	document.getElementById("changeRowNum").onchange = function () {
 	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-	    fom.action = goUrlXdmList;
-	    fom.submit();
+	    submit(goUrlXdmList);
 	}
 	
 	document.getElementById("btnSearch").onclick = function () {
-   		fom.action = goUrlXdmList;
-   		fom.submit();
+		submit(goUrlXdmList);
 	};
 </script>
 

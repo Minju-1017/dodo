@@ -60,11 +60,11 @@
 									<tr>
 										<th>인원</th>
 										<td th:if="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
-											th:text="${gameItem?.gMinPeople + '명 (' + gameItem?.gBestPeople + '인 최적, ' 
+											th:text="${gameItem?.gMinPeople + '인 (' + gameItem?.gBestPeople + '인 최적, ' 
 												+ gameItem?.gRecommendPeople + '인 추천)'}"></td>
 										<td th:unless="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
 											th:text="${gameItem?.gMinPeople + ' ~ ' + gameItem?.gMaxPeople + 
-												'명 (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
+												'인 (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
 									</tr>
 									<tr>
 										<th>사용연령</th>
@@ -553,9 +553,9 @@
 									<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
 									<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
 									<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-										th:text="${list?.gMinPeople + '명'}"></span>
+										th:text="${list?.gMinPeople + '인'}"></span>
 									<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-										th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명'}"></span>&nbsp;&nbsp;
+										th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></span>&nbsp;&nbsp;
 									<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
 									<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
 										th:text="${list?.gMinTime + '분'}"></span>

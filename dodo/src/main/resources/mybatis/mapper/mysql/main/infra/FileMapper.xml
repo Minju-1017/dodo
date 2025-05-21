@@ -4,7 +4,7 @@
 <mapper namespace="com.dodo.module.file.FileDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.file.FileDto"></resultMap>
 
-	<select id="selectOneCount" resultType="Integer">
+	<select id="selectListCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM 
 			${fDbTableName}

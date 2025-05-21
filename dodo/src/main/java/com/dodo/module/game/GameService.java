@@ -11,16 +11,20 @@ public class GameService {
 	@Autowired
 	GameDao dao;
 	
-	public int selectOneCount(GameVo vo) {
-		return dao.selectOneCount(vo);
+	public int selectListCount(GameVo vo) {
+		return dao.selectListCount(vo);
 	}
 	
 	public List<GameDto> selectList(GameVo vo) {
 		return dao.selectList(vo);
 	}
 	
-	public List<GameDto> selectListWithoutPaging() {
-		return dao.selectListWithoutPaging();
+	public int selectGameInfoListCount(GameVo vo) {
+		return dao.selectGameInfoListCount(vo);
+	}
+	
+	public List<GameDto> selectGameInfoList(GameVo vo) {
+		return dao.selectGameInfoList(vo);
 	}
 	
 	public List<GameDto> selectTop10List(GameVo vo) {

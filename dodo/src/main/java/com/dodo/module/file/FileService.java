@@ -92,7 +92,7 @@ public class FileService {
 				fileDto.setrSeq(rSeq);
 				
 				// DB 저장
-				int count = dao.selectOneCount(fileDto);
+				int count = dao.selectListCount(fileDto);
 				
 				if (count == 0) {
 					dao.insertFile(fileDto);

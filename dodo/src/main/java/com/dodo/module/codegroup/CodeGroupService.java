@@ -11,8 +11,8 @@ public class CodeGroupService {
 	@Autowired
 	CodeGroupDao dao;
 	
-	public int selectOneCount(CodeGroupVo vo) {
-		return dao.selectOneCount(vo);
+	public int selectListCount(CodeGroupVo vo) {
+		return dao.selectListCount(vo);
 	}
 	
 	public List<CodeGroupDto> selectList(CodeGroupVo vo) {

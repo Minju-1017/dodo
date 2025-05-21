@@ -39,7 +39,7 @@ public class CodeController {
 	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo,
 			HttpSession httpSession) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount(vo));
+		vo.setParamsPaging(service.selectListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
 			model.addAttribute("codeList", service.selectList(vo));

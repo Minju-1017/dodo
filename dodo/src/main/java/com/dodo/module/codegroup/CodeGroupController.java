@@ -32,7 +32,7 @@ public class CodeGroupController {
 	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo,
 			HttpSession httpSession) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectOneCount(vo));
+		vo.setParamsPaging(service.selectListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
 			model.addAttribute("codeGroupList", service.selectList(vo));

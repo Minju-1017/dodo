@@ -68,9 +68,9 @@
 													<td th:text="${list?.grScoreAvg}"></td>	
 													<td th:text="${list?.gLevel}"></td>
 													<td th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-														th:text="${list?.gMinPeople + '명'}"></td>
+														th:text="${list?.gMinPeople + '인'}"></td>
 													<td th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-														th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명'}"></td>		
+														th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></td>		
 													<td th:if="${list?.gMinTime eq list?.gMaxTime}"
 														th:text="${list?.gMinTime + '분'}"></td>
 													<td th:unless="${list?.gMinTime eq list?.gMaxTime}"

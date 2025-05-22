@@ -48,7 +48,7 @@
 												<tr th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}">
 													<td>
 														<h5 class="fs-6 mb-0">
-															<span th:text="${(listStat.index + 1) + '위'}" class="text-inherit"></span>
+															<span th:text="${list.grOrder + '위'}" class="text-inherit"></span>
 														</h5>
 													<td>
 														<a href="javascript:void(0);"

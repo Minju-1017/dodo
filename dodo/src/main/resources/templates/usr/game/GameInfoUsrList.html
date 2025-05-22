@@ -10,7 +10,9 @@
 			
 				<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 				<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-				<input type="hidden" name="shCategoryCd" id="shCategoryCd"/>
+				<input type="hidden" name="shCategoryCd" id="shCategoryCd" th:value="${vo.shCategoryCd}"/>
+				<input type="hidden" name="gSeq">
+				<input type="hidden" name="gCategoryCd">
 			
 				<div class="row gx-10">
 					<aside class="col-lg-3 col-md-4 mb-6 mb-md-0">
@@ -37,38 +39,16 @@
 	
 								<div class="mb-8">
 									<div class="my-4">
-										<input type="search" class="form-control" placeholder="게임 검색" />
+										<input type="search" class="form-control" placeholder="게임명 검색"
+											id="shValue" name="shValue" th:value="${vo.shValue}" />
 									</div>
 								</div>
 								<div class="mb-8">
 									<h5 class="mb-3">인원</h5>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="1p" />
-										<label class="form-check-label" for="1p">1인</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="2p" />
-										<label class="form-check-label" for="2p">2인</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="3p" />
-										<label class="form-check-label" for="3p">3인</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="4p" />
-										<label class="form-check-label" for="4p">4인</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="5p" />
-										<label class="form-check-label" for="5p">5인</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="6p" />
-										<label class="form-check-label" for="6p">6인</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="7p" />
-										<label class="form-check-label" for="7p">7인 이상</label>
+									<div class="form-check mb-2" th:each="entry : ${vo.shPeopleList}">
+										<input class="form-check-input" type="checkbox" th:checked="${entry.value}"
+											th:attr="onclick=|searchList('${entry.key}', ${entry.value})|"/>
+										<label class="form-check-label" th:text="${entry.key}"></label>
 									</div>
 								</div>
 								<div class="mb-8">
@@ -289,7 +269,7 @@
 									<div class="col-md-4 col-12">
 										<div class="text-center position-relative">
 											<div class="position-absolute top-0">
-												<span class="badge bg-danger" th:text="${(listStat.index + 1)}"></span>
+												<span class="badge bg-danger" th:text="${(list?.grOrder)}"></span>
 											</div>
 											<a href="javascript:void(0);"
 												th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
@@ -403,9 +383,10 @@
 <script type="text/javascript">
   	let seq = document.querySelector("input[name=gSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
+  	let shCategoryCd = document.querySelector("input[name=shCategoryCd]");
     	
 	let fom = document.querySelector("form[name=formList]");
-	let goUrlUsrGameInfoList = "/usr/game/gameInfoUsrList";
+	let goUrlUsrGameInfoList = "/usr/game/GameInfoUsrList";
 	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
 	
 	function submit(goUrl) {
@@ -414,10 +395,14 @@
 	}
 </script>
 
+<script th:inline="javascript">
+    let shPeopleList = /*[[${vo.shPeopleList}]]*/ {};
+</script>
+
 <!-- Search / Paging -->
 <script type="text/javascript">
 	function goCateList(keyValue) {
-		cate.value = keyValue;
+		shCategoryCd.value = keyValue;
 		submit(goUrlUsrGameInfoList);
 	}
 
@@ -426,10 +411,26 @@
 		submit(goUrlUsrGameInfoList);
 	}
 	
+	function goDetail(keyValue1, keyValue2) {
+		seq.value = keyValue1;
+		cate.value = keyValue2;
+		submit(goUrlUsrDetail);
+	}
+	
 	document.getElementById("changeRowNum").onchange = function () {
 	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-	    fom.action = goUrlXdmList;
-	    fom.submit();
+	    submit(goUrlUsrGameInfoList);
+	}
+	
+	document.getElementById("shOrderOption").onchange = function () {
+	    document.getElementById("shOrderOption").value = document.getElementById("shOrderOption").value;
+	    submit(goUrlUsrGameInfoList);
+	}
+	
+	function searchList(value1, value2) {
+		// true/false 반전해서 업데이트
+	    shPeopleList[value1] = !value2;
+	    submit(goUrlUsrGameInfoList);
 	}
 </script>
 

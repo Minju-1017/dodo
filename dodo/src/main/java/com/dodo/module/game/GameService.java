@@ -31,8 +31,12 @@ public class GameService {
 		return dao.selectTop10List(vo);
 	}
 	
-	public List<GameDto> selectOrderList(GameDto gameDto) {
-		return dao.selectOrderList(gameDto);
+	public List<GameDto> selectGameOrderList() {
+		return dao.selectGameOrderList();
+	}
+	
+	public GameDto selectGameOrder(GameDto gameDto) {
+		return dao.selectGameOrder(gameDto);
 	}
 	
 	public List<GameDto> selectGameRelationList(GameDto gameDto) {

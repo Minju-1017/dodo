@@ -36,8 +36,7 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmList")
-	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo,
-			HttpSession httpSession) throws Exception {
+	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		

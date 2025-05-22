@@ -13,7 +13,7 @@ public interface CodeDao {
 	
 	public int selectListCount(CodeVo vo);
 	public List<CodeDto> selectList(CodeVo vo); 
-	public List<CodeDto> selectListWithoutPaging(MemberDto memberDto); 
+	public List<CodeDto> selectListWithoutPaging(CodeDto codeDto); 
 	public CodeDto selectOne(CodeDto codeDto);
 	public int insert(CodeDto codeDto);
 	public int update(CodeDto codeDto);

@@ -213,7 +213,23 @@ public class GameController {
 		vo.setParamsPaging(10);
 		
 		if (vo.getTotalRows() > 0) {
-			model.addAttribute("gameList", service.selectTop10List(vo));
+			// Top 10 List
+			List<GameDto> top10List = service.selectTop10List(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = service.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : top10List) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("gameList", top10List);
 		}
 		
 		return path_user + "GameTop10UsrList";
@@ -231,7 +247,23 @@ public class GameController {
 		vo.setParamsPaging(service.selectGameInfoListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
-			model.addAttribute("gameList", service.selectGameInfoList(vo));
+			// Game List
+			List<GameDto> gameDtoList = service.selectGameInfoList(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = service.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : gameDtoList) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+			
+			model.addAttribute("gameList", gameDtoList);
 		}
 		
 		return path_user + "GameInfoUsrList";
@@ -244,16 +276,9 @@ public class GameController {
 	@RequestMapping(value = "GameUsrDetail")
 	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {
 		// 순위 리스트
-		List<GameDto> dtoOrderList = service.selectOrderList(gameDto);
+		GameDto orderDto = service.selectGameOrder(gameDto);
 		GameDto dto1 = service.selectOne(gameDto);
-		
-		// 순위 설정
-		for (GameDto orderDto : dtoOrderList) {
-			if (orderDto.getgSeq().equals(dto1.getgSeq())) {
-				dto1.setGrOrder(orderDto.getGrOrder());
-				break;
-			}
-		}
+		dto1.setGrOrder(orderDto.getGrOrder());
 		
 		// 썸네일
 		gameDto.setrSeq(gameDto.getgSeq());
@@ -299,18 +324,12 @@ public class GameController {
 		int successCnt = service.insertReview(gameReviewDto);
 			
 		if (successCnt > 0) {
-			// 순위 리스트
-			List<GameDto> dtoOrderList = service.selectOrderList(gameDto);
-			GameDto dto = service.selectOne(gameDto);
-			dto.setGrDtosSize(gameDto.getGrDtosSize());
-			
 			// 순위 설정
-			for (GameDto orderDto : dtoOrderList) {
-				if (orderDto.getgSeq().equals(dto.getgSeq())) {
-					dto.setGrOrder(orderDto.getGrOrder());
-					break;
-				}
-			}
+			GameDto orderDto = service.selectGameOrder(gameDto);
+			GameDto dto = service.selectOne(gameDto);
+			dto.setGrOrder(orderDto.getGrOrder());
+			
+			dto.setGrDtosSize(gameDto.getGrDtosSize());
 			
 			// 게임 정보
 			model.addAttribute("gameItem", dto);

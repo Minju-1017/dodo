@@ -31,9 +31,7 @@
 			<if test="shPeople != null and !shPeople.equals('')">AND #{shPeople} >= a.gMinPeople AND a.gMaxPeople >= #{shPeople}</if>			
 	        <if test="shTime != null and !shTime.equals('')">AND #{shTime} >= a.gMinTime AND a.gMaxTime >= #{shTime}</if>				
 			<if test="shMinLevel != null and !shMinLevel.equals('')">AND a.gLevel >= #{shMinLevel}</if>	
-			<if test="shMaxLevel != null and !shMaxLevel.equals('')">AND #{shMaxLevel} >= a.gLevel</if>	
-			<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND grScoreAvg >= #{shMinScoreAvg}</if>	
-			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= grScoreAvg</if>		
+			<if test="shMaxLevel != null and !shMaxLevel.equals('')">AND #{shMaxLevel} >= a.gLevel</if>		
 	        <choose>
 	            <when test="shOption == 1">AND a.gSeq = #{shValue}</when>
 	            <when test="shOption == 2">AND a.gName LIKE CONCAT('%',#{shValue},'%')</when>
@@ -48,15 +46,17 @@
 		WHERE 1=1		
 			AND a.gDelNy = 0
 			<if test="shCategoryCd != null and !shCategoryCd.equals('')">AND a.gCategoryCd = #{shCategoryCd}</if>
+			<if test="shValue != null and !shValue.equals('')">AND a.gName LIKE CONCAT('%',#{shValue},'%')</if>
+			<if test="shPeopleList['1인'] == true">AND 1 >= a.gMinPeople AND a.gMaxPeople >= 1</if>
 			<choose>
-	            <when test="shOrderOption == 1">ORDER BY grScoreAvg DESC</when>
-	            <when test="shOrderOption == 2">ORDER BY grScoreAvg ASC</when>
-	            <when test="shOrderOption == 3">ORDER BY a.gLevel ASC</when>
-	            <when test="shOrderOption == 4">ORDER BY a.gLevel DESC</when>
-	            <when test="shOrderOption == 5">ORDER BY a.gMaxTime ASC</when>
-	            <when test="shOrderOption == 6">ORDER BY a.gMaxTime DESC</when>
-	            <when test="shOrderOption == 7">ORDER BY a.gMaxPeople ASC</when>
-	            <when test="shOrderOption == 8">ORDER BY a.gMaxPeople DESC</when>
+	            <when test="shOrderOption == 1">ORDER BY grScoreAvg DESC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 2">ORDER BY grScoreAvg ASC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 3">ORDER BY a.gLevel ASC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 4">ORDER BY a.gLevel DESC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 5">ORDER BY a.gMaxTime ASC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 6">ORDER BY a.gMaxTime DESC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 7">ORDER BY a.gMaxPeople ASC, a.gSeq DESC</when>
+	            <when test="shOrderOption == 8">ORDER BY a.gMaxPeople DESC, a.gSeq DESC</when>
 	        </choose>
 	</sql>
 	
@@ -102,15 +102,37 @@
 	
 	<select id="selectListCount" resultType="Integer">
 		SELECT COUNT(*)
-			<include refid="selectCommon"/>
-		ORDER BY a.gSeq DESC
+		FROM (
+		    SELECT *
+		    FROM (
+		        SELECT 
+		            a.*,
+		            (
+		                SELECT IFNULL(AVG(b.grScore), 0)
+		                FROM gameReview b
+		                WHERE b.grDelNy = 0
+		                  AND b.game_gSeq = a.gSeq
+		            ) AS grScoreAvg
+		        <include refid="selectCommon"/>
+		        ORDER BY a.gSeq DESC
+		    ) AS sub_games
+		    WHERE 1=1
+		    	<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND sub_games.grScoreAvg >= #{shMinScoreAvg}</if>	
+				<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= sub_games.grScoreAvg</if>
+		) AS games
 	</select>
 
 	<select id="selectList" resultMap="resultMapObj">
-		SELECT
-			<include refid="selectCommonColumn"/>
-		<include refid="selectCommon"/>
-		ORDER BY a.gSeq DESC
+		SELECT *
+		FROM (
+			SELECT
+				<include refid="selectCommonColumn"/>
+			<include refid="selectCommon"/>
+			ORDER BY a.gSeq DESC
+		) AS sub_games
+		WHERE 1=1
+			<if test="shMinScoreAvg != null and !shMinScoreAvg.equals('')">AND sub_games.grScoreAvg >= #{shMinScoreAvg}</if>	
+			<if test="shMaxScoreAvg != null and !shMaxScoreAvg.equals('')">AND #{shMaxScoreAvg} >= sub_games.grScoreAvg</if>
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
@@ -121,7 +143,7 @@
 			game a
 		WHERE 1=1
 			AND a.gDelNy = 0
-		ORDER BY grScoreAvg DESC LIMIT 0, 10
+		ORDER BY grScoreAvg DESC, a.gSeq DESC LIMIT 0, 10
 	</select>
 	
 	<select id="selectGameInfoListCount" resultType="Integer">
@@ -135,7 +157,7 @@
 						AND b.game_gSeq = a.gSeq
 				) AS grScoreAvg
 		    <include refid="selectGameInfoCommon"/>
-		) AS sorted_games
+		) AS games
 	</select>
 
 	<select id="selectGameInfoList" resultMap="resultMapObj">
@@ -145,23 +167,43 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
-	<select id="selectOrderList" resultMap="resultMapObj">
+	<select id="selectGameOrderList" resultMap="resultMapObj">
 		SELECT
-			a.gSeq,
-        	ROW_NUMBER() OVER(
-        		ORDER BY 
-					(SELECT IFNULL(AVG(b.grScore), 0)
+    		a.gSeq,
+		    RANK() OVER(
+		        ORDER BY 
+		        	(SELECT IFNULL(AVG(b.grScore), 0)
 				FROM gameReview b
-				WHERE 1=1 
+				WHERE 1=1
 					AND b.grDelNy = 0 
 					AND b.game_gSeq = a.gSeq
-		    ) 
-	        DESC) grOrder
-		FROM 
-			game a
+		        ) DESC
+		    ) AS grOrder
+		FROM game a
 		WHERE 1=1
-       		 AND a.gDelNy = 0  
-		ORDER BY grOrder
+			AND a.gDelNy = 0
+	</select>
+	
+	<select id="selectGameOrder" resultMap="resultMapObj">
+		SELECT *
+		FROM (
+			SELECT 
+				a.gSeq,
+				RANK() OVER (
+					ORDER BY 
+						(SELECT IFNULL(AVG(b.grScore), 0)
+					FROM gameReview b
+					WHERE 1=1
+						AND b.grDelNy = 0
+						AND b.game_gSeq = a.gSeq
+					) DESC
+				) AS grOrder
+			FROM game a
+			WHERE 1=1
+       		 AND a.gDelNy = 0
+		) AS ranked
+		WHERE 1=1
+			AND ranked.gSeq = #{gSeq}
 	</select>
 	
 	<select id="selectGameRelationList" resultMap="resultMapObj">
@@ -178,7 +220,7 @@
 			AND a.gSeq != #{gSeq}
 			AND a.gDelNy = 0
 			AND a.gCategoryCd = #{gCategoryCd}
-		ORDER BY grScoreAvg DESC LIMIT 0, 5
+		ORDER BY grScoreAvg DESC, a.gSeq DESC LIMIT 0, 5
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
@@ -389,10 +431,10 @@
 		ORDER BY 
 			<choose>
 				<when test="grShOption == 1">
-					a.grRegiDate DESC
+					a.grRegiDate DESC, a.grSeq DESC
 				</when>
 				<when test="grShOption == 2">
-					a.grScore DESC
+					a.grScore DESC, a.grSeq DESC
 				</when>
 			</choose>
 		LIMIT #{grDtosSize} OFFSET 0

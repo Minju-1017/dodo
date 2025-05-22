@@ -63,8 +63,8 @@ public class CodeService {
 	public List<CodeDto> selectList(CodeVo vo) {
 		return dao.selectList(vo);
 	}
-	public List<CodeDto> selectListWithoutPaging(MemberDto memberDto) {
-		return dao.selectListWithoutPaging(memberDto);
+	public List<CodeDto> selectListWithoutPaging(CodeDto codeDto) {
+		return dao.selectListWithoutPaging(codeDto);
 	}
 	
 	public CodeDto selectOne(CodeDto codeDto) {

@@ -82,6 +82,18 @@
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
 	
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		FROM 
+			code a
+		LEFT JOIN
+			codeGroup b
+		ON
+			a.codeGroup_cgSeq = b.cgSeq
+		ORDER BY a.cSeq DESC
+	</select>
+	
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 			<include refid="selectCommonColumn"/>

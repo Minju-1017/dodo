@@ -126,32 +126,29 @@ function imgFileValidation(fileObj, fileNameInputObj) {
  * 모달
  */
 
-// 기본 알림 모달
+// 기본 알림 모달 - 공용
 function showModalAlert(title, body) {
 	document.querySelector("#modalAlertTitle").textContent = title;
 	document.querySelector("#modalAlertBody").textContent = body;
 	$("#modalAlert").modal("show"); 
 }
 
-// 데이터 삭제 알림 모달
+// 데이터 삭제 알림 모달 - Xdm
 function showModalDeleteConfirm(title, body, showBtnUelete, showBtnDelete) {
 	document.querySelector("#modalConfirmTitle").textContent = title;
 	document.querySelector("#modalConfirmBody").textContent = body;
 	document.querySelector("#btnModalUelete").style.display = showBtnUelete;
 	document.querySelector("#btnModalDelete").style.display = showBtnDelete;
-	document.querySelector("#btnModalWithdrawal").style.display = 'none';
-	document.querySelector("#btnModalLogin").style.display = 'none';
+	document.querySelector("#btnModalExcelDownload").style.display = 'none';
 	$("#modalConfirm").modal("show");      	
 }
 
-// 데이터 삭제 알림 모달(회원탈퇴)
+// 회원탈퇴 - Usr
 function showModalWithdrawalConfirm(title, body) {
 	document.querySelector("#modalConfirmTitle").textContent = title;
 	document.querySelector("#modalConfirmBody").textContent = body;
-	document.querySelector("#btnModalUelete").style.display = 'none';
-	document.querySelector("#btnModalDelete").style.display = 'none';
-	document.querySelector("#btnModalLogin").style.display = 'none';
 	document.querySelector("#btnModalWithdrawal").style.display = '';
+	document.querySelector("#btnModalLogin").style.display = 'none';
 	$("#modalConfirm").modal("show");      	
 }
 
@@ -159,11 +156,20 @@ function showModalWithdrawalConfirm(title, body) {
 function showModalMoveLoginConfirm(title, body) {
 	document.querySelector("#modalConfirmTitle").textContent = title;
 	document.querySelector("#modalConfirmBody").textContent = body;
-	document.querySelector("#btnModalUelete").style.display = 'none';
-	document.querySelector("#btnModalDelete").style.display = 'none';
 	document.querySelector("#btnModalWithdrawal").style.display = 'none';
 	document.querySelector("#btnModalLogin").style.display = '';
 	$("#modalConfirm").modal("show");      	
+}
+
+// 엑셀 다운로드 알림 모달
+function showModalExcelDownloadConfirm(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalUelete").style.display = 'none';
+	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalExcelDownload").style.display = '';
+	$("#modalConfirm").modal("show");     
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

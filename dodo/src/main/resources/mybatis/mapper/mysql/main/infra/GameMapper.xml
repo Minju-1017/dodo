@@ -47,7 +47,47 @@
 			AND a.gDelNy = 0
 			<if test="shCategoryCd != null and !shCategoryCd.equals('')">AND a.gCategoryCd = #{shCategoryCd}</if>
 			<if test="shValue != null and !shValue.equals('')">AND a.gName LIKE CONCAT('%',#{shValue},'%')</if>
-			<if test="shPeopleList['1인'] == true">AND 1 >= a.gMinPeople AND a.gMaxPeople >= 1</if>
+			<if test="shPeopleList['1인'] == true or shPeopleList['2인'] == true 
+				or shPeopleList['3인'] == true or shPeopleList['4인'] == true 
+				or shPeopleList['5인'] == true or shPeopleList['6인'] == true 
+				or shPeopleList['7인 이상'] == true">
+				AND 
+				<trim prefix="(" suffix=")" prefixOverrides="OR">
+					<if test="shPeopleList['1인'] == true">OR (1 >= a.gMinPeople AND a.gMaxPeople >= 1)</if>
+					<if test="shPeopleList['2인'] == true">OR (2 >= a.gMinPeople AND a.gMaxPeople >= 2)</if>
+					<if test="shPeopleList['3인'] == true">OR (3 >= a.gMinPeople AND a.gMaxPeople >= 3)</if>
+					<if test="shPeopleList['4인'] == true">OR (4 >= a.gMinPeople AND a.gMaxPeople >= 4)</if>
+					<if test="shPeopleList['5인'] == true">OR (5 >= a.gMinPeople AND a.gMaxPeople >= 5)</if>
+					<if test="shPeopleList['6인'] == true">OR (6 >= a.gMinPeople AND a.gMaxPeople >= 6)</if>
+					<if test="shPeopleList['7인 이상'] == true">OR a.gMinPeople > 6</if>
+				</trim>
+			</if>
+			<if test="shTimeList['10분 이내'] == true or shTimeList['10 - 20분'] == true 
+				or shTimeList['20 - 30분'] == true or shTimeList['30 - 60분'] == true 
+				or shTimeList['60 - 90분'] == true or shTimeList['90분 초과'] == true">
+				AND 
+				<trim prefix="(" suffix=")" prefixOverrides="OR">
+					<if test="shTimeList['10분 이내'] == true">OR (a.gMinTime >= 0 AND 10 >= a.gMaxTime)</if>
+					<if test="shTimeList['10 - 20분'] == true">OR (a.gMinTime >= 11 AND 20 >= a.gMaxTime)</if>
+					<if test="shTimeList['20 - 30분'] == true">OR (a.gMinTime >= 21 AND 30 >= a.gMaxTime)</if>
+					<if test="shTimeList['30 - 60분'] == true">OR (a.gMinTime >= 31 AND 60 >= a.gMaxTime)</if>
+					<if test="shTimeList['60 - 90분'] == true">OR (a.gMinTime >= 61 AND 90 >= a.gMaxTime)</if>
+					<if test="shTimeList['90분 초과'] == true">OR a.gMinTime >= 91</if>
+				</trim>
+			</if>
+			<!-- TODO: Level 검색 안됨!!!!!!! -->
+			<if test="shLevelList['5'] == true or shLevelList['4'] == true 
+				or shLevelList['3'] == true or shLevelList['2'] == true 
+				or shLevelList['1'] == true">
+				AND 
+				<trim prefix="(" suffix=")" prefixOverrides="OR">
+					<if test="shLevelList['5'] == true">OR (a.gLevel = 5)</if>
+					<if test="shLevelList['4'] == true">OR (a.gLevel >= 4 AND 4.99 >= a.gLevel)</if>
+					<if test="shLevelList['3'] == true">OR (a.gLevel >= 3 AND 3.99 >= a.gLevel)</if>
+					<if test="shLevelList['2'] == true">OR (a.gLevel >= 2 AND 2.99 >= a.gLevel)</if>
+					<if test="shLevelList['1'] == true">OR (a.gLevel >= 0 AND 1.99 >= a.gLevel)</if>
+				</trim>
+			</if>
 			<choose>
 	            <when test="shOrderOption == 1">ORDER BY grScoreAvg DESC, a.gSeq DESC</when>
 	            <when test="shOrderOption == 2">ORDER BY grScoreAvg ASC, a.gSeq DESC</when>
@@ -149,21 +189,54 @@
 	<select id="selectGameInfoListCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM (
-			SELECT
-				a.gSeq,
-				(SELECT IFNULL(AVG(b.grScore), 0)
-					FROM gameReview b
-					WHERE b.grDelNy = 0
-						AND b.game_gSeq = a.gSeq
-				) AS grScoreAvg
-		    <include refid="selectGameInfoCommon"/>
+			SELECT *
+		    FROM (
+				SELECT
+					a.*,
+					(
+						SELECT IFNULL(AVG(b.grScore), 0)
+						FROM gameReview b
+						WHERE b.grDelNy = 0
+							AND b.game_gSeq = a.gSeq
+					) AS grScoreAvg
+			    <include refid="selectGameInfoCommon"/>
+			) AS sub_games
+			WHERE 1=1
+				<if test="shScoreList['(8점 - 10점)'] == true or shScoreList['(6점 - 8점)'] == true 
+					or shScoreList['(4점 - 6점)'] == true or shScoreList['(2점 - 4점)'] == true 
+					or shScoreList['(0점 - 2점)'] == true">
+					AND 
+					<trim prefix="(" suffix=")" prefixOverrides="OR">
+						<if test="shScoreList['(8점 - 10점)'] == true">OR (sub_games.grScoreAvg >= 8)</if>
+						<if test="shScoreList['(6점 - 8점)'] == true">OR (sub_games.grScoreAvg >= 6 AND 7.99 >= sub_games.grScoreAvg)</if>
+						<if test="shScoreList['(4점 - 6점)'] == true">OR (sub_games.grScoreAvg >= 4 AND 5.99 >= sub_games.grScoreAvg)</if>
+						<if test="shScoreList['(2점 - 4점)'] == true">OR (sub_games.grScoreAvg >= 2 AND 3.99 >= sub_games.grScoreAvg)</if>
+						<if test="shScoreList['(0점 - 2점)'] == true">OR (sub_games.grScoreAvg >= 0 AND 1.99 >= sub_games.grScoreAvg)</if>
+					</trim>
+				</if>
 		) AS games
 	</select>
 
 	<select id="selectGameInfoList" resultMap="resultMapObj">
-		SELECT
-			<include refid="selectCommonColumn"/>
-		<include refid="selectGameInfoCommon"/>
+		SELECT *
+		FROM (
+			SELECT
+				<include refid="selectCommonColumn"/>
+			<include refid="selectGameInfoCommon"/>
+		) AS sub_games
+		WHERE 1=1
+			<if test="shScoreList['(8점 - 10점)'] == true or shScoreList['(6점 - 8점)'] == true 
+				or shScoreList['(4점 - 6점)'] == true or shScoreList['(2점 - 4점)'] == true 
+				or shScoreList['(0점 - 2점)'] == true">
+				AND 
+				<trim prefix="(" suffix=")" prefixOverrides="OR">
+					<if test="shScoreList['(8점 - 10점)'] == true">OR (sub_games.grScoreAvg >= 8)</if>
+					<if test="shScoreList['(6점 - 8점)'] == true">OR (sub_games.grScoreAvg >= 6 AND 7.99 >= sub_games.grScoreAvg)</if>
+					<if test="shScoreList['(4점 - 6점)'] == true">OR (sub_games.grScoreAvg >= 4 AND 5.99 >= sub_games.grScoreAvg)</if>
+					<if test="shScoreList['(2점 - 4점)'] == true">OR (sub_games.grScoreAvg >= 2 AND 3.99 >= sub_games.grScoreAvg)</if>
+					<if test="shScoreList['(0점 - 2점)'] == true">OR (sub_games.grScoreAvg >= 0 AND 1.99 >= sub_games.grScoreAvg)</if>
+				</trim>
+			</if>
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	

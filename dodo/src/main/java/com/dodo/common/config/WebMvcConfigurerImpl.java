@@ -27,6 +27,9 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 					"/usr/member/MemberUsrSignInForgotPwdProc",
 					"/usr/game/GameTop10UsrList",
 					"/usr/game/GameInfoUsrList",
+					"/usr/game/GameInfoSearchUsr",
+					"/usr/game/GameInfoSearchTotalUsrList",
+					"/usr/game/GameInfoSearchUsrList",
 					"/usr/game/GameUsrDetail",
 					"/usr/game/GameUsrDetailReviewMore"
 		);

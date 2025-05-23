@@ -1,6 +1,7 @@
 package com.dodo.module.game;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.module.file.FileService;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value={"/xdm/game/", "/usr/game/"})
@@ -36,8 +35,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmList")
-	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo,
-			HttpSession httpSession) throws Exception {
+	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		
@@ -186,8 +184,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameReviewXdmList")
-	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo,
-			HttpSession httpSession) throws Exception {
+	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectReviewOneCount(vo));
 		
@@ -206,8 +203,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameTop10UsrList")
-	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo,
-			HttpSession httpSession) throws Exception {
+	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setRowNumToShow(10);
 		vo.setParamsPaging(10);
@@ -241,8 +237,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameInfoUsrList")
-	public String gameInfoUsrList(Model model, @ModelAttribute("vo") GameVo vo,
-			HttpSession httpSession) throws Exception {
+	public String gameInfoUsrList(Model model, @ModelAttribute("vo") GameVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectGameInfoListCount(vo));
 		
@@ -267,6 +262,74 @@ public class GameController {
 		}
 		
 		return path_user + "GameInfoUsrList";
+	}
+	
+	/**
+	 * Ajax를 이용한 검색 필터로 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "GameInfoSearchUsr", method = RequestMethod.POST)
+	public String gameInfoSearchUsr(
+			Model model, @ModelAttribute("vo") GameVo vo) {
+		System.out.println("###############" + vo.getShLevelList().get("5"));
+
+		// Thymeleaf fragment만 리턴
+	    return path_user + "GameInfoUsrList :: #setGameSearchValue";
+	}
+	
+	/**
+	 * Ajax로 검색 필터로 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "GameInfoSearchTotalUsrList", method = RequestMethod.POST)
+	public String gameInfoSearchTotalUsrList(
+			Model model, @ModelAttribute("vo") GameVo vo) {
+		System.out.println("###############" + vo.getShLevelList().get("5"));
+		vo.setParamsPaging(service.selectGameInfoListCount(vo));
+
+		// Thymeleaf fragment만 리턴
+	    return path_user + "GameInfoUsrList :: #totalGameRefresh";
+	}
+	
+	/**
+	 * Ajax를 이용한 검색 필터로 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "GameInfoSearchUsrList", method = RequestMethod.POST)
+	public String gameInfoSearchUsrList(
+			Model model, @ModelAttribute("vo") GameVo vo) {
+		System.out.println("###############" + vo.getShLevelList().get("5"));
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectGameInfoListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			// Game List
+			List<GameDto> gameDtoList = service.selectGameInfoList(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = service.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : gameDtoList) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+			
+			model.addAttribute("gameList", gameDtoList);
+		}
+
+		// Thymeleaf fragment만 리턴
+	    return path_user + "GameInfoUsrList :: #gameListRefresh";
 	}
 	
 	/**
@@ -309,12 +372,12 @@ public class GameController {
 	public String gameUsrDetailReviewMore(Model model, GameDto gameDto) {
     	model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
     	
-    	 // Thymeleaf fragment만 리턴
+    	// Thymeleaf fragment만 리턴
 	    return path_user + "GameUsrDetail :: #reviewList";
 	}
 	
 	/**
-	 * Ajax를 입력한 데이터 추가하기(리뷰) - User
+	 * Ajax를 이용한 입력한 데이터 추가하기(리뷰) - User
 	 * @param gameReviewDto
 	 * @return
 	 * @throws Exception
@@ -342,7 +405,7 @@ public class GameController {
 	}
 	
 	/**
-	 * Ajax를 게임 디테일 화면 갱신(리뷰 분포) - User
+	 * Ajax를 이용한 게임 디테일 화면 갱신(리뷰 분포) - User
 	 * @param gameReviewDto
 	 * @return
 	 * @throws Exception
@@ -362,7 +425,7 @@ public class GameController {
 	}
 	
 	/**
-	 * Ajax를 입력한 데이터 추가 후 화면 갱신3(리뷰) - User
+	 * Ajax를 이용한 입력한 데이터 추가 후 화면 갱신3(리뷰) - User
 	 * @param gameReviewDto
 	 * @return
 	 * @throws Exception

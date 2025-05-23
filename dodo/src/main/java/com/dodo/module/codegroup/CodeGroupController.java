@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpSession;
-
 @Controller
 @RequestMapping(value="/xdm/codegroup/")
 public class CodeGroupController {
@@ -29,8 +27,7 @@ public class CodeGroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeGroupXdmList")
-	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo,
-			HttpSession httpSession) throws Exception {
+	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		

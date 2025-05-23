@@ -23,44 +23,37 @@ public class GameVo extends BaseVo {
 	private Integer shOrderOption = 1; 	// 1: 평점 높은순, 2: 평점 낮은순, 3: 난이도 낮은순, 4: 난이도 높은순, 
 										// 5: 소요시간 짧은순, 6: 소요시간 긴순, 7: 인원 적은순, 8: 인원 많은순
 	
-	// 인원 체크박스
-	private Map<String, Boolean> shPeopleList = new LinkedHashMap<String, Boolean>();
-	
-	private Boolean shPeople1p = false;
-	private Boolean shPeople2p = false;
-	private Boolean shPeople3p = false;
-	private Boolean shPeople4p = false;
-	private Boolean shPeople5p = false;
-	private Boolean shPeople6p = false;
-	private Boolean shPeople7p = false;
-	
-	// 시간 체크박스
-	private Boolean shTime10 = false;
-	private Boolean shTime20 = false;
-	private Boolean shTime30 = false;
-	private Boolean shTime60 = false;
-	private Boolean shTime90 = false;
-	private Boolean shTime90Plus = false;
-	
-	// 레벨 체크박스
-	private Boolean shLevel5 = false;
-	private Boolean shLevel4 = false;
-	private Boolean shLevel3 = false;
-	private Boolean shLevel2 = false;
-	private Boolean shLevel1 = false;
-	
-	// 점수 체크박스
-	private Boolean shScoreAvg10;
-	private Boolean shScoreAvg8;
-	private Boolean shScoreAvg6;
-	private Boolean shScoreAvg4;
-	private Boolean shScoreAvg2;
+	private Map<String, Boolean> shPeopleList = new LinkedHashMap<String, Boolean>(); 	// 인원 체크박스
+	private Map<String, Boolean> shTimeList = new LinkedHashMap<String, Boolean>(); 	// 시간 체크박스
+	private Map<String, Boolean> shLevelList = new LinkedHashMap<String, Boolean>();	// 레벨 체크박스
+	private Map<String, Boolean> shScoreList = new LinkedHashMap<String, Boolean>();	// 평점 체크박스
 	
 	public GameVo() {
+		// 인원 체크박스 초기화
 		for (int i = 1; i < 7; i++) {
 			shPeopleList.put(i + "인", false);
 		}
 		shPeopleList.put("7인 이상", false);
+		
+		// 시간 체크박스 초기화
+		shTimeList.put("10분 이내", false);
+		shTimeList.put("10 - 20분", false);
+		shTimeList.put("20 - 30분", false);
+		shTimeList.put("30 - 60분", false);
+		shTimeList.put("60 - 90분", false);
+		shTimeList.put("90분 초과", false);
+		
+		// 레벨 체크박스 초기화
+		for (int i = 5; i > 0; i--) {
+			shLevelList.put(String.valueOf(i), false);
+		}
+		
+		// 평점 체크박스 초기화
+		shScoreList.put("(8점 - 10점)", false);
+		shScoreList.put("(6점 - 8점)", false);
+		shScoreList.put("(4점 - 6점)", false);
+		shScoreList.put("(2점 - 4점)", false);
+		shScoreList.put("(0점 - 2점)", false);
 	}
 
 	public String getgSeq() {
@@ -151,196 +144,36 @@ public class GameVo extends BaseVo {
 		this.shOrderOption = shOrderOption;
 	}
 
-	public Boolean getShPeople1p() {
-		return shPeople1p;
-	}
-
-	public void setShPeople1p(Boolean shPeople1p) {
-		this.shPeople1p = shPeople1p;
-	}
-
-	public Boolean getShPeople2p() {
-		return shPeople2p;
-	}
-
-	public void setShPeople2p(Boolean shPeople2p) {
-		this.shPeople2p = shPeople2p;
-	}
-
-	public Boolean getShPeople3p() {
-		return shPeople3p;
-	}
-
-	public void setShPeople3p(Boolean shPeople3p) {
-		this.shPeople3p = shPeople3p;
-	}
-
-	public Boolean getShPeople4p() {
-		return shPeople4p;
-	}
-
-	public void setShPeople4p(Boolean shPeople4p) {
-		this.shPeople4p = shPeople4p;
-	}
-
-	public Boolean getShPeople5p() {
-		return shPeople5p;
-	}
-
-	public void setShPeople5p(Boolean shPeople5p) {
-		this.shPeople5p = shPeople5p;
-	}
-
-	public Boolean getShPeople6p() {
-		return shPeople6p;
-	}
-
-	public void setShPeople6p(Boolean shPeople6p) {
-		this.shPeople6p = shPeople6p;
-	}
-
-	public Boolean getShPeople7p() {
-		return shPeople7p;
-	}
-
-	public void setShPeople7p(Boolean shPeople7p) {
-		this.shPeople7p = shPeople7p;
-	}
-
-	public Boolean getShTime10() {
-		return shTime10;
-	}
-
-	public void setShTime10(Boolean shTime10) {
-		this.shTime10 = shTime10;
-	}
-
-	public Boolean getShTime20() {
-		return shTime20;
-	}
-
-	public void setShTime20(Boolean shTime20) {
-		this.shTime20 = shTime20;
-	}
-
-	public Boolean getShTime30() {
-		return shTime30;
-	}
-
-	public void setShTime30(Boolean shTime30) {
-		this.shTime30 = shTime30;
-	}
-
-	public Boolean getShTime60() {
-		return shTime60;
-	}
-
-	public void setShTime60(Boolean shTime60) {
-		this.shTime60 = shTime60;
-	}
-
-	public Boolean getShTime90() {
-		return shTime90;
-	}
-
-	public void setShTime90(Boolean shTime90) {
-		this.shTime90 = shTime90;
-	}
-
-	public Boolean getShTime90Plus() {
-		return shTime90Plus;
-	}
-
-	public void setShTime90Plus(Boolean shTime90Plus) {
-		this.shTime90Plus = shTime90Plus;
-	}
-
-	public Boolean getShLevel5() {
-		return shLevel5;
-	}
-
-	public void setShLevel5(Boolean shLevel5) {
-		this.shLevel5 = shLevel5;
-	}
-
-	public Boolean getShLevel4() {
-		return shLevel4;
-	}
-
-	public void setShLevel4(Boolean shLevel4) {
-		this.shLevel4 = shLevel4;
-	}
-
-	public Boolean getShLevel3() {
-		return shLevel3;
-	}
-
-	public void setShLevel3(Boolean shLevel3) {
-		this.shLevel3 = shLevel3;
-	}
-
-	public Boolean getShLevel2() {
-		return shLevel2;
-	}
-
-	public void setShLevel2(Boolean shLevel2) {
-		this.shLevel2 = shLevel2;
-	}
-
-	public Boolean getShLevel1() {
-		return shLevel1;
-	}
-
-	public void setShLevel1(Boolean shLevel1) {
-		this.shLevel1 = shLevel1;
-	}
-
-	public Boolean getShScoreAvg10() {
-		return shScoreAvg10;
-	}
-
-	public void setShScoreAvg10(Boolean shScoreAvg10) {
-		this.shScoreAvg10 = shScoreAvg10;
-	}
-
-	public Boolean getShScoreAvg8() {
-		return shScoreAvg8;
-	}
-
-	public void setShScoreAvg8(Boolean shScoreAvg8) {
-		this.shScoreAvg8 = shScoreAvg8;
-	}
-
-	public Boolean getShScoreAvg6() {
-		return shScoreAvg6;
-	}
-
-	public void setShScoreAvg6(Boolean shScoreAvg6) {
-		this.shScoreAvg6 = shScoreAvg6;
-	}
-
-	public Boolean getShScoreAvg4() {
-		return shScoreAvg4;
-	}
-
-	public void setShScoreAvg4(Boolean shScoreAvg4) {
-		this.shScoreAvg4 = shScoreAvg4;
-	}
-
-	public Boolean getShScoreAvg2() {
-		return shScoreAvg2;
-	}
-
-	public void setShScoreAvg2(Boolean shScoreAvg2) {
-		this.shScoreAvg2 = shScoreAvg2;
-	}
-
 	public Map<String, Boolean> getShPeopleList() {
 		return shPeopleList;
 	}
 
 	public void setShPeopleList(Map<String, Boolean> shPeopleList) {
 		this.shPeopleList = shPeopleList;
+	}
+
+	public Map<String, Boolean> getShTimeList() {
+		return shTimeList;
+	}
+
+	public void setShTimeList(Map<String, Boolean> shTimeList) {
+		this.shTimeList = shTimeList;
+	}
+
+	public Map<String, Boolean> getShLevelList() {
+		return shLevelList;
+	}
+
+	public void setShLevelList(Map<String, Boolean> shLevelList) {
+		this.shLevelList = shLevelList;
+	}
+
+	public Map<String, Boolean> getShScoreList() {
+		return shScoreList;
+	}
+
+	public void setShScoreList(Map<String, Boolean> shScoreList) {
+		this.shScoreList = shScoreList;
 	}
 	
 }

@@ -6,194 +6,147 @@
 <main>
 	<div class="mt-8 mb-lg-14 mb-8">
 		<div class="container">
+			
 			<form name="formList" id="formList" method="post" autocomplete="off">
 			
-				<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
+				<input type="hidden" id="currPage" name="currPage" th:value="${vo.currPage}" default="1"/>
 				<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-				<input type="hidden" name="shCategoryCd" id="shCategoryCd" th:value="${vo.shCategoryCd}"/>
-				<input type="hidden" name="gSeq">
-				<input type="hidden" name="gCategoryCd">
+				<input type="hidden" id="shCategoryCd" name="shCategoryCd" th:value="${vo.shCategoryCd}"/>
+				<input type="hidden" id="gSeq" name="gSeq">
+				<input type="hidden" id="gCategoryCd" name="gCategoryCd">
 			
 				<div class="row gx-10">
 					<aside class="col-lg-3 col-md-4 mb-6 mb-md-0">
-						<div class="offcanvas offcanvas-start offcanvas-collapse w-md-50" 
-							tabindex="-1" id="offcanvasCategory" aria-labelledby="offcanvasCategoryLabel">
-							<div class="offcanvas-header d-lg-none">
-								<h5 class="offcanvas-title" id="offcanvasCategoryLabel">검색</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-							</div>
-							<div class="offcanvas-body ps-lg-2 pt-lg-0">				
-								<div class="mb-8">
-									<ul class="nav nav-category">
-										<li class="nav-item border-bottom w-100">
-											<a href="javascript:void(0);" class="nav-link" onclick="goCateList('')">전체 보기</a>
-										</li>
-									</ul>
-									<ul class="nav" 
-										th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}">
-										<li class="nav-item border-bottom w-100">
-											<a href="javascript:void(0);" class="nav-link" th:text="${codeList.cName}" th:attr="onclick=|goCateList('${codeList.cSeq}')|"></a>
-										</li>
-									</ul>
+						<div id="setGameSearchValue" th:fragment="setGameSearchValue">
+							<div class="offcanvas offcanvas-start offcanvas-collapse w-md-50" 
+								tabindex="-1" id="offcanvasCategory" aria-labelledby="offcanvasCategoryLabel">
+								<div class="offcanvas-header d-lg-none">
+									<h5 class="offcanvas-title" id="offcanvasCategoryLabel">검색</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 								</div>
-	
-								<div class="mb-8">
-									<div class="my-4">
-										<input type="search" class="form-control" placeholder="게임명 검색"
-											id="shValue" name="shValue" th:value="${vo.shValue}" />
+								<div class="offcanvas-body ps-lg-2 pt-lg-0">				
+									<div class="mb-8">
+										<ul class="nav nav-category">
+											<li class="nav-item border-bottom w-100">
+												<a href="javascript:void(0);" class="nav-link" onclick="goCateList('')">전체 보기</a>
+											</li>
+										</ul>
+										<ul class="nav" 
+											th:each="codeList : ${@codeService.selectListCachedCode(@constants.GAME_CODE_GROUP_SEQ_CATEGORY)}">
+											<li class="nav-item border-bottom w-100">
+												<a href="javascript:void(0);" class="nav-link" th:text="${codeList.cName}" th:attr="onclick=|goCateList('${codeList.cSeq}')|"></a>
+											</li>
+										</ul>
 									</div>
-								</div>
-								<div class="mb-8">
-									<h5 class="mb-3">인원</h5>
-									<div class="form-check mb-2" th:each="entry : ${vo.shPeopleList}">
-										<input class="form-check-input" type="checkbox" th:checked="${entry.value}"
-											th:attr="onclick=|searchList('${entry.key}', ${entry.value})|"/>
-										<label class="form-check-label" th:text="${entry.key}"></label>
-									</div>
-								</div>
-								<div class="mb-8">
-									<h5 class="mb-3">소요 시간</h5>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="10m" />
-										<label class="form-check-label" for="10m">10분 이내</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="20m" />
-										<label class="form-check-label" for="20m">10 - 20분</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="30m" />
-										<label class="form-check-label" for="30m">20 - 30분</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="60m" />
-										<label class="form-check-label" for="60m">30 - 60분</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="90m" />
-										<label class="form-check-label" for="90m">60 - 90분</label>
-									</div>
-									<div class="form-check mb-2">
-										<input class="form-check-input" type="checkbox" value="" id="90+" />
-										<label class="form-check-label" for="90+">90분 이상</label>
-									</div>
-								</div>
-								<div class="mb-8">
-									<h5 class="mb-3">난이도 (최상 5)</h5>
-									<div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingFive" />
-											<label class="form-check-label" for="ratingFive">
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<span class="small"></span>
-											</label>
+		
+									<div class="mb-8">
+										<div class="my-4">
+											<input type="search" class="form-control" placeholder="게임명 검색"
+												id="shValue" name="shValue" th:value="${vo.shValue}" />
 										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingFour" />
-											<label class="form-check-label" for="ratingFour">
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star text-warning"></i>
-												<span class="small"></span>
-											</label>
+									</div>
+									<div class="mb-8">
+										<h5 class="mb-3">인원</h5>
+										<div class="form-check mb-2" th:each="entry : ${vo.shPeopleList}">
+											<input class="form-check-input" type="checkbox" th:checked="${entry.value}"
+												th:attr="onclick=|searchPeopleList('${entry.key}', ${entry.value})|" />
+											<label class="form-check-label" th:text="${entry.key}"></label>
 										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingThree" />
-											<label class="form-check-label" for="ratingThree">
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star text-warning"></i>
-												<i class="bi bi-star text-warning"></i>
-												<span class="small"></span>
-											</label>
+									</div>
+									<div class="mb-8">
+										<h5 class="mb-3">소요 시간</h5>
+										<div class="form-check mb-2" th:each="entry : ${vo.shTimeList}">
+											<input class="form-check-input" type="checkbox" th:checked="${entry.value}"
+												 th:attr="onclick=|searchTimeList('${entry.key}', ${entry.value})|" />
+											<label class="form-check-label" th:text="${entry.key}"></label>
 										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
-											<label class="form-check-label" for="ratingTwo">
+									</div>
+									<div class="mb-8">
+										<h5 class="mb-3">난이도 (최상 5)</h5>
+										<div class="form-check mb-2" th:each="entry : ${vo.shLevelList}">
+											<input class="form-check-input" type="checkbox" th:checked="${entry.value}"
+												 th:attr="onclick=|searchLevelList('${entry.key}', ${entry.value})|" />
+											<label th:if="${entry.key == '5'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
-												<i class="bi bi-star text-warning"></i>
-												<i class="bi bi-star text-warning"></i>
-												<i class="bi bi-star text-warning"></i>
-												<span class="small"></span>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
 											</label>
-										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingOne" />
-											<label class="form-check-label" for="ratingOne">
+											<label th:if="${entry.key == '4'}" class="form-check-label">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+											</label>
+											<label th:if="${entry.key == '3'}" class="form-check-label">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+											</label>
+											<label th:if="${entry.key == '2'}" class="form-check-label">
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star-fill text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+												<i class="bi bi-star text-warning"></i>
+											</label>
+											<label th:if="${entry.key == '1'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
-												<span class="small"></span>
 											</label>
 										</div>
 									</div>
-								</div>
-								<div class="mb-8">
-									<h5 class="mb-3">평점 (최고 10점)</h5>
-									<div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingFive" />
-											<label class="form-check-label" for="ratingFive">
+									<div class="mb-8">
+										<h5 class="mb-3">평점 (최고 10점)</h5>
+										<div class="form-check mb-2" th:each="entry : ${vo.shScoreList}">
+											<input class="form-check-input" type="checkbox" th:checked="${entry.value}"
+												 th:attr="onclick=|searchScoreList('${entry.key}', ${entry.value})|" />
+											<label th:if="${entry.key == '(8점 - 10점)'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
-												<span class="small">(8점 - 10점)</span>
+												<span class="small" th:text="${entry.key}"></span>
 											</label>
-										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingFour" />
-											<label class="form-check-label" for="ratingFour">
+											<label th:if="${entry.key == '(6점 - 8점)'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
-												<span class="small">(6점 - 8점)</span>
+												<span class="small" th:text="${entry.key}"></span>
 											</label>
-										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingThree" />
-											<label class="form-check-label" for="ratingThree">
+											<label th:if="${entry.key == '(4점 - 6점)'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
-												<span class="small">(4점 - 6점)</span>
+												<span class="small" th:text="${entry.key}"></span>
 											</label>
-										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingTwo" />
-											<label class="form-check-label" for="ratingTwo">
+											<label th:if="${entry.key == '(2점 - 4점)'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
-												<span class="small">(2점 - 4점)</span>
+												<span class="small" th:text="${entry.key}"></span>
 											</label>
-										</div>
-										<div class="form-check mb-2">
-											<input class="form-check-input" type="checkbox" value="" id="ratingOne" />
-											<label class="form-check-label" for="ratingOne">
+											<label th:if="${entry.key == '(0점 - 2점)'}" class="form-check-label">
 												<i class="bi bi-star-fill text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
 												<i class="bi bi-star text-warning"></i>
-												<span class="small">(0점 - 2점)</span>
+												<span class="small" th:text="${entry.key}"></span>
 											</label>
 										</div>
 									</div>
@@ -201,18 +154,26 @@
 							</div>
 						</div>
 					</aside>
+					
 					<section class="col-lg-9 col-md-12">
 						<div class="row g-4 row-cols-1">
 							<div class="card mb-4 bg-light border-0">
 								<div class="card-body p-7">
-									<h3 class="mb-0">전체 게임</h3>
+									<h3 th:if="${@codeService.selectOneCachedCode(vo.shCategoryCd) == ''
+										or @codeService.selectOneCachedCode(vo.shCategoryCd) == null}" 
+										class="mb-0">전체 보기</h3>
+									<h3 th:unless="${@codeService.selectOneCachedCode(vo.shCategoryCd) == ''
+										or @codeService.selectOneCachedCode(vo.shCategoryCd) == null}" 
+										class="mb-0" th:text="${@codeService.selectOneCachedCode(vo.shCategoryCd)}"></h3>
 								</div>
 							</div>
 							<div class="d-lg-flex justify-content-between align-items-center">
 								<div class="mb-3 mb-lg-0">
-									<p class="mb-0">
-										Total: <span class="text-dark" th:text="${vo.totalRows}"></span>
-									</p>
+									<div id="totalGameRefresh" th:fragment="totalGameRefresh">
+										<p class="mb-0">
+											Total: <span class="text-dark" th:text="${vo.totalRows}"></span>
+										</p>
+									</div>
 								</div>
 	
 								<div class="d-md-flex justify-content-between align-items-center">
@@ -261,113 +222,115 @@
 								</div>
 							</div>
 						</div>
-						<div class="row g-4 row-cols-1 mt-2">
-							<div th:if="${#lists.isEmpty(gameList)}">데이터가 없습니다.</div> 
-							<div th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}"
-								class="col card card-product card-body">
-								<div class="row align-items-center">
-									<div class="col-md-4 col-12">
-										<div class="text-center position-relative">
-											<div class="position-absolute top-0">
-												<span class="badge bg-danger" th:text="${(list?.grOrder)}"></span>
+						<div id="gameListRefresh" th:fragment="gameListRefresh">
+							<div class="row g-4 row-cols-1 mt-2">
+								<div th:if="${#lists.isEmpty(gameList)}">데이터가 없습니다.</div> 
+								<div th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}"
+									class="col card card-product card-body">
+									<div class="row align-items-center">
+										<div class="col-md-4 col-12">
+											<div class="text-center position-relative">
+												<div class="position-absolute top-0">
+													<span class="badge bg-danger" th:text="${(list?.grOrder)}"></span>
+												</div>
+												<a href="javascript:void(0);"
+													th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
+													<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+														class="img-fluid" 
+														src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
+													<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+														class="img-fluid" th:src="${list?.fPath}" />
+												</a>
 											</div>
-											<a href="javascript:void(0);"
-												th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
-												<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
-													class="img-fluid" 
-													src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
-												<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
-													class="img-fluid" th:src="${list?.fPath}" />
-											</a>
+										</div>
+										<div class="col-md-8 col-12 flex-grow-1">
+											<div class="text-small mb-1">
+												<span class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></span>
+											</div>
+											<h2 class="fs-5">
+												<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
+													th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
+											</h2>
+											<div>
+												<span class="text-warning">
+													<i th:unless="${list?.fillStarCount eq 0}" 
+														th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+														class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
+														th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+														class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
+														th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+														class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
+														and list?.harfStarCount eq 0 
+														and list?.fillStarCount eq 0}"   
+														th:each="i : ${#numbers.sequence(0, 4)}"
+														class="bi bi-star"></i>
+												</span>
+												
+												<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + list?.grCount + ')'}"></span>
+											</div>
+											<div class="mt-1">
+												<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
+												<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
+												<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
+												<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
+													th:text="${list?.gMinPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>
+												<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
+													th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>&nbsp;&nbsp;
+												<i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i>
+												<span th:text="${list?.gUseAge + '세 이상'}"></span>&nbsp;&nbsp;
+												<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
+												<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
+													th:text="${list?.gMinTime + '분'}"></span>
+												<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
+													th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
+											</div>
+											<div class="mt-2">
+												<a th:if="${list?.gOfficialUrl ne null and #strings.trim(list?.gOfficialUrl) ne ''}" 
+													th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank">공식판매처</a>
+												<span th:unless="${list?.gOfficialUrl ne null and #strings.trim(list?.gOfficialUrl) ne ''}" 
+													class= "d-block">공식판매처 정보없음</span>
+											</div>
+											<div class="mt-3">
+												<a href="./myboardgame-holding-write.html"
+													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+													data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
+													<i class="bi bi-emoji-smile"></i></a>
+												<a href="#!"
+													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+													data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
+													<i class="bi bi-heart"></i></a>
+												<a href="./usedgame-shopping.html" 
+													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+													data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
+													<i class="bi bi-cart"></i></a>
+											</div>
 										</div>
 									</div>
-									<div class="col-md-8 col-12 flex-grow-1">
-										<div class="text-small mb-1">
-											<span class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></span>
-										</div>
-										<h2 class="fs-5">
-											<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
-												th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
-										</h2>
-										<div>
-											<span class="text-warning">
-												<i th:unless="${list?.fillStarCount eq 0}" 
-													th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
-													class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
-													th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
-													class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
-													th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
-													class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
-													and list?.harfStarCount eq 0 
-													and list?.fillStarCount eq 0}"   
-													th:each="i : ${#numbers.sequence(0, 4)}"
-													class="bi bi-star"></i>
-											</span>
-											
-											<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + list?.grCount + ')'}"></span>
-										</div>
-										<div class="mt-1">
-											<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
-											<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
-											<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
-											<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-												th:text="${list?.gMinPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>
-											<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-												th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>&nbsp;&nbsp;
-											<i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i>
-											<span th:text="${list?.gUseAge + '세 이상'}"></span>&nbsp;&nbsp;
-											<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
-											<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
-												th:text="${list?.gMinTime + '분'}"></span>
-											<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
-												th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
-										</div>
-										<div class="mt-2">
-											<a th:if="${list?.gOfficialUrl ne null and #strings.trim(list?.gOfficialUrl) ne ''}" 
-												th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank">공식판매처</a>
-											<span th:unless="${list?.gOfficialUrl ne null and #strings.trim(list?.gOfficialUrl) ne ''}" 
-												class= "d-block">공식판매처 정보없음</span>
-										</div>
-										<div class="mt-3">
-											<a href="./myboardgame-holding-write.html"
-												class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-												data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
-												<i class="bi bi-emoji-smile"></i></a>
-											<a href="#!"
-												class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-												data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
-												<i class="bi bi-heart"></i></a>
-											<a href="./usedgame-shopping.html" 
-												class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-												data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
-												<i class="bi bi-cart"></i></a>
-										</div>
-									</div>
+		                        </div>
+							</div>
+							<div class="row mt-8">
+								<div class="col">
+									<nav>
+										<ul class="pagination">
+											<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+												<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+													th:attr="onclick=|goList('${vo.startPage - 1}')|">
+													<span aria-hidden="true">&laquo;</span>
+												</a>
+											</li>
+											<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+												th:classappend="${num eq vo.currPage} ? active : ''" 
+												class="page-item" style="cursor: pointer;">
+												<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+											</li>
+											<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+												<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+													<span aria-hidden="true">&raquo;</span>
+												</a>
+											</li>
+										</ul>
+									</nav>
 								</div>
-	                        </div>
-						</div>
-						<div class="row mt-8">
-							<div class="col">
-								<nav>
-									<ul class="pagination">
-										<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
-											<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
-												th:attr="onclick=|goList('${vo.startPage - 1}')|">
-												<span aria-hidden="true">&laquo;</span>
-											</a>
-										</li>
-										<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
-											th:classappend="${num eq vo.currPage} ? active : ''" 
-											class="page-item" style="cursor: pointer;">
-											<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
-										</li>
-										<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
-											<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
-												<span aria-hidden="true">&raquo;</span>
-											</a>
-										</li>
-									</ul>
-								</nav>
 							</div>
 						</div>
 					</section>
@@ -395,20 +358,24 @@
 	}
 </script>
 
+<!-- 변수 정의(검색 체크박스) -->
 <script th:inline="javascript">
-    let shPeopleList = /*[[${vo.shPeopleList}]]*/ {};
+	let shPeopleList = /*[[${vo.shPeopleList}]]*/ {};
+	let shTimeList = /*[[${vo.shTimeList}]]*/ {};
+	let shLevelList = /*[[${vo.shLevelList}]]*/ {};
+	let shScoreList = /*[[${vo.shScoreList}]]*/ {};
 </script>
 
 <!-- Search / Paging -->
 <script type="text/javascript">
 	function goCateList(keyValue) {
 		shCategoryCd.value = keyValue;
-		submit(goUrlUsrGameInfoList);
+		setSearchValue();
 	}
 
 	function goList(currPage) {
 		document.querySelector("input[name=currPage]").value = currPage;
-		submit(goUrlUsrGameInfoList);
+		setSearchValue();
 	}
 	
 	function goDetail(keyValue1, keyValue2) {
@@ -418,19 +385,137 @@
 	}
 	
 	document.getElementById("changeRowNum").onchange = function () {
+		alert(document.getElementById("changeRowNum").value);
 	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-	    submit(goUrlUsrGameInfoList);
+	    setSearchValue();
 	}
 	
 	document.getElementById("shOrderOption").onchange = function () {
 	    document.getElementById("shOrderOption").value = document.getElementById("shOrderOption").value;
-	    submit(goUrlUsrGameInfoList);
+	    setSearchValue();
 	}
 	
-	function searchList(value1, value2) {
-		// true/false 반전해서 업데이트
-	    shPeopleList[value1] = !value2;
-	    submit(goUrlUsrGameInfoList);
+	function searchPeopleList(key, value) {
+		alert(value);
+		shPeopleList[key] = !value;
+		setSearchValue();
+	}
+	
+	function searchTimeList(key, value) {
+		shTimeList[key] = !value;
+		setSearchValue();
+	}
+	
+	function searchLevelList(key, value) {
+		shLevelList[key] = !value;
+		setSearchValue();
+	}
+	
+	function searchScoreList(key, value) {
+		shScoreList[key] = !value;
+		setSearchValue();
+	}
+	
+	function setSearchValue() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/game/GameInfoSearchUsr"
+			,traditional: true
+			,data : {
+				"currPage" : $("#currPage").val(),
+				"rowNumToShow" : $("#rowNumToShow").val(),
+				"shCategoryCd" : $("#shCategoryCd").val(),
+				"shValue" : $("#shValue").val(),
+				"shOrderOption" : $("#shOrderOption").val(),
+				...flattenMap("shPeopleList", shPeopleList),
+		        ...flattenMap("shTimeList", shTimeList),
+		        ...flattenMap("shLevelList", shLevelList),
+		        ...flattenMap("shScoreList", shScoreList)
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					$('#setGameSearchValue').replaceWith(fragmentHtml);
+					goSearchTotalCount();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function goSearchTotalCount() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/game/GameInfoSearchTotalUsrList"
+			,traditional: true
+			,data : {
+				"currPage" : $("#currPage").val(),
+				"rowNumToShow" : $("#rowNumToShow").val(),
+				"shCategoryCd" : $("#shCategoryCd").val(),
+				"shValue" : $("#shValue").val(),
+				"shOrderOption" : $("#shOrderOption").val(),
+				...flattenMap("shPeopleList", shPeopleList),
+		        ...flattenMap("shTimeList", shTimeList),
+		        ...flattenMap("shLevelList", shLevelList),
+		        ...flattenMap("shScoreList", shScoreList)
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					$('#totalGameRefresh').replaceWith(fragmentHtml);
+					goSearchList();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function goSearchList() {
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/game/GameInfoSearchUsrList"
+			,traditional: true
+			,data : {
+				"currPage" : $("#currPage").val(),
+				"rowNumToShow" : $("#rowNumToShow").val(),
+				"shCategoryCd" : $("#shCategoryCd").val(),
+				"shValue" : $("#shValue").val(),
+				"shOrderOption" : $("#shOrderOption").val(),
+				...flattenMap("shPeopleList", shPeopleList),
+		        ...flattenMap("shTimeList", shTimeList),
+		        ...flattenMap("shLevelList", shLevelList),
+		        ...flattenMap("shScoreList", shScoreList)
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					$('#gameListRefresh').replaceWith(fragmentHtml);
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function flattenMap(baseKey, obj) {
+	    const flat = {};
+	    for (const key in obj) {
+	        if (obj.hasOwnProperty(key)) {
+	            flat[`${baseKey}[${key}]`] = obj[key];
+	        }
+	    }
+	    return flat;
 	}
 </script>
 

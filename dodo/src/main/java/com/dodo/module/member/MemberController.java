@@ -442,7 +442,7 @@ public class MemberController {
 	 */
 	@ResponseBody // Ajax 코드는 무조건 써준다.
 	@RequestMapping(value = "MemberUsrUeleProc")
-	public Map<String, Object> memberUsrUeleProc(MemberDto memberDto, HttpSession httpSession) {
+	public Map<String, Object> memberUsrUeleProc(MemberDto memberDto) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		int successCnt = service.uelete(memberDto);	
 		
@@ -519,8 +519,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmList")
-	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo,
-			HttpSession httpSession) throws Exception {
+	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo) throws Exception {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 

@@ -166,5 +166,14 @@ public class CodeController {
 
 		return returnMap;
 	}
+	
+	/**
+	 * 엑셀 업로드 화면 이동
+	 * @return
+	 */
+	@RequestMapping(value = "CodeXdmExcelUpload")	
+	public String codeXdmExcelUpload() throws Exception {	
+		return path + "CodeXdmExcelUpload";
+	}
 
 }

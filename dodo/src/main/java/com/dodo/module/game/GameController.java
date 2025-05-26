@@ -265,18 +265,27 @@ public class GameController {
 	}
 	
 	/**
-	 * Ajax를 이용한 검색 필터로 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
+	 * Ajax를 이용해 필터 선택 부분 갱신 - User
 	 * @param seqList
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameInfoSearchUsr", method = RequestMethod.POST)
-	public String gameInfoSearchUsr(
-			Model model, @ModelAttribute("vo") GameVo vo) {
-		System.out.println("###############" + vo.getShLevelList().get("5"));
-
+	public String gameInfoSearchUsr(@ModelAttribute("vo") GameVo vo) {
 		// Thymeleaf fragment만 리턴
 	    return path_user + "GameInfoUsrList :: #setGameSearchValue";
+	}
+	
+	/**
+	 * Ajax를 이용해 제목 갱신 - User
+	 * @param seqList
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "GameInfoSearchUsrTitle", method = RequestMethod.POST)
+	public String gameInfoSearchUsrTitle(@ModelAttribute("vo") GameVo vo) {
+		// Thymeleaf fragment만 리턴
+	    return path_user + "GameInfoUsrList :: #titleRefresh";
 	}
 	
 	/**
@@ -288,7 +297,6 @@ public class GameController {
 	@RequestMapping(value = "GameInfoSearchTotalUsrList", method = RequestMethod.POST)
 	public String gameInfoSearchTotalUsrList(
 			Model model, @ModelAttribute("vo") GameVo vo) {
-		System.out.println("###############" + vo.getShLevelList().get("5"));
 		vo.setParamsPaging(service.selectGameInfoListCount(vo));
 
 		// Thymeleaf fragment만 리턴
@@ -304,7 +312,6 @@ public class GameController {
 	@RequestMapping(value = "GameInfoSearchUsrList", method = RequestMethod.POST)
 	public String gameInfoSearchUsrList(
 			Model model, @ModelAttribute("vo") GameVo vo) {
-		System.out.println("###############" + vo.getShLevelList().get("5"));
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectGameInfoListCount(vo));
 		

@@ -37,23 +37,25 @@ public class GameVo extends BaseVo {
 		
 		// 시간 체크박스 초기화
 		shTimeList.put("10분 이내", false);
-		shTimeList.put("10 - 20분", false);
-		shTimeList.put("20 - 30분", false);
-		shTimeList.put("30 - 60분", false);
-		shTimeList.put("60 - 90분", false);
+		shTimeList.put("11 - 20분", false);
+		shTimeList.put("21 - 30분", false);
+		shTimeList.put("31 - 60분", false);
+		shTimeList.put("61 - 90분", false);
 		shTimeList.put("90분 초과", false);
 		
 		// 레벨 체크박스 초기화
-		for (int i = 5; i > 0; i--) {
-			shLevelList.put(String.valueOf(i), false);
-		}
+		shLevelList.put("(5)", false);
+		shLevelList.put("(4 - 4.99)", false);
+		shLevelList.put("(3 - 3.99)", false);
+		shLevelList.put("(2 - 2.99)", false);
+		shLevelList.put("(0 - 1.99)", false);
 		
 		// 평점 체크박스 초기화
-		shScoreList.put("(8점 - 10점)", false);
-		shScoreList.put("(6점 - 8점)", false);
-		shScoreList.put("(4점 - 6점)", false);
-		shScoreList.put("(2점 - 4점)", false);
-		shScoreList.put("(0점 - 2점)", false);
+		shScoreList.put("(8 - 10)", false);
+		shScoreList.put("(6 - 7.99)", false);
+		shScoreList.put("(4 - 5.99)", false);
+		shScoreList.put("(2 - 3.99)", false);
+		shScoreList.put("(0 - 1.99)", false);
 	}
 
 	public String getgSeq() {

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<div class="main-wrapper">
+	<nav class="navbar-vertical-nav d-none d-xl-block">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column" id="sideNavbar">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">Home</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesService"
+							aria-expanded="false"
+							aria-controls="navCategoriesService"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesService" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">중고거래관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<!-- Nav item -->
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5 d-flex justify-content-between align-items-center">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">홈</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesService"
+							aria-expanded="false"
+							aria-controls="navCategoriesService"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesService" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">중고거래관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+    <!-- main wrapper -->
+	<main class="main-content-wrapper">
+		<div class="container">
+			<div class="row mb-8">
+				<div class="col-md-12">
+					<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+						<h2>Code</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8 g-5">
+				<div class="col-lg-12 col-12">
+					<div class="card card-lg border-0">
+						<div class="card-body d-flex flex-column gap-8 p-7">
+							<div class="d-flex flex-column gap-4">
+								<form class="row g-5 needs-validation" novalidate
+									method="post" enctype="multipart/form-data" id="form" name="form">
+									<div class="col-lg-12 col-12">
+										<label for="fUploadFiles" class="form-label">엑셀 파일 업로드</label>
+									</div>
+									<div class="col-lg-12 col-12">
+										<div class="d-flex flex-column flex-md-row align-items-center file-input-wrapper gap-3">
+											<div class="file-upload btn btn-light">
+												<input type="file" accept=".xlsx,.xls," name="fUploadFiles" id="fUploadFiles" class="file-input opacity-0" />
+												파일 선택
+											</div>
+											<div class="col-4"><span id="fSize"></span></div>
+										</div>
+									</div>
+									<div class="col-lg-12 col-12">
+										<div class="col-4">
+											<input type="text" class="form-control" name="fFileName" id="fFileName" 
+												placeholder="xlsx, xls / 최대 5MB" readonly required />
+											<div class="invalid-feedback"> 파일을 형식과 크기에 맞춰 선택해 주세요. </div>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12">
+										<div class="d-flex flex-column flex-md-row gap-2">
+											<a href="/xdm/code/CodeXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12" style="text-align: right;">
+										<button th:unless="${#lists.isEmpty(codeList)}" 
+											class="btn btn-primary" type="button" id="btnSave">
+											<i class="bi bi-database-add"></i>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="card h-100 card-lg">
+					
+						<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+
+						<div class="card-body p-0">
+							<div class="table-responsive">
+								<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
+									<thead class="bg-light">
+										<tr>
+											<th>#</th>
+											<th>사용</th>
+											<th>코드그룹<br>코드</th>
+											<th>코드그룹<br>이름</th>
+											<th>코드</th>
+											<th>코드 이름</th>
+											<th>코드 이름(영문)</th>
+											<th>순서</th>
+											<th>등록일</th>
+											<th>수정일</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:if="${#lists.isEmpty(codeList)}">
+											<td class="text-center" colspan="11">
+												데이터가 없습니다.
+											</td>
+										</tr> 
+										<tr th:if="${!#lists.isEmpty(codeList)}" th:each="list : ${codeList}">
+											<td th:text="${vo?.totalRows - ((vo?.currPage - 1) * vo?.rowNumToShow + listStat.index)}"></td>
+											<td th:text="${list?.cUseNyStr}"></td>
+											<td th:text="${list?.codeGroup_cgSeq}"></td>
+											<td th:text="${list?.cgName}"></td>
+											<td th:text="${list?.cSeq}"></td>
+											<td>			
+												<a href="javascript:void(0);" th:text="${list?.cName}"
+													th:attr="onclick=|goForm('${list.cSeq}')|"></a>
+											</td>
+											<td th:text="${list?.cNameEng}"></td>
+											<td th:text="${list?.cSequence}"></td>
+											<td th:text="${list?.cRegiDate}"></td>
+											<td th:text="${list?.cUpdtDate}"></td>
+										</tr>
+									</tbody>
+								</table>
+						   	</div>
+						</div>
+						<div class="border-top d-md-flex justify-content-between align-items-center px-6 py-6">
+							<div></div>
+							<nav class="mt-2 mt-md-0">
+								<ul class="pagination mb-0">
+									<li th:if="${vo?.startPage gt vo?.pageNumToShow}" class="page-item" style="cursor: pointer;">
+										<a class="page-link" href="javascript:goList(${vo?.startPage - 1})"
+											th:attr="onclick=|goList('${vo?.startPage - 1}')|">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li th:each="num: ${#numbers.sequence(vo?.startPage, vo?.endPage)}" 
+										th:classappend="${num eq vo?.currPage} ? active : ''" 
+										class="page-item" style="cursor: pointer;">
+										<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+									</li>
+									<li th:if="${vo?.endPage ne vo?.totalPages}" class="page-item" style="cursor: pointer;">
+										<a class="page-link" th:attr="onclick=|goList('${vo?.endPage + 1}')|">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+							<div></div>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+    	
+<div th:replace="~{xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlXdmInst = "/xdm/game/GameXdmInst";
+	
+	// Input
+	let fUploadFiles = document.getElementById("fUploadFiles");
+	let fFileName = document.getElementById("fFileName");
+	let fSize = document.getElementById("fSize");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// fUploadFiles, fFileName 체크
+		resetValidation(fFileName);
+		
+		var file = fUploadFiles.files[0];
+		
+		if (file != null && file.name != null && file.name.trim() != ""
+				&& fFileName.value != null && fFileName.value.trim() != "") {
+			if (!excelFileValidation(file, fFileName)) {
+				fFileName.classList.add("is-invalid");
+				
+				if (!focus) {
+					fFileName.focus();
+					focus = true;
+				}
+			} else {
+				fFileName.classList.add("is-valid");
+			}
+		} else {
+			fFileName.classList.add("is-invalid");
+			
+			if (!focus) {
+				fFileName.focus();
+				focus = true;
+			}
+		}
+		
+		// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+		
+		//submit(goUrlXdmInst);
+	}
+	
+	// fUploadFiles, fFileName Change 시 체크
+	fUploadFiles.addEventListener("change", function() {
+		resetValidation(fFileName);
+		
+		var file = fUploadFiles.files[0];
+		
+		// fUploadFiles가 빈값이나 null이면 Validation 후 return
+		if (file == null 
+				|| (file != null && file.name == null)
+				|| (file != null && file.name != null && file.name.trim() == "")) {
+			fFileName.classList.add("is-invalid");
+			return;
+		}
+		
+		// 선택한 파일명 fFileName에 보여주기
+		fFileName.value = file.name.trim();
+		
+		// 파일 크기 fSize에 보여주기
+		var sizeInMB = file.size / (1024 * 1024);
+
+		if (sizeInMB >= 0.01) {
+		  fSize.textContent = `크기 ${sizeInMB.toFixed(2)} MB`;
+		} else {
+		  sizeInKB = file.size / 1024;
+		  fSize.textContent = `크기 ${sizeInKB.toFixed(2)} KB`;
+		}
+		
+		// fFileName이 빈값이나 null이면 Validation 후 return
+		if (fFileName.value == null
+				|| (fFileName.value != null && fFileName.value.trim() == "")) {
+			fFileName.classList.add("is-invalid");
+			return;
+		}
+		
+		// Validation
+		if (!excelFileValidation(file, fFileName)) {
+			fFileName.classList.add("is-invalid");
+		} else {
+			fFileName.classList.add("is-valid");
+		}
+	});
+</script>
+    	
+</body>
+</html>
+

@@ -73,12 +73,12 @@
 															th:src="${memberPfFile?.fPath}"
 															alt="Image" />
 													</div>
-													<div class="file-upload btn btn-light ms-md-4">
+													<div class="file-upload btn btn-light ms-md-4 mt-2">
 														<input type="file" accept=".jpeg,.jpg,.png,.gif" name="fUploadFiles" id="fUploadFiles" class="file-input opacity-0" />
 														파일 선택
 													</div>
 													<div class="ms-md-2 col-4">
-														<input type="text" class="form-control" name="fFileName" id="fFileName" 
+														<input type="text" class="form-control mt-2" name="fFileName" id="fFileName" 
 															th:value="${memberPfFile?.fFileName}" 
 															placeholder="JPG, JPEG, GIF, PNG / 최대 2MB" readonly required />
 														<div class="invalid-feedback"> 파일의 형식과 크기를 확인해 주세요. </div>

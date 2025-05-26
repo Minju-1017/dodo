@@ -12,9 +12,11 @@ const REGEX_yyyyMMdd = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/
 const REGEX_EMAIL = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/; // Email
 const REGEX_URL = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
 const REGEX_IMG_FILE = /(.*?)\.(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$/;
+const REGEX_EXCEL_FILE = /(.*?)\.(xlsx|xls|XLSX|XLS)$/;
 
-// 이미지 파일 최대 사이즈
+// 파일 최대 사이즈
 const IMG_MAX_SIZE = 2 * 1024 * 1024; // 2MB
+const EXCEL_MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
 // Validation 초기화
 function resetValidation(obj) {
@@ -112,11 +114,20 @@ function realNumberValidation(obj) {
 	return true;
 }
 
-// 이미지 파일 체크 - 이미지 파일 형식(jpg, jpeg, gif, png), 사이즈(2MB), null/빈값 허용
+// 이미지 파일 체크 - 파일 형식(jpg, jpeg, gif, png), 사이즈(2MB), null/빈값 허용
 // Object null, "" 체크는 호출전에 함
 function imgFileValidation(fileObj, fileNameInputObj) {
 	var value = fileNameInputObj.value.trim();
 	if(!value.match(REGEX_IMG_FILE) || fileObj.size >= IMG_MAX_SIZE) return false;
+	
+	return true;
+}
+
+// 엑셀 파일 체크 - 파일 형식(xlsx, xls), 사이즈(5MB)
+// Object null, "" 체크는 호출전에 함
+function excelFileValidation(fileObj, fileNameInputObj) {
+	var value = fileNameInputObj.value.trim();
+	if(!value.match(REGEX_EXCEL_FILE) || fileObj.size >= IMG_EXCEL_SIZE) return false;
 	
 	return true;
 }

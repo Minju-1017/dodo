@@ -479,8 +479,27 @@
 	            <when test="shOption == 5">AND c.mId LIKE CONCAT('%',#{shValue},'%')</when>
 	            <when test="shOption == 6">AND c.mName LIKE CONCAT('%',#{shValue},'%')</when>
 	        </choose>
-		ORDER BY a.gSeq DESC
+		ORDER BY a.grSeq DESC
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+	</select>
+	
+	<select id="selectReviewOne" resultMap="resultMapObj">
+		SELECT
+			a.grSeq,
+		    a.member_mSeq,
+		    a.game_gSeq,
+		    a.grScore,
+		    a.grComment,
+		    a.grRegiDate,
+		    b.gName,
+		    c.mId,
+		    c.mName
+		FROM 
+			gameReview a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+			AND a.grSeq=#{grSeq}
 	</select>
 	
 	<select id="selectGameDetailReviewList" resultMap="resultMapObj_GR">

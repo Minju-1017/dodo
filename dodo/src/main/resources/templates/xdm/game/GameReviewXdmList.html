@@ -271,8 +271,8 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:if="${#lists.isEmpty(gameList)}">
-												<td class="text-center" colspan="10">
+											<tr th:if="${#lists.isEmpty(gameReviewList)}">
+												<td class="text-center" colspan="9">
 													데이터가 없습니다.
 												</td>
 											</tr> 
@@ -348,6 +348,7 @@
     	
 	let fom = document.querySelector("form[name=formList]");
 	let goUrlXdmList = "/xdm/game/GameReviewXdmList";
+	let goUrlXdmForm = "/xdm/game/GameReviewXdmForm";
 	let goUrlXdmListUeleProc = "/xdm/game/GameReviewListXdmUeleProc";
 	let goUrlXdmListDeleProc = "/xdm/game/GameReviewListXdmDeleProc";
 	
@@ -384,7 +385,7 @@
 </script>
 
 <!-- Table Check Box 처리 (Uelete/Delete/Update)-->
-    	<script type="text/javascript">
+<script type="text/javascript">
      	document.getElementById("checkAll").onclick = function() {
 		allCheck("check", this.checked);
 	}

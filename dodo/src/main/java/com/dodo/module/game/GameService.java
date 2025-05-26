@@ -79,6 +79,10 @@ public class GameService {
 		return dao.selectReviewList(vo);
 	}
 	
+	public GameReviewDto selectReviewOne(GameDto gameDto) {
+		return dao.selectReviewOne(gameDto);
+	}
+	
 	public GameDto selectGameDetailReviewDistribution(GameDto gameDto) {
 		return dao.selectGameDetailReviewDistribution(gameDto);
 	}

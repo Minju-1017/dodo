@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<div class="main-wrapper">
+	<!-- navbar vertical -->
+	<!-- navbar -->
+	<nav class="navbar-vertical-nav d-none d-xl-block">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/xdm/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column" id="sideNavbar">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">Home</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesService"
+							aria-expanded="false"
+							aria-controls="navCategoriesService"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesService" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">중고거래관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<!-- Nav item -->
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar-vertical-nav offcanvas offcanvas-start navbar-offcanvac" tabindex="-1" id="offcanvasExample">
+		<div class="navbar-vertical">
+			<div class="px-4 py-5 d-flex justify-content-between align-items-center">
+				<a href="/xdm/index" class="navbar-brand">
+					<img src="/assets/usr/template/FreshCart-1.4.0/images/logo/logo.png" alt="" width="180px" />
+				</a>
+				<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			</div>
+			<div class="navbar-vertical-content flex-grow-1" data-simplebar="">
+				<ul class="navbar-nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/index">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-house"></i></span>
+								<span class="nav-link-text">홈</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/xdm/member/MemberXdmList">
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-people"></i></span>
+								<span class="nav-link-text">회원관리</span>
+							</div>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesService"
+							aria-expanded="false"
+							aria-controls="navCategoriesService"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-box"></i></span>
+								<span class="nav-link-text">서비스관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesService" class="collapse show" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link active" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">중고거래관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a
+							class="nav-link collapsed "
+							href="#"
+							data-bs-toggle="collapse"
+							data-bs-target="#navCategoriesOrders"
+							aria-expanded="false"
+							aria-controls="navCategoriesOrders"
+						>
+							<div class="d-flex align-items-center">
+								<span class="nav-link-icon"><i class="bi bi-laptop"></i></span>
+								<span class="nav-link-text">시스템관리</span>
+							</div>
+						</a>
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
+							<ul class="nav flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- main wrapper -->
+	<main class="main-content-wrapper">
+		<div class="container">
+			<div class="row mb-8">
+				<div class="col-md-12">
+					<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+						<h2>Game Review</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-8 g-5">
+				<div class="col-lg-12 col-12">
+					<div class="card card-lg border-0">
+						<div class="card-body d-flex flex-column gap-8 p-7">
+							<div class="d-flex flex-column gap-4">
+								<form class="row g-5 needs-validation" novalidate
+									method="post" enctype="multipart/form-data" id="form" name="form">
+									
+									<input type="hidden" name="grSeq" th:value="${grSeq}">
+									
+									<div class="col-lg-3 col-12">
+										<label for="grSeq" class="form-label">
+											고유번호
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="grSeq" id="grSeq" 
+											th:value="${gameReviewItem?.grSeq}" disabled />
+									</div>
+									<div class="col-lg-9 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="game_gSeq" class="form-label">
+											게임 고유번호
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="game_gSeq" id="game_gSeq" 
+											th:value="${gameReviewItem?.game_gSeq}" disabled />
+									</div>
+									<div class="col-lg-4 col-12">
+										<label for="gName" class="form-label">
+											게임명
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="gName" id="gName" autocomplete="off" 
+											th:value="${gameReviewItem?.gName}" disabled />
+									</div>
+									<div class="col-lg-5 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="member_mSeq" class="form-label">
+											작성자 고유번호
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="member_mSeq" id="member_mSeq" 
+											th:value="${gameReviewItem?.member_mSeq}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="gName" class="form-label">
+											작성자 아이디
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="mId" id="mId" autocomplete="off" 
+											th:value="${gameReviewItem?.mId}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="gName" class="form-label">
+											작성자명
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="mName" id="mName" autocomplete="off" 
+											th:value="${gameReviewItem?.mName}" disabled />
+									</div>
+									<div class="col-lg-3 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="grRegiDate" class="form-label">
+											등록일
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="grRegiDate" id="grRegiDate" autocomplete="off" 
+											th:value="${gameReviewItem?.grRegiDate}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="grScore" class="form-label">
+											평점
+											<span class="text-danger">*</span>
+										</label>
+										<input type="text" class="form-control" name="grScore" id="grScore" autocomplete="off" 
+											th:value="${gameReviewItem?.grScore}" disabled />
+									</div>
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-6 col-12">
+										<label for="grComment" class="form-label">
+											내용
+											<span class="text-danger">*</span>
+										</label>
+										<textarea class="form-control" id="grComment" name="grComment" rows="5" style="resize: none;"
+											autocomplete="off" th:text="${gameItem?.grComment}" disabled></textarea>
+									</div>
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-6 col-12">
+										<div class="d-flex flex-column flex-md-row gap-2">
+											<a href="/xdm/game/GameReviewXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12" style="text-align: right;">
+										<button class="btn btn-danger" type="button" id="btnUelete">
+											<i class="bi bi-trash3"></i>
+										</button>
+										<button class="btn btn-danger" type="button" id="btnDelete">
+											<i class="bi bi-x-lg"></i>
+										</button>
+										<button class="btn btn-primary" type="button" id="btnSave">
+											<i class="bi bi-database-add"></i>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+    	
+<div th:replace="~{xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	// Seq
+	let seq = document.querySelector("input[name=grSeq]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlXdmUpdt = "/xdm/game/GameReviewXdmUpdt";
+	let goUrlXdmUele = "/xdm/game/GameReviewXdmUele";
+	let goUrlXdmDele = "/xdm/game/GameReviewXdmDele";
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		submit(goUrlXdmUpdt);
+	}
+</script>
+
+<!-- 삭제/삭제(업데이트) 모달 -->
+<script type="text/javascript">
+	if(document.getElementById("btnUelete")){
+		document.getElementById("btnUelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 데이터를 삭제(업데이트)하시겠습니까?", '', 'none');      	
+		}
+	}
+
+	document.getElementById("btnModalUelete").onclick = function () {
+		submit(goUrlXdmUele);
+	}
+	
+	if(document.getElementById("btnDelete")){
+		document.getElementById("btnDelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 데이터를 삭제하시겠습니까?", 'none', '');   	
+		}
+	}
+
+	document.getElementById("btnModalDelete").onclick = function () {
+		submit(goUrlXdmDele);
+	}
+</script>
+    	
+</body>
+</html>

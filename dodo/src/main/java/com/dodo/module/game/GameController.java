@@ -195,6 +195,17 @@ public class GameController {
 		return path_admin + "GameReviewXdmList";
 	}
 	
+	/**
+	 * 데이터 추가/수정 폼 - Admin
+	 * @return
+	 */
+	@RequestMapping(value = "GameReviewXdmForm")
+	public String gameReviewXdmForm(Model model, GameDto gameDto) throws Exception {	
+		model.addAttribute("gameReviewItem", service.selectReviewOne(gameDto));
+		
+		return path_admin + "GameXdmForm";
+	}
+	
 	/////////////////////////////////////////////////////////////////
 	
 	/**

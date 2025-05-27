@@ -27,7 +27,7 @@ public class CodeGroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeGroupXdmList")
-	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo) throws Exception {
+	public String codeGroupXdmList(Model model, @ModelAttribute("vo") CodeGroupVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		
@@ -45,8 +45,7 @@ public class CodeGroupController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeGroupXdmForm")
-	public String codeGroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo,
-			Model model, CodeGroupDto codeGroupDto) throws Exception {
+	public String codeGroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo, Model model, CodeGroupDto codeGroupDto) {
 		if (vo.getCgSeq().equals("0") || vo.getCgSeq().equals("")) {
 			// insert mode
 		} else {
@@ -105,12 +104,11 @@ public class CodeGroupController {
 	 * Ajax를 통한 여러건 데이터 삭제
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "CodeGroupListXdmDeleProc")
 	public Map<String, Object> codeGroupListXdmDeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+			@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");
@@ -131,12 +129,10 @@ public class CodeGroupController {
 	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "CodeGroupListXdmUeleProc")
-	public Map<String, Object> codeGroupListXdmUeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+	public Map<String, Object> codeGroupListXdmUeleProc(@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");

@@ -32,7 +32,7 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmList")
-	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo) throws Exception {
+	public String codeXdmList(Model model, @ModelAttribute("vo") CodeVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		
@@ -48,8 +48,7 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmForm")
-	public String codeXdmForm(@ModelAttribute("vo") CodeVo vo, Model model, CodeDto codeDto) 
-			throws Exception {	
+	public String codeXdmForm(@ModelAttribute("vo") CodeVo vo, Model model, CodeDto codeDto) {	
 		/* 
 			Code Group쪽에서 데이터를 가져올 때, 아래 주석처럼 Code쪽에서 DB로 접근해서 가져와도 되고
 			@Autowired로 CodeGroupService codeGroupService;를 선언해서 가져와도 된다.
@@ -119,12 +118,10 @@ public class CodeController {
 	 * Ajax를 통한 여러건 데이터 삭제
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "CodeListXdmDeleProc")
-	public Map<String, Object> codeListXdmDeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+	public Map<String, Object> codeListXdmDeleProc(@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");
@@ -145,12 +142,11 @@ public class CodeController {
 	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "CodeListXdmUeleProc")
 	public Map<String, Object> codeListXdmUeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+			@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");
@@ -172,7 +168,7 @@ public class CodeController {
 	 * @return
 	 */
 	@RequestMapping(value = "CodeXdmExcelUpload")	
-	public String codeXdmExcelUpload() throws Exception {	
+	public String codeXdmExcelUpload() {	
 		return path + "CodeXdmExcelUpload";
 	}
 

@@ -35,7 +35,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmList")
-	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
+	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		
@@ -51,8 +51,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmForm")
-	public String gameXdmForm(@ModelAttribute("vo") GameVo vo,
-			Model model, GameDto gameDto) throws Exception {	
+	public String gameXdmForm(@ModelAttribute("vo") GameVo vo, Model model, GameDto gameDto) {	
 		if (vo.getgSeq().equals("0") || vo.getgSeq().equals("")) {
 			// insert mode
 		} else {
@@ -130,12 +129,10 @@ public class GameController {
 	 * Ajax를 통한 여러건 데이터 삭제 - Admin
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "GameListXdmDeleProc")
-	public Map<String, Object> gameListXdmDeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+	public Map<String, Object> gameListXdmDeleProc(@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");
@@ -156,12 +153,11 @@ public class GameController {
 	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용 - Admin
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "GameListXdmUeleProc")
 	public Map<String, Object> gameListXdmUeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+			@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");
@@ -184,7 +180,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameReviewXdmList")
-	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
+	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectReviewOneCount(vo));
 		
@@ -200,10 +196,94 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameReviewXdmForm")
-	public String gameReviewXdmForm(Model model, GameDto gameDto) throws Exception {	
-		model.addAttribute("gameReviewItem", service.selectReviewOne(gameDto));
+	public String gameReviewXdmForm(Model model, GameReviewDto gameReviewDto) {	
+		model.addAttribute("gameReviewItem", service.selectReviewOne(gameReviewDto));
 		
-		return path_admin + "GameXdmForm";
+		return path_admin + "GameReviewXdmForm";
+	}
+	
+	/**
+	 * 입력한 데이터 수정하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "GameReviewXdmUpdt")
+	public String gameReviewXdmUpdt(GameReviewDto gameReviewDto) {
+		System.out.println("@@@@@@@@@@@@@@" + gameReviewDto.getGrSeq());
+		service.updateReview(gameReviewDto);
+
+		return "redirect:GameReviewXdmList";
+	}
+	
+	/**
+	 * 데이터 삭제하기 - Admin
+	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "GameReviewXdmDele")
+	public String gameReviewXdmDele(GameReviewDto gameReviewDto) {
+		service.deleteReview(gameReviewDto);	
+
+		return "redirect:GameReviewXdmList";
+	}
+	
+	/**
+	 * 데이터 삭제 옵션 세팅 - update 이용 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "GameReviewXdmUele")
+	public String gameReviewXdmUele(GameReviewDto gameReviewDto) {
+		service.ueleteReview(gameReviewDto);	
+
+		return "redirect:GameReviewXdmList";
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제 - Admin
+	 * @param seqList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "GameReviewListXdmDeleProc")
+	public Map<String, Object> gameReviewListXdmDeleProc(@RequestParam(value="chbox") List<String> seqList) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listDeleteReview(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용 - Admin
+	 * @param seqList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "GameReviewListXdmUeleProc")
+	public Map<String, Object> gameReviewListXdmUeleProc(@RequestParam(value="chbox") List<String> seqList) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listUeleteReview(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
 	}
 	
 	/////////////////////////////////////////////////////////////////
@@ -214,7 +294,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameTop10UsrList")
-	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo) throws Exception {
+	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setRowNumToShow(10);
 		vo.setParamsPaging(10);
@@ -279,7 +359,6 @@ public class GameController {
 	 * Ajax를 이용해 필터 선택 부분 갱신 - User
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameInfoSearchUsr", method = RequestMethod.POST)
 	public String gameInfoSearchUsr(@ModelAttribute("vo") GameVo vo) {
@@ -291,7 +370,6 @@ public class GameController {
 	 * Ajax를 이용해 제목 갱신 - User
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameInfoSearchUsrTitle", method = RequestMethod.POST)
 	public String gameInfoSearchUsrTitle(@ModelAttribute("vo") GameVo vo) {
@@ -303,7 +381,6 @@ public class GameController {
 	 * Ajax로 검색 필터로 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameInfoSearchTotalUsrList", method = RequestMethod.POST)
 	public String gameInfoSearchTotalUsrList(
@@ -318,7 +395,6 @@ public class GameController {
 	 * Ajax를 이용한 검색 필터로 전체 데이터 읽어오기 - 페이징 기능 들어감 - User
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameInfoSearchUsrList", method = RequestMethod.POST)
 	public String gameInfoSearchUsrList(
@@ -355,7 +431,7 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameUsrDetail")
-	public String gameUsrDetail(Model model, GameDto gameDto) throws Exception {
+	public String gameUsrDetail(Model model, GameDto gameDto) {
 		// 순위 리스트
 		GameDto orderDto = service.selectGameOrder(gameDto);
 		GameDto dto1 = service.selectOne(gameDto);
@@ -398,7 +474,6 @@ public class GameController {
 	 * Ajax를 이용한 입력한 데이터 추가하기(리뷰) - User
 	 * @param gameReviewDto
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameUsrDetailReviewInst", method = RequestMethod.POST)
 	public String gameUsrDetailReviewInst(Model model, GameReviewDto gameReviewDto, GameDto gameDto) {
@@ -426,7 +501,6 @@ public class GameController {
 	 * Ajax를 이용한 게임 디테일 화면 갱신(리뷰 분포) - User
 	 * @param gameReviewDto
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameUsrDetailReviewDistributionRefresh", method = RequestMethod.POST)
 	public String gameUsrDetailReviewDistributionRefresh(Model model, GameDto gameDto) {
@@ -446,7 +520,6 @@ public class GameController {
 	 * Ajax를 이용한 입력한 데이터 추가 후 화면 갱신3(리뷰) - User
 	 * @param gameReviewDto
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "GameUsrDetailReviewListRefresh", method = RequestMethod.POST)
 	public String gameUsrDetailReviewListRefresh(Model model, GameDto gameDto) {	

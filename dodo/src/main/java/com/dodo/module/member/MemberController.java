@@ -123,7 +123,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberUsrSignUpForm")	
-	public String memberUsrSignUpForm() throws Exception {				
+	public String memberUsrSignUpForm() {				
 		return path_user + "MemberUsrSignUpForm";
 	}
 	
@@ -151,11 +151,10 @@ public class MemberController {
 	 * Ajax를 통한 회원가입 - User
 	 * @param memberDto
 	 * @return
-	 * @throws Exception 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "MemberUsrInstProc")
-	public Map<String, Object> memberUsrInstProc(MemberDto memberDto) throws Exception {
+	public Map<String, Object> memberUsrInstProc(MemberDto memberDto) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		int cntId = service.insertCheckId(memberDto);
 		
@@ -192,7 +191,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberUsrSignIn")	
-	public String memberUsrSignIn() throws Exception {				
+	public String memberUsrSignIn() {				
 		return path_user + "MemberUsrSignIn";
 	}
 	
@@ -232,7 +231,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberUsrSignInForgotPwdForm")	
-	public String memberUsrSignInForgotPwdForm() throws Exception {	
+	public String memberUsrSignInForgotPwdForm() {	
 		return path_user + "MemberUsrSignInForgotPwdForm";
 	}
 	
@@ -262,11 +261,10 @@ public class MemberController {
 	/**
 	 * Ajax를 통한 로그아웃 처리 - User
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "MemberUsrSignOutProc")	
-	public Map<String, Object> memberUsrSignOutProc(HttpSession httpSession) throws Exception {
+	public Map<String, Object> memberUsrSignOutProc(HttpSession httpSession) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		usrSignOut(httpSession);
@@ -302,12 +300,11 @@ public class MemberController {
 	 * Ajax를 통한 회원 기본 정보 수정 - User
 	 * @param memberDto
 	 * @param httpSession
-	 * @return 
-	 * @throws Exception
+	 * @return
 	 */
 	@ResponseBody // Ajax 코드는 무조건 써준다.
 	@RequestMapping(value = "MemberUsrUpdt")
-	public Map<String, Object> memberUsrUpdt(MemberDto memberDto, HttpSession httpSession) throws Exception {
+	public Map<String, Object> memberUsrUpdt(MemberDto memberDto, HttpSession httpSession) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		int successCnt = service.update(memberDto);
 		
@@ -462,7 +459,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmSignIn")	
-	public String memberXdmSignIn() throws Exception {				
+	public String memberXdmSignIn() {				
 		return path_admin + "MemberXdmSignIn";
 	}
 	
@@ -500,11 +497,10 @@ public class MemberController {
 	/**
 	 * Ajax를 통한 로그아웃 처리 - Admin
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "MemberXdmSignOutProc")	
-	public Map<String, Object> memberXdmSignOutProc(HttpSession httpSession) throws Exception {
+	public Map<String, Object> memberXdmSignOutProc(HttpSession httpSession) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		xdmSignOut(httpSession);
@@ -519,7 +515,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmList")
-	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo) throws Exception {
+	public String memberXdmList(Model model, @ModelAttribute("vo") MemberVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 
@@ -535,8 +531,7 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberXdmForm")
-	public String memberXdmForm(@ModelAttribute("vo") MemberVo vo,
-			Model model, MemberDto memberDto) throws Exception {
+	public String memberXdmForm(@ModelAttribute("vo") MemberVo vo, Model model, MemberDto memberDto) {
 		if (vo.getmSeq().equals("0") || vo.getmSeq().equals("")) {
 			// insert mode
 		} else {
@@ -603,12 +598,10 @@ public class MemberController {
 	 * Ajax를 통한 여러건 데이터 삭제
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "MemberListXdmDeleProc")
-	public Map<String, Object> memberListXdmDeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+	public Map<String, Object> memberListXdmDeleProc(@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");
@@ -629,12 +622,10 @@ public class MemberController {
 	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
 	 * @param seqList
 	 * @return
-	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "MemberListXdmUeleProc")
-	public Map<String, Object> memberListXdmUeleProc(
-			@RequestParam(value="chbox") List<String> seqList) throws Exception {
+	public Map<String, Object> memberListXdmUeleProc(@RequestParam(value="chbox") List<String> seqList) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		if (seqList == null || (seqList != null && seqList.size() == 0)) {
 			returnMap.put("rt", "fail");

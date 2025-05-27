@@ -483,7 +483,7 @@
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
-	<select id="selectReviewOne" resultMap="resultMapObj">
+	<select id="selectReviewOne" resultMap="resultMapObj_GR">
 		SELECT
 			a.grSeq,
 		    a.member_mSeq,
@@ -574,5 +574,47 @@
 			SELECT last_insert_id()
 		</selectKey>
 	</insert>
+	
+	<update id="updateReview">
+		UPDATE gameReview
+		SET
+			grComment='관리자에 의해 가려진 리뷰입니다.'
+		WHERE
+			grSeq=#{grSeq}
+	</update>
+	
+	<delete id="deleteReview">
+		DELETE FROM gameReview
+		WHERE
+			grSeq=#{grSeq}
+	</delete>
+	
+	<update id="ueleteReview">
+		UPDATE gameReview
+		SET
+			grDelNy=1
+		WHERE
+			grSeq=#{grSeq}
+	</update>
+	
+	<delete id="listDeleteReview" parameterType="java.util.List">
+		DELETE FROM gameReview
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(grSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
+	<delete id="listUeleteReview" parameterType="java.util.List">
+		UPDATE gameReview
+		SET
+			grDelNy=1
+		<where> 
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(grSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
 	
 </mapper>

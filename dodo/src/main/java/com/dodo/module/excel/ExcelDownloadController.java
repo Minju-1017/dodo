@@ -37,7 +37,8 @@ public class ExcelDownloadController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "CodeXdmListExcelDownload")
-    public ResponseEntity<byte[]> codeXdmListExcelDownload(@ModelAttribute("vo") CodeVo vo) throws IOException {		
+    public ResponseEntity<byte[]> codeXdmListExcelDownload(
+    		@ModelAttribute("vo") CodeVo vo) throws IOException {		
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("Code List");
 		
@@ -98,7 +99,8 @@ public class ExcelDownloadController {
      * @throws Exception
      */
     @RequestMapping(value = "CodeXdmListExcelDownloadBySB")
-	public void codeXdmListExcelDownloadBySB(HttpServletResponse response, @ModelAttribute("vo") CodeVo vo) throws Exception {
+	public void codeXdmListExcelDownloadBySB(
+			HttpServletResponse response, @ModelAttribute("vo") CodeVo vo) throws Exception {
     	// 원래는 xls이 아닌 csv로 해야함. xls로 하면 파일 손상 메세지가 뜸
 	    response.setContentType("text/xls; charset=UTF-8"); 
 	    response.setHeader("Content-Disposition", "attachment; filename = codelist.xls");

@@ -79,8 +79,8 @@ public class GameService {
 		return dao.selectReviewList(vo);
 	}
 	
-	public GameReviewDto selectReviewOne(GameDto gameDto) {
-		return dao.selectReviewOne(gameDto);
+	public GameReviewDto selectReviewOne(GameReviewDto gameReviewDto) {
+		return dao.selectReviewOne(gameReviewDto);
 	}
 	
 	public GameDto selectGameDetailReviewDistribution(GameDto gameDto) {
@@ -93,6 +93,26 @@ public class GameService {
 	
 	public int insertReview(GameReviewDto gameReviewDto) {
 		return dao.insertReview(gameReviewDto);
+	}
+	
+	public int updateReview(GameReviewDto gameReviewDto) {
+		return dao.updateReview(gameReviewDto);
+	}
+	
+	public int deleteReview(GameReviewDto gameReviewDto) {
+		return dao.deleteReview(gameReviewDto);
+	}
+	
+	public int ueleteReview(GameReviewDto gameReviewDto) {
+		return dao.ueleteReview(gameReviewDto);
+	}
+	
+	public int listDeleteReview(List<String> seqList) {
+		return dao.listDeleteReview(seqList);
+	}
+	
+	public int listUeleteReview(List<String> seqList) {
+		return dao.listUeleteReview(seqList);
 	}
 	
 }

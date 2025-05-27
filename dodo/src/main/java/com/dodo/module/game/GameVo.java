@@ -28,6 +28,8 @@ public class GameVo extends BaseVo {
 	private Map<String, Boolean> shLevelList = new LinkedHashMap<String, Boolean>();	// 레벨 체크박스
 	private Map<String, Boolean> shScoreList = new LinkedHashMap<String, Boolean>();	// 평점 체크박스
 	
+	private String mSeq; // 로그인한 사용자
+	
 	public GameVo() {
 		// 인원 체크박스 초기화
 		for (int i = 1; i < 7; i++) {
@@ -176,6 +178,14 @@ public class GameVo extends BaseVo {
 
 	public void setShScoreList(Map<String, Boolean> shScoreList) {
 		this.shScoreList = shScoreList;
+	}
+
+	public String getmSeq() {
+		return mSeq;
+	}
+
+	public void setmSeq(String mSeq) {
+		this.mSeq = mSeq;
 	}
 	
 }

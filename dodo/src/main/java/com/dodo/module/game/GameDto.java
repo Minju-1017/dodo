@@ -20,7 +20,7 @@ public class GameDto extends FileDto {
 	private String gOfficialUrl;
 	private String gComuUrl1;
 	private String gComuUrl2;
-	private int gCategoryCd;
+	private Integer gCategoryCd;
 	private String gGDName;
 	private String gGAAName;
 	private String gGPName;
@@ -61,6 +61,9 @@ public class GameDto extends FileDto {
 	// 보여줄 리뷰 개수, 정렬 조건
 	private int grDtosSize = 5; 		// 보여줄 리뷰 개수
 	private Integer grShOption = 1;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 / 1: 최신순, 2: 평점 높은순
+	
+	private String mSeq; // 로그인한 사용자
+	private int mwCount; // 로그인한 사용자의 위시리스트인가? O: 1, X: 0
 	
 	public String getgSeq() {
 		return gSeq;
@@ -204,11 +207,11 @@ public class GameDto extends FileDto {
 		this.emptyStarCount = 5 - this.fillStarCount - this.harfStarCount;
 	}
 
-	public int getgCategoryCd() {
+	public Integer getgCategoryCd() {
 		return gCategoryCd;
 	}
 
-	public void setgCategoryCd(int gCategoryCd) {
+	public void setgCategoryCd(Integer gCategoryCd) {
 		this.gCategoryCd = gCategoryCd;
 	}
 
@@ -434,6 +437,22 @@ public class GameDto extends FileDto {
 
 	public void setScore1(int score1) {
 		this.score1 = score1;
+	}
+
+	public String getmSeq() {
+		return mSeq;
+	}
+
+	public void setmSeq(String mSeq) {
+		this.mSeq = mSeq;
+	}
+
+	public int getMwCount() {
+		return mwCount;
+	}
+
+	public void setMwCount(int mwCount) {
+		this.mwCount = mwCount;
 	}
 
 }

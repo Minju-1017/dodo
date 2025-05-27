@@ -132,11 +132,19 @@
 				AND b.grDelNy = 0 
 				AND b.game_gSeq = a.gSeq
 		) as grCount,
-		(SELECT c.fPath
-			FROM gameSmallTnFile c
+		(SELECT b.fPath
+			FROM gameSmallTnFile b
 			WHERE 1=1 
-				AND a.gSeq = c.rSeq
+				AND a.gSeq = b.rSeq
 	    ) as fPath
+	    
+	    <if test="mSeq != null and !mSeq.equals('')">
+	    , (SELECT COUNT(*) FROM memberWish b
+			WHERE 1=1  
+				AND b.game_gSeq = a.gSeq
+				AND b.member_mSeq = #{mSeq}
+		) as mwCount
+		</if>
 	</sql>
 	<!-- End -->
 	

@@ -3,6 +3,7 @@
 
 <mapper namespace="com.dodo.module.member.MemberDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.member.MemberDto"></resultMap>
+	<resultMap id="resultMapObj_MW" type="com.dodo.module.member.MemberWishDto"></resultMap>
 
 	<!-- 공통 구문 selectCommon으로 선언 -->
 	<sql id="selectCommon">
@@ -224,4 +225,114 @@
 		</where>
 	</delete>
 	
+	<!-- ################################ Wish ############################## -->
+
+	<sql id="selectGameCommonColumn">
+		b.gSeq,
+	    b.gName,
+	    b.gLevel,
+	    b.gMinPeople,
+	    b.gMaxPeople,
+	    b.gBestPeople,
+	    b.gRecommendPeople,
+	    b.gUseAge,
+	    b.gMinTime,
+	    b.gMaxTime,
+	    b.gOfficialCd,
+	    b.gOfficialUrl,
+	    b.gComuUrl1,
+	    b.gComuUrl2,
+	    b.gCategoryCd,
+	    b.gGDName,
+	    b.gGAAName,
+	    b.gGPName,
+	    b.gRegiDate,
+	    b.gUpdtDate,
+	    (SELECT IFNULL(AVG(b.grScore),0)
+			FROM gameReview c
+			WHERE 1=1 
+				AND c.grDelNy = 0 
+				AND c.game_gSeq = b.gSeq
+	    ) as grScoreAvg,
+	    (SELECT COUNT(*) FROM gameReview c
+			WHERE 1=1 
+				AND c.grDelNy = 0 
+				AND c.game_gSeq = b.gSeq
+		) as grCount,
+		(SELECT c.fPath
+			FROM gameSmallTnFile c
+			WHERE 1=1 
+				AND b.gSeq = c.rSeq
+	    ) as fPath
+	</sql>
+	
+	<select id="selectWishListCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM 
+			memberWish a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+			AND a.member_mSeq = #{member_mSeq}
+       		AND b.gDelNy = 0
+	</select>
+
+	<select id="selectWishList" resultMap="resultMapObj_MW">
+		SELECT
+			a.mwSeq,
+		    a.member_mSeq,
+		    a.game_gSeq,
+			<include refid="selectGameCommonColumn"/>
+		FROM 
+			memberWish a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+			AND a.member_mSeq = #{member_mSeq}
+       		AND b.gDelNy = 0
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
+	<insert id="insertWish">
+		INSERT INTO memberWish
+		(
+		    member_mSeq,
+		    game_gSeq,
+		    mwRegiDate
+		)
+		VALUES
+		(
+			#{mSeq},
+			#{gSeq},
+		    now()
+		)
+		
+		<selectKey resultType="String" keyProperty="mwSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteWishByCondition">
+		DELETE FROM memberWish
+		WHERE 1=1
+			AND member_mSeq=#{mSeq}
+			AND game_gSeq=#{gSeq}
+	</delete>
+	
+	<delete id="deleteWishBySeq">
+		DELETE FROM memberWish
+		WHERE
+			mwSeq=#{mwSeq}
+	</delete>
+	
+	<delete id="listDeleteWish" parameterType="java.util.List">
+		DELETE FROM memberWish
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(mwSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+		
 </mapper>

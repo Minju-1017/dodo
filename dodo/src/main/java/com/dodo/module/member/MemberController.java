@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import com.dodo.Constants;
 import com.dodo.common.mail.MailService;
 import com.dodo.module.code.CodeService;
 import com.dodo.module.file.FileService;
+import com.dodo.module.game.GameDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -450,6 +452,66 @@ public class MemberController {
 		}
 
 		return returnMap;
+	}
+	
+	/**
+	 * 회원 위시 리스트 - 전체 데이터 읽어오기(페이징 기능 들어감) - User
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "MemberWishUsrList")
+	public String memberWishUsrList(Model model, @ModelAttribute("vo") MemberWishVo vo, 
+			MemberWishDto memberWishDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// addAttribute 하기 전에 미리 실행되야함
+		memberWishDto.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		vo.setParamsPaging(service.selectWishListCount(memberWishDto));
+
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("wishList", service.selectWishList(memberWishDto));
+		}
+		
+		return path_user + "MemberWishUsrList";
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "MemberWishUsrInst", method = RequestMethod.POST)
+	public String memberWishUsrInst(MemberWishDto memberWishDto, 
+			@RequestParam("redirectUrl") String redirectUrl, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		service.insertWish(memberWishDto);
+		
+		return "redirect:" + redirectUrl;
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "MemberWishUsrDele", method = RequestMethod.POST)
+	public String memberWishUsrDele(MemberWishDto memberWishDto, 
+			@RequestParam("redirectUrl") String redirectUrl, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		service.deleteWishByCondition(memberWishDto);
+		
+		return "redirect:" + redirectUrl;
 	}
 	
 	////////////////////////////////////////////////////////////////////

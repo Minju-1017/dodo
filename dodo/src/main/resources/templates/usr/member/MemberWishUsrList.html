@@ -9,27 +9,28 @@
 			<div class="row">
  				<div class="col-lg-12">
     				<div class="mb-8">
-						<h3 class="mb-1">Top 10</h3>
+						<h3 class="mb-1">위시 리스트</h3>
 					</div>
 					<form name="formList" id="formList" method="post" autocomplete="off">
 			
 						<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 						<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
 						<input type="hidden" name="gSeq">
-						<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
 						<input type="hidden" name="gCategoryCd">
-						<input type="hidden" name="redirectUrl" value="/usr/game/GameTop10UsrList">
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
+								
+								<div th:replace="~{usr/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+								
 								<div class="card-body p-0">
 									<div class="table-responsive">
 										<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
 											<thead class="bg-light">
 												<tr>
-													<th>순위</th>
 													<th></th>
 													<th>게임명</th>
+													<th>순위</th>
 													<th>카테고리</th>
 													<th>평점</th>
 													<th>난이도</th>
@@ -38,21 +39,16 @@
 													<th>공식판매처</th>
 													<th>중고거래</th>
 													<th>내게임</th>
-													<th>위시</th>
+													<th>삭제</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:if="${#lists.isEmpty(gameList)}">
-													<td class="text-center" colspan="10">
+												<tr th:if="${#lists.isEmpty(wishList)}">
+													<td class="text-center" colspan="11">
 														데이터가 없습니다.
 													</td>
 												</tr> 
-												<tr th:if="${!#lists.isEmpty(gameList)}" th:each="list : ${gameList}">
-													<td>
-														<h5 class="fs-6 mb-0">
-															<span th:text="${list.grOrder + '위'}" class="text-inherit"></span>
-														</h5>
-													</td>
+												<tr th:if="${!#lists.isEmpty(wishList)}" th:each="list : ${wishList}">
 													<td>
 														<a href="javascript:void(0);"
 															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
@@ -66,6 +62,11 @@
 													<td>
 														<a class="fw-bold text-inherit" href="javascript:void(0);" th:text="${list?.gName}"
 															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
+													</td>
+													<td>
+														<h5 class="fs-6 mb-0">
+															<span th:text="${list.grOrder}" class="text-inherit"></span>
+														</h5>
 													</td>
 													<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></td>
 													<td th:text="${list?.grScoreAvg}"></td>	
@@ -84,20 +85,13 @@
 													</td>
 													<td><a href="#"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
 													<td>
-														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="내 게임 등록">
-															<i class="bi bi-emoji-smile"></i>
+														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="내게임 등록">
+															<i class="feather-icon icon-smile"></i>
 														</a>
 													</td>
-													<td th:if="${list?.mwCount == 0}">
-														<a href="javascript:void(0);" th:attr="onclick=|goWish(true, '${list.gSeq}')|"
-															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="위시리스트 등록">
-															<i class="bi bi-heart"></i>
-														</a>
-													</td>
-													<td th:unless="${list?.mwCount == 0}">
-														<a href="javascript:void(0);" th:attr="onclick=|goWish(false, '${list.gSeq}')|"
-															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="위시리스트 삭제">
-															<i class="bi bi-heart-fill"></i>
+													<td>
+														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="삭제">
+															<i class="feather-icon icon-trash-2"></i>
 														</a>
 													</td>
 												</tr>
@@ -106,6 +100,34 @@
 								   	</div>
 								</div>
 							 </div>
+							 <div class="row mt-8">
+								<div class="col">
+									<nav>
+										<ul class="pagination mb-0">
+											<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+												<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
+													th:attr="onclick=|goList('${vo.startPage - 1}')|">
+													<span aria-hidden="true">&laquo;</span>
+												</a>
+											</li>
+											<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" 
+												th:classappend="${num eq vo.currPage} ? active : ''" 
+												class="page-item" style="cursor: pointer;">
+												<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+											</li>
+											<li 	th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+												<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+													<span aria-hidden="true">&raquo;</span>
+												</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+								<div class="col" style="text-align: right; vertical-align: middle;">
+									<a href="#" class="btn btn-outline-primary">선택 내 게임 등록</a>&nbsp;
+									<a href="#" class="btn btn-outline-danger">선택 삭제</a>
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -118,45 +140,17 @@
 
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
-  	let gSeq = document.querySelector("input[name=gSeq]");
-  	let mSeq = document.querySelector("input[name=mSeq]");
+  	let seq = document.querySelector("input[name=gSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
-  	let redirectUrl = document.querySelector("input[name=redirectUrl]");
     	
 	let fom = document.querySelector("form[name=formList]");
-
-	function submit(url) {
-		alert(url);
-		fom.action = url;
+	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
+	
+	function goDetail(keyValue1, keyValue2) {
+		seq.value = keyValue1;
+		cate.value = keyValue2;
+		fom.action = goUrlUsrDetail;
 		fom.submit();
-	}
-</script>
-
-<script type="text/javascript">
-	function goDetail(gameSeq, gameCate) {
-		gSeq.value = gameSeq;
-		cate.value = gameCate;
-		submit("/usr/game/GameUsrDetail");
-	}
-	
-	function goWish(bWish, gameSeq) {
-		var mSeq = document.getElementById("mSeq").value;
-		if (mSeq == null || mSeq == "") {
-			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
-			return false;
-		}
-		
-		gSeq.value = gameSeq;
-		
-		if (bWish) {
-			submit("/usr/member/MemberWishUsrInst");
-		} else {
-			submit("/usr/member/MemberWishUsrDele");
-		}
-	}
-	
-	document.getElementById("btnModalLogin").onclick = function() {
-		location.href = "/usr/member/MemberXdmSignIn";
 	}
 </script>
 

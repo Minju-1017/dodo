@@ -1,7 +1,6 @@
 package com.dodo.module.game;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.module.file.FileService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value={"/xdm/game/", "/usr/game/"})
@@ -35,11 +36,12 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmList")
-	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo) {
+	public String gameXdmList(Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 			model.addAttribute("gameList", service.selectList(vo));
 		}
 		
@@ -51,7 +53,8 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameXdmForm")
-	public String gameXdmForm(@ModelAttribute("vo") GameVo vo, Model model, GameDto gameDto) {	
+	public String gameXdmForm(@ModelAttribute("vo") GameVo vo, Model model, 
+			GameDto gameDto, HttpSession httpSession) {	
 		if (vo.getgSeq().equals("0") || vo.getgSeq().equals("")) {
 			// insert mode
 		} else {
@@ -60,6 +63,7 @@ public class GameController {
 			model.addAttribute("gameSmallTnFile", fileService.selectOne(gameDto, "gameSmallTnFile"));
 			model.addAttribute("gameLargeTnFile", fileService.selectOne(gameDto, "gameLargeTnFile"));
 			
+			gameDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 			model.addAttribute("gameItem", service.selectOne(gameDto));
 		}
 		
@@ -294,13 +298,14 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameTop10UsrList")
-	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo) {
+	public String gameTop10UsrList(Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setRowNumToShow(10);
 		vo.setParamsPaging(10);
 		
 		if (vo.getTotalRows() > 0) {
 			// Top 10 List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 			List<GameDto> top10List = service.selectTop10List(vo);
 			
 			// 순위 리스트
@@ -328,12 +333,13 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameInfoUsrList")
-	public String gameInfoUsrList(Model model, @ModelAttribute("vo") GameVo vo) {
+	public String gameInfoUsrList(Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectGameInfoListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
 			// Game List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 			List<GameDto> gameDtoList = service.selectGameInfoList(vo);
 			
 			// 순위 리스트
@@ -398,12 +404,13 @@ public class GameController {
 	 */
 	@RequestMapping(value = "GameInfoSearchUsrList", method = RequestMethod.POST)
 	public String gameInfoSearchUsrList(
-			Model model, @ModelAttribute("vo") GameVo vo) {
+			Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
 		// addAttribute 하기 전에 미리 실행되야함
 		vo.setParamsPaging(service.selectGameInfoListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
 			// Game List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 			List<GameDto> gameDtoList = service.selectGameInfoList(vo);
 			
 			// 순위 리스트
@@ -431,8 +438,9 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameUsrDetail")
-	public String gameUsrDetail(Model model, GameDto gameDto) {
+	public String gameUsrDetail(Model model, GameDto gameDto, HttpSession httpSession) {
 		// 순위 리스트
+		gameDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 		GameDto orderDto = service.selectGameOrder(gameDto);
 		GameDto dto1 = service.selectOne(gameDto);
 		dto1.setGrOrder(orderDto.getGrOrder());
@@ -453,6 +461,7 @@ public class GameController {
 		model.addAttribute("gameDetailReviewList", service.selectGameDetailReviewList(gameDto));
 		
 		// 연관 게임 리스트
+		gameDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 		model.addAttribute("gameRelationList", service.selectGameRelationList(gameDto));
 		
 		return path_user + "GameUsrDetail";
@@ -476,11 +485,13 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameUsrDetailReviewInst", method = RequestMethod.POST)
-	public String gameUsrDetailReviewInst(Model model, GameReviewDto gameReviewDto, GameDto gameDto) {
+	public String gameUsrDetailReviewInst(
+			Model model, GameReviewDto gameReviewDto, GameDto gameDto, HttpSession httpSession) {
 		int successCnt = service.insertReview(gameReviewDto);
 			
 		if (successCnt > 0) {
 			// 순위 설정
+			gameDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 			GameDto orderDto = service.selectGameOrder(gameDto);
 			GameDto dto = service.selectOne(gameDto);
 			dto.setGrOrder(orderDto.getGrOrder());
@@ -503,8 +514,9 @@ public class GameController {
 	 * @return
 	 */
 	@RequestMapping(value = "GameUsrDetailReviewDistributionRefresh", method = RequestMethod.POST)
-	public String gameUsrDetailReviewDistributionRefresh(Model model, GameDto gameDto) {
+	public String gameUsrDetailReviewDistributionRefresh(Model model, GameDto gameDto, HttpSession httpSession) {
 		// 게임 정보
+		gameDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 		model.addAttribute("gameItem", service.selectOne(gameDto));
 		
 		// 리뷰 분포

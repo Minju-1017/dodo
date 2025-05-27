@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dodo.module.game.GameDto;
+
 @Service
 public class MemberService {
 	
@@ -65,6 +67,30 @@ public class MemberService {
 	
 	public int listUelete(List<String> seqList) {
 		return dao.listUelete(seqList);
+	}
+	
+	public int selectWishListCount(MemberWishDto memberWishDto) {
+		return dao.selectWishListCount(memberWishDto);
+	}
+	
+	public List<MemberWishDto> selectWishList(MemberWishDto memberWishDto) {
+		return dao.selectWishList(memberWishDto);
+	}
+	
+	public int insertWish(MemberWishDto memberWishDto) {
+		return dao.insertWish(memberWishDto);
+	}
+	
+	public int deleteWishByCondition(MemberWishDto memberWishDto) {
+		return dao.deleteWishByCondition(memberWishDto);
+	}
+	
+	public int deleteWishBySeq(MemberWishDto memberWishDto) {
+		return dao.deleteWishBySeq(memberWishDto);
+	}
+	
+	public int listDeleteWish(List<String> seqList) {
+		return dao.listDeleteWish(seqList);
 	}
 	
 }

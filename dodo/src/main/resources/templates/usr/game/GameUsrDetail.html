@@ -4,401 +4,409 @@
 <div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
 <main>
-	<section class="mt-8">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-5 col-xl-5">
-					<div class="product" id="product">																
-						<div th:unless="${gameLargeTnFile?.fPath eq null or #strings.trim(ameLargeTnFile?.fPath) eq ''}" 
-							class="zoom" onmousemove="zoom(event)"
-							th:style="@{'background-image: url(' + ${gameLargeTnFile?.fPath} + ')'}">
-							<img th:src="${gameLargeTnFile?.fPath}" />
+	<form class="row g-6 needs-validation" novalidate method="post" id="form" name="form">
+	
+		<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${gameItem?.gSeq}">
+		<input type="hidden" id="gSeq" name="gSeq" th:value="${gameItem?.gSeq}">
+		<input type="hidden" id="grDtosSize" name="grDtosSize" th:value="${gameItem?.grDtosSize}">
+		<input type="hidden" id="grCount" name="grCount" th:value="${gameItem?.grCount}">
+		<input type="hidden" id="gCategoryCd" name="gCategoryCd" th:value="${gameItem?.gCategoryCd}">
+											
+		<section class="mt-8">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5 col-xl-5">
+						<div class="product" id="product">																
+							<div th:unless="${gameLargeTnFile?.fPath eq null or #strings.trim(ameLargeTnFile?.fPath) eq ''}" 
+								class="zoom" onmousemove="zoom(event)"
+								th:style="@{'background-image: url(' + ${gameLargeTnFile?.fPath} + ')'}">
+								<img th:src="${gameLargeTnFile?.fPath}" />
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-7 col-xl-6">
-					<div class="ps-lg-10 mt-6 mt-md-0">
-						<div id="gameInfoRefresh" th:fragment="gameInfoRefresh">
-							<div class="d-flex mb-2 gap-3">
-								<div>
-									<i class="bi bi-trophy" data-bs-toggle="tooltip" data-bs-html="true" title="순위"></i> 
-									<span th:text="${gameItem?.grOrder}"></span>
+					<div class="col-md-7 col-xl-6">
+						<div class="ps-lg-10 mt-6 mt-md-0">
+							<div id="gameInfoRefresh" th:fragment="gameInfoRefresh">
+								<div class="d-flex mb-2 gap-3">
+									<div>
+										<i class="bi bi-trophy" data-bs-toggle="tooltip" title="순위"></i> 
+										<span th:text="${gameItem?.grOrder}"></span>
+									</div>
+									<div>
+										<i class="bi bi-star" data-bs-toggle="tooltip" title="평점"></i>
+										<span th:text="${gameItem?.grScoreAvg}"></span>
+									</div>
+									<div>
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" title="난이도"></i>
+										<span th:text="${gameItem?.gLevel}"></span>
+									</div>
 								</div>
-								<div>
-									<i class="bi bi-star" data-bs-toggle="tooltip" data-bs-html="true" title="평점"></i>
-									<span th:text="${gameItem?.grScoreAvg}"></span>
-								</div>
-								<div>
-									<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
-									<span th:text="${gameItem?.gLevel}"></span>
-								</div>
+								<h2 class="mb-1" th:text="${gameItem?.gName}"></h2>
+								<div class="mb-4">
+									<small class="text-warning">
+										<i th:unless="${gameItem?.fillStarCount eq 0}" 
+											th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
+											class="bi bi-star-fill"></i><i th:unless="${gameItem?.harfStarCount eq 0}"  
+											th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
+											class="bi bi-star-half"></i><i th:unless="${gameItem?.emptyStarCount eq 0}"   
+											th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
+											class="bi bi-star"></i><i th:if="${gameItem?.emptyStarCount eq 0 
+											and gameItem?.harfStarCount eq 0 
+											and gameItem?.fillStarCount eq 0}"   
+											th:each="i : ${#numbers.sequence(0, 4)}"
+											class="bi bi-star"></i>
+									</small>
+									<a href="#" class="ms-2" id="linkReviews"
+										th:text="${'(' + @doDoUtil.formatNumberComma(gameItem?.grCount) + ' 리뷰 보기)'}"></a>
+								</div>  
 							</div>
-							<h2 class="mb-1" th:text="${gameItem?.gName}"></h2>
-							<div class="mb-4">
-								<small class="text-warning">
-									<i th:unless="${gameItem?.fillStarCount eq 0}" 
-										th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
-										class="bi bi-star-fill"></i><i th:unless="${gameItem?.harfStarCount eq 0}"  
-										th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
-										class="bi bi-star-half"></i><i th:unless="${gameItem?.emptyStarCount eq 0}"   
-										th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
-										class="bi bi-star"></i><i th:if="${gameItem?.emptyStarCount eq 0 
-										and gameItem?.harfStarCount eq 0 
-										and gameItem?.fillStarCount eq 0}"   
-										th:each="i : ${#numbers.sequence(0, 4)}"
-										class="bi bi-star"></i>
-								</small>
-								<a href="#" class="ms-2" id="linkReviews"
-									th:text="${'(' + @doDoUtil.formatNumberComma(gameItem?.grCount) + ' 리뷰 보기)'}"></a>
-							</div>  
-						</div>
-						<hr class="my-6" />
-						<div>
-							<!-- table -->
-							<table class="table table-borderless mb-0">
-								<tbody>
-									<tr>
-										<th>인원</th>
-										<td th:if="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
-											th:text="${gameItem?.gMinPeople + '인 (' + gameItem?.gBestPeople + '인 최적, ' 
-												+ gameItem?.gRecommendPeople + '인 추천)'}"></td>
-										<td th:unless="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
-											th:text="${gameItem?.gMinPeople + ' ~ ' + gameItem?.gMaxPeople + 
-												'인 (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
-									</tr>
-									<tr>
-										<th>사용연령</th>
-										<td th:text="${gameItem?.gUseAge + '세 이상'}"></td>
-									</tr>
-									<tr>
-										<th>소요시간</th>
-										<td th:if="${gameItem?.gMinTime == gameItem?.gMaxTime}"
-											th:text="${gameItem?.gMinTime + '분'}"></td>
-										<td th:unless="${gameItem?.gMinTime == gameItem?.gMaxTime}"
-											th:text="${gameItem?.gMinTime + ' ~ ' + gameItem?.gMaxTime + '분'}"></td>	
-									</tr>
-									<tr>
-										<th>공식판매처</th>
-										<td>
-											<a th:href="${gameItem?.gOfficialUrl}" class= "d-block" target="_blank"
-												th:text="${@codeService.selectOneCachedCode(gameItem?.gOfficialCd)}"></a>
-										</td>
-									</tr>
-									<tr>
-										<th>커뮤니티</th>
-										<td>
-											<div class="d-flex gap-3">
-												<a th:href="${gameItem?.gComuUrl1}" class="text-inherit" target="_blank" 
-													style="text-decoration: underline;">BoardLife</a>
-												<a th:href="${gameItem?.gComuUrl2}" class="text-inherit" target="_blank"
-													style="text-decoration: underline;">BoardgameGeek</a>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<hr class="my-6" />
-						<div class="mt-3 row justify-content-start g-2 align-items-center">
-							<div class="col-xxl-3 col-lg-4 col-md-5 col-5 d-grid">
-								<a class="btn btn-primary" href="./usedgame-shopping.html">
-									<i class="feather-icon icon-shopping-bag me-2"></i>중고 구매
-								</a>
+							<hr class="my-6" />
+							<div>
+								<!-- table -->
+								<table class="table table-borderless mb-0">
+									<tbody>
+										<tr>
+											<th>인원</th>
+											<td th:if="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
+												th:text="${gameItem?.gMinPeople + '인 (' + gameItem?.gBestPeople + '인 최적, ' 
+													+ gameItem?.gRecommendPeople + '인 추천)'}"></td>
+											<td th:unless="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
+												th:text="${gameItem?.gMinPeople + ' ~ ' + gameItem?.gMaxPeople + 
+													'인 (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
+										</tr>
+										<tr>
+											<th>사용연령</th>
+											<td th:text="${gameItem?.gUseAge + '세 이상'}"></td>
+										</tr>
+										<tr>
+											<th>소요시간</th>
+											<td th:if="${gameItem?.gMinTime == gameItem?.gMaxTime}"
+												th:text="${gameItem?.gMinTime + '분'}"></td>
+											<td th:unless="${gameItem?.gMinTime == gameItem?.gMaxTime}"
+												th:text="${gameItem?.gMinTime + ' ~ ' + gameItem?.gMaxTime + '분'}"></td>	
+										</tr>
+										<tr>
+											<th>공식판매처</th>
+											<td>
+												<a th:href="${gameItem?.gOfficialUrl}" class= "d-block" target="_blank"
+													th:text="${@codeService.selectOneCachedCode(gameItem?.gOfficialCd)}"></a>
+											</td>
+										</tr>
+										<tr>
+											<th>커뮤니티</th>
+											<td>
+												<div class="d-flex gap-3">
+													<a th:href="${gameItem?.gComuUrl1}" class="text-inherit" target="_blank" 
+														style="text-decoration: underline;">BoardLife</a>
+													<a th:href="${gameItem?.gComuUrl2}" class="text-inherit" target="_blank"
+														style="text-decoration: underline;">BoardgameGeek</a>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-							<div class="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
-								<a class="btn btn-info" href="./myboardgame-holding-write.html">
-									<i class="feather-icon icon-shopping-bag me-2"></i>보유 게임 등록
-								</a>
-							</div>
-							<div class="col-xxl-2 col-lg-4 col-md-2 col-2 d-grid">
-								<a class="btn btn-outline-danger" href="#" data-bs-toggle="tooltip"
-									data-bs-html="true" aria-label="위시리스트"><i class="feather-icon icon-heart"></i></a>
-							</div>
-							<div class="col-xxl-3 col-lg-4 col-md-3 col-3 d-grid">
-								<div class="dropdown">
-									<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">Share</a>
-
-									<ul class="dropdown-menu">
-										<li>
-											<a class="dropdown-item" href="#">
-												<i class="bi bi-facebook me-2"></i>
-												Facebook
-											</a>
-										</li>
-										<li>
-											<a class="dropdown-item" href="#">
-												<i class="bi bi-twitter me-2"></i>
-												Twitter
-											</a>
-										</li>
-										<li>
-											<a class="dropdown-item" href="#">
-												<i class="bi bi-instagram me-2"></i>
-												Instagram
-											</a>
-										</li>
-									</ul>
+							<hr class="my-6" />
+							<div id="wishRefresh" th:fragment="wishRefresh">
+								<div class="mt-3 row justify-content-start g-2 align-items-center">
+									<div class="col-xxl-3 col-lg-4 col-md-5 col-5 d-grid">
+										<a class="btn btn-primary" href="./usedgame-shopping.html">
+											<i class="feather-icon icon-shopping-bag me-2"></i>중고 구매
+										</a>
+									</div>
+									<div class="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
+										<a class="btn btn-info" href="./myboardgame-holding-write.html">
+											<i class="feather-icon icon-shopping-bag me-2"></i>보유 게임 등록
+										</a>
+									</div>
+									<div class="col-xxl-2 col-lg-4 col-md-2 col-2 d-grid">
+										<a th:if="${gameItem?.mwCount == 0}" href="javascript:void(0);"
+											th:attr="onclick=|goWish(true)|" class="btn btn-outline-danger"
+											data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a th:unless="${gameItem?.mwCount == 0}" href="javascript:void(0);"
+											th:attr="onclick=|goWish(false)|" class="btn btn-outline-danger"
+											data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
+									</div>
+									<div class="col-xxl-3 col-lg-4 col-md-3 col-3 d-grid">
+										<div class="dropdown">
+											<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+												data-bs-toggle="dropdown" aria-expanded="false">Share</a>
+		
+											<ul class="dropdown-menu">
+												<li>
+													<a class="dropdown-item" href="#">
+														<i class="bi bi-facebook me-2"></i>
+														Facebook
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item" href="#">
+														<i class="bi bi-twitter me-2"></i>
+														Twitter
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item" href="#">
+														<i class="bi bi-instagram me-2"></i>
+														Instagram
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	<section class="mt-lg-14 mt-8">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<ul class="nav nav-pills nav-lb-tab" id="myTab" role="tablist">
-						<li class="nav-item" role="presentation">
-							<button class="nav-link active" id="details-tab" data-bs-toggle="tab"
-								data-bs-target="#details-tab-pane" type="button" role="tab"
-								aria-controls="details-tab-pane" aria-selected="false">
-								게임 상세 정보
-							</button>
-						</li>
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
-								data-bs-target="#reviews-tab-pane" type="button" role="tab"
-								aria-controls="reviews-tab-pane" aria-selected="false">
-								리뷰
-							</button>
-						</li>
-					</ul>
-					<div class="tab-content" id="myTabContent">
-						<div class="tab-pane fade show active" id="details-tab-pane" role="tabpanel"
-							aria-labelledby="details-tab" tabindex="0">
-							<div class="my-8">
-								<div class="row">
-									<div class="col-12 col-lg-8">
-										<table class="table table-striped">
-											<tbody>
-												<tr>
-													<th width="300px">디자이너</th>
-													<td th:text="${gameItem?.gGDName}" style="white-space: pre-line"></td>
-												</tr>
-												<tr>
-													<th>아트웍 작가</th>
-													<td th:text="${gameItem?.gGAAName}" style="white-space: pre-line"></td>
-												</tr>
-												<tr>
-													<th>출판사</th>
-													<td th:text="${gameItem?.gGPName}" style="white-space: pre-line"></td>
-												</tr>
-												<tr>
-													<th>카테고리</th>
-													<td class="border-bottom"
-														th:text="${@codeService.selectOneCachedCode(gameItem?.gCategoryCd)}"></td>
-												</tr>
-											</tbody>
-										</table>
+		</section>
+		<section class="mt-lg-14 mt-8">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="nav nav-pills nav-lb-tab" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="details-tab" data-bs-toggle="tab"
+									data-bs-target="#details-tab-pane" type="button" role="tab"
+									aria-controls="details-tab-pane" aria-selected="false">
+									게임 상세 정보
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
+									data-bs-target="#reviews-tab-pane" type="button" role="tab"
+									aria-controls="reviews-tab-pane" aria-selected="false">
+									리뷰
+								</button>
+							</li>
+						</ul>
+						<div class="tab-content" id="myTabContent">
+							<div class="tab-pane fade show active" id="details-tab-pane" role="tabpanel"
+								aria-labelledby="details-tab" tabindex="0">
+								<div class="my-8">
+									<div class="row">
+										<div class="col-12 col-lg-8">
+											<table class="table table-striped">
+												<tbody>
+													<tr>
+														<th width="300px">디자이너</th>
+														<td th:text="${gameItem?.gGDName}" style="white-space: pre-line"></td>
+													</tr>
+													<tr>
+														<th>아트웍 작가</th>
+														<td th:text="${gameItem?.gGAAName}" style="white-space: pre-line"></td>
+													</tr>
+													<tr>
+														<th>출판사</th>
+														<td th:text="${gameItem?.gGPName}" style="white-space: pre-line"></td>
+													</tr>
+													<tr>
+														<th>카테고리</th>
+														<td class="border-bottom"
+															th:text="${@codeService.selectOneCachedCode(gameItem?.gCategoryCd)}"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel"
-							aria-labelledby="reviews-tab" tabindex="0">
-							<div class="my-8">
-								<div class="row">
-									<div class="col-md-4">
-										<div class="me-lg-12 mb-6 mb-md-0">
-											<div id="reviewDistributionRefresh" th:fragment="reviewDistributionRefresh">
-												<div class="mb-5">
-													<h4 class="mb-3">평점</h4>
-													<span>
-														<small class="text-warning">
-															<i th:unless="${gameItem?.fillStarCount eq 0}" 
-																th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
-																class="bi bi-star-fill"></i><i th:unless="${gameItem?.harfStarCount eq 0}"  
-																th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
-																class="bi bi-star-half"></i><i th:unless="${gameItem?.emptyStarCount eq 0}"   
-																th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
-																class="bi bi-star"></i><i th:if="${gameItem?.emptyStarCount eq 0 
-																and gameItem?.harfStarCount eq 0 
-																and gameItem?.fillStarCount eq 0}"   
-																th:each="i : ${#numbers.sequence(0, 4)}"
-																class="bi bi-star"></i>
-														</small>
-														<span class="ms-3" th:text="${gameItem?.grScoreAvg + '/ 10'}"></span>
-														<small class="ms-3" th:text="${'리뷰 합계 ' + @doDoUtil.formatNumberComma(gameItem?.grCount)}"></small>
-													</span>
-												</div>
-												<div class="mb-8">
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">10</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score10}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score10}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score10 + '%'}"></span>
+							<div class="tab-pane fade" id="reviews-tab-pane" role="tabpanel"
+								aria-labelledby="reviews-tab" tabindex="0">
+								<div class="my-8">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="me-lg-12 mb-6 mb-md-0">
+												<div id="reviewDistributionRefresh" th:fragment="reviewDistributionRefresh">
+													<div class="mb-5">
+														<h4 class="mb-3">평점</h4>
+														<span>
+															<small class="text-warning">
+																<i th:unless="${gameItem?.fillStarCount eq 0}" 
+																	th:each="i : ${#numbers.sequence(0, gameItem?.fillStarCount - 1)}"
+																	class="bi bi-star-fill"></i><i th:unless="${gameItem?.harfStarCount eq 0}"  
+																	th:each="i : ${#numbers.sequence(0, gameItem?.harfStarCount - 1)}" 
+																	class="bi bi-star-half"></i><i th:unless="${gameItem?.emptyStarCount eq 0}"   
+																	th:each="i : ${#numbers.sequence(0, gameItem?.emptyStarCount - 1)}"
+																	class="bi bi-star"></i><i th:if="${gameItem?.emptyStarCount eq 0 
+																	and gameItem?.harfStarCount eq 0 
+																	and gameItem?.fillStarCount eq 0}"   
+																	th:each="i : ${#numbers.sequence(0, 4)}"
+																	class="bi bi-star"></i>
+															</small>
+															<span class="ms-3" th:text="${gameItem?.grScoreAvg + '/ 10'}"></span>
+															<small class="ms-3" th:text="${'리뷰 합계 ' + @doDoUtil.formatNumberComma(gameItem?.grCount)}"></small>
+														</span>
 													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;9</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score9}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score9}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+													<div class="mb-8">
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">10</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
 															</div>
-														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score9 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;8</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score8}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score8}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score10}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score10}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
 															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score10 + '%'}"></span>
 														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score8 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;7</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score7}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score7}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;9</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
 															</div>
-														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score7 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;6</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score6}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score6}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score9}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score9}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
 															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score9 + '%'}"></span>
 														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score6 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;5</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score5}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score5}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;8</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
 															</div>
-														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score5 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;4</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score4}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score4}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score8}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score8}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
 															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score8 + '%'}"></span>
 														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score4 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;3</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score3}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score3}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;7</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
 															</div>
-														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score3 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;2</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score2}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score2}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score7}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score7}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
 															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score7 + '%'}"></span>
 														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score2 + '%'}"></span>
-													</div>
-													<div class="d-flex align-items-center mb-2">
-														<div class="text-nowrap me-3 text-muted">
-															<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;1</span>
-															<i class="bi bi-star-fill ms-1 small text-warning"></i>
-														</div>
-														<div class="w-100">
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" role="progressbar"
-																	th:style="|width: ${gameDetailReviewDistribution?.score1}%|" 
-																	th:aria-valuenow="${gameDetailReviewDistribution?.score1}"
-																	aria-valuemin="0" aria-valuemax="100"></div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;6</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
 															</div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score6}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score6}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score6 + '%'}"></span>
 														</div>
-														<span class="text-muted ms-3" style="width:13px" 
-															th:text="${gameDetailReviewDistribution?.score1 + '%'}"></span>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;5</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
+															</div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score5}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score5}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score5 + '%'}"></span>
+														</div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;4</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
+															</div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score4}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score4}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score4 + '%'}"></span>
+														</div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;3</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
+															</div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score3}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score3}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score3 + '%'}"></span>
+														</div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;2</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
+															</div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score2}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score2}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score2 + '%'}"></span>
+														</div>
+														<div class="d-flex align-items-center mb-2">
+															<div class="text-nowrap me-3 text-muted">
+																<span class="d-inline-block align-middle text-muted" style="width:13px">&nbsp;1</span>
+																<i class="bi bi-star-fill ms-1 small text-warning"></i>
+															</div>
+															<div class="w-100">
+																<div class="progress" style="height: 6px">
+																	<div class="progress-bar bg-warning" role="progressbar"
+																		th:style="|width: ${gameDetailReviewDistribution?.score1}%|" 
+																		th:aria-valuenow="${gameDetailReviewDistribution?.score1}"
+																		aria-valuemin="0" aria-valuemax="100"></div>
+																</div>
+															</div>
+															<span class="text-muted ms-3" style="width:13px" 
+																th:text="${gameDetailReviewDistribution?.score1 + '%'}"></span>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="col-md-8">
-										<form class="row g-6 needs-validation" novalidate method="post" id="form" name="form">
-										
-											<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${session.sessSeqUsr}">
-											<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${gameItem?.gSeq}">
-											<input type="hidden" id="gSeq" name="gSeq" th:value="${gameItem?.gSeq}">
-											<input type="hidden" id="grDtosSize" name="grDtosSize" th:value="${gameItem?.grDtosSize}">
-											<input type="hidden" id="grCount" name="grCount" th:value="${gameItem?.grCount}">
-											
+										<div class="col-md-8">
 											<div class="mb-10">
 												<div class="d-flex justify-content-between align-items-center mb-8">
 													<div>
@@ -495,18 +503,18 @@
 													</div>
 												</div>
 											</div>
-										</form>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div class="tab-pane fade" id="sellerInfo-tab-pane" role="tabpanel"
+								aria-labelledby="sellerInfo-tab" tabindex="0">...</div>
 						</div>
-						<div class="tab-pane fade" id="sellerInfo-tab-pane" role="tabpanel"
-							aria-labelledby="sellerInfo-tab" tabindex="0">...</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</form>
 	<section class="my-lg-14 my-14">
 		<div class="container">
 			<div class="row">
@@ -514,72 +522,79 @@
 					<h3>연관 게임</h3>
 				</div>
 			</div>
-			<div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-2 mt-2">
-				<div th:if="${#lists.isEmpty(gameRelationList)}" class="col">
-					데이터가 없습니다.
-				</div>
-				<div th:if="${!#lists.isEmpty(gameRelationList)}" class="col" th:each="list : ${gameRelationList}">
-					<div class="card card-product">
-						<div class="card-body">
-							<div class="text-center position-relative">
-								<a href="javascript:void(0);"
-									th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
-									<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
-										class="mb-3 img-fluid" 
-										src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
-									<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
-										class="mb-3 img-fluid" th:src="${list?.fPath}" />
-								</a>
-
-								<div class="card-product-action">
-									<a href="./myboardgame-holding-write.html" class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip" 
-										data-bs-html="true" title="내 게임 등록"></i></a>
-									<a href="#!" class="btn-action" data-bs-toggle="tooltip" data-bs-html="true"
-										title="위시리스트 등록"><i class="bi bi-heart"></i></a>
-									<a href="./usedgame-shopping.html" class="btn-action"><i class="bi bi-cart" 
-										data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매"></i></a>
+			<div id="relationWishRefresh" th:fragment="relationWishRefresh">
+				<div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-2 mt-2">
+					<div th:if="${#lists.isEmpty(gameRelationList)}" class="col">
+						데이터가 없습니다.
+					</div>
+					<div th:if="${!#lists.isEmpty(gameRelationList)}" class="col" th:each="list : ${gameRelationList}">
+						<div class="card card-product">
+							<div class="card-body">
+								<div class="text-center position-relative">
+									<a href="javascript:void(0);"
+										th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
+										<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+											class="mb-3 img-fluid" 
+											src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
+										<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+											class="mb-3 img-fluid" th:src="${list?.fPath}" />
+									</a>
+	
+									<div class="card-product-action">
+										<a href="./myboardgame-holding-write.html" 
+											class="btn-action"><i class="bi bi-emoji-smile" data-bs-toggle="tooltip" 
+											title="내 게임 등록"></i></a>
+										<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
+											th:attr="onclick=|goWishRelation(true, '${list.gSeq}')|" class="btn-action"
+											data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+										<a th:unless="${list?.mwCount == 0}" href="javascript:void(0);"
+											th:attr="onclick=|goWishRelation(false, '${list.gSeq}')|" class="btn-action"
+											data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
+										<a href="./usedgame-shopping.html" class="btn-action"><i class="bi bi-cart" 
+											data-bs-toggle="tooltip" title="중고 구매"></i></a>
+									</div>
 								</div>
-							</div>
-							<div class="text-small mb-1">
-								<small class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></small>
-							</div>
-							<h2 class="fs-6">
-								<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
-									th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
-							</h2>
-							<div>
-								<span class="small">
-									<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
-									<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
-									<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
-									<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-										th:text="${list?.gMinPeople + '인'}"></span>
-									<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-										th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></span>&nbsp;&nbsp;
-									<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
-									<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
-										th:text="${list?.gMinTime + '분'}"></span>
-									<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
-										th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
-								</span>
-							</div>
-							<div>
-								<span>
-									<small class="text-warning">
-										<i th:unless="${list?.fillStarCount eq 0}" 
-											th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
-											class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
-											th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
-											class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
-											th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
-											class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
-											and list?.harfStarCount eq 0 
-											and list?.fillStarCount eq 0}"   
-											th:each="i : ${#numbers.sequence(0, 4)}"
-											class="bi bi-star"></i>
-									</small>
-									<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + @doDoUtil.formatNumberComma(list?.grCount) + ')'}"></span>
-								</span>
+								<div class="text-small mb-1">
+									<small class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></small>
+								</div>
+								<h2 class="fs-6">
+									<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
+										th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
+								</h2>
+								<div>
+									<span class="small">
+										<i class="bi bi-reception-4" data-bs-toggle="tooltip" title="난이도"></i>
+										<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
+										<i class="bi bi-person" data-bs-toggle="tooltip" title="인원"></i>
+										<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
+											th:text="${list?.gMinPeople + '인'}"></span>
+										<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
+											th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></span>&nbsp;&nbsp;
+										<i class="bi bi-alarm" data-bs-toggle="tooltip" title="소요시간"></i>
+										<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
+											th:text="${list?.gMinTime + '분'}"></span>
+										<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
+											th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
+									</span>
+								</div>
+								<div>
+									<span>
+										<small class="text-warning">
+											<i th:unless="${list?.fillStarCount eq 0}" 
+												th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+												class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
+												th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+												class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
+												th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+												class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
+												and list?.harfStarCount eq 0 
+												and list?.fillStarCount eq 0}"   
+												th:each="i : ${#numbers.sequence(0, 4)}"
+												class="bi bi-star"></i>
+										</small>
+										<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + @doDoUtil.formatNumberComma(list?.grCount) + ')'}"></span>
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -595,6 +610,124 @@
 <script type="text/javascript">
 	let grScore = document.getElementById("grScore");
 	let grComment = document.getElementById("grComment");
+</script>
+
+<!-- Wish -->
+<script type="text/javascript">
+	function goWish(bWish) {
+		var mSeq = document.getElementById("mSeq").value;
+		if (mSeq == null || mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		var wishUrl;
+		if (bWish) {
+			wishUrl = "/usr/member/MemberWishUsrInstByGameDetail";
+		} else {
+			wishUrl = "/usr/member/MemberWishUsrDeleByGameDetail";
+		}
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: wishUrl
+			,traditional: true
+			,data : {
+				"gSeq" : $("#gSeq").val(),
+				"mSeq" : $("#mSeq").val()
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					disposeAllTooltips();
+					$('#wishRefresh').replaceWith(fragmentHtml);
+					refreshTooltipsAndTitles();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function goWishRelation(bWish, rgSeq) {
+		var mSeq = document.getElementById("mSeq").value;
+		if (mSeq == null || mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		var wishUrl;
+		if (bWish) {
+			wishUrl = "/usr/member/MemberWishUsrInstByGameDetailRelation";
+		} else {
+			wishUrl = "/usr/member/MemberWishUsrDeleByGameDetailRelation";
+		}
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: wishUrl
+			,traditional: true
+			,data : {
+				"rgSeq" : rgSeq,
+				"gSeq" : $("#gSeq").val(),
+				"mSeq" : $("#mSeq").val(),
+				"gCategoryCd" : $("#gCategoryCd").val()
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					disposeAllTooltips();
+					$('#relationWishRefresh').replaceWith(fragmentHtml);
+					refreshTooltipsAndTitles();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	document.getElementById("btnModalLogin").onclick = function() {
+		location.href = "/usr/member/MemberXdmSignIn";
+	}
+	
+	function disposeAllTooltips() {
+		  // 기존 툴팁 인스턴스 숨기고 제거
+		  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+		    const tooltip = bootstrap.Tooltip.getInstance(el);
+		    if (tooltip) {
+		      tooltip.hide();    // 툴팁 숨기기
+		      tooltip.dispose(); // 인스턴스 완전 제거
+		    }
+		  });
+		  
+		  // body에 남아있는 툴팁 팝업 엘리먼트도 제거
+		  document.querySelectorAll('.tooltip').forEach(tt => tt.remove());
+		}
+	
+	function refreshTooltipsAndTitles() {
+		// 텍스트 갱신
+	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+	      const icon = el.querySelector('i');
+	      if (icon) {
+	        if (icon.classList.contains('bi-heart-fill')) {
+	          el.setAttribute('title', '위시리스트 삭제');
+	        } else if (icon.classList.contains('bi-heart')) {
+	          el.setAttribute('title', '위시리스트 등록');
+	        }
+	      }
+	    });
+
+	    // 툴팁 재초기화
+	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+	      new bootstrap.Tooltip(el, { trigger: 'hover focus' });
+	    });
+	}
 </script>
 
 <!-- Review -->

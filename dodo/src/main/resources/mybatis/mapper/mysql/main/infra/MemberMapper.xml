@@ -248,7 +248,7 @@
 	    b.gGPName,
 	    b.gRegiDate,
 	    b.gUpdtDate,
-	    (SELECT IFNULL(AVG(b.grScore),0)
+	    (SELECT IFNULL(AVG(c.grScore),0)
 			FROM gameReview c
 			WHERE 1=1 
 				AND c.grDelNy = 0 

@@ -212,7 +212,6 @@ public class GameController {
 	 */
 	@RequestMapping(value = "GameReviewXdmUpdt")
 	public String gameReviewXdmUpdt(GameReviewDto gameReviewDto) {
-		System.out.println("@@@@@@@@@@@@@@" + gameReviewDto.getGrSeq());
 		service.updateReview(gameReviewDto);
 
 		return "redirect:GameReviewXdmList";

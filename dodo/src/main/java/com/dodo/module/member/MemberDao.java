@@ -22,8 +22,8 @@ public interface MemberDao {
 	public int listDelete(List<String> seqList);
 	public int listUelete(List<String> seqList);
 	
-	public int selectWishListCount(MemberWishDto memberWishDto);
-	public List<MemberWishDto> selectWishList(MemberWishDto memberWishDto);  
+	public int selectWishListCount(MemberWishVo vo);
+	public List<MemberWishDto> selectWishList(MemberWishVo vo);  
 	public int insertWish(MemberWishDto memberWishDto);
 	public int deleteWishByCondition(MemberWishDto memberWishDto);
 	public int deleteWishBySeq(MemberWishDto memberWishDto);

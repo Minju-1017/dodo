@@ -28,6 +28,11 @@
 										<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
 											<thead class="bg-light">
 												<tr>
+													<th>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" id="checkAll" name="checkAll">
+														</div>
+													</th>
 													<th></th>
 													<th>게임명</th>
 													<th>순위</th>
@@ -44,11 +49,16 @@
 											</thead>
 											<tbody>
 												<tr th:if="${#lists.isEmpty(wishList)}">
-													<td class="text-center" colspan="11">
+													<td class="text-center" colspan="13">
 														데이터가 없습니다.
 													</td>
 												</tr> 
 												<tr th:if="${!#lists.isEmpty(wishList)}" th:each="list : ${wishList}">
+													<td>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" name="check" th:value="${list?.mwSeq}">
+														</div>
+													</td>
 													<td>
 														<a href="javascript:void(0);"
 															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
@@ -63,10 +73,7 @@
 														<a class="fw-bold text-inherit" href="javascript:void(0);" th:text="${list?.gName}"
 															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
 													</td>
-													<td>
-														<h5 class="fs-6 mb-0">
-															<span th:text="${list.grOrder}" class="text-inherit"></span>
-														</h5>
+													<td th:text="${list.grOrder}">
 													</td>
 													<td th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></td>
 													<td th:text="${list?.grScoreAvg}"></td>	
@@ -144,13 +151,31 @@
   	let cate = document.querySelector("input[name=gCategoryCd]");
     	
 	let fom = document.querySelector("form[name=formList]");
+	let goUrlUsrList = "/usr/member/MemberWishUsrList";
 	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
 	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<!-- Move Page / Paging -->
+<script type="text/javascript">
 	function goDetail(keyValue1, keyValue2) {
 		seq.value = keyValue1;
 		cate.value = keyValue2;
-		fom.action = goUrlUsrDetail;
-		fom.submit();
+		submit(goUrlUsrDetail);
+	}
+
+	function goList(currPage) {
+		document.querySelector("input[name=currPage]").value = currPage;
+		submit(goUrlUsrList);
+	}
+	
+	document.getElementById("changeRowNum").onchange = function () {
+	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+	    submit(goUrlUsrList);
 	}
 </script>
 

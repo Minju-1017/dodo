@@ -4,14 +4,14 @@ import com.dodo.module.BaseVo;
 
 public class MemberWishVo extends BaseVo {
 
-	private String mwSeq;
+	private String member_mSeq;
 
-	public String getMwSeq() {
-		return mwSeq;
+	public String getMember_mSeq() {
+		return member_mSeq;
 	}
 
-	public void setMwSeq(String mwSeq) {
-		this.mwSeq = mwSeq;
+	public void setMember_mSeq(String member_mSeq) {
+		this.member_mSeq = member_mSeq;
 	}
 	
 }

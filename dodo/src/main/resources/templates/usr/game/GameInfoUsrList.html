@@ -13,6 +13,7 @@
 				<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
 				<input type="hidden" id="shCategoryCd" name="shCategoryCd" th:value="${vo.shCategoryCd}"/>
 				<input type="hidden" id="gSeq" name="gSeq">
+				<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
 				<input type="hidden" id="gCategoryCd" name="gCategoryCd">
 			
 				<div class="row gx-10">
@@ -272,16 +273,16 @@
 												<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + list?.grCount + ')'}"></span>
 											</div>
 											<div class="mt-1">
-												<i class="bi bi-reception-4" data-bs-toggle="tooltip" data-bs-html="true" title="난이도"></i>
+												<i class="bi bi-reception-4" data-bs-toggle="tooltip" title="난이도"></i>
 												<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
-												<i class="bi bi-person" data-bs-toggle="tooltip" data-bs-html="true" title="인원"></i>
+												<i class="bi bi-person" data-bs-toggle="tooltip" title="인원"></i>
 												<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
 													th:text="${list?.gMinPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>
 												<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
 													th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>&nbsp;&nbsp;
-												<i class="bi bi-person-plus" data-bs-toggle="tooltip" data-bs-html="true" title="사용 연령"></i>
+												<i class="bi bi-person-plus" data-bs-toggle="tooltip" title="사용 연령"></i>
 												<span th:text="${list?.gUseAge + '세 이상'}"></span>&nbsp;&nbsp;
-												<i class="bi bi-alarm" data-bs-toggle="tooltip" data-bs-html="true" title="소요시간"></i>
+												<i class="bi bi-alarm" data-bs-toggle="tooltip" title="소요시간"></i>
 												<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
 													th:text="${list?.gMinTime + '분'}"></span>
 												<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
@@ -294,18 +295,20 @@
 													class= "d-block">공식판매처 정보없음</span>
 											</div>
 											<div class="mt-3">
-												<a href="./myboardgame-holding-write.html"
+												<a href="#"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-													data-bs-toggle="tooltip" data-bs-html="true" title="내 게임 등록">
-													<i class="bi bi-emoji-smile"></i></a>
-												<a href="#!"
+													data-bs-toggle="tooltip" title="내 게임 등록"><i class="bi bi-emoji-smile"></i></a>
+												<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
+													th:attr="onclick=|goWish(true, '${list.gSeq}')|"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-													data-bs-toggle="tooltip" data-bs-html="true" title="위시리스트 등록">
-													<i class="bi bi-heart"></i></a>
-												<a href="./usedgame-shopping.html" 
+													data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+												<a th:unless="${list?.mwCount == 0}" href="javascript:void(0);"
+													th:attr="onclick=|goWish(false, '${list.gSeq}')|"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-													data-bs-toggle="tooltip" data-bs-html="true" title="중고 구매">
-													<i class="bi bi-cart"></i></a>
+													data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
+												<a href="#" 
+													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+													data-bs-toggle="tooltip" title="중고 구매"><i class="bi bi-cart"></i></a>
 											</div>
 										</div>
 									</div>
@@ -347,13 +350,12 @@
 
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
-  	let seq = document.querySelector("input[name=gSeq]");
+  	let gSeq = document.querySelector("input[name=gSeq]");
+  	let mSeq = document.querySelector("input[name=mSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let shCategoryCd = document.querySelector("input[name=shCategoryCd]");
     	
 	let fom = document.querySelector("form[name=formList]");
-	let goUrlUsrGameInfoList = "/usr/game/GameInfoUsrList";
-	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -369,6 +371,95 @@
 	let shScoreList = /*[[${vo.shScoreList}]]*/ {};
 </script>
 
+<!-- Wish -->
+<script type="text/javascript">
+	function goWish(bWish, gameSeq) {
+		var mSeq = document.getElementById("mSeq").value;
+		if (mSeq == null || mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		gSeq.value = gameSeq;
+		
+		var wishUrl;
+		if (bWish) {
+			wishUrl = "/usr/member/MemberWishUsrInstByGameInfo";
+		} else {
+			wishUrl = "/usr/member/MemberWishUsrDeleByGameInfo";
+		}
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: wishUrl
+			,traditional: true
+			,data : {
+				"gSeq" : $("#gSeq").val(),
+				"mSeq" : $("#mSeq").val(),
+				"currPage" : $("#currPage").val(),
+				"rowNumToShow" : $("#rowNumToShow").val(),
+				"shCategoryCd" : $("#shCategoryCd").val(),
+				"shValue" : $("#shValue").val(),
+				"shOrderOption" : $("#shOrderOption").val(),
+				...flattenMap("shPeopleList", shPeopleList),
+		        ...flattenMap("shTimeList", shTimeList),
+		        ...flattenMap("shLevelList", shLevelList),
+		        ...flattenMap("shScoreList", shScoreList)
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					disposeAllTooltips();
+					$('#gameListRefresh').replaceWith(fragmentHtml);
+					refreshTooltipsAndTitles();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	document.getElementById("btnModalLogin").onclick = function() {
+		location.href = "/usr/member/MemberXdmSignIn";
+	}
+	
+	function disposeAllTooltips() {
+		  // 기존 툴팁 인스턴스 숨기고 제거
+		  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+		    const tooltip = bootstrap.Tooltip.getInstance(el);
+		    if (tooltip) {
+		      tooltip.hide();    // 툴팁 숨기기
+		      tooltip.dispose(); // 인스턴스 완전 제거
+		    }
+		  });
+		  
+		  // body에 남아있는 툴팁 팝업 엘리먼트도 제거
+		  document.querySelectorAll('.tooltip').forEach(tt => tt.remove());
+		}
+	
+	function refreshTooltipsAndTitles() {
+		// 텍스트 갱신
+	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+	      const icon = el.querySelector('i');
+	      if (icon) {
+	        if (icon.classList.contains('bi-heart-fill')) {
+	          el.setAttribute('title', '위시리스트 삭제');
+	        } else if (icon.classList.contains('bi-heart')) {
+	          el.setAttribute('title', '위시리스트 등록');
+	        }
+	      }
+	    });
+
+	    // 툴팁 재초기화
+	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+	      new bootstrap.Tooltip(el, { trigger: 'hover focus' });
+	    });
+	}
+</script>
+
 <!-- Search / Paging -->
 <script type="text/javascript">
 	function goCateList(keyValue) {
@@ -381,10 +472,10 @@
 		setSearchValue();
 	}
 	
-	function goDetail(keyValue1, keyValue2) {
-		seq.value = keyValue1;
-		cate.value = keyValue2;
-		submit(goUrlUsrDetail);
+	function goDetail(gameSeq, gameCate) {
+		gSeq.value = gameSeq;
+		cate.value = gameCate;
+		submit("/usr/game/GameUsrDetail");
 	}
 	
 	document.getElementById("changeRowNum").onchange = function () {

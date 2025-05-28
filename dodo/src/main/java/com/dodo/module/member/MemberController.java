@@ -20,6 +20,8 @@ import com.dodo.common.mail.MailService;
 import com.dodo.module.code.CodeService;
 import com.dodo.module.file.FileService;
 import com.dodo.module.game.GameDto;
+import com.dodo.module.game.GameService;
+import com.dodo.module.game.GameVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,6 +37,9 @@ public class MemberController {
 	
 	@Autowired
 	CodeService codeService;
+	
+	@Autowired
+	GameService gameService;
 	
 	@Autowired
 	MailService mailService;
@@ -460,19 +465,34 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "MemberWishUsrList")
-	public String memberWishUsrList(Model model, @ModelAttribute("vo") MemberWishVo vo, 
-			MemberWishDto memberWishDto, HttpSession httpSession) {
+	public String memberWishUsrList(Model model, @ModelAttribute("vo") MemberWishVo vo, HttpSession httpSession) {
 		if (httpSession.getAttribute("sessSeqUsr") == null) {
 			usrSignOut(httpSession);
 			return "redirect:MemberUsrSignIn";
 		}
 		
 		// addAttribute 하기 전에 미리 실행되야함
-		memberWishDto.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
-		vo.setParamsPaging(service.selectWishListCount(memberWishDto));
+		vo.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		vo.setParamsPaging(service.selectWishListCount(vo));
 
 		if (vo.getTotalRows() > 0) {
-			model.addAttribute("wishList", service.selectWishList(memberWishDto));
+			// Wish List
+			List<MemberWishDto> wishDtoList = service.selectWishList(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (MemberWishDto dto : wishDtoList) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("wishList", wishDtoList);
 		}
 		
 		return path_user + "MemberWishUsrList";
@@ -481,7 +501,6 @@ public class MemberController {
 	/**
 	 * 입력한 데이터 추가하기 - Admin
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
-	 * @throws Exception 
 	 */
 	@RequestMapping(value = "MemberWishUsrInst", method = RequestMethod.POST)
 	public String memberWishUsrInst(MemberWishDto memberWishDto, 
@@ -497,7 +516,99 @@ public class MemberController {
 	}
 	
 	/**
+	 * Ajax를 이용해 입력한 데이터 추가하기 - Admin
+	 */
+	@RequestMapping(value = "MemberWishUsrInstByGameInfo", method = RequestMethod.POST)
+	public String memberWishUsrInstByGameInfo(MemberWishDto memberWishDto, HttpSession httpSession, 
+			Model model, @ModelAttribute("vo") GameVo vo) {
+		// Login 상태일 때만 가능
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		service.insertWish(memberWishDto);
+		
+		// Game List 검색 필터에 맞춰서 읽어오기
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(gameService.selectGameInfoListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			// Game List
+			List<GameDto> gameDtoList = gameService.selectGameInfoList(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : gameDtoList) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+			
+			model.addAttribute("gameList", gameDtoList);
+		}
+
+		// Thymeleaf fragment만 리턴
+	    return "usr/game/GameInfoUsrList :: #gameListRefresh";
+	}
+	
+	/**
 	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberWishUsrInstByGameDetail", method = RequestMethod.POST)
+	public String memberWishUsrInstByGameDetail(MemberWishDto memberWishDto, 
+			Model model, GameDto gameDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		service.insertWish(memberWishDto);
+		
+		// 게임 정보, 순위 리스트
+		GameDto orderDto = gameService.selectGameOrder(gameDto);
+		GameDto dto = gameService.selectOne(gameDto);
+		dto.setGrOrder(orderDto.getGrOrder());
+		model.addAttribute("gameItem", dto);
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/game/GameUsrDetail :: #wishRefresh";
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberWishUsrInstByGameDetailRelation", method = RequestMethod.POST)
+	public String memberWishUsrInstByGameDetailRelation(MemberWishDto memberWishDto, 
+			Model model, GameDto gameDto, HttpSession httpSession,
+			@RequestParam("rgSeq") String rgSeq) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		memberWishDto.setgSeq(rgSeq);
+		service.insertWish(memberWishDto);
+		
+		// 연관 게임 정보
+		model.addAttribute("gameRelationList", gameService.selectGameRelationList(gameDto));
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/game/GameUsrDetail :: #relationWishRefresh";
+	}
+	
+	/**
+	 * 입력한 데이터 삭제하기 - Admin
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 * @throws Exception 
 	 */
@@ -512,6 +623,98 @@ public class MemberController {
 		service.deleteWishByCondition(memberWishDto);
 		
 		return "redirect:" + redirectUrl;
+	}
+	
+	/**
+	 * Ajax를 이용해 입력한 데이터 추가하기 - Admin
+	 */
+	@RequestMapping(value = "MemberWishUsrDeleByGameInfo", method = RequestMethod.POST)
+	public String memberWishUsrDeleByGameInfo(MemberWishDto memberWishDto, HttpSession httpSession, 
+			Model model, @ModelAttribute("vo") GameVo vo) {
+		// Login 상태일 때만 가능
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		service.deleteWishByCondition(memberWishDto);
+		
+		// Game List 검색 필터에 맞춰서 읽어오기
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(gameService.selectGameInfoListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			// Game List
+			List<GameDto> gameDtoList = gameService.selectGameInfoList(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : gameDtoList) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+			
+			model.addAttribute("gameList", gameDtoList);
+		}
+
+		// Thymeleaf fragment만 리턴
+	    return "usr/game/GameInfoUsrList :: #gameListRefresh";
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberWishUsrDeleByGameDetail", method = RequestMethod.POST)
+	public String memberWishUsrDeleByGameDetail(MemberWishDto memberWishDto, 
+			Model model, GameDto gameDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		service.deleteWishByCondition(memberWishDto);
+		
+		// 게임 정보, 순위 리스트
+		GameDto orderDto = gameService.selectGameOrder(gameDto);
+		GameDto dto = gameService.selectOne(gameDto);
+		dto.setGrOrder(orderDto.getGrOrder());
+		model.addAttribute("gameItem", dto);
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/game/GameUsrDetail :: #wishRefresh";
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberWishUsrDeleByGameDetailRelation", method = RequestMethod.POST)
+	public String memberWishUsrDeleByGameDetailRelation(MemberWishDto memberWishDto, 
+			Model model, GameDto gameDto, HttpSession httpSession,
+			@RequestParam("rgSeq") String rgSeq) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		memberWishDto.setgSeq(rgSeq);
+		service.deleteWishByCondition(memberWishDto);
+		
+		// 연관 게임 정보
+		model.addAttribute("gameRelationList", gameService.selectGameRelationList(gameDto));
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/game/GameUsrDetail :: #relationWishRefresh";
 	}
 	
 	////////////////////////////////////////////////////////////////////

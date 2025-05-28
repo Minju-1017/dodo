@@ -69,12 +69,12 @@ public class MemberService {
 		return dao.listUelete(seqList);
 	}
 	
-	public int selectWishListCount(MemberWishDto memberWishDto) {
-		return dao.selectWishListCount(memberWishDto);
+	public int selectWishListCount(MemberWishVo vo) {
+		return dao.selectWishListCount(vo);
 	}
 	
-	public List<MemberWishDto> selectWishList(MemberWishDto memberWishDto) {
-		return dao.selectWishList(memberWishDto);
+	public List<MemberWishDto> selectWishList(MemberWishVo vo) {
+		return dao.selectWishList(vo);
 	}
 	
 	public int insertWish(MemberWishDto memberWishDto) {

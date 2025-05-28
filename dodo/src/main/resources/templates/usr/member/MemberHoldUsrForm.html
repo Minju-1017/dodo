@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section class="mt-8 mb-14">
+		<div class="container">
+			<div class="row">
+ 				<div class="col-lg-12">
+    				<div class="mb-8">
+						<h3 class="mb-1">보유 게임</h3>
+					</div>
+					<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
+						
+						<input type="hidden" name="mhSeq" th:value="${vo.mhSeq}">
+						<input type="hidden" name="gSeq">
+						
+						<div class="row">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div class="col-12">
+											<h6 class="h6">게임명<span style="color: red;"> *</span></h6>
+											<input th:if="${vo.mhSeq != null and vo.mhSeq != '' and vo.mhSeq != '0'}" 
+												class="form-control rounded" type="text" id="gName" name="gName"
+												th:value="${holdItem?.gName}" readonly required />
+											<div th:unless="${vo.mhSeq != null and vo.mhSeq != '' and vo.mhSeq != '0'}"
+												class="input-group">
+												<input class="form-control rounded" type="search" 
+													id="gName" name="gName" placeholder="게임 검색" autocomplete="off" 
+													th:value="${holdItem?.gName}" required />
+												<span class="input-group-append">
+													<button class="btn bg-white border border-start-0 ms-n10 rounded-0 rounded-end"
+														type="button" id="btnSearch">
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+															viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															class="feather feather-search">
+															<circle cx="11" cy="11" r="8"></circle>
+															<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+														</svg>
+													</button>
+												</span>
+												<div class="invalid-feedback">검색 결과가 없거나, 검색을 하지 않으셨습니다. 등록할 게임을 검색해 주세요.</div>
+											</div>
+										</div>
+										<div class="col-12">
+											<h6 class="h6">사용 슬리브(프로텍터)</h6>
+											<input type="text" class="form-control" autocomplete="off" 
+												id="mhSleeve" name="mhSleeve" th:value="${holdItem?.mhSleeve}" 
+												oninput="limitKoreanChars(this, 30)" />
+										</div>
+										<div class="col-12">
+											<h6 class="h6">사용 코인 캡슐</h6>
+											<input type="text" class="form-control" autocomplete="off" 
+												id="mhCoin" name="mhCoin" th:value="${holdItem?.mhCoin}"
+												oninput="limitKoreanChars(this, 30)" />
+										</div>
+										<div class="col-12 mb-1">
+											<h6 class="h6">메모</h6>
+											<textarea class="form-control" id="mhName" name="mhName"
+												rows="5" style="resize: none;"
+												autocomplete="off" th:text="${holdItem?.mhName}"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="mt-4 mb-3 text-center">
+									<button class="btn btn-primary" type="button" id="btnSave">저장</button>&nbsp;
+									<button th:if="${vo.mhSeq != null and vo.mhSeq != '' and vo.mhSeq != '0'}"
+										class="btn btn-danger" type="button" id="btnDelete">삭제</button>&nbsp;
+									<a href="/usr/member/MemberHoldUsrList" class="btn btn-light">취소</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	//Seq
+	let mhSeq = document.querySelector("input[name=mhSeq]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlUsrInst = "/usr/member/MemberHoldUsrInst";
+	let goUrlUsrUpdt = "/usr/memberp/MemberHoldUsrUpdt";
+	let goUrlUsrDele = "/usr/member/MemberHoldUsrDele";
+	
+	// Input
+	let gSeq = document.getElementById("gSeq");
+	let gName = document.getElementById("gName");
+	let mhSleeve = document.getElementById("mhSleeve");
+	let mhCoin = document.getElementById("mhCoin");
+	let mhMemo = document.getElementById("mhMemo");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+
+	function limitKoreanChars(el, maxChars) {
+		const chars = [...el.value]; 
+		
+		if (chars.length > maxChars) {
+			el.value = chars.slice(0, maxChars).join('');
+		}
+	}
+</script>
+
+<!-- Game 검색 -->
+<script typr="text/javascript">
+	gName.addEventListener("keydown", function (event) {
+		if (event.key === "Enter") {
+			event.preventDefault(); // 폼 전송 방지
+			document.getElementById("btnSearch").click(); // 검색 버튼 클릭 동작 호출
+		}
+	});
+	
+	document.getElementById("btnSearch").onclick = function() {
+		gName.readOnly = true; // 검색 결과 받을 때 까지 입력 방지
+		
+		// TODO: 화면 버튼 검색, 갱신 버튼 추가하기
+		
+		// 검색 결과 받기
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/member/MemberHoleUsrSearchProc"
+			,data : { 
+				"gName" : $("#gName").val()
+			}
+			,success: function(response) {
+				if (response.rt == "fail") {
+					gName.readOnly = false;
+					gSeq.value = "";
+					gName.value = "";
+					resetValidation(gName);
+					gName.classList.add("is-invalid");
+					gName.focus();
+				} else {  
+					gSeq.value = response.rt;
+					resetValidation(gName);
+					gName.classList.add("is-valid");
+					gName.focus();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// gName 체크
+		resetValidation(gName);
+		
+		if (!strValidation(gName)) {
+			gName.classList.add("is-invalid");
+			
+			if (!focus) {
+				gName.focus();
+				focus = true;
+			}
+		} else {
+			gName.classList.add("is-valid");
+		}
+		
+		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+		
+		if(mhSeq.value == "0" || mhSeq.value == "") {
+			submit(goUrlUsrInst);
+		} else {
+			submit(goUrlUsrUpdt);
+		}
+	}
+</script>
+
+<!-- 삭제/삭제(업데이트) 모달 -->
+<script type="text/javascript">
+	if(document.getElementById("btnDelete")){
+		document.getElementById("btnDelete").onclick = function () {
+			showModalDeleteConfirm("확인", "해당 게임을 삭제하시겠습니까?", 'none', '');     	
+		}
+	}
+
+	document.getElementById("btnModalDelete").onclick = function () {
+		submit(goUrlUsrDele);
+	}
+</script>
+
+</body>
+</html>

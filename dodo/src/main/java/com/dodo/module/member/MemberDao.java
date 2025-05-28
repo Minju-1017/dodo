@@ -29,4 +29,8 @@ public interface MemberDao {
 	public int deleteWishBySeq(MemberWishDto memberWishDto);
 	public int listDeleteWish(List<String> seqList);
 	
+	public int selectHoldListCount(MemberHoldVo vo);
+	public List<MemberHoldDto> selectHoldList(MemberHoldVo vo);  
+	public MemberHoldDto selectHoldOne(MemberHoldVo vo);  
+	
 }

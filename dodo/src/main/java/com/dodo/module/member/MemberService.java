@@ -93,4 +93,16 @@ public class MemberService {
 		return dao.listDeleteWish(seqList);
 	}
 	
+	public int selectHoldListCount(MemberHoldVo vo) {
+		return dao.selectHoldListCount(vo);
+	}
+	
+	public List<MemberHoldDto> selectHoldList(MemberHoldVo vo) {
+		return dao.selectHoldList(vo);
+	}
+	
+	public MemberHoldDto selectHoldOne(MemberHoldVo vo) {
+		return dao.selectHoldOne(vo);
+	}
+	
 }

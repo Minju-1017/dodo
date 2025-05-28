@@ -9,7 +9,7 @@
 			<div class="row">
  				<div class="col-lg-12">
     				<div class="mb-8">
-						<h3 class="mb-1">위시 리스트</h3>
+						<h3 class="mb-1">보유 게임</h3>
 					</div>
 					<form name="formList" id="formList" method="post" autocomplete="off">
 			
@@ -17,8 +17,8 @@
 						<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
 						<input type="hidden" name="gSeq">
 						<input type="hidden" name="gCategoryCd">
-						<input type="hidden" name="redirectUrl" value="/usr/member/MemberWishUsrList">
-						<input type="hidden" id="mwSeq" name="mwSeq">
+						<input type="hidden" name="redirectUrl" value="/usr/member/MemberHoldUsrList">
+						<input type="hidden" id="mhSeq" name="mhSeq">
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
@@ -43,22 +43,24 @@
 													<th>난이도</th>
 													<th>인원</th>
 													<th>소요시간<br>(분)</th>
-													<th>공식판매처</th>
-													<th>중고거래</th>
-													<th>내게임</th>
+													<th>슬리브</th>
+													<th>코인</th>
+													<th>메모</th>
+													<th>수정</th>
 													<th>삭제</th>
+													<th>판매</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:if="${#lists.isEmpty(wishList)}">
-													<td class="text-center" colspan="13">
+												<tr th:if="${#lists.isEmpty(holdList)}">
+													<td class="text-center" colspan="15">
 														데이터가 없습니다.
 													</td>
 												</tr> 
-												<tr th:if="${!#lists.isEmpty(wishList)}" th:each="list : ${wishList}">
+												<tr th:if="${!#lists.isEmpty(holdList)}" th:each="list : ${holdList}">
 													<td>
 														<div class="form-check">
-															<input class="form-check-input" type="checkbox" name="check" th:value="${list?.mwSeq}">
+															<input class="form-check-input" type="checkbox" name="check" th:value="${list?.mhSeq}">
 														</div>
 													</td>
 													<td>
@@ -87,18 +89,22 @@
 														th:text="${list?.gMinTime}"></td>
 													<td th:unless="${list?.gMinTime eq list?.gMaxTime}"
 														th:text="${list?.gMinTime + '-' + list?.gMaxTime}"></td>	
+													<td th:text="${list?.mhSleeve}"></td>	
+													<td th:text="${list?.mhCoin}"></td>	
 													<td>
-														<a th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank"
-															th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}"></a>
+														<span class="text-muted" data-bs-toggle="tooltip" 
+															data-bs-placement="top" th:title="${list?.mhMemo}">
+															<i class="bi bi-chat-dots"></i>
+														</span>
 													</td>
-													<td><a href="#"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
 													<td>
-														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="내게임 등록">
-															<i class="bi bi-emoji-smile"></i>
+														<a href="javascript:void(0);" th:attr="onclick=|goForm('${list.mhSeq}')|"
+															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="수정">
+															<i class="bi bi-pencil-square"></i>
 														</a>
 													</td>
 													<td>
-														<a href="javascript:void(0);" th:attr="onclick=|goWishDelete('${list.mwSeq}')|"
+														<a href="javascript:void(0);" th:attr="onclick=|goHoldDelete('${list.mhSeq}')|"
 															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="삭제">
 															<i class="bi bi-trash"></i>
 														</a>
@@ -133,8 +139,10 @@
 									</nav>
 								</div>
 								<div class="col" style="text-align: right; vertical-align: middle;">
-									<a href="#" class="btn btn-outline-primary">선택 내 게임 등록</a>&nbsp;
-									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>
+									<button type="button" id="btnForm" class="btn btn-outline-primary">등록</button>&nbsp;
+									<a href="#" class="btn btn-outline-secondary">선택 수정</a>&nbsp;
+									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>&nbsp;
+									<a href="#" class="btn btn-danger">선택 판매</a>
 								</div>
 							</div>
 						</div>
@@ -150,18 +158,33 @@
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
   	let gSeq = document.querySelector("input[name=gSeq]");
-  	let mwSeq = document.querySelector("input[name=mwSeq]");
+  	let mhSeq = document.querySelector("input[name=mhSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let redirectUrl = document.querySelector("input[name=redirectUrl]");
     	
 	let fom = document.querySelector("form[name=formList]");
-	let goUrlUsrList = "/usr/member/MemberWishUsrList";
+	let goUrlUsrList = "/usr/member/MemberHoldUsrList";
+	let goUrlUsrForm = "/usr/member/MemberHoldUsrForm";
 	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
-	let goUrlUsrListDeleProc = "/usr/member/MemberWishListUsrDeleProc";
+	let goUrlUsrListDeleProc = "/usr/member/MemberHoldListUsrDeleProc";
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
 		fom.submit();
+	}
+</script>
+
+<!-- 데이터 추가/수정 -->
+<script type="text/javascript">
+	// 데이터 추가
+	document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	}
+	
+	// 데이터 추가/수정
+	goForm = function (keyValue) {
+		mhSeq.value = keyValue;
+	    submit(goUrlUsrForm);
 	}
 </script>
 
@@ -188,7 +211,7 @@
 <script type="text/javascript">
 function goWishDelete(memberWishSeq) {
 	mwSeq.value = memberWishSeq;
-	submit("/usr/member/MemberWishUsrDele");
+	submit("/usr/member/MemberHoldUsrDele");
 }
 </script>
 

@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dodo.Constants;
 import com.dodo.common.mail.MailService;
 import com.dodo.module.code.CodeService;
+import com.dodo.module.codegroup.CodeGroupDto;
+import com.dodo.module.codegroup.CodeGroupVo;
 import com.dodo.module.file.FileService;
 import com.dodo.module.game.GameDto;
 import com.dodo.module.game.GameService;
@@ -745,6 +747,83 @@ public class MemberController {
 	}
 	
 	////////////////////////////Member Usr - Hold////////////////////////////////////
+	///
+	/**
+	 * 회원 위시 리스트 - 전체 데이터 읽어오기(페이징 기능 들어감) - User
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "MemberHoldUsrList")
+	public String memberHoldUsrList(Model model, @ModelAttribute("vo") MemberHoldVo vo, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		vo.setParamsPaging(service.selectHoldListCount(vo));
+
+		if (vo.getTotalRows() > 0) {
+			// Hold List
+			List<MemberHoldDto> holdDtoList = service.selectHoldList(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (MemberHoldDto dto : holdDtoList) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("holdList", holdDtoList);
+		}
+		
+		return path_user + "MemberHoldUsrList";
+	}
+	
+	/**
+	 * 데이터 추가/수정 폼
+	 * @return
+	 */
+	@RequestMapping(value = "MemberHoldUsrForm")
+	public String memberHoldUsrForm(@ModelAttribute("vo") MemberHoldVo vo, Model model, MemberHoldDto memberHoldDto) {
+		if (vo.getMhSeq().equals("0") || vo.getMhSeq().equals("")) {
+			// insert mode
+		} else {
+			// update mode
+			model.addAttribute("holdItem", service.selectHoldOne(vo));
+		}
+		
+		return path_user + "MemberHoldUsrForm";
+	}
+	
+	/**
+	 * Ajax를 통한 게임 검색 - User
+	 * @param memberDto
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody // Ajax 코드는 무조건 써준다.
+	@RequestMapping(value = "MemberHoleUsrSearchProc")
+	public Map<String, Object> memberHoleUsrSearchProc(GameDto gameDto) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		GameDto gDto = gameService.selectOneByName(gameDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+		
+		if (gDto == null) { 
+			returnMap.put("rt", "fail");
+		} else {
+			returnMap.put("rt", gDto.getgName());
+		}
+		
+		return returnMap;
+	}
 	
 	////////////////////////////Xdm////////////////////////////////////
 

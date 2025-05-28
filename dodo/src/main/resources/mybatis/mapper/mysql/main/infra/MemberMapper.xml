@@ -368,4 +368,21 @@
 		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
 	</select>
 	
+	<select id="selectHoldOne" resultMap="resultMapObj_MH">
+		SELECT
+			a.mhSeq,
+		    a.member_mSeq,
+		    a.game_gSeq,
+		    a.mhSleeve,
+		    a.mhCoin,
+		    a.mhMemo,
+			<include refid="selectGameCommonColumn"/>
+		FROM 
+			memberHold a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+			AND a.mhSeq=#{mhSeq}
+	</select>
+	
 </mapper>

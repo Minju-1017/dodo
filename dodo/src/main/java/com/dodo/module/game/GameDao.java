@@ -16,6 +16,7 @@ public interface GameDao {
 	public GameDto selectGameOrder(GameDto gameDto);
 	public List<GameDto> selectGameRelationList(GameDto gameDto);
 	public GameDto selectOne(GameDto gameDto);
+	public GameDto selectOneByName(GameDto gameDto);
 	public int insert(GameDto gameDto);
 	public int update(GameDto gameDto);
 	public int delete(GameDto gameDto);

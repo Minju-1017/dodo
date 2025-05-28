@@ -313,6 +313,15 @@
 			AND a.gSeq=#{gSeq}
 	</select>
 	
+	<select id="selectOneByName" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectCommonColumn"/>
+		FROM 
+			game a
+		WHERE 1=1
+			AND a.gName=#{gName}
+	</select>
+	
 	<insert id="insert">
 		INSERT INTO game
 		(

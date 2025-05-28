@@ -47,6 +47,10 @@ public class GameService {
 		return dao.selectOne(gameDto);
 	}
 	
+	public GameDto selectOneByName(GameDto gameDto) {
+		return dao.selectOneByName(gameDto);
+	}
+	
 	public int insert(GameDto gameDto) {
 		return dao.insert(gameDto);
 	}

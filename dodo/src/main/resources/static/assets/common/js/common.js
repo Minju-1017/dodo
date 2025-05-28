@@ -154,25 +154,7 @@ function showModalDeleteConfirm(title, body, showBtnUelete, showBtnDelete) {
 	$("#modalConfirm").modal("show");      	
 }
 
-// 회원탈퇴 - Usr
-function showModalWithdrawalConfirm(title, body) {
-	document.querySelector("#modalConfirmTitle").textContent = title;
-	document.querySelector("#modalConfirmBody").textContent = body;
-	document.querySelector("#btnModalWithdrawal").style.display = '';
-	document.querySelector("#btnModalLogin").style.display = 'none';
-	$("#modalConfirm").modal("show");      	
-}
-
-// 로그인창 이동 알림 모달
-function showModalMoveLoginConfirm(title, body) {
-	document.querySelector("#modalConfirmTitle").textContent = title;
-	document.querySelector("#modalConfirmBody").textContent = body;
-	document.querySelector("#btnModalWithdrawal").style.display = 'none';
-	document.querySelector("#btnModalLogin").style.display = '';
-	$("#modalConfirm").modal("show");      	
-}
-
-// 엑셀 다운로드 알림 모달
+// 엑셀 다운로드 알림 모달 - Xdm
 function showModalExcelDownloadConfirm(title, body) {
 	document.querySelector("#modalConfirmTitle").textContent = title;
 	document.querySelector("#modalConfirmBody").textContent = body;
@@ -180,8 +162,38 @@ function showModalExcelDownloadConfirm(title, body) {
 	document.querySelector("#btnModalDelete").style.display = 'none';
 	document.querySelector("#btnModalExcelDownload").style.display = '';
 	$("#modalConfirm").modal("show");     
-	
 }
+
+// 회원탈퇴 - Usr
+function showModalWithdrawalConfirm(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalWithdrawal").style.display = '';
+	document.querySelector("#btnModalLogin").style.display = 'none';
+	document.querySelector("#btnModalDelete").style.display = 'none';
+	$("#modalConfirm").modal("show");      	
+}
+
+// 로그인창 이동 알림 모달 - Usr
+function showModalMoveLoginConfirm(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalWithdrawal").style.display = 'none';
+	document.querySelector("#btnModalLogin").style.display = '';
+	document.querySelector("#btnModalDelete").style.display = 'none';
+	$("#modalConfirm").modal("show");      	
+}
+
+// 위시리스트 삭제 알림 모달 - Usr
+function showModalWishDeleConfirm(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalWithdrawal").style.display = 'none';
+	document.querySelector("#btnModalLogin").style.display = 'none';
+	document.querySelector("#btnModalDelete").style.display = '';
+	$("#modalConfirm").modal("show");      	
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -205,7 +217,7 @@ function allCheck(name, isChecked) {
 	}
 }
 
-// 체크한 데이터 수정
+// 체크한 데이터 수정 - Xdm
 function modifyCheckedElement(str) {
 	const selectedElementsCnt = getCheckedElementsCnt("check");
 
@@ -221,7 +233,7 @@ function modifyCheckedElement(str) {
     })
 }
 
-// 삭제(업데이트) - 체크한 데이터 리스트 모달창 띄우기
+// 삭제(업데이트) - 체크한 데이터 리스트 모달창 띄우기 - Xdm
 function ueleteCheckedElementsModal(str) {
 	const selectedElementsCnt = getCheckedElementsCnt("check");
 					
@@ -234,13 +246,26 @@ function ueleteCheckedElementsModal(str) {
 	);
 }
 
-// 삭제 - 체크한 데이터 리스트 모달창 띄우기
+// 삭제 - 체크한 데이터 리스트 모달창 띄우기 - Xdm
 function deleteCheckedElementsModal(str) {
 	const selectedElementsCnt = getCheckedElementsCnt("check");
 					
 	if (selectedElementsCnt == 0) return;
 	
 	showModalDeleteConfirm(
+			"확인", 
+			"선택한 " + str + " 전부 삭제하시겠습니까?", 
+			'none', ''
+	); 
+}
+
+// 삭제 - 체크한 데이터 리스트 모달창 띄우기 - Usr
+function deleteCheckedElementsModalByUsr(str) {
+	const selectedElementsCnt = getCheckedElementsCnt("check");
+					
+	if (selectedElementsCnt == 0) return;
+	
+	showModalWishDeleConfirm(
 			"확인", 
 			"선택한 " + str + " 전부 삭제하시겠습니까?", 
 			'none', ''

@@ -4,6 +4,7 @@
 <mapper namespace="com.dodo.module.member.MemberDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.member.MemberDto"></resultMap>
 	<resultMap id="resultMapObj_MW" type="com.dodo.module.member.MemberWishDto"></resultMap>
+	<resultMap id="resultMapObj_MH" type="com.dodo.module.member.MemberHoldDto"></resultMap>
 
 	<!-- 공통 구문 selectCommon으로 선언 -->
 	<sql id="selectCommon">
@@ -57,6 +58,45 @@
 			FROM memberPfFile b
 			WHERE 1=1 
 				AND a.mSeq = b.rSeq
+	    ) as fPath
+	</sql>
+	
+	<sql id="selectGameCommonColumn">
+		b.gSeq,
+	    b.gName,
+	    b.gLevel,
+	    b.gMinPeople,
+	    b.gMaxPeople,
+	    b.gBestPeople,
+	    b.gRecommendPeople,
+	    b.gUseAge,
+	    b.gMinTime,
+	    b.gMaxTime,
+	    b.gOfficialCd,
+	    b.gOfficialUrl,
+	    b.gComuUrl1,
+	    b.gComuUrl2,
+	    b.gCategoryCd,
+	    b.gGDName,
+	    b.gGAAName,
+	    b.gGPName,
+	    b.gRegiDate,
+	    b.gUpdtDate,
+	    (SELECT IFNULL(AVG(c.grScore),0)
+			FROM gameReview c
+			WHERE 1=1 
+				AND c.grDelNy = 0 
+				AND c.game_gSeq = b.gSeq
+	    ) as grScoreAvg,
+	    (SELECT COUNT(*) FROM gameReview c
+			WHERE 1=1 
+				AND c.grDelNy = 0 
+				AND c.game_gSeq = b.gSeq
+		) as grCount,
+		(SELECT c.fPath
+			FROM gameSmallTnFile c
+			WHERE 1=1 
+				AND b.gSeq = c.rSeq
 	    ) as fPath
 	</sql>
 	<!-- End -->
@@ -226,45 +266,6 @@
 	</delete>
 	
 	<!-- ################################ Wish ############################## -->
-
-	<sql id="selectGameCommonColumn">
-		b.gSeq,
-	    b.gName,
-	    b.gLevel,
-	    b.gMinPeople,
-	    b.gMaxPeople,
-	    b.gBestPeople,
-	    b.gRecommendPeople,
-	    b.gUseAge,
-	    b.gMinTime,
-	    b.gMaxTime,
-	    b.gOfficialCd,
-	    b.gOfficialUrl,
-	    b.gComuUrl1,
-	    b.gComuUrl2,
-	    b.gCategoryCd,
-	    b.gGDName,
-	    b.gGAAName,
-	    b.gGPName,
-	    b.gRegiDate,
-	    b.gUpdtDate,
-	    (SELECT IFNULL(AVG(c.grScore),0)
-			FROM gameReview c
-			WHERE 1=1 
-				AND c.grDelNy = 0 
-				AND c.game_gSeq = b.gSeq
-	    ) as grScoreAvg,
-	    (SELECT COUNT(*) FROM gameReview c
-			WHERE 1=1 
-				AND c.grDelNy = 0 
-				AND c.game_gSeq = b.gSeq
-		) as grCount,
-		(SELECT c.fPath
-			FROM gameSmallTnFile c
-			WHERE 1=1 
-				AND b.gSeq = c.rSeq
-	    ) as fPath
-	</sql>
 	
 	<select id="selectWishListCount" resultType="Integer">
 		SELECT COUNT(*)
@@ -334,5 +335,37 @@
 			</foreach>
 		</where>
 	</delete>
-		
+	
+	<!-- ################################ Hold ############################## -->
+	<select id="selectHoldListCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM 
+			memberHold a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+			AND a.member_mSeq = #{member_mSeq}
+       		AND b.gDelNy = 0
+	</select>
+
+	<select id="selectHoldList" resultMap="resultMapObj_MH">
+		SELECT
+			a.mhSeq,
+		    a.member_mSeq,
+		    a.game_gSeq,
+		    a.mhSleeve,
+		    a.mhCoin,
+		    a.mhMemo,
+			<include refid="selectGameCommonColumn"/>
+		FROM 
+			memberHold a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+		WHERE 1=1
+			AND a.member_mSeq = #{member_mSeq}
+       		AND b.gDelNy = 0
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		<!-- 위와 동일 코드 LIMIT #{startRnumForMysql}, #{rowNumToShow} -->
+	</select>
+	
 </mapper>

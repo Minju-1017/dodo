@@ -277,9 +277,9 @@
 												<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
 												<i class="bi bi-person" data-bs-toggle="tooltip" title="인원"></i>
 												<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-													th:text="${list?.gMinPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>
+													th:text="${list?.gMinPeople + ' (' + list?.gBestPeople + '인 최적)'}"></span>
 												<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-													th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '명 (' + list?.gBestPeople + '인 최적)'}"></span>&nbsp;&nbsp;
+													th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + ' (' + list?.gBestPeople + '인 최적)'}"></span>&nbsp;&nbsp;
 												<i class="bi bi-person-plus" data-bs-toggle="tooltip" title="사용 연령"></i>
 												<span th:text="${list?.gUseAge + '세 이상'}"></span>&nbsp;&nbsp;
 												<i class="bi bi-alarm" data-bs-toggle="tooltip" title="소요시간"></i>

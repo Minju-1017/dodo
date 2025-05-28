@@ -123,7 +123,7 @@ public class MemberController {
 		return new BCryptPasswordEncoder(length).matches(inputStr, str);
 	}
 	
-	///////////////////////////////////////////////////////////////////
+	////////////////////////////Member Usr - 회원 관련////////////////////////////////////
 	
 	/**
 	 * 회원가입 화면 이동 - User
@@ -459,6 +459,8 @@ public class MemberController {
 		return returnMap;
 	}
 	
+	////////////////////////////Member Usr - Wish////////////////////////////////////
+	
 	/**
 	 * 회원 위시 리스트 - 전체 데이터 읽어오기(페이징 기능 들어감) - User
 	 * @param model
@@ -620,7 +622,7 @@ public class MemberController {
 			return "redirect:MemberUsrSignIn";
 		}
 		
-		service.deleteWishByCondition(memberWishDto);
+		service.deleteWishBySeq(memberWishDto);
 		
 		return "redirect:" + redirectUrl;
 	}
@@ -717,8 +719,35 @@ public class MemberController {
 	    return "usr/game/GameUsrDetail :: #relationWishRefresh";
 	}
 	
-	////////////////////////////////////////////////////////////////////
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제
+	 * @param seqList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberWishListUsrDeleProc")
+	public Map<String, Object> memberWishListUsrDeleProc(
+			@RequestParam(value="chbox") List<String> seqList) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listDeleteWish(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
 	
+	////////////////////////////Member Usr - Hold////////////////////////////////////
+	
+	////////////////////////////Xdm////////////////////////////////////
+
 	/**
 	 * 로그인 화면 이동 - Admin
 	 * @return

@@ -70,11 +70,11 @@
 										<tr>
 											<th>인원</th>
 											<td th:if="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
-												th:text="${gameItem?.gMinPeople + '인 (' + gameItem?.gBestPeople + '인 최적, ' 
+												th:text="${gameItem?.gMinPeople + ' (' + gameItem?.gBestPeople + '인 최적, ' 
 													+ gameItem?.gRecommendPeople + '인 추천)'}"></td>
 											<td th:unless="${gameItem?.gMinPeople eq gameItem?.gMaxPeople}"
 												th:text="${gameItem?.gMinPeople + ' ~ ' + gameItem?.gMaxPeople + 
-													'인 (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
+													' (' + gameItem?.gBestPeople + '인 최적, ' + gameItem?.gRecommendPeople + '인 추천)'}"></td>
 										</tr>
 										<tr>
 											<th>사용연령</th>

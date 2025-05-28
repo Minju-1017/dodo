@@ -34,7 +34,7 @@
 													<th>평점</th>
 													<th>난이도</th>
 													<th>인원</th>
-													<th>소요시간</th>
+													<th>소요시간(분)</th>
 													<th>공식판매처</th>
 													<th>중고거래</th>
 													<th>내게임</th>
@@ -71,13 +71,13 @@
 													<td th:text="${list?.grScoreAvg}"></td>	
 													<td th:text="${list?.gLevel}"></td>
 													<td th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-														th:text="${list?.gMinPeople + '인'}"></td>
+														th:text="${list?.gMinPeople}"></td>
 													<td th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-														th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></td>		
+														th:text="${list?.gMinPeople + '-' + list?.gMaxPeople}"></td>		
 													<td th:if="${list?.gMinTime eq list?.gMaxTime}"
-														th:text="${list?.gMinTime + '분'}"></td>
+														th:text="${list?.gMinTime}"></td>
 													<td th:unless="${list?.gMinTime eq list?.gMaxTime}"
-														th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></td>	
+														th:text="${list?.gMinTime + '-' + list?.gMaxTime}"></td>	
 													<td>
 														<a th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank"
 															th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}"></a>

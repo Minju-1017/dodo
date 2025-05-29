@@ -385,4 +385,63 @@
 			AND a.mhSeq=#{mhSeq}
 	</select>
 	
+	<select id="insertHoldCheck" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			memberHold 
+		WHERE 1=1
+			AND member_mSeq=#{member_mSeq}
+			AND game_gSeq=#{game_gSeq}
+	</select>
+	
+	<insert id="insertHold">
+		INSERT INTO memberHold
+		(
+			member_mSeq,
+			game_gSeq,
+			mhSleeve,
+			mhCoin,
+			mhMemo,
+			mhRegiDate
+		)
+		VALUES
+		(
+		    #{member_mSeq},
+		    #{gSeq},
+		    #{mhSleeve},
+		    #{mhCoin},
+		    #{mhMemo},
+		    now()
+		)
+		
+		<selectKey resultType="String" keyProperty="mhSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="updateHold">
+		UPDATE memberHold
+		SET
+			mhSleeve=#{mhSleeve},
+			mhCoin=#{mhCoin},
+			mhMemo=#{mhMemo},
+			mhUpdtDate=now()
+		WHERE
+			mhSeq=#{mhSeq}
+	</update>
+	
+	<delete id="deleteHold">
+		DELETE FROM memberHold
+		WHERE
+			mhSeq=#{mhSeq}
+	</delete>
+	
+	<delete id="listDeleteHold" parameterType="java.util.List">
+		DELETE FROM memberHold
+		<where>
+			<foreach collection="list" item="item" separator="or" open="" close="">
+				(mhSeq=#{item})
+			</foreach>
+		</where>
+	</delete>
+	
 </mapper>

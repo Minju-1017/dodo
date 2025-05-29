@@ -105,4 +105,24 @@ public class MemberService {
 		return dao.selectHoldOne(vo);
 	}
 	
+	public int insertHoldCheck(MemberHoldDto memberHoldDto) {
+		return dao.insertHoldCheck(memberHoldDto);
+	}
+	
+	public int insertHold(MemberHoldDto memberHoldDto) {
+		return dao.insertHold(memberHoldDto);
+	}
+	
+	public int updateHold(MemberHoldDto memberHoldDto) {
+		return dao.updateHold(memberHoldDto);
+	}
+	
+	public int deleteHold(MemberHoldDto memberHoldDto) {
+		return dao.deleteHold(memberHoldDto);
+	}
+	
+	public int listDeleteHold(List<String> seqList) {
+		return dao.listDeleteHold(seqList);
+	}
+	
 }

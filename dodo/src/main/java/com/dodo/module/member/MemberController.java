@@ -22,6 +22,7 @@ import com.dodo.module.codegroup.CodeGroupDto;
 import com.dodo.module.codegroup.CodeGroupVo;
 import com.dodo.module.file.FileService;
 import com.dodo.module.game.GameDto;
+import com.dodo.module.game.GameReviewDto;
 import com.dodo.module.game.GameService;
 import com.dodo.module.game.GameVo;
 
@@ -811,17 +812,95 @@ public class MemberController {
 	 */
 	@ResponseBody // Ajax 코드는 무조건 써준다.
 	@RequestMapping(value = "MemberHoleUsrSearchProc")
-	public Map<String, Object> memberHoleUsrSearchProc(GameDto gameDto) {
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
+	public Map<String, Object> memberHoleUsrSearchProc(GameDto gameDto, HttpSession httpSession) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();		
 		GameDto gDto = gameService.selectOneByName(gameDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
 		
 		if (gDto == null) { 
 			returnMap.put("rt", "fail");
 		} else {
-			returnMap.put("rt", gDto.getgName());
+			if (httpSession.getAttribute("sessSeqUsr") == null) {
+				returnMap.put("rt", "fail_login");
+			} else {
+				MemberHoldDto mhDto = new MemberHoldDto();
+				mhDto.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+				mhDto.setGame_gSeq(gDto.getgSeq());
+				
+				int holdCount = service.insertHoldCheck(mhDto); // 내 등록 게임 리스트에 있는지 체크
+				
+				if (holdCount == 0) {
+					returnMap.put("rt", gDto.getgSeq());
+				} else {
+					returnMap.put("rt", "fail_hold");
+				}
+			}		
 		}
 		
+		return returnMap;
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberHoldUsrInst")
+	public String memberHoldUsrInst(MemberHoldDto memberHoldDto, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		memberHoldDto.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		service.insertHold(memberHoldDto);
+		
+		return "redirect:MemberHoldUsrList";
+	}
+	
+	/**
+	 * 입력한 데이터 수정하기
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberHoldUsrUpdt")
+	public String memberHoldUsrUpdt(MemberHoldDto memberHoldDto) {
+		service.updateHold(memberHoldDto);
+
+		return "redirect:MemberHoldUsrList";
+	}
+	
+	/**
+	 * 데이터 삭제하기
+	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberHoldUsrDele")
+	public String memberHoldUsrDele(MemberHoldDto memberHoldDto) {
+		service.deleteHold(memberHoldDto);	
+
+		return "redirect:MemberHoldUsrList";
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제
+	 * @param seqList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "MemberHoldListUsrDeleProc")
+	public Map<String, Object> memberHoldListUsrDeleProc(
+			@RequestParam(value="chbox") List<String> seqList) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listDeleteHold(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
 		return returnMap;
 	}
 	

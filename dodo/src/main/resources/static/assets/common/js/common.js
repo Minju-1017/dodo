@@ -185,7 +185,7 @@ function showModalMoveLoginConfirm(title, body) {
 }
 
 // 위시리스트 삭제 알림 모달 - Usr
-function showModalWishDeleConfirm(title, body) {
+function showModalDeleConfirmUsr(title, body) {
 	document.querySelector("#modalConfirmTitle").textContent = title;
 	document.querySelector("#modalConfirmBody").textContent = body;
 	document.querySelector("#btnModalWithdrawal").style.display = 'none';
@@ -265,7 +265,7 @@ function deleteCheckedElementsModalByUsr(str) {
 					
 	if (selectedElementsCnt == 0) return;
 	
-	showModalWishDeleConfirm(
+	showModalDeleConfirmUsr(
 			"확인", 
 			"선택한 " + str + " 전부 삭제하시겠습니까?", 
 			'none', ''

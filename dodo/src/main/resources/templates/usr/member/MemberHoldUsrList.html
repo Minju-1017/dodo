@@ -67,10 +67,10 @@
 														<a href="javascript:void(0);"
 															th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
 															<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
-																class="icon-shape icon-xl" 
+																class="icon-shape icon-xs" 
 																src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
 															<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
-																class="icon-shape icon-xl" th:src="${list?.fPath}" />
+																class="icon-shape icon-xs" th:src="${list?.fPath}" />
 														</a>
 													</td>
 													<td>
@@ -92,7 +92,7 @@
 													<td th:text="${list?.mhSleeve}"></td>	
 													<td th:text="${list?.mhCoin}"></td>	
 													<td>
-														<span class="text-muted" data-bs-toggle="tooltip" 
+														<span class="text-muted" data-bs-toggle="tooltip"
 															data-bs-placement="top" th:title="${list?.mhMemo}">
 															<i class="bi bi-chat-dots"></i>
 														</span>
@@ -107,6 +107,12 @@
 														<a href="javascript:void(0);" th:attr="onclick=|goHoldDelete('${list.mhSeq}')|"
 															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="삭제">
 															<i class="bi bi-trash"></i>
+														</a>
+													</td>
+													<td>
+														<a href="#"
+															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="판매">
+															<i class="bi bi-truck"></i>
 														</a>
 													</td>
 												</tr>
@@ -140,7 +146,7 @@
 								</div>
 								<div class="col" style="text-align: right; vertical-align: middle;">
 									<button type="button" id="btnForm" class="btn btn-outline-primary">등록</button>&nbsp;
-									<a href="#" class="btn btn-outline-secondary">선택 수정</a>&nbsp;
+									<a href="#" class="btn btn-outline-secondary" id="modify">선택 수정</a>&nbsp;
 									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>&nbsp;
 									<a href="#" class="btn btn-danger">선택 판매</a>
 								</div>
@@ -219,6 +225,10 @@ function goWishDelete(memberWishSeq) {
 <script type="text/javascript">
 	document.getElementById("checkAll").onclick = function() {
 		allCheck("check", this.checked);
+	}
+	
+	document.getElementById("modify").onclick = function() {
+		modifyCheckedElement("1개의 게임을");
 	}
 	
 	document.getElementById("delete").onclick = function() {

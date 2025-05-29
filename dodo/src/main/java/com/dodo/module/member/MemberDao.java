@@ -31,6 +31,11 @@ public interface MemberDao {
 	
 	public int selectHoldListCount(MemberHoldVo vo);
 	public List<MemberHoldDto> selectHoldList(MemberHoldVo vo);  
-	public MemberHoldDto selectHoldOne(MemberHoldVo vo);  
-	
+	public MemberHoldDto selectHoldOne(MemberHoldVo vo); 
+	public int insertHoldCheck(MemberHoldDto memberHoldDto);
+	public int insertHold(MemberHoldDto memberHoldDto);  
+	public int updateHold(MemberHoldDto memberHoldDto); 
+	public int deleteHold(MemberHoldDto memberHoldDto);  
+	public int listDeleteHold(List<String> seqList); 
+		
 }

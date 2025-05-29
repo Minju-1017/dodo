@@ -171,6 +171,7 @@ function showModalWithdrawalConfirm(title, body) {
 	document.querySelector("#btnModalWithdrawal").style.display = '';
 	document.querySelector("#btnModalLogin").style.display = 'none';
 	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalDeleteOne").style.display = 'none';
 	$("#modalConfirm").modal("show");      	
 }
 
@@ -181,16 +182,29 @@ function showModalMoveLoginConfirm(title, body) {
 	document.querySelector("#btnModalWithdrawal").style.display = 'none';
 	document.querySelector("#btnModalLogin").style.display = '';
 	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalDeleteOne").style.display = 'none';
 	$("#modalConfirm").modal("show");      	
 }
 
-// 위시리스트 삭제 알림 모달 - Usr
+// 삭제 알림 모달 - Usr
 function showModalDeleConfirmUsr(title, body) {
 	document.querySelector("#modalConfirmTitle").textContent = title;
 	document.querySelector("#modalConfirmBody").textContent = body;
 	document.querySelector("#btnModalWithdrawal").style.display = 'none';
 	document.querySelector("#btnModalLogin").style.display = 'none';
 	document.querySelector("#btnModalDelete").style.display = '';
+	document.querySelector("#btnModalDeleteOne").style.display = 'none';
+	$("#modalConfirm").modal("show");      	
+}
+
+// 삭제 알림 모달(Table에서 1개 삭제) - Usr
+function showModalDeleOneConfirmUsr(title, body) {
+	document.querySelector("#modalConfirmTitle").textContent = title;
+	document.querySelector("#modalConfirmBody").textContent = body;
+	document.querySelector("#btnModalWithdrawal").style.display = 'none';
+	document.querySelector("#btnModalLogin").style.display = 'none';
+	document.querySelector("#btnModalDelete").style.display = 'none';
+	document.querySelector("#btnModalDeleteOne").style.display = '';
 	$("#modalConfirm").modal("show");      	
 }
 

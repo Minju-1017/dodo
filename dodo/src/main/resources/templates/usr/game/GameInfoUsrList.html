@@ -295,9 +295,14 @@
 													class= "d-block">공식판매처 정보없음</span>
 											</div>
 											<div class="mt-3">
-												<a href="#"
+												<a th:if="${list?.mhCount == 0}" href="javascript:void(0);"
+													th:attr="onclick=|goHold(true, '${list.gSeq}')|"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
-													data-bs-toggle="tooltip" title="내 게임 등록"><i class="bi bi-emoji-smile"></i></a>
+													data-bs-toggle="tooltip" title="보유 게임 등록"><i class="bi bi-emoji-smile"></i></a>
+												<a th:unless="${list?.mhCount == 0}" href="javascript:void(0);"
+													th:attr="onclick=|goHold(false, '${list.gSeq}')|"
+													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
+													data-bs-toggle="tooltip" title="보유 게임 삭제"><i class="bi bi-emoji-smile-fill"></i></a>
 												<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
 													th:attr="onclick=|goWish(true, '${list.gSeq}')|"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
@@ -371,7 +376,7 @@
 	let shScoreList = /*[[${vo.shScoreList}]]*/ {};
 </script>
 
-<!-- Wish -->
+<!-- Wish/Hold -->
 <script type="text/javascript">
 	function goWish(bWish, gameSeq) {
 		var mSeq = document.getElementById("mSeq").value;
@@ -394,6 +399,55 @@
 			,cache: false
 			,type: "post"
 			,url: wishUrl
+			,traditional: true
+			,data : {
+				"gSeq" : $("#gSeq").val(),
+				"mSeq" : $("#mSeq").val(),
+				"currPage" : $("#currPage").val(),
+				"rowNumToShow" : $("#rowNumToShow").val(),
+				"shCategoryCd" : $("#shCategoryCd").val(),
+				"shValue" : $("#shValue").val(),
+				"shOrderOption" : $("#shOrderOption").val(),
+				...flattenMap("shPeopleList", shPeopleList),
+		        ...flattenMap("shTimeList", shTimeList),
+		        ...flattenMap("shLevelList", shLevelList),
+		        ...flattenMap("shScoreList", shScoreList)
+			}
+			,success: function(fragmentHtml) {
+				if (fragmentHtml != null && fragmentHtml != "") {
+					// fragmentHtml은 렌더링된 HTML fragment
+					disposeAllTooltips();
+					$('#gameListRefresh').replaceWith(fragmentHtml);
+					refreshTooltipsAndTitles();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	function goHold(bHold, gameSeq) {
+		var mSeq = document.getElementById("mSeq").value;
+		if (mSeq == null || mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		gSeq.value = gameSeq;
+		
+		var holdUrl;
+		if (bHold) {
+			holdUrl = "/usr/member/MemberHoldUsrInstByGameInfo";
+		} else {
+			holdUrl = "/usr/member/MemberHoldUsrDeleByGameInfo";
+		}
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: holdUrl
 			,traditional: true
 			,data : {
 				"gSeq" : $("#gSeq").val(),
@@ -449,6 +503,10 @@
 	          el.setAttribute('title', '위시리스트 삭제');
 	        } else if (icon.classList.contains('bi-heart')) {
 	          el.setAttribute('title', '위시리스트 등록');
+	        } else if (icon.classList.contains('bi-emoji-smile-fill')) {
+	          el.setAttribute('title', '보유 게임 삭제');
+	        } else if (icon.classList.contains('bi-emoji-smile')) {
+	          el.setAttribute('title', '보유 게임 등록');
 	        }
 	      }
 	    });

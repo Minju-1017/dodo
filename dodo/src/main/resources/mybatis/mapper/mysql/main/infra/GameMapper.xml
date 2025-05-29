@@ -139,11 +139,16 @@
 	    ) as fPath
 	    
 	    <if test="mSeq != null and !mSeq.equals('')">
-	    , (SELECT COUNT(*) FROM memberWish b
-			WHERE 1=1  
-				AND b.game_gSeq = a.gSeq
-				AND b.member_mSeq = #{mSeq}
-		) as mwCount
+		    , (SELECT COUNT(*) FROM memberWish b
+				WHERE 1=1  
+					AND b.game_gSeq = a.gSeq
+					AND b.member_mSeq = #{mSeq}
+			) as mwCount
+			, (SELECT COUNT(*) FROM memberHold b
+				WHERE 1=1  
+					AND b.game_gSeq = a.gSeq
+					AND b.member_mSeq = #{mSeq}
+			) as mhCount
 		</if>
 	</sql>
 	<!-- End -->

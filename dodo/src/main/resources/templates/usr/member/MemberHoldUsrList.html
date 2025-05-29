@@ -167,12 +167,11 @@
   	let mhSeq = document.querySelector("input[name=mhSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let redirectUrl = document.querySelector("input[name=redirectUrl]");
+  	
+  	let prevFocusId = document.getElementById("prevFocusId");
     	
 	let fom = document.querySelector("form[name=formList]");
 	let goUrlUsrList = "/usr/member/MemberHoldUsrList";
-	let goUrlUsrForm = "/usr/member/MemberHoldUsrForm";
-	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
-	let goUrlUsrListDeleProc = "/usr/member/MemberHoldListUsrDeleProc";
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -190,7 +189,7 @@
 	// 데이터 추가/수정
 	goForm = function (keyValue) {
 		mhSeq.value = keyValue;
-	    submit(goUrlUsrForm);
+	    submit("/usr/member/MemberHoldUsrForm");
 	}
 </script>
 
@@ -199,12 +198,29 @@
 	function goDetail(keyValue1, keyValue2) {
 		gSeq.value = keyValue1;
 		cate.value = keyValue2;
-		submit(goUrlUsrDetail);
+		submit("/usr/game/GameUsrDetail");
 	}
 
 	function goList(currPage) {
 		document.querySelector("input[name=currPage]").value = currPage;
 		submit(goUrlUsrList);
+	}
+	
+	function goHoldDelete(keyValue) {
+		prevFocusId.value = keyValue;
+		
+		showModalDeleOneConfirmUsr(
+			"확인", 
+			"보유 게임에서 삭제하시겠습니까?"
+		);  
+	}
+	
+	document.getElementById("btnModalDeleteOne").onclick = function () {
+		var prevFocusIdValue = prevFocusId.value;
+		if (prevFocusIdValue == null && prevFocusIdValue == "") return;
+		
+		mhSeq.value = prevFocusIdValue;
+		submit("/usr/member/MemberHoldUsrDele");
 	}
 	
 	document.getElementById("changeRowNum").onchange = function () {
@@ -228,7 +244,7 @@ function goWishDelete(memberWishSeq) {
 	}
 	
 	document.getElementById("modify").onclick = function() {
-		modifyCheckedElement("1개의 게임을");
+		modifyCheckedElement("1개의 게임");
 	}
 	
 	document.getElementById("delete").onclick = function() {
@@ -236,7 +252,7 @@ function goWishDelete(memberWishSeq) {
 	}
 
 	document.getElementById("btnModalDelete").onclick = function () {
-		deleteCheckedElements(goUrlUsrListDeleProc, goUrlUsrList);
+		deleteCheckedElements("/usr/member/MemberHoldListUsrDeleProc", goUrlUsrList);
 	}
 </script>
 

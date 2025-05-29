@@ -63,7 +63,8 @@ public class GameDto extends FileDto {
 	private Integer grShOption = 1;		// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용 / 1: 최신순, 2: 평점 높은순
 	
 	private String mSeq; // 로그인한 사용자
-	private int mwCount; // 로그인한 사용자의 위시리스트인가? O: 1, X: 0
+	private int mwCount; // 로그인한 사용자의 위시인가? O: 1, X: 0
+	private int mhCount; // 로그인한 사용자의 보유게임인가? O: 1, X: 0
 	
 	public String getgSeq() {
 		return gSeq;
@@ -453,6 +454,14 @@ public class GameDto extends FileDto {
 
 	public void setMwCount(int mwCount) {
 		this.mwCount = mwCount;
+	}
+
+	public int getMhCount() {
+		return mhCount;
+	}
+
+	public void setMhCount(int mhCount) {
+		this.mhCount = mhCount;
 	}
 
 }

@@ -37,7 +37,7 @@
 													<th>소요시간(분)</th>
 													<th>공식판매처</th>
 													<th>중고거래</th>
-													<th>내게임</th>
+													<th>보유</th>
 													<th>위시</th>
 												</tr>
 											</thead>
@@ -83,9 +83,16 @@
 															th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}"></a>
 													</td>
 													<td><a href="#"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
-													<td>
-														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="내 게임 등록">
+													<td th:if="${list?.mhCount == 0}">
+														<a href="javascript:void(0);" th:attr="onclick=|goHold(true, '${list.gSeq}')|"
+															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="보유 게임 등록">
 															<i class="bi bi-emoji-smile"></i>
+														</a>
+													</td>
+													<td th:unless="${list?.mhCount == 0}">
+														<a href="javascript:void(0);" th:attr="onclick=|goHold(false, '${list.gSeq}')|"
+															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="보유 게임 삭제">
+															<i class="bi bi-emoji-smile-fill"></i>
 														</a>
 													</td>
 													<td th:if="${list?.mwCount == 0}">
@@ -131,6 +138,7 @@
 	}
 </script>
 
+<!-- Detail/Wish/Hold -->
 <script type="text/javascript">
 	function goDetail(gameSeq, gameCate) {
 		gSeq.value = gameSeq;
@@ -151,6 +159,22 @@
 			submit("/usr/member/MemberWishUsrInst");
 		} else {
 			submit("/usr/member/MemberWishUsrDele");
+		}
+	}
+	
+	function goHold(bHold, gameSeq) {
+		var mSeq = document.getElementById("mSeq").value;
+		if (mSeq == null || mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		gSeq.value = gameSeq;
+		
+		if (bHold) {
+			submit("/usr/member/MemberHoldUsrInst");
+		} else {
+			submit("/usr/member/MemberHoldUsrDele");
 		}
 	}
 	

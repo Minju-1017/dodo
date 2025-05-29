@@ -98,6 +98,18 @@
 			WHERE 1=1 
 				AND b.gSeq = c.rSeq
 	    ) as fPath
+	    <if test="member_mSeq != null and !member_mSeq.equals('')">
+		    , (SELECT COUNT(*) FROM memberWish c
+				WHERE 1=1  
+					AND c.game_gSeq = b.gSeq
+					AND c.member_mSeq = #{member_mSeq}
+			) as mwCount
+			, (SELECT COUNT(*) FROM memberHold c
+				WHERE 1=1  
+					AND c.game_gSeq = b.gSeq
+					AND c.member_mSeq = #{member_mSeq}
+			) as mhCount
+		</if>
 	</sql>
 	<!-- End -->
 	
@@ -405,7 +417,10 @@
 		)
 		VALUES
 		(
-		    #{member_mSeq},
+			<choose>
+				<when test="member_mSeq == null or member_mSeq.equals('')">#{mSeq},</when>
+				<when test="member_mSeq != null and !member_mSeq.equals('')">#{member_mSeq},</when>
+			</choose>
 		    #{gSeq},
 		    #{mhSleeve},
 		    #{mhCoin},
@@ -429,7 +444,14 @@
 			mhSeq=#{mhSeq}
 	</update>
 	
-	<delete id="deleteHold">
+	<delete id="deleteHoldByCondition">
+		DELETE FROM memberHold
+		WHERE 1=1
+			AND member_mSeq=#{mSeq}
+			AND game_gSeq=#{gSeq}
+	</delete>
+	
+	<delete id="deleteHoldBySeq">
 		DELETE FROM memberHold
 		WHERE
 			mhSeq=#{mhSeq}

@@ -35,7 +35,8 @@ public interface MemberDao {
 	public int insertHoldCheck(MemberHoldDto memberHoldDto);
 	public int insertHold(MemberHoldDto memberHoldDto);  
 	public int updateHold(MemberHoldDto memberHoldDto); 
-	public int deleteHold(MemberHoldDto memberHoldDto);  
+	public int deleteHoldByCondition(MemberHoldDto memberHoldDto);  
+	public int deleteHoldBySeq(MemberHoldDto memberHoldDto);  
 	public int listDeleteHold(List<String> seqList); 
 		
 }

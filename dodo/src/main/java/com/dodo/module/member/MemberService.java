@@ -117,8 +117,12 @@ public class MemberService {
 		return dao.updateHold(memberHoldDto);
 	}
 	
-	public int deleteHold(MemberHoldDto memberHoldDto) {
-		return dao.deleteHold(memberHoldDto);
+	public int deleteHoldByCondition(MemberHoldDto memberHoldDto) {
+		return dao.deleteHoldByCondition(memberHoldDto);
+	}
+	
+	public int deleteHoldBySeq(MemberHoldDto memberHoldDto) {
+		return dao.deleteHoldBySeq(memberHoldDto);
 	}
 	
 	public int listDeleteHold(List<String> seqList) {

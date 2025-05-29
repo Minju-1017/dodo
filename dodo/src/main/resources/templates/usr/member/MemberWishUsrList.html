@@ -19,6 +19,7 @@
 						<input type="hidden" name="gCategoryCd">
 						<input type="hidden" name="redirectUrl" value="/usr/member/MemberWishUsrList">
 						<input type="hidden" id="mwSeq" name="mwSeq">
+						<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
@@ -45,7 +46,7 @@
 													<th>소요시간<br>(분)</th>
 													<th>공식판매처</th>
 													<th>중고거래</th>
-													<th>내게임</th>
+													<th>보유</th>
 													<th>삭제</th>
 												</tr>
 											</thead>
@@ -92,9 +93,16 @@
 															th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}"></a>
 													</td>
 													<td><a href="#"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
-													<td>
-														<a href="#" class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="내게임 등록">
+													<td th:if="${list?.mhCount == 0}">
+														<a href="javascript:void(0);" th:attr="onclick=|goHold(true, '${list.gSeq}')|"
+															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="보유 게임 등록">
 															<i class="bi bi-emoji-smile"></i>
+														</a>
+													</td>
+													<td th:unless="${list?.mhCount == 0}">
+														<a href="javascript:void(0);" th:attr="onclick=|goHold(false, '${list.gSeq}')|"
+															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="보유 게임 삭제">
+															<i class="bi bi-emoji-smile-fill"></i>
 														</a>
 													</td>
 													<td>
@@ -133,7 +141,7 @@
 									</nav>
 								</div>
 								<div class="col" style="text-align: right; vertical-align: middle;">
-									<a href="#" class="btn btn-outline-primary">선택 내 게임 등록</a>&nbsp;
+									<a href="#" class="btn btn-outline-primary">선택 보유 게임 등록</a>&nbsp;
 									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>
 								</div>
 							</div>
@@ -153,6 +161,8 @@
   	let mwSeq = document.querySelector("input[name=mwSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let redirectUrl = document.querySelector("input[name=redirectUrl]");
+  	
+  	let prevFocusId = document.getElementById("prevFocusId");
     	
 	let fom = document.querySelector("form[name=formList]");
 	let goUrlUsrList = "/usr/member/MemberWishUsrList";
@@ -184,12 +194,44 @@
 	}
 </script>
 
-<!-- Wish -->
+<!-- Wish/Hold -->
 <script type="text/javascript">
-function goWishDelete(memberWishSeq) {
-	mwSeq.value = memberWishSeq;
-	submit("/usr/member/MemberWishUsrDele");
-}
+	function goWishDelete(memberWishSeq) {
+		prevFocusId.value = memberWishSeq;
+		
+		showModalDeleOneConfirmUsr(
+			"확인", 
+			"보유 게임에서 삭제하시겠습니까?"
+		);  
+	}
+	
+	document.getElementById("btnModalDeleteOne").onclick = function () {
+		var prevFocusIdValue = prevFocusId.value;
+		if (prevFocusIdValue == null && prevFocusIdValue == "") return;
+		
+		mwSeq.value = prevFocusIdValue;
+		submit("/usr/member/MemberWishUsrDele");
+	}
+	
+	function goHold(bHold, gameSeq) {
+		var mSeq = document.getElementById("mSeq").value;
+		if (mSeq == null || mSeq == "") {
+			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+			return false;
+		}
+		
+		gSeq.value = gameSeq;
+		
+		if (bHold) {
+			submit("/usr/member/MemberHoldUsrInst");
+		} else {
+			submit("/usr/member/MemberHoldUsrDele");
+		}
+	}
+	
+	document.getElementById("btnModalLogin").onclick = function() {
+		location.href = "/usr/member/MemberXdmSignIn";
+	}
 </script>
 
 <!-- Table Check Box 처리 (Delete)-->

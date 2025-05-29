@@ -15,6 +15,7 @@
 						
 						<input type="hidden" id="mhSeq" name="mhSeq" th:value="${vo.mhSeq}">
 						<input type="hidden" id="gSeq" name="gSeq" th:value="${holdItem?.gSeq}">
+						<input type="hidden" name="redirectUrl" value="/usr/member/MemberHoldUsrList">
 						
 						<div class="row">
 							<div class="col-lg-8">
@@ -84,6 +85,7 @@
 <script type="text/javascript">
 	//Seq
 	let mhSeq = document.querySelector("input[name=mhSeq]");
+	let redirectUrl = document.querySelector("input[name=redirectUrl]");
 	
 	// URL
 	let fom = document.querySelector("form[name=form]");
@@ -238,8 +240,7 @@
 		document.getElementById("btnDelete").onclick = function () {
 			showModalDeleConfirmUsr(
 				"확인", 
-				"보유 게임에서 삭제하시겠습니까?", 
-				'none', ''
+				"보유 게임에서 삭제하시겠습니까?"
 			);    	
 		}
 	}

@@ -110,7 +110,7 @@
 														</a>
 													</td>
 													<td>
-														<a href="#"
+														<a href="javascript:void(0);" th:attr="onclick=|goSales('${list.gSeq}', '${list.gName}')|"
 															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="판매">
 															<i class="bi bi-truck"></i>
 														</a>
@@ -147,8 +147,7 @@
 								<div class="col" style="text-align: right; vertical-align: middle;">
 									<button type="button" id="btnForm" class="btn btn-outline-primary">등록</button>&nbsp;
 									<a href="#" class="btn btn-outline-secondary" id="modify">선택 수정</a>&nbsp;
-									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>&nbsp;
-									<a href="#" class="btn btn-danger">선택 판매</a>
+									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>
 								</div>
 							</div>
 						</div>
@@ -164,6 +163,8 @@
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
   	let gSeq = document.querySelector("input[name=gSeq]");
+  	let game_gSeq = document.querySelector("input[name=game_gSeq]");
+  	let gName = document.querySelector("input[name=gName]");
   	let mhSeq = document.querySelector("input[name=mhSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let redirectUrl = document.querySelector("input[name=redirectUrl]");
@@ -227,14 +228,32 @@
 	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 	    submit(goUrlUsrList);
 	}
-</script>
-
-<!-- Wish -->
-<script type="text/javascript">
-function goWishDelete(memberWishSeq) {
-	mwSeq.value = memberWishSeq;
-	submit("/usr/member/MemberHoldUsrDele");
-}
+	
+	function goSales(keyValue1, keyValue2) {
+		alert(keyValue1 + ", " + keyValue2);
+		game_gSeq.value = keyValue1;
+		gName.value = keyValue2;
+		
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/sales/SalesUsrInstCheckProc"
+			,data : { 
+				"game_gSeq" : $("#game_gSeq").val()
+			}
+			,success: function(response) {
+				if (response.rt == "success") {
+					submit("/usr/sales/SalesUsrInstForm");
+				} else {
+					showModalAlert("확인", "이미 중고 거래 등록한 게임입니다.");
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
 </script>
 
 <!-- Table Check Box 처리 (Delete)-->

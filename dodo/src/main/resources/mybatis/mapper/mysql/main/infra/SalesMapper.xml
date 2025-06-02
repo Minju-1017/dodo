@@ -4,4 +4,12 @@
 <mapper namespace="com.dodo.module.sales.SalesDao">
 	<resultMap id="resultMapObj" type="com.dodo.module.sales.SalesDto"></resultMap>
 	
+	<select id="salesInstCheck" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			memberSales 
+		WHERE 1=1
+			AND member_mSeq=#{member_mSeq}
+			AND game_gSeq=#{game_gSeq}
+	</select>
+	
 </mapper>

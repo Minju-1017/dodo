@@ -889,10 +889,6 @@ public class MemberController {
 		return "redirect:" + redirectUrl;
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Ajax를 이용해 입력한 데이터 추가하기 - Admin
 	 */

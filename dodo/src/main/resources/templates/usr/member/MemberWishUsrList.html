@@ -141,7 +141,6 @@
 									</nav>
 								</div>
 								<div class="col" style="text-align: right; vertical-align: middle;">
-									<a href="#" class="btn btn-outline-primary">선택 보유 게임 등록</a>&nbsp;
 									<a href="#" class="btn btn-outline-danger" id="delete">선택 삭제</a>
 								</div>
 							</div>
@@ -166,8 +165,6 @@
     	
 	let fom = document.querySelector("form[name=formList]");
 	let goUrlUsrList = "/usr/member/MemberWishUsrList";
-	let goUrlUsrDetail = "/usr/game/GameUsrDetail";
-	let goUrlUsrListDeleProc = "/usr/member/MemberWishListUsrDeleProc";
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -180,7 +177,7 @@
 	function goDetail(keyValue1, keyValue2) {
 		gSeq.value = keyValue1;
 		cate.value = keyValue2;
-		submit(goUrlUsrDetail);
+		submit("/usr/game/GameUsrDetail");
 	}
 
 	function goList(currPage) {
@@ -245,7 +242,7 @@
 	}
 
 	document.getElementById("btnModalDelete").onclick = function () {
-		deleteCheckedElements(goUrlUsrListDeleProc, goUrlUsrList);
+		deleteCheckedElements("/usr/member/MemberWishListUsrDeleProc", goUrlUsrList);
 	}
 </script>
 

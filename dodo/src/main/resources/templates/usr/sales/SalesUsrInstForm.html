@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section class="mt-8 mb-14">
+		<div class="container">
+			<div class="row">
+ 				<div class="col-lg-12">
+    				<div class="mb-8">
+						<h3 class="mb-1">중고 거래</h3>
+					</div>
+					<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
+						
+						<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${salesItem?.game_gSeq}">
+						
+						<div class="row">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div class="col-12">
+											<h6 class="h6">게임명<span style="color: red;"> *</span></h6>
+											<input type="text" class="form-control rounded-end" autocomplete="off" 
+												id="gName" name="gName" th:value="${salesItem?.gName}" readonly />
+										</div>
+										<div class="col-12">
+											<h6 class="h6">제목<span style="color: red;"> *</span></h6>
+											<input type="text" class="form-control" autocomplete="off" 
+												id="msTitle" name="msTitle" th:value="${salesItem?.msTitle}" 
+												placeholder="30자 제한" oninput="limitKoreanChars(this, 30)" required />
+											<div class="invalid-feedback"> 제목을 입력해 주세요. </div>
+										</div>
+										<div class="col-12">
+											<h6 class="h6">내용</h6>
+											<textarea class="form-control" id="msDesc" name="msDesc"
+												rows="5" style="resize: none;"
+												autocomplete="off" th:text="${salesItem?.msDesc}"></textarea>
+										</div>
+										<div class="col-12 mb-1">
+											<h6 class="h6">판매 가격</h6>
+											<textarea class="form-control" id="msDesc" name="msDesc"
+												rows="5" style="resize: none;"
+												autocomplete="off" th:text="${salesItem?.msDesc}"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="mt-4 mb-3 text-center">
+									<button class="btn btn-primary" type="button" id="btnSave">등록</button>&nbsp;
+									<button th:if="${vo.msSeq != null and vo.msSeq != '' and vo.msSeq != '0'
+										and session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+										and session.sessSeqUsr eq salesItem?.member_mSeq}"
+										class="btn btn-danger" type="button" id="btnDelete">삭제</button>&nbsp;
+									<a href="/usr/sales/SalesUsrList" class="btn btn-light">취소</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	//Seq
+	let mhSeq = document.querySelector("input[name=mhSeq]");
+	let redirectUrl = document.querySelector("input[name=redirectUrl]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	let goUrlUsrInst = "/usr/member/MemberHoldUsrInst";
+	let goUrlUsrUpdt = "/usr/member/MemberHoldUsrUpdt";
+	let goUrlUsrDele = "/usr/member/MemberHoldUsrDele";
+	
+	// Input
+	let gNameInvalidFeedback = document.getElementById("gNameInvalidFeedback");
+	let gNameValidFeedback = document.getElementById("gNameValidFeedback");
+	let btnSearch = document.getElementById("btnSearch");
+	let btnSearchRefresh = document.getElementById("btnSearchRefresh");
+	let gSeq = document.getElementById("gSeq");
+	let gName = document.getElementById("gName");
+	let mhSleeve = document.getElementById("mhSleeve");
+	let mhCoin = document.getElementById("mhCoin");
+	let mhMemo = document.getElementById("mhMemo");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+
+	function limitKoreanChars(el, maxChars) {
+		const chars = [...el.value]; 
+		
+		if (chars.length > maxChars) {
+			el.value = chars.slice(0, maxChars).join('');
+		}
+	}
+</script>
+
+<!-- Game 검색 -->
+<script typr="text/javascript">
+	gName.addEventListener("keydown", function (event) {
+		if (event.key === "Enter") {
+			event.preventDefault(); // 폼 전송 방지
+			btnSearch.click(); // 검색 버튼 클릭 동작 호출
+		}
+	});
+	
+	btnSearch.onclick = function() {
+		// 검색 결과 받을 때 까지 입력 방지
+		gName.readOnly = true; 
+		btnSearch.disabled = true;
+		
+		// gName 체크
+		resetValidation(gName);
+		
+		if (!strValidation(gName)) {
+			gNameInvalidFeedback.textContent = "게임명을 입력해 주세요.";
+			gName.classList.add("is-invalid");
+			gName.focus();
+			gName.readOnly = false; 
+			btnSearch.disabled = false;
+			
+			return false;
+		}
+		
+		gNameValidFeedback.textContent = "검색중...";
+		gName.classList.add("is-valid");
+		
+
+		// 검색 결과 받기
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/member/MemberHoleUsrSearchProc"
+			,data : { 
+				"gName" : $("#gName").val()
+			}
+			,success: function(response) {
+				resetValidation(gName);
+				
+				if (response.rt == "fail") {
+					gSeq.value = "";
+					gName.value = "";
+					gNameInvalidFeedback.textContent = "검색된 게임이 없습니다. 다시 검색해 주세요.";
+					gName.classList.add("is-invalid");
+					btnSearch.disabled = false;
+					gName.readOnly = false;
+					gName.focus();
+				} else if (response.rt == "fail_login") {
+					showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
+				} else if (response.rt == "fail_hold") {
+					gSeq.value = "";
+					gName.value = "";
+					gNameInvalidFeedback.textContent = "이미 등록된 게임입니다. 다른 게임을 검색해 주세요.";
+					gName.classList.add("is-invalid");
+					btnSearch.disabled = false;
+					gName.readOnly = false;
+					gName.focus();
+				} else {  
+					gSeq.value = response.rt;
+					btnSearchRefresh.disabled = false;
+					gNameValidFeedback.textContent = "다른 게임을 검색하려면 새로고침 버튼을 클릭해 주세요.";
+					gName.classList.add("is-valid");
+					gName.focus();
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+	
+	document.getElementById("btnModalLogin").onclick = function() {
+		location.href = "/usr/member/MemberXdmSignIn";
+	}
+	
+	btnSearchRefresh.onclick = function() {
+		resetValidation(gName);
+		gSeq.value = "";
+		gName.value = "";
+		btnSearch.disabled = false;
+		btnSearchRefresh.disabled = true;
+		gName.readOnly = false;
+		gName.focus();
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		// gName 체크
+		resetValidation(gName);
+		
+		if (gSeq.value == null || gSeq.value == "") {
+			gNameInvalidFeedback.textContent = "게임을 검색해 주세요.";
+			gName.classList.add("is-invalid");
+			gName.focus();
+			
+			return false;
+		} else {
+			gNameValidFeedback.textContent = "";
+			gName.classList.add("is-valid");
+		}
+		
+		if(mhSeq.value == "0" || mhSeq.value == "") {
+			submit(goUrlUsrInst);
+		} else {
+			submit(goUrlUsrUpdt);
+		}
+	}
+</script>
+
+<!-- 삭제/삭제(업데이트) 모달 -->
+<script type="text/javascript">
+	if(document.getElementById("btnDelete")){
+		document.getElementById("btnDelete").onclick = function () {
+			showModalDeleConfirmUsr(
+				"확인", 
+				"보유 게임에서 삭제하시겠습니까?"
+			);    	
+		}
+	}
+
+	document.getElementById("btnModalDelete").onclick = function () {
+		submit(goUrlUsrDele);
+	}
+</script>
+
+</body>
+</html>

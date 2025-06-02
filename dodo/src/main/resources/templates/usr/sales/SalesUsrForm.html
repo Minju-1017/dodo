@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section class="mt-8 mb-14">
+		<div class="container">
+			<div class="row">
+ 				<div class="col-lg-12">
+    				<div class="mb-8">
+						<h3 class="mb-1">중고 거래</h3>
+					</div>
+					<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
+						
+						<input type="hidden" id="msSeq" name="msSeq" th:value="${salesItem?.msSeq}">
+						<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${salesItem?.game_gSeq}">
+						
+						<div class="row">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div class="col-12">
+											<h6 class="h6">게임명<span style="color: red;"> *</span></h6>
+											<input type="text" class="form-control rounded-end" autocomplete="off" 
+												id="gName" name="gName" th:value="${salesItem?.gName}" readonly />
+										</div>
+										<div class="col-12">
+											<h6 class="h6">제목<span style="color: red;"> *</span></h6>
+											<input type="text" class="form-control" autocomplete="off" 
+												id="msTitle" name="msTitle" th:value="${salesItem?.msTitle}" 
+												placeholder="30자 제한" oninput="limitKoreanChars(this, 30)" required />
+											<div class="invalid-feedback"> 제목을 입력해 주세요. </div>
+										</div>
+										<div class="col-12">
+											<h6 class="h6">내용</h6>
+											<textarea class="form-control" id="msDesc" name="msDesc"
+												rows="5" style="resize: none;"
+												autocomplete="off" th:text="${salesItem?.msDesc}"></textarea>
+										</div>
+										<div class="row mb-1">
+											<div class="col-6">
+												<h6 class="h6">판매 가격<span style="color: red;"> *</span></h6>
+												<input type="text" class="form-control" autocomplete="off" 
+													id="msPrice" name="msPrice" th:value="${salesItem?.msPrice}" required />
+												<div class="invalid-feedback"> 판매 가격을 입력해 주세요. (0보다 큰 정수) </div>
+											</div>
+											<div class="col-6">
+												<h6 class="h6 d-flex align-items-center">
+													판매 수수료<span class="small ms-1" style="color: green;">2%</span>
+												</h6>
+												<div class="input-group">
+													<input type="text" class="form-control" autocomplete="off"
+														id="msFee" name="msFee" th:value="${salesItem?.msFee}" readonly required />
+													<button class="btn btn-outline-primary rounded-end" type="button" id="btnFee">수수료 확인</button>
+													<div id="msFeeInvalidFeedback" class="invalid-feedback"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mt-4 mb-3 text-center">
+									<button class="btn btn-primary" type="button" id="btnSave">등록</button><span>&nbsp;</span>
+									<a href="/usr/sales/SalesUsrList" class="btn btn-light">취소</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	//Seq
+	let msSeq = document.querySelector("input[name=msSeq]");
+	let game_gSeq = document.querySelector("input[name=game_gSeq]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	
+	// Input
+	let msFeeInvalidFeedback = document.getElementById("msFeeInvalidFeedback");
+	let msTitle = document.getElementById("msTitle");
+	let msDesc = document.getElementById("msDesc");
+	let msPrice = document.getElementById("msPrice");
+	let msFee = document.getElementById("msFee");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+
+	function limitKoreanChars(el, maxChars) {
+		const chars = [...el.value]; 
+		
+		if (chars.length > maxChars) {
+			el.value = chars.slice(0, maxChars).join('');
+		}
+	}
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnFee 버튼 클릭시
+	document.getElementById("btnFee").addEventListener("click", function () {
+		resetValidation(msFee);
+		
+		if (!positiveNumberValidation(msPrice)) {
+			msFeeInvalidFeedback.textContent = "판매 가격(0보다 큰 정수)을 입력 후 확인해 주세요.";
+			msFee.classList.add("is-invalid");
+			msPrice.focus();
+			
+			return;
+		}
+		
+		msFee.classList.add("is-valid");
+    	msFee.value = getFee();
+	});
+	
+	function getFee() {
+		return Math.ceil(parseFloat(msPrice.value) * 0.02);
+	}
+  
+	// btnSave 클릭시
+	document.getElementById("btnSave").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// msTitle 체크
+		resetValidation(msTitle);
+		
+		if (!strValidation(msTitle)) {
+			msTitle.classList.add("is-invalid");
+			
+			if (!focus) {
+				msTitle.focus();
+				focus = true;
+			}
+		} else {
+			msTitle.classList.add("is-valid");
+		}
+		
+		// msPrice 체크
+		resetValidation(msPrice);
+		
+		if (!positiveNumberValidation(msPrice)) {
+			msPrice.classList.add("is-invalid");
+			
+			if (!focus) {
+				msPrice.focus();
+				focus = true;
+			}
+		} else {
+			msPrice.classList.add("is-valid");
+		}
+		
+		// msFee 체크
+		resetValidation(msFee);
+		
+		if (!positiveNumberValidation(msPrice)) {
+			msFeeInvalidFeedback.textContent = "판매 가격(0보다 큰 정수)을 입력 후 확인해 주세요.";
+			msFee.classList.add("is-invalid");
+			
+			if (!focus) {
+				msPrice.focus();
+				focus = true;
+			}
+		} else if (msFee.value != getFee()) {
+			msFeeInvalidFeedback.textContent = "수수료 확인 버튼을 클릭해 주세요.";
+			msFee.classList.add("is-invalid");
+			
+			if (!focus) {
+				btnFee.focus();
+				focus = true;
+			}
+		} else {
+			msFee.classList.add("is-valid");
+		}
+		
+		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+
+		msTitle.value = msTitle.value.trim();
+		msDesc.value = msDesc.value.trim();
+		msPrice.value = msPrice.value.trim();
+		
+		if(msSeq.value == "0" || msSeq.value == "") {
+			submit("/usr/sales/SalesUsrInst");
+		} else {
+			submit("/usr/sales/SalesUsrUpdt");
+		}
+	}
+	
+	// msTitle Input 시 체크
+	msTitle.addEventListener("input", function() {
+		resetValidation(msTitle);
+		
+		if (!strValidation(msTitle)) {
+			msTitle.classList.add("is-invalid");
+		} else {
+			msTitle.classList.add("is-valid");
+		}		
+	});
+	
+	// msPrice Input 시 체크
+	msPrice.addEventListener("input", function() {
+		resetValidation(msPrice);
+		
+		if (!positiveNumberValidation(msPrice)) {
+			msPrice.classList.add("is-invalid");
+		} else {
+			msPrice.classList.add("is-valid");
+		}
+	});
+</script>
+
+</body>
+</html>

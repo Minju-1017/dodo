@@ -82,12 +82,10 @@
 										<a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 											<img th:if="${session.sessPfFileNameUsr eq null or #strings.trim(session.sessPfFileNameUsr) eq ''}" 
 												class="avatar avatar-md rounded-circle" 
-												src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar.jpg"
-												alt="" />
+												src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar.jpg" />
 											<img th:if="${session.sessPfFileNameUsr ne null and #strings.trim(session.sessPfFileNameUsr) ne ''}" 
 												class="avatar avatar-md rounded-circle" 
-												th:src="${session.sessPfFileNameUsr}"
-												alt="" />
+												th:src="${session.sessPfFileNameUsr}" />
 										</a>
 										<div class="dropdown-menu dropdown-menu-end p-0">
 											<div class="lh-1 px-5 py-4 border-bottom">
@@ -171,7 +169,7 @@
 									</ul>
 								</li>
 								<li class="nav-item dropdown w-100 w-lg-auto">
-									<a class="nav-link" href="./pages/usedgame-shopping.html">중고 거래</a>
+									<a class="nav-link" href="/usr/sales/SalesUsrList">중고 거래</a>
 								</li>
 								<li th:if="${session.sessSeqUsr ne null}" class="nav-item dropdown w-100 w-lg-auto">
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

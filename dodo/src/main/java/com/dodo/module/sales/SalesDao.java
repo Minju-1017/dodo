@@ -1,10 +1,21 @@
 package com.dodo.module.sales;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
+
+import com.dodo.module.code.CodeDto;
+import com.dodo.module.code.CodeVo;
 
 @Repository
 public interface SalesDao {
 	
-	public int salesInstCheck(SalesDto salesDto);
-	
+	public int selectListCount(SalesVo vo);
+	public List<SalesDto> selectList(SalesVo vo); 
+	public SalesDto selectOne(SalesDto salesDto);
+	public int plusHit(SalesDto salesDto);
+	public int insertCheck(SalesDto salesDto);
+	public int insert(SalesDto salesDto);
+	public int update(SalesDto salesDto);
+	public int delete(SalesDto salesDto);
 }

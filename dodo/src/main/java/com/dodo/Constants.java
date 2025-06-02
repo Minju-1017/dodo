@@ -32,6 +32,13 @@ public class Constants {
 	public final static int GAME_CODE_GROUP_SEQ_OFFICIAL = 2; // gOfficialCd
 	public final static int GAME_CODE_GROUP_SEQ_CATEGORY = 3; // gCategoryCd
 	
+	// Sales에 사용하는 코드 그룹
+	public final static int SALES_CODE_GROUP_SEQ_STATE = 4; // msStateCd
+	
+	// 판매상태(msStateCd)
+	public final static int SALES_CODE_ON_SALE = 20;
+	public final static int SALES_CODE_SALE_COMPLETED = 22;
+	
 	// Member 등급
 	public final static int MEMBER_GRADE_CODE_ADMIN = 43;
 	public final static int MEMBER_GRADE_CODE_MEMBER= 44;

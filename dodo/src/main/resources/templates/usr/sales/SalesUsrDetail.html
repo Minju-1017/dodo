@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>
+	<section class="mt-8 mb-14">
+		<div class="container">
+			<div class="row">
+ 				<div class="col-lg-12">
+    				<div class="mb-8">
+						<h3 class="mb-1">중고 거래</h3>
+					</div>
+					<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
+						
+						<input type="hidden" id="msSeq" name="msSeq" th:value="${salesItem?.msSeq}">
+						<input type="hidden" name="gSeq" th:value="${salesItem?.game_gSeq}">
+						<input type="hidden" name="gCategoryCd" th:value="${salesItem?.gCategoryCd}">
+						
+						<div class="row">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div class="mt-4 mb-4">
+											<h4 class="mb-0" th:text="${salesItem?.msTitle}"></h4>
+										</div>
+										<div class="d-flex justify-content-between align-items-center">
+											<div class="d-flex align-items-center">
+												<img th:if="${salesItem?.fPath eq null or #strings.trim(salesItem?.fPath) eq ''}" 
+													class="rounded-circle avatar-md" 
+													src="/assets/usr/template/FreshCart-1.4.0/images/avatar/avatar.jpg" />
+												<img th:if="${salesItem?.fPath ne null or #strings.trim(salesItem?.fPath) ne ''}" 
+													class="rounded-circle avatar-md" 
+													th:src="${salesItem?.fPath}" />
+												<div class="ms-4 lh-1">
+													<h6 class="mb-0" th:text="${salesItem?.mName}"></h6>
+													<span class="text-secondary small" th:text="${salesItem?.msRegiDate}"></span>&nbsp;&nbsp;
+													<span class="text-secondary small" th:text="${'조회 ' + salesItem?.msHit}"></span>
+												</div>
+											</div>
+										</div>
+										<hr class="mt-4" />
+										<div>
+											<table class="table table-borderless mb-0">
+												<tbody>
+													<tr>
+														<th style="text-align: right;" width="150px">게임명</th>
+														<td>
+															<a href="javascript:void(0);" th:text="${salesItem?.gName}" onclick="goDetail()"
+																data-bs-toggle="tooltip" data-bs-placement="top" title="게임 상세 보기"></a>
+														</td>
+													</tr>
+													<tr>
+														<th style="text-align: right;" >판매상태</th>
+														<td>
+															<span th:if="${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE}" class="badge bg-primary" 
+																th:text="${@codeService.selectOneCachedCode(salesItem?.msStateCd)}"></span>
+															<span th:if="${salesItem?.msStateCd == @constants.SALES_CODE_SALE_COMPLETED}" class="badge bg-success"
+																th:text="${@codeService.selectOneCachedCode(salesItem?.msStateCd)}"></span>
+														</td>
+													</tr>
+													<tr>
+														<th style="text-align: right;" >판매가</th>
+														<td th:text="${'￦ ' + @doDoUtil.formatNumberComma(salesItem?.msPrice)}"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<hr class="mt-4" />
+										<div>
+											<p th:text="${salesItem?.msDesc}" style="white-space: pre-line"></p>
+										</div>
+									</div>
+								</div>
+								<div class="mt-3 text-center">
+									<a href="javascript:void(0);" 
+										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+											and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}"
+										class="btn btn-primary" 
+										th:attr="onclick=|goModify(${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE})|">수정</a><span 
+										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+											and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}">&nbsp;</span>
+									<a href="javascript:void(0);" 
+										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+											and not #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)
+											and salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE}"
+										class="btn btn-primary" onclick="goBuy()">구매</a><span 
+										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+											and not #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)
+											and salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE}">&nbsp;</span>
+									<a href="javascript:void(0);" 
+										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+											and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}"
+										class="btn btn-danger" 
+										th:attr="onclick=|goDelete(${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE})|">삭제</a><span 
+										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
+										and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}">&nbsp;</span>
+									<a href="/usr/sales/SalesUsrList" class="btn btn-outline-secondary">목록</a>&nbsp;
+									<a href="#" class="btn btn-outline-secondary"><i class="bi bi-arrow-up fs-6"></i> Top</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	//Seq
+	let msSeq = document.querySelector("input[name=msSeq]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+	
+	function goDetail() {
+		submit("/usr/game/GameUsrDetail");
+	}
+	
+	function goModify(value) {
+		if (!value) {
+			showModalAlert("확인", "판매중일 때만 수정할 수 있습니다.");
+			return;
+		}
+		
+		submit("/usr/sales/SalesUsrForm");
+	}
+	
+	function goDelete(value) {
+		if (!value) {
+			showModalAlert("확인", "판매중일 때만 삭제할 수 있습니다.");
+			return;
+		}
+		
+		showModalDeleConfirmUsr(
+			"확인", 
+			"중고 판매 목록에서 삭제하시겠습니까?"
+		);
+	}
+	
+	document.getElementById("btnModalDelete").onclick = function () {
+		submit("/usr/sales/SalesUsrDele");
+	}
+	
+	function goBuy() {
+		
+	}
+</script>
+
+</body>
+</html>

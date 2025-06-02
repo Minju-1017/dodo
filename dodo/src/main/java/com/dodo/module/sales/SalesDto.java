@@ -7,8 +7,8 @@ public class SalesDto {
 	private String game_gSeq;
 	private String msTitle;
 	private String msDesc;
-	private double msPrice;
-	private double msFee;
+	private int msPrice;
+	private int msFee;
 	private int msStateCd;
 	private int msHit;
 	private String bm_mSeq;
@@ -23,6 +23,12 @@ public class SalesDto {
 	private int msDeliStateCd;
 	private String msRegiDate;
 	private String msUpdtDate;
+	
+	private String gName;
+	private Integer gCategoryCd;
+	
+	private String mName;
+	private String fPath;
 	
 	public String getMsSeq() {
 		return msSeq;
@@ -64,19 +70,19 @@ public class SalesDto {
 		this.msDesc = msDesc;
 	}
 	
-	public double getMsPrice() {
+	public int getMsPrice() {
 		return msPrice;
 	}
 	
-	public void setMsPrice(double msPrice) {
+	public void setMsPrice(int msPrice) {
 		this.msPrice = msPrice;
 	}
 	
-	public double getMsFee() {
+	public int getMsFee() {
 		return msFee;
 	}
 	
-	public void setMsFee(double msFee) {
+	public void setMsFee(int msFee) {
 		this.msFee = msFee;
 	}
 	
@@ -190,6 +196,38 @@ public class SalesDto {
 	
 	public void setMsUpdtDate(String msUpdtDate) {
 		this.msUpdtDate = msUpdtDate;
+	}
+
+	public Integer getgCategoryCd() {
+		return gCategoryCd;
+	}
+
+	public void setgCategoryCd(Integer gCategoryCd) {
+		this.gCategoryCd = gCategoryCd;
+	}
+
+	public String getgName() {
+		return gName;
+	}
+
+	public void setgName(String gName) {
+		this.gName = gName;
+	}
+
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+
+	public String getfPath() {
+		return fPath;
+	}
+
+	public void setfPath(String fPath) {
+		this.fPath = fPath;
 	}
 	
 }

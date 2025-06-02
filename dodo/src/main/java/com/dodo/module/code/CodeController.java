@@ -96,7 +96,6 @@ public class CodeController {
 	 */
 	@RequestMapping(value = "CodeXdmDele")
 	public String codeXdmDele(CodeDto codeDto) {
-		System.out.println(codeDto.getcSeq());
 		service.delete(codeDto);	
 
 		return "redirect:CodeXdmList";
@@ -108,7 +107,6 @@ public class CodeController {
 	 */
 	@RequestMapping(value = "CodeXdmUele")
 	public String codeXdmUele(CodeDto codeDto) {
-		System.out.println(codeDto.getcSeq());
 		service.uelete(codeDto);	
 
 		return "redirect:CodeXdmList";

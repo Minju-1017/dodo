@@ -19,6 +19,8 @@
 						<input type="hidden" name="gCategoryCd">
 						<input type="hidden" name="redirectUrl" value="/usr/member/MemberHoldUsrList">
 						<input type="hidden" id="mhSeq" name="mhSeq">
+						<input type="hidden" id="game_gSeq" name="game_gSeq" />
+						<input type="hidden" id="gName" name="gName" />
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
@@ -230,7 +232,6 @@
 	}
 	
 	function goSales(keyValue1, keyValue2) {
-		alert(keyValue1 + ", " + keyValue2);
 		game_gSeq.value = keyValue1;
 		gName.value = keyValue2;
 		
@@ -244,7 +245,7 @@
 			}
 			,success: function(response) {
 				if (response.rt == "success") {
-					submit("/usr/sales/SalesUsrInstForm");
+					submit("/usr/sales/SalesUsrForm");
 				} else {
 					showModalAlert("확인", "이미 중고 거래 등록한 게임입니다.");
 				}

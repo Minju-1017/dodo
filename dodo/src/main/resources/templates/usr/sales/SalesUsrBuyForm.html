@@ -123,9 +123,15 @@
 										</table>
 									</div>
 								</div>
+								
+								<!-- Toss Pay -->
+								<div id="payment-method"></div>
+								<div id="agreement"></div>
+    							<!-- End -->
+    							
 								<div class="mt-4 mb-3 text-center">
-									<button class="btn btn-primary" type="button" id="btnPay">결제하기</button><span>&nbsp;</span>
-									<a href="/usr/sales/SalesUsrList" class="btn btn-light">취소</a>
+									<button class="btn btn-primary" type="button" id="payment-button">결제하기</button><span>&nbsp;</span>
+									<a href="/usr/sales/SalesUsrTossPayCheckout" class="btn btn-light">취소</a>
 								</div>
 							</div>
 						</div>
@@ -216,91 +222,132 @@
     }
 </script>
 
-<!-- Validation: Bootstrap -->
-<script type="text/javascript">
-	// btnPay 클릭시
-	document.getElementById("btnPay").onclick = function() {
-		var focus = false; // Validation 후 Focus 줘야 하는 Input
-		
-		// msDeliName 체크
-		resetValidation(msDeliName);
-		
-		if (!strKorEngNumberValidation(msDeliName)) {
-			msDeliName.classList.add("is-invalid");
-			
-			if (!focus) {
-				msDeliName.focus();
-				focus = true;
-			}
-		} else {
-			msDeliName.classList.add("is-valid");
-		}
-		
-		// msDeliTel 체크
-		resetValidation(msDeliTel);
-		
-		if (!phoneValidation(msDeliTel)) {
-			msDeliTel.classList.add("is-invalid");
-			
-			if (!focus) {
-				msDeliTel.focus();
-				focus = true;
-			}
-		} else {
-			msDeliTel.classList.add("is-valid");
-		}
-		
-		// msDeliPostcode 체크
-		resetValidation(msDeliPostcode);
-		
-		if (!strValidation(msDeliPostcode)) {
-			msDeliPostcode.classList.add("is-invalid");
-			
-			if (!focus) {
-				msDeliPostcode.focus();
-				focus = true;
-			}
-		} else {
-			msDeliPostcode.classList.add("is-valid");
-		}
-		
-		// msDeliRoadAddr 체크
-		resetValidation(msDeliRoadAddr);
-		
-		if (!strValidation(msDeliRoadAddr)) {
-			msDeliRoadAddr.classList.add("is-invalid");
-			
-			if (!focus) {
-				msDeliRoadAddr.focus();
-				focus = true;
-			}
-		} else {
-			msDeliRoadAddr.classList.add("is-valid");
-		}
-		
-		// msDeliDetailAddr 체크
-		resetValidation(msDeliDetailAddr);
-		
-		if (!strValidation(msDeliDetailAddr)) {
-			msDeliDetailAddr.classList.add("is-invalid");
-			
-			if (!focus) {
-				msDeliDetailAddr.focus();
-				focus = true;
-			}
-		} else {
-			msDeliDetailAddr.classList.add("is-valid");
-		}
-		
-		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
-		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
-		if (focus) return false;
+<!-- Toss Pay -->
+<script src="https://js.tosspayments.com/v2/standard"></script>
 
-		msDeliName.value = msDeliName.value.trim();
-		msDeliTel.value = msDeliTel.value.trim();
-		msDeliDetailAddr.value = msDeliDetailAddr.value.trim();
+<script th:inline="javascript">
+	main();
 
-		//submit("/usr/sales/SalesUsrUpdt");
+	async function main() {
+		// ------  결제위젯 초기화 ------
+		const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+		const tossPayments = TossPayments(clientKey);
+        
+		// 회원 결제
+		const customerKey = "V2LzssPPyFpsOVX12y4Sa"; // TODO: 고유아이디로 변경
+		const widgets = tossPayments.widgets({
+			customerKey,
+		});
+
+		// ------ 주문의 결제 금액 설정 ------
+		await widgets.setAmount({
+			currency: "KRW",
+			value: /*[[${salesItem?.msPrice}]]*/ "",
+		});
+
+		await Promise.all([
+			// ------  결제 UI 렌더링 ------
+			widgets.renderPaymentMethods({
+				selector: "#payment-method",
+				variantKey: "DEFAULT",
+			}),
+			
+			// ------  이용약관 UI 렌더링 ------
+			widgets.renderAgreement({ selector: "#agreement", variantKey: "AGREEMENT" }),
+		]);
+		
+		// btnPay 클릭시
+		document.getElementById("payment-button").addEventListener("click", async function () {
+			var focus = false; // Validation 후 Focus 줘야 하는 Input
+			
+			// msDeliName 체크
+			resetValidation(msDeliName);
+			
+			if (!strKorEngNumberValidation(msDeliName)) {
+				msDeliName.classList.add("is-invalid");
+				
+				if (!focus) {
+					msDeliName.focus();
+					focus = true;
+				}
+			} else {
+				msDeliName.classList.add("is-valid");
+			}
+			
+			// msDeliTel 체크
+			resetValidation(msDeliTel);
+			
+			if (!phoneValidation(msDeliTel)) {
+				msDeliTel.classList.add("is-invalid");
+				
+				if (!focus) {
+					msDeliTel.focus();
+					focus = true;
+				}
+			} else {
+				msDeliTel.classList.add("is-valid");
+			}
+			
+			// msDeliPostcode 체크
+			resetValidation(msDeliPostcode);
+			
+			if (!strValidation(msDeliPostcode)) {
+				msDeliPostcode.classList.add("is-invalid");
+				
+				if (!focus) {
+					msDeliPostcode.focus();
+					focus = true;
+				}
+			} else {
+				msDeliPostcode.classList.add("is-valid");
+			}
+			
+			// msDeliRoadAddr 체크
+			resetValidation(msDeliRoadAddr);
+			
+			if (!strValidation(msDeliRoadAddr)) {
+				msDeliRoadAddr.classList.add("is-invalid");
+				
+				if (!focus) {
+					msDeliRoadAddr.focus();
+					focus = true;
+				}
+			} else {
+				msDeliRoadAddr.classList.add("is-valid");
+			}
+			
+			// msDeliDetailAddr 체크
+			resetValidation(msDeliDetailAddr);
+			
+			if (!strValidation(msDeliDetailAddr)) {
+				msDeliDetailAddr.classList.add("is-invalid");
+				
+				if (!focus) {
+					msDeliDetailAddr.focus();
+					focus = true;
+				}
+			} else {
+				msDeliDetailAddr.classList.add("is-valid");
+			}
+			
+			// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+			// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+			if (focus) return false;
+
+			msDeliName.value = msDeliName.value.trim();
+			msDeliTel.value = msDeliTel.value.trim();
+			msDeliDetailAddr.value = msDeliDetailAddr.value.trim();
+
+			await widgets.requestPayment({
+				orderId: "6rqp2wGIeRCQmMS_oWFb5", // TODO: 고유값으로 변경
+				orderName: /*[[${salesItem?.gName}]]*/ "",
+				successUrl: window.location.origin + "/success.html",
+	            failUrl: window.location.origin + "/fail.html",
+				customerEmail: /*[[${memberItem?.mEmail}]]*/ "",
+				customerName: msDeliName.value,
+				customerMobilePhone: msDeliTel.value,
+			});
+		});
 	}
 	
 	// msDeliName Input 시 체크
@@ -336,6 +383,8 @@
 		}	
 	});
 </script>
+
+
 
 </body>
 </html>

@@ -13,7 +13,7 @@ public class SalesDto {
 	private int msHit;
 	private String bm_mSeq;
 	private String msDeliName;
-	private String msDelePostcode;
+	private String msDeliPostcode;
 	private String msDeliRoadAddr;
 	private String msDeliDetailAddr;
 	private String msDeliTel;
@@ -118,12 +118,12 @@ public class SalesDto {
 		this.msDeliName = msDeliName;
 	}
 	
-	public String getMsDelePostcode() {
-		return msDelePostcode;
+	public String getMsDeliPostcode() {
+		return msDeliPostcode;
 	}
 	
-	public void setMsDelePostcode(String msDelePostcode) {
-		this.msDelePostcode = msDelePostcode;
+	public void setMsDeliPostcode(String msDeliPostcode) {
+		this.msDeliPostcode = msDeliPostcode;
 	}
 	
 	public String getMsDeliRoadAddr() {

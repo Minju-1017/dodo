@@ -53,6 +53,7 @@
 	    a.mRegiDate,
 	    a.mUpdtDate,
 	    a.mGradeCd,
+	    a.mTel,
 	    a.mDelNy,
 	    (SELECT b.fPath
 			FROM memberPfFile b
@@ -163,11 +164,6 @@
 		    mBirth,
 		    mGenderCd,
 		    mGradeCd,
-		    mPostcode,
-			mRoadAddress,
-			mDetailAddress,
-			mLatitude,
-			mLongitude,
 		    mRegiDate,
 		    mDelNy
 		)
@@ -180,11 +176,6 @@
 		    #{mBirth},
 		    #{mGenderCd},
 		    44,
-		    #{mPostcode},
-			#{mRoadAddress},
-			#{mDetailAddress},
-			#{mLatitude},
-			#{mLongitude},
 		    now(),
 		    0
 		)
@@ -202,6 +193,7 @@
 			mBirth=#{mBirth},
 			mGenderCd=#{mGenderCd},
 			mGradeCd=#{mGradeCd},
+			mTel=#{mTel},
 			mPostcode=#{mPostcode},
 			mRoadAddress=#{mRoadAddress},
 			mDetailAddress=#{mDetailAddress},

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
+import com.dodo.module.member.MemberDto;
+import com.dodo.module.member.MemberService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,6 +26,9 @@ public class SalesController {
 	
 	@Autowired
 	SalesService service;
+	
+	@Autowired
+	MemberService memberService;
 	
 	/**
 	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
@@ -150,6 +155,19 @@ public class SalesController {
 		service.delete(salesDto);	
 
 		return "redirect:SalesUsrList";
+	}
+	
+	/**
+	 * 데이터 추가 폼
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrBuyForm")
+	public String salesUsrBuyForm(Model model, SalesDto salesDto, MemberDto memberDto, HttpSession httpSession) {
+		memberDto.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		model.addAttribute("memberItem", memberService.selectOne(memberDto));
+		model.addAttribute("salesItem", service.selectOne(salesDto));
+		
+		return path_user + "SalesUsrBuyForm";
 	}
 
 }

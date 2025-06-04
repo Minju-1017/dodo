@@ -12,15 +12,16 @@ public class MemberDto extends FileDto {
 	private String mBirth;
 	private int mGenderCd;
 	private int mGradeCd;
-	private String mRegiDate;
-	private String mUpdtDate;
-	private int mDelNy;
-	private String mDelNyStr;
+	private String mTel;
 	private String mPostcode;
 	private String mRoadAddress;
 	private String mDetailAddress;
 	private Double mLatitude;
 	private Double mLongitude;
+	private String mRegiDate;
+	private String mUpdtDate;
+	private int mDelNy;
+	private String mDelNyStr;
 
 	public String getmSeq() {
 		return mSeq;
@@ -113,6 +114,14 @@ public class MemberDto extends FileDto {
 
 	public String getmDelNyStr() {
 		return mDelNyStr;
+	}
+
+	public String getmTel() {
+		return mTel;
+	}
+
+	public void setmTel(String mTel) {
+		this.mTel = mTel;
 	}
 
 	public String getmPostcode() {

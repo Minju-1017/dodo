@@ -40,7 +40,7 @@
 		a.msHit,
 		a.bm_mSeq,
 		a.msDeliName,
-		a.msDelePostcode,
+		a.msDeliPostcode,
 		a.msDeliRoadAddr,
 		a.msDeliDetailAddr,
 		a.msDeliTel,

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>						
+	<div class="mt-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb mb-0">
+							<li class="breadcrumb-item"><a href="/usr/index">홈</a></li>
+							<li class="breadcrumb-item">중고 거래</li>
+							<li class="breadcrumb-item active" aria-current="page">구매</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>			
+	<section class="mt-8 mb-14">
+		<div class="container">
+			<div class="row">
+ 				<div class="col-lg-12">
+					<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
+						
+						<input type="hidden" id="msSeq" name="msSeq" th:value="${salesItem?.msSeq}">
+						<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${salesItem?.game_gSeq}">
+						<input type="hidden" id="bm_mSeq" name="bm_mSeq" th:value="${salesItem?.bm_mSeq}">
+						
+						<div class="row mb-8 g-5">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div class="mb-3">
+											<h5 class="mb-1">배송 정보</h5>
+										</div>
+										<div class="d-flex gap-4">
+											<div class="form-check">
+												<input class="form-check-input" type="radio" onclick="changeDeliAddr(false)"
+													name="addressType" id="defaultAddress" value="default" checked>
+												<label class="form-check-label" for="defaultAddress">
+													기본 배송지
+												</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" onclick="changeDeliAddr(true)"
+													name="addressType" id="newAddress" value="new">
+												<label class="form-check-label" for="newAddress">
+													신규 배송지
+												</label>
+											</div>
+										</div>
+										<div class="row mt-2">
+											<div class="col-6">
+												<h6 class="h6">받는이<span style="color: red;"> *</span></h6>
+												<input type="text" class="form-control rounded-end" autocomplete="off" 
+													id="msDeliName" name="msDeliName" th:value="${memberItem?.mName}" required />
+												<div class="invalid-feedback"> 이름을 입력해 주세요. 한글/영문/숫자만 허용 </div>
+											</div>
+											<div class="col-6">
+												<h6 class="h6">연락처<span style="color: red;"> *</span></h6>
+												<input type="text" class="form-control rounded-end" autocomplete="off" 
+													id="msDeliTel" name="msDeliTel" th:value="${memberItem?.mTel}" required />
+												<div class="invalid-feedback"> 연락처를 9~11자리 숫자로 입력해 주세요. </div>
+											</div>
+										</div>
+										
+										<div class="col-12">
+											<h6 class="h6">주소<span style="color: red;"> *</span></h6>
+											<div class="d-flex gap-2">
+												<div>
+		                                 			<input type="text" class="form-control" id="msDeliPostcode" name="msDeliPostcode" 
+														th:value="${memberItem?.mPostcode}" placeholder="우편번호" readonly required />
+													<div class="invalid-feedback"> 우편번호를 입력해 주세요. </div>
+												</div>
+												<div>
+													<button class="btn btn-secondary" type="button" onclick="clickBtnPostcode()">우편번호 찾기</button>
+												</div>
+											</div>
+											<div class="mt-2">
+												<input type="text" class="form-control" id="msDeliRoadAddr" name="msDeliRoadAddr" 
+													th:value="${memberItem?.mRoadAddress}" placeholder="도로명주소" readonly required />
+												<div class="invalid-feedback"> 도로명 주소를 입력해 주세요. </div>
+											</div>
+											<div class="mt-2">
+												<input type="text" class="form-control" id="msDeliDetailAddr" name="msDeliDetailAddr" 
+													autocomplete="off" th:value="${memberItem?.mDetailAddress}" placeholder="상세주소" required />
+												<div class="invalid-feedback"> 상세 주소를 입력해 주세요. </div>
+											</div>
+										</div>
+										<div class="row mb-1">
+											<div class="col-12">
+												<h6 class="h6">배송 메모</h6>
+												<input type="text" class="form-control" autocomplete="off" 
+													placeholder="30자 제한" oninput="limitKoreanChars(this, 30)" 
+													id="msDeliMemo" name="msDeliMemo" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mt-4 card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div class="mb-3">
+											<h5 class="mb-1">구매 정보</h5>
+										</div>
+										<table class="table table-borderless">
+											<tbody>
+												<tr>
+													<th width="120px" >판매자</th>
+													<td th:text="${salesItem?.mName}"></td>
+												</tr>
+												<tr>
+													<th width="120px" >게임명</th>
+													<td th:text="${salesItem?.gName}"></td>
+												</tr>
+												<tr>
+													<th>판매가</th>
+													<td th:text="${'￦ ' + @doDoUtil.formatNumberComma(salesItem?.msPrice)}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="mt-4 mb-3 text-center">
+									<button class="btn btn-primary" type="button" id="btnPay">결제하기</button><span>&nbsp;</span>
+									<a href="/usr/sales/SalesUsrList" class="btn btn-light">취소</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	//Seq
+	let msSeq = document.querySelector("input[name=msSeq]");
+	let game_gSeq = document.querySelector("input[name=game_gSeq]");
+	
+	// URL
+	let fom = document.querySelector("form[name=form]");
+	
+	// Input
+	let msDeliName = document.getElementById("msDeliName");
+	let msDeliTel = document.getElementById("msDeliTel");
+	let msDeliPostcode = document.getElementById("msDeliPostcode");
+	let msDeliRoadAddr = document.getElementById("msDeliRoadAddr");
+	let msDeliDetailAddr = document.getElementById("msDeliDetailAddr");
+	
+	function submit(goUrl) {
+		fom.action = goUrl;
+		fom.submit();
+	}
+</script>
+
+<script th:inline="javascript">
+	function changeDeliAddr(bValue) {
+		resetValidation(msDeliName);
+		resetValidation(msDeliTel);
+		resetValidation(msDeliPostcode);
+		resetValidation(msDeliRoadAddr);
+		resetValidation(msDeliDetailAddr);
+		
+		if (bValue) { // 신규 주소면
+			msDeliName.value = "";
+			msDeliTel.value = "";
+			msDeliPostcode.value = "";
+			msDeliRoadAddr.value = "";
+			msDeliDetailAddr.value = "";
+		} else {
+			msDeliName.value = /*[[${memberItem?.mName}]]*/ "";
+			msDeliTel.value = /*[[${memberItem?.mTel}]]*/ "";
+			msDeliPostcode.value = /*[[${memberItem?.mPostcode}]]*/ "";
+			msDeliRoadAddr.value = /*[[${memberItem?.mRoadAddress}]]*/ "";
+			msDeliDetailAddr.value = /*[[${memberItem?.mDetailAddress}]]*/ "";
+		}
+	}
+</script>
+
+<!-- 주소 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script type="text/javascript">
+    function clickBtnPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = data.address; // 최종 주소 변수
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                msDeliPostcode.value = data.zonecode;
+                msDeliRoadAddr.value = roadAddr;
+                
+                // 상세주소 초기화
+                msDeliDetailAddr.value = "";
+                
+                // Validation
+                resetValidation(msDeliPostcode);
+                resetValidation(msDeliRoadAddr);
+                resetValidation(msDeliDetailAddr);
+                msDeliPostcode.classList.add("is-valid");
+                msDeliRoadAddr.classList.add("is-valid");
+            }
+        }).open();
+    }
+</script>
+
+<!-- Validation: Bootstrap -->
+<script type="text/javascript">
+	// btnPay 클릭시
+	document.getElementById("btnPay").onclick = function() {
+		var focus = false; // Validation 후 Focus 줘야 하는 Input
+		
+		// msDeliName 체크
+		resetValidation(msDeliName);
+		
+		if (!strKorEngNumberValidation(msDeliName)) {
+			msDeliName.classList.add("is-invalid");
+			
+			if (!focus) {
+				msDeliName.focus();
+				focus = true;
+			}
+		} else {
+			msDeliName.classList.add("is-valid");
+		}
+		
+		// msDeliTel 체크
+		resetValidation(msDeliTel);
+		
+		if (!phoneValidation(msDeliTel)) {
+			msDeliTel.classList.add("is-invalid");
+			
+			if (!focus) {
+				msDeliTel.focus();
+				focus = true;
+			}
+		} else {
+			msDeliTel.classList.add("is-valid");
+		}
+		
+		// msDeliPostcode 체크
+		resetValidation(msDeliPostcode);
+		
+		if (!strValidation(msDeliPostcode)) {
+			msDeliPostcode.classList.add("is-invalid");
+			
+			if (!focus) {
+				msDeliPostcode.focus();
+				focus = true;
+			}
+		} else {
+			msDeliPostcode.classList.add("is-valid");
+		}
+		
+		// msDeliRoadAddr 체크
+		resetValidation(msDeliRoadAddr);
+		
+		if (!strValidation(msDeliRoadAddr)) {
+			msDeliRoadAddr.classList.add("is-invalid");
+			
+			if (!focus) {
+				msDeliRoadAddr.focus();
+				focus = true;
+			}
+		} else {
+			msDeliRoadAddr.classList.add("is-valid");
+		}
+		
+		// msDeliDetailAddr 체크
+		resetValidation(msDeliDetailAddr);
+		
+		if (!strValidation(msDeliDetailAddr)) {
+			msDeliDetailAddr.classList.add("is-invalid");
+			
+			if (!focus) {
+				msDeliDetailAddr.focus();
+				focus = true;
+			}
+		} else {
+			msDeliDetailAddr.classList.add("is-valid");
+		}
+		
+		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
+		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
+		if (focus) return false;
+
+		msDeliName.value = msDeliName.value.trim();
+		msDeliTel.value = msDeliTel.value.trim();
+		msDeliDetailAddr.value = msDeliDetailAddr.value.trim();
+
+		//submit("/usr/sales/SalesUsrUpdt");
+	}
+	
+	// msDeliName Input 시 체크
+	msDeliName.addEventListener("input", function(){
+		resetValidation(msDeliName);
+		
+		if (!strKorEngNumberValidation(msDeliName)) {
+			msDeliName.classList.add("is-invalid");
+		} else {
+			msDeliName.classList.add("is-valid");
+		}	
+	});
+	
+	// msDeliTel Input 시 체크
+	msDeliTel.addEventListener("input", function(){
+		resetValidation(msDeliTel);
+		
+		if (!phoneValidation(msDeliTel)) {
+			msDeliTel.classList.add("is-invalid");
+		} else {
+			msDeliTel.classList.add("is-valid");
+		}	
+	});
+	
+	// msDeliDetailAddr Input 시 체크
+	msDeliDetailAddr.addEventListener("input", function(){
+		resetValidation(msDeliDetailAddr);
+		
+		if (!strValidation(msDeliDetailAddr)) {
+			msDeliDetailAddr.classList.add("is-invalid");
+		} else {
+			msDeliDetailAddr.classList.add("is-valid");
+		}	
+	});
+</script>
+
+</body>
+</html>

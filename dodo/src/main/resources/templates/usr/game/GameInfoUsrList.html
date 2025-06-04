@@ -4,9 +4,23 @@
 <div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
 <main>
+	<div class="mt-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb mb-0">
+							<li class="breadcrumb-item"><a href="/usr/index">홈</a></li>
+							<li class="breadcrumb-item">보드게임</li>
+							<li class="breadcrumb-item active" aria-current="page">정보 및 리뷰</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="mt-8 mb-lg-14 mb-8">
 		<div class="container">
-			
 			<form name="formList" id="formList" method="post" autocomplete="off">
 			
 				<input type="hidden" id="currPage" name="currPage" th:value="${vo.currPage}" default="1"/>

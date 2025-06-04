@@ -42,13 +42,6 @@
 				</div>
 				<div class="col-lg-9 col-md-8 col-12">
 					<div class="py-6 p-md-6 p-lg-10">
-						<div class="row mb-8">
-							<div class="col-md-12">
-								<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-									<h4>기본 정보 변경</h4>
-								</div>
-							</div>
-						</div>
 						<div class="row mb-8 g-5">
 							<div class="col-lg-12 col-12">
 								<div class="card card-lg border-0">
@@ -139,8 +132,19 @@
 											</div>
 											<div class="col-lg-5 col-12"></div>
 											<div class="col-lg-7 col-12">
+												<label for="mTel" class="form-label">
+													연락처
+													<span class="text-danger">*</span>
+												</label>
+												<input type="text" class="form-control" id="mTel" name="mTel" 
+													autocomplete="off" th:value="${memberItem?.mTel}" 
+													placeholder="숫자만 입력" maxlength="11" required />
+												<div class="invalid-feedback"> 연락처를 형식에 맞게 입력해 주세요. (9~11자리 숫자) </div>
+											</div>
+											<div class="col-lg-5 col-12"></div>
+											<div class="col-lg-7 col-12">
 												<label class="form-label">
-													주소 - 기본 배송지
+													주소 (기본 배송지)
 													<span class="text-danger">*</span>
 												</label>
 												<div class="d-flex gap-2">
@@ -191,6 +195,7 @@
 	let mName = document.getElementById("mName");
 	let mEmail = document.getElementById("mEmail");
 	let mBirth = document.getElementById("mBirth");
+	let mTel = document.getElementById("mTel");
 	let mPostcode = document.getElementById("mPostcode");
 	let mRoadAddress = document.getElementById("mRoadAddress");
 	let mDetailAddress = document.getElementById("mDetailAddress");
@@ -337,6 +342,20 @@
 			mBirth.classList.add("is-valid");
 		}
 		
+		// mTel 체크
+		resetValidation(mTel);
+		
+		if (!phoneValidation(mTel)) {
+			mTel.classList.add("is-invalid");
+			
+			if (!focus) {
+				mTel.focus();
+				focus = true;
+			}
+		} else {
+			mTel.classList.add("is-valid");
+		}
+		
 		// mPostcode 체크
 		resetValidation(mPostcode);
 		
@@ -385,6 +404,7 @@
 
 		mName.value = mName.value.trim();
 		mEmail.value = mEmail.value.trim();
+		mTel.value = mTel.value.trim();
 		mDetailAddress.value = mDetailAddress.value.trim();
 		
 		setAccount();
@@ -449,6 +469,17 @@
 		}	
 	});
 	
+	// mTel Input 시 체크
+	mTel.addEventListener("input", function(){
+		resetValidation(mTel);
+		
+		if (!phoneValidation(mTel)) {
+			mTel.classList.add("is-invalid");
+		} else {
+			mTel.classList.add("is-valid");
+		}	
+	});
+	
 	// mDetailAddress Input 시 체크
 	mDetailAddress.addEventListener("input", function(){
 		resetValidation(mDetailAddress);
@@ -474,6 +505,7 @@
 				"mGenderCd" : $("#mGenderCd").val(), 
 				"fFileName" : $("#fFileName").val(),
 				"mGradeCd" : $("#mGradeCd").val(),
+				"mTel" : $("#mTel").val(),
 				"mPostcode" : $("#mPostcode").val(),
 				"mRoadAddress" : $("#mRoadAddress").val(),
 				"mDetailAddress" : $("#mDetailAddress").val(),
@@ -488,6 +520,7 @@
 					resetValidation(mEmail);
 					resetValidation(mBirth);
 					resetValidation(fFileName);
+					resetValidation(mTel);
 					resetValidation(mPostcode);
 	                resetValidation(mRoadAddress);
 	                resetValidation(mDetailAddress);

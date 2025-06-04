@@ -27,12 +27,13 @@
 						
 						<input type="hidden" id="msSeq" name="msSeq" th:value="${salesItem?.msSeq}">
 						<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${salesItem?.game_gSeq}">
+						<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${salesItem?.member_mSeq}">
 						<input type="hidden" id="bm_mSeq" name="bm_mSeq" th:value="${salesItem?.bm_mSeq}">
 						
 						<div class="row mb-8 g-5">
 							<div class="col-lg-8">
 								<div class="card card-lg">
-									<div class="card-body p-6 d-flex flex-column gap-3">
+									<div class="card-body p-8 d-flex flex-column gap-3">
 										<div class="mb-3">
 											<h5 class="mb-1">배송 정보</h5>
 										</div>
@@ -101,18 +102,18 @@
 									</div>
 								</div>
 								<div class="mt-4 card card-lg">
-									<div class="card-body p-6 d-flex flex-column gap-3">
+									<div class="card-body p-8 d-flex flex-column">
 										<div class="mb-3">
 											<h5 class="mb-1">구매 정보</h5>
 										</div>
 										<table class="table table-borderless">
 											<tbody>
 												<tr>
-													<th width="120px" >판매자</th>
+													<th width="120px">판매자</th>
 													<td th:text="${salesItem?.mName}"></td>
 												</tr>
 												<tr>
-													<th width="120px" >게임명</th>
+													<th>게임명</th>
 													<td th:text="${salesItem?.gName}"></td>
 												</tr>
 												<tr>
@@ -125,13 +126,18 @@
 								</div>
 								
 								<!-- Toss Pay -->
-								<div id="payment-method"></div>
-								<div id="agreement"></div>
+								<div class="mt-4 card card-lg">
+									<div class="card-body p-6 d-flex flex-column gap-3">
+										<div id="payment-method"></div>
+										<div id="agreement"></div>
+									</div>
+								</div>
     							<!-- End -->
     							
-								<div class="mt-4 mb-3 text-center">
+								<div class="mt-6 mb-3 text-center">
 									<button class="btn btn-primary" type="button" id="payment-button">결제하기</button><span>&nbsp;</span>
-									<a href="/usr/sales/SalesUsrTossPayCheckout" class="btn btn-light">취소</a>
+									<a class="btn btn-light" href="javascript:void(0);"
+										onclick="submit('/usr/sales/SalesUsrDetail')">취소</a>
 								</div>
 							</div>
 						</div>
@@ -149,6 +155,7 @@
 	//Seq
 	let msSeq = document.querySelector("input[name=msSeq]");
 	let game_gSeq = document.querySelector("input[name=game_gSeq]");
+	let member_mSeq = document.querySelector("input[name=member_mSeq]");
 	
 	// URL
 	let fom = document.querySelector("form[name=form]");

@@ -214,8 +214,7 @@
 										</div>
 									</div>
 									<div class="col-lg-6 col-12" style="text-align: right;">
-										<button th:unless="${#lists.isEmpty(codeList)}" 
-											class="btn btn-primary" type="button" id="btnSave">
+										<button class="btn btn-primary" type="button" id="btnSave">
 											<i class="bi bi-database-add"></i>
 										</button>
 									</div>
@@ -225,11 +224,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-12 text-center">
 					<div class="card h-100 card-lg">
 					
-						<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+						<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div> 중복되는 totalAndRowNum 처리
 
 						<div class="card-body p-0">
 							<div class="table-responsive">
@@ -286,7 +285,7 @@
 									<li th:each="num: ${#numbers.sequence(vo?.startPage, vo?.endPage)}" 
 										th:classappend="${num eq vo?.currPage} ? active : ''" 
 										class="page-item" style="cursor: pointer;">
-										<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+										<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}">${i.index}</a>
 									</li>
 									<li th:if="${vo?.endPage ne vo?.totalPages}" class="page-item" style="cursor: pointer;">
 										<a class="page-link" th:attr="onclick=|goList('${vo?.endPage + 1}')|">
@@ -299,7 +298,7 @@
 						</div>
 					 </div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</main>
 </div>
@@ -310,7 +309,7 @@
 <script type="text/javascript">
 	// URL
 	let fom = document.querySelector("form[name=form]");
-	let goUrlXdmInst = "/xdm/game/GameXdmInst";
+	let uFile = document.querySelector("input[name=fUploadFiles]");
 	
 	// Input
 	let fUploadFiles = document.getElementById("fUploadFiles");
@@ -337,6 +336,7 @@
 		if (file != null && file.name != null && file.name.trim() != ""
 				&& fFileName.value != null && fFileName.value.trim() != "") {
 			if (!excelFileValidation(file, fFileName)) {
+				
 				fFileName.classList.add("is-invalid");
 				
 				if (!focus) {
@@ -354,11 +354,11 @@
 				focus = true;
 			}
 		}
-		
+
 		// return false 시 Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 		if (focus) return false;
 		
-		//submit(goUrlXdmInst);
+		submit("/xdm/excel/CodeXdmListExcelRead");
 	}
 	
 	// fUploadFiles, fFileName Change 시 체크

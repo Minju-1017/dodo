@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dodo.module.code.CodeDto;
 import com.dodo.module.code.CodeService;
@@ -25,7 +30,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value="/xdm/excel/")
-public class ExcelDownloadController {
+public class ExcelController {
 	
 	@Autowired
 	CodeService codeService;
@@ -136,5 +141,49 @@ public class ExcelDownloadController {
         
 	    writer.flush();
 	    writer.close();
+	}
+    
+    /**
+	 * Apache POI 이용한 Excel Read(Insert)
+	 * @param dto
+	 * @return
+	 * @throws IOException
+	 */
+    @RequestMapping(value = "CodeXdmListExcelRead")
+	public String readExcel(CodeDto dto, @RequestParam("fUploadFiles") MultipartFile file) throws Exception { 
+    	System.out.println("$$$$$$$$$$$$$$" + file);
+		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+		XSSFSheet worksheet = workbook.getSheetAt(0);
+		
+		for(int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) {
+			CodeDto excel = new CodeDto();
+		    
+		    DataFormatter formatter = new DataFormatter();		        
+		    XSSFRow row = worksheet.getRow(i);
+		    	    	
+		    String cName = formatter.formatCellValue(row.getCell(0));
+		    String cNameEng = formatter.formatCellValue(row.getCell(1));
+		    String cSequence = formatter.formatCellValue(row.getCell(2));
+		    String cDescription = formatter.formatCellValue(row.getCell(3));
+		    String cUseNy = formatter.formatCellValue(row.getCell(4));
+		    String codeGroup_cgSeq = formatter.formatCellValue(row.getCell(5));
+		
+			if (cUseNy.equals("Y")) {
+				cUseNy = "1";
+			} else {
+				cUseNy = "0";
+			}
+			
+			excel.setcName(cName);
+			excel.setcNameEng(cNameEng);
+			excel.setcSequence(Integer.parseInt(cSequence));
+			excel.setcDescription(cDescription);
+			excel.setcUseNy(Integer.parseInt(cUseNy));
+			excel.setCodeGroup_cgSeq(codeGroup_cgSeq);
+	
+		    codeService.insert(excel);
+		} 
+		
+		return "redirect:/xdm/code/CodeXdmList";
 	}
 }

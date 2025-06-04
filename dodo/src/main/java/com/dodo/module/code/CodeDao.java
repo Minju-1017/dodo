@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.dodo.module.member.MemberDto;
-
 @Repository
 public interface CodeDao {
 

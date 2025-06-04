@@ -127,7 +127,7 @@ function imgFileValidation(fileObj, fileNameInputObj) {
 // Object null, "" 체크는 호출전에 함
 function excelFileValidation(fileObj, fileNameInputObj) {
 	var value = fileNameInputObj.value.trim();
-	if(!value.match(REGEX_EXCEL_FILE) || fileObj.size >= IMG_EXCEL_SIZE) return false;
+	if(!value.match(REGEX_EXCEL_FILE) || fileObj.size >= EXCEL_MAX_SIZE) return false;
 	
 	return true;
 }

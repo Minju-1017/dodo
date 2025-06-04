@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.dodo.module.code.CodeDto;
-import com.dodo.module.code.CodeVo;
-
 @Repository
 public interface SalesDao {
 	

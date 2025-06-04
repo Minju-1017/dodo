@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dodo.module.code.CodeDto;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller

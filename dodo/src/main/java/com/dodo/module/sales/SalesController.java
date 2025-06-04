@@ -8,7 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dodo.Constants;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +33,27 @@ public class SalesController {
 	@RequestMapping(value = "SalesUsrList")
 	public String salesUsrList(Model model, @ModelAttribute("vo") SalesVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("salesList", service.selectList(vo));
+		}
+		
+		return path_user + "SalesUsrList";
+	}
+	
+	/**
+	 * 검색된 데이터 읽어오기 - 페이징 기능 들어감
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "SalesSearchUsrList")
+	public String salesSearchUsrList(Model model, @ModelAttribute("vo") SalesVo vo, 
+			@RequestParam("salesShValue") String salesShValue) {
+		// addAttribute 하기 전에 미리 실행되야함(판매중인 게임만 검색)
+		if (salesShValue != null && !salesShValue.equals("")) vo.setShValue(salesShValue);
+		vo.setShStateCd(Constants.SALES_CODE_ON_SALE);
+		vo.setShOption(1);
 		vo.setParamsPaging(service.selectListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {

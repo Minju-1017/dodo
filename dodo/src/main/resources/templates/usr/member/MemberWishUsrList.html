@@ -20,6 +20,7 @@
 						<input type="hidden" name="redirectUrl" value="/usr/member/MemberWishUsrList">
 						<input type="hidden" id="mwSeq" name="mwSeq">
 						<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
+						<input type="hidden" name="salesShValue">
 			
 						<div class="col-md-12 text-center">
 							<div class="card h-100 card-lg">
@@ -92,7 +93,7 @@
 														<a th:href="${list?.gOfficialUrl}" class= "d-block" target="_blank"
 															th:text="${@codeService.selectOneCachedCode(list?.gOfficialCd)}"></a>
 													</td>
-													<td><a href="#"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
+													<td><a href="javascript:void(0);" th:attr="onclick=|goSales('${list.gName}')|"><div class="btn btn-primary btn-sm">바로가기</div></a></td>
 													<td th:if="${list?.mhCount == 0}">
 														<a href="javascript:void(0);" th:attr="onclick=|goHold(true, '${list.gSeq}')|"
 															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="보유 게임 등록">
@@ -160,6 +161,7 @@
   	let mwSeq = document.querySelector("input[name=mwSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let redirectUrl = document.querySelector("input[name=redirectUrl]");
+  	let salesShValue = document.querySelector("input[name=salesShValue]");
   	
   	let prevFocusId = document.getElementById("prevFocusId");
     	
@@ -191,8 +193,13 @@
 	}
 </script>
 
-<!-- Wish/Hold -->
+<!-- Sales/Wish/Hold -->
 <script type="text/javascript">
+	function goSales(gameName) {
+		salesShValue.value = gameName;
+		submit("/usr/sales/SalesSearchUsrList");
+	}
+
 	function goWishDelete(memberWishSeq) {
 		prevFocusId.value = memberWishSeq;
 		

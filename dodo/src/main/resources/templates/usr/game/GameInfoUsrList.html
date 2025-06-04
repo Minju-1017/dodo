@@ -15,6 +15,7 @@
 				<input type="hidden" id="gSeq" name="gSeq">
 				<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
 				<input type="hidden" id="gCategoryCd" name="gCategoryCd">
+				<input type="hidden" name="salesShValue">
 			
 				<div class="row gx-10">
 					<aside class="col-lg-3 col-md-4 mb-6 mb-md-0">
@@ -311,7 +312,7 @@
 													th:attr="onclick=|goWish(false, '${list.gSeq}')|"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
 													data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
-												<a href="#" 
+												<a href="javascript:void(0);" th:attr="onclick=|goSales('${list.gName}')|"
 													class="btn btn-icon btn-sm btn-outline-gray-400 text-muted"
 													data-bs-toggle="tooltip" title="중고 구매"><i class="bi bi-cart"></i></a>
 											</div>
@@ -359,6 +360,7 @@
   	let mSeq = document.querySelector("input[name=mSeq]");
   	let cate = document.querySelector("input[name=gCategoryCd]");
   	let shCategoryCd = document.querySelector("input[name=shCategoryCd]");
+  	let salesShValue = document.querySelector("input[name=salesShValue]");
     	
 	let fom = document.querySelector("form[name=formList]");
 	
@@ -376,7 +378,7 @@
 	let shScoreList = /*[[${vo.shScoreList}]]*/ {};
 </script>
 
-<!-- Wish/Hold -->
+<!-- Wish/Hold/Sales -->
 <script type="text/javascript">
 	function goWish(bWish, gameSeq) {
 		var mSeq = document.getElementById("mSeq").value;
@@ -515,6 +517,11 @@
 	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
 	      new bootstrap.Tooltip(el, { trigger: 'hover focus' });
 	    });
+	}
+	
+	function goSales(gameName) {
+		salesShValue.value = gameName;
+		submit("/usr/sales/SalesSearchUsrList");
 	}
 </script>
 

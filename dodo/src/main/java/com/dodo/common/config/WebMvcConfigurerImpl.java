@@ -33,7 +33,8 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 					"/usr/game/GameInfoSearchUsrList",
 					"/usr/game/GameUsrDetail",
 					"/usr/game/GameUsrDetailReviewMore",
-					"/usr/sales/SalesUsrList"
+					"/usr/sales/SalesUsrList",
+					"/usr/sales/SalesSearchUsrList"
 		);
 	}
 

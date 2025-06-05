@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	
+<div th:replace="~{usr/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
+
+<main>						
+	<div class="mt-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb mb-0">
+							<li class="breadcrumb-item"><a href="/usr/index">홈</a></li>
+							<li class="breadcrumb-item">중고 거래</li>
+							<li class="breadcrumb-item active" aria-current="page">구매</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>			
+	<section class="mt-8 mb-14">
+		<div class="container">
+			<div class="row">
+ 				<div class="col-lg-12">
+					<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
+						
+						<div class="row mb-8 g-5">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-8 d-flex flex-column gap-3">
+										<div class="row mt-2">
+											<div class="col-12">
+												<span th:utext="${message}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+    							
+								<div class="mt-6 mb-3 text-center">
+									<a class="btn btn-primary" href="/usr/sales/SalesUsrList">중고 거래</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+
+</body>
+</html>

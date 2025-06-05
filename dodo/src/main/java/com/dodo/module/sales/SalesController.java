@@ -1,13 +1,21 @@
 package com.dodo.module.sales;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,6 +37,9 @@ public class SalesController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Value("${toss.secretKey}")
+    private String tossSecretKey;
 	
 	/**
 	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
@@ -57,7 +68,7 @@ public class SalesController {
 			@RequestParam("salesShValue") String salesShValue) {
 		// addAttribute 하기 전에 미리 실행되야함(판매중인 게임만 검색)
 		if (salesShValue != null && !salesShValue.equals("")) vo.setShValue(salesShValue);
-		vo.setShStateCd(Constants.SALES_CODE_ON_SALE);
+		vo.setShStateCd(Constants.SALES_CODE_ON_SALES);
 		vo.setShOption(1);
 		vo.setParamsPaging(service.selectListCount(vo));
 		
@@ -139,26 +150,50 @@ public class SalesController {
 	 * 입력한 데이터 수정하기
 	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
 	 */
+	@ResponseBody
 	@RequestMapping(value = "SalesUsrUpdt")
-	public String salesUsrUpdt(SalesDto salesDto) {
-		service.update(salesDto);	
-
-		return "redirect:SalesUsrList";
+	public Map<String, Object> salesUsrUpdt(SalesDto salesDto) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		SalesDto sDto = service.selectOne(salesDto);
+		int soDtoCnt = service.orderCheckByMsSeq(salesDto);
+		
+		// 결제 완료거나, 구매중이면 수정 불가
+		if (sDto.getMsStateCd() == Constants.SALES_CODE_SALES_COMPLETED || soDtoCnt > 0) {
+			returnMap.put("rt", "fail");
+		} else {
+			service.update(salesDto);
+			returnMap.put("rt", "success");
+		}
+		
+		return returnMap;
 	}
 	
 	/**
-	 * 데이터 삭제하기
-	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
+	 * Ajax를 통한 데이터 삭제하기
+	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value = "SalesUsrDele")
-	public String salesUsrDele(SalesDto salesDto) {
-		service.delete(salesDto);	
-
-		return "redirect:SalesUsrList";
+	public Map<String, Object> salesUsrDele(SalesDto salesDto) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		SalesDto sDto = service.selectOne(salesDto);
+		int soDtoCnt = service.orderCheckByMsSeq(salesDto);
+		
+		// 결제 완료거나, 구매중이면 수정 불가
+		if (sDto.getMsStateCd() == Constants.SALES_CODE_SALES_COMPLETED || soDtoCnt > 0) {
+			returnMap.put("rt", "fail");
+		} else {
+			service.delete(salesDto);	
+			returnMap.put("rt", "success");
+		}
+		
+		return returnMap;
 	}
 	
 	/**
-	 * 데이터 추가 폼
+	 * Toss 결제 폼
 	 * @return
 	 */
 	@RequestMapping(value = "SalesUsrBuyForm")
@@ -168,6 +203,152 @@ public class SalesController {
 		model.addAttribute("salesItem", service.selectOne(salesDto));
 		
 		return path_user + "SalesUsrBuyForm";
+	}
+	
+	/**
+	 * Ajax를 통한 Toss 결제 정보 DB 저장
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "SalesUsrBuyInst")
+	public Map<String, Object> salesUsrBuyInst(Model model, SalesDto salesDto, 
+			SalesOrderDto salesOrderDto, HttpSession httpSession) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		salesOrderDto.setMemberSales_msSeq(salesDto.getMsSeq());
+		salesOrderDto.setoMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		
+		int cnt = service.insertOrderCheck(salesOrderDto);
+		
+		if (cnt == 0) {
+			int cntInsert = service.insertOrder(salesOrderDto);
+			
+			if (cntInsert == 0) {
+				returnMap.put("rt", "fail");
+			} else {
+				model.addAttribute("salesOrderItem", salesOrderDto);
+				returnMap.put("rt", salesOrderDto.getMsoSeq());
+			}
+		} else {
+			int cntDel = service.deleteOrder(salesOrderDto);
+			
+			if (cntDel == 0) {
+				returnMap.put("rt", "fail");
+			} else {
+				int cntInsert = service.insertOrder(salesOrderDto);
+				
+				if (cntInsert == 0) {
+					returnMap.put("rt", "fail");
+				} else {
+					model.addAttribute("salesOrderItem", salesOrderDto);
+					returnMap.put("rt", salesOrderDto.getMsoSeq());
+				}
+			}
+		}
+		
+		return returnMap;
+	}
+	
+	/**
+	 * Toss 결제 성공 UI
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrBuySuccess", method = RequestMethod.GET)
+	public String salesUsrBuySuccess(Model model,
+	        @RequestParam("paymentKey") String paymentKey,
+	        @RequestParam("orderId") String orderId,
+	        @RequestParam("amount") String amount) throws Exception {
+        // DB에 저장된 결제 정보와 Toss로 결제하려는 정보가 일치하는지 확인한다.
+        SalesOrderDto dto = new SalesOrderDto();
+        dto.setMsoSeq(orderId);
+        int check = service.orderCheck(dto);
+        
+        if (check == 0) {
+        	model.addAttribute("message", "주문 실패하였습니다. 중고거래 게시판으로 이동합니다.");
+        	return path_user + "SalesUsrBuyFail";
+        }
+        
+        // Toss API에 결제 승인 요청
+		JSONObject obj = new JSONObject();
+		obj.put("orderId", orderId);
+		obj.put("amount", amount);
+		obj.put("paymentKey", paymentKey);
+
+        // 토스페이먼츠 API는 시크릿 키를 사용자 ID로 사용하고, 비밀번호는 사용하지 않습니다.
+        // 비밀번호가 없다는 것을 알리기 위해 시크릿 키 뒤에 콜론을 추가합니다.
+        Base64.Encoder encoder = Base64.getEncoder();
+        byte[] encodedBytes = encoder.encode((tossSecretKey + ":").getBytes(StandardCharsets.UTF_8));
+        String authorizations = "Basic " + new String(encodedBytes);
+
+        // 결제를 승인하면 결제수단에서 금액이 차감돼요.
+        URL url = new URL("https://api.tosspayments.com/v1/payments/confirm");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("Authorization", authorizations);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+
+        // 결제 승인 요청
+        OutputStream outputStream = connection.getOutputStream();
+        outputStream.write(obj.toString().getBytes("UTF-8"));
+
+        // 결제 승인 결과 받음 (성공 200)
+        int code = connection.getResponseCode();
+        
+        SalesOrderDto salesOrderDto = new SalesOrderDto();
+    	salesOrderDto.setMsoSeq(orderId);
+    	
+        if (code == 200) {
+        	// 결제 승인 성공 시 중고 거래 상태(구매 완료)/배송 상태(결제 완료) 변경
+        	service.updateSuccess(salesOrderDto);
+        	service.updateOrderSuccess(salesOrderDto);
+        	
+        	return path_user + "SalesUsrBuySuccess";
+        } else {
+        	// 결제 승인 실패 시 임시 주문 정보 삭제
+        	service.deleteOrder(salesOrderDto);
+        	
+        	// 실패 메세지
+        	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br>중고거래 게시판으로 이동합니다.");
+        	return path_user + "SalesUsrBuyFail";
+        }
+    }
+	
+	/**
+	 * Toss 결제 실패 UI
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrBuyFail")
+	public String salesUsrBuyFail() {
+		return path_user + "SalesUsrBuyFail";
+	}
+	
+	/**
+	 * 내 판매 정보 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrMySalesList")
+	public String salesUsrMySalesList(Model model, @ModelAttribute("vo") SalesVo vo) {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectMySalesListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("mySalesList", service.selectMySalesList(vo));
+		}
+		
+		return path_user + "SalesUsrMySalesList";
+	}
+	
+	/**
+	 * 데이터 추가 폼
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrMySalesDeliForm")
+	public String salesUsrMySalesDeliForm(Model model, SalesDto salesDto) {
+		model.addAttribute("salesDeliItem", service.selectOrderOne(salesDto));
+		
+		return path_user + "SalesUsrMySalesDeliForm";
 	}
 
 }

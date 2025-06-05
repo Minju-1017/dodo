@@ -1,6 +1,6 @@
 package com.dodo.module.sales;
 
-public class SalesDto {
+public class SalesDto extends SalesOrderDto {
 	
 	private String msSeq;
 	private String member_mSeq;
@@ -11,16 +11,6 @@ public class SalesDto {
 	private int msFee;
 	private int msStateCd;
 	private int msHit;
-	private String bm_mSeq;
-	private String msDeliName;
-	private String msDeliPostcode;
-	private String msDeliRoadAddr;
-	private String msDeliDetailAddr;
-	private String msDeliTel;
-	private String msDeliMemo; 
-	private String msDeliComp;
-	private String msDeliNo;
-	private int msDeliStateCd;
 	private String msRegiDate;
 	private String msUpdtDate;
 	
@@ -100,86 +90,6 @@ public class SalesDto {
 	
 	public void setMsHit(int msHit) {
 		this.msHit = msHit;
-	}
-	
-	public String getBm_mSeq() {
-		return bm_mSeq;
-	}
-	
-	public void setBm_mSeq(String bm_mSeq) {
-		this.bm_mSeq = bm_mSeq;
-	}
-	
-	public String getMsDeliName() {
-		return msDeliName;
-	}
-	
-	public void setMsDeliName(String msDeliName) {
-		this.msDeliName = msDeliName;
-	}
-	
-	public String getMsDeliPostcode() {
-		return msDeliPostcode;
-	}
-	
-	public void setMsDeliPostcode(String msDeliPostcode) {
-		this.msDeliPostcode = msDeliPostcode;
-	}
-	
-	public String getMsDeliRoadAddr() {
-		return msDeliRoadAddr;
-	}
-	
-	public void setMsDeliRoadAddr(String msDeliRoadAddr) {
-		this.msDeliRoadAddr = msDeliRoadAddr;
-	}
-	
-	public String getMsDeliDetailAddr() {
-		return msDeliDetailAddr;
-	}
-	
-	public void setMsDeliDetailAddr(String msDeliDetailAddr) {
-		this.msDeliDetailAddr = msDeliDetailAddr;
-	}
-	
-	public String getMsDeliTel() {
-		return msDeliTel;
-	}
-	
-	public void setMsDeliTel(String msDeliTel) {
-		this.msDeliTel = msDeliTel;
-	}
-	
-	public String getMsDeliMemo() {
-		return msDeliMemo;
-	}
-	
-	public void setMsDeliMemo(String msDeliMemo) {
-		this.msDeliMemo = msDeliMemo;
-	}
-	
-	public String getMsDeliComp() {
-		return msDeliComp;
-	}
-	
-	public void setMsDeliComp(String msDeliComp) {
-		this.msDeliComp = msDeliComp;
-	}
-	
-	public String getMsDeliNo() {
-		return msDeliNo;
-	}
-	
-	public void setMsDeliNo(String msDeliNo) {
-		this.msDeliNo = msDeliNo;
-	}
-	
-	public int getMsDeliStateCd() {
-		return msDeliStateCd;
-	}
-	
-	public void setMsDeliStateCd(int msDeliStateCd) {
-		this.msDeliStateCd = msDeliStateCd;
 	}
 	
 	public String getMsRegiDate() {

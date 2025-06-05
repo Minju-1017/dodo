@@ -38,16 +38,6 @@
 		a.msFee,
 		a.msStateCd,
 		a.msHit,
-		a.bm_mSeq,
-		a.msDeliName,
-		a.msDeliPostcode,
-		a.msDeliRoadAddr,
-		a.msDeliDetailAddr,
-		a.msDeliTel,
-		a.msDeliMemo, 
-		a.msDeliComp,
-		a.msDeliNo,
-		a.msDeliStateCd,
 		a.msRegiDate,
 		a.msUpdtDate,
 		b.gName,
@@ -60,6 +50,54 @@
 	    ) as fPath
 	</sql>
 	
+	<sql id="selectMySalesCommon">
+		FROM 
+			memberSales a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+			LEFT JOIN memberSalesOrder d ON a.msSeq = d.memberSales_msSeq
+		WHERE 1=1
+			AND a.msDelNy = 0
+			<if test="shStateCd != null and !shStateCd.equals('')">AND a.msStateCd = #{shStateCd}</if>	
+			<if test="shDeliStateCd != null and !shDeliStateCd.equals('')">AND d.msoDeliStateCd = #{shDeliStateCd}</if>			
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.msRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
+				</when>
+			</choose>				
+	        <choose>
+	            <when test="shOption == 1">AND b.gName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 2">AND c.mName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 3">AND d.oMember_mSeq LIKE CONCAT('%',#{shValue},'%')</when>
+	        </choose>
+		ORDER BY a.msSeq DESC
+	</sql>
+	
+	<sql id="selectMySalesCommonColumn">
+		<include refid="selectCommonColumn"/>,
+		d.msoSeq,
+		d.memberSales_msSeq,
+		d.oMember_mSeq,
+		d.msoDeliName,
+		d.msoDeliPostcode,
+		d.msoDeliRoadAddr,
+		d.msoDeliDetailAddr,
+		d.msoDeliTel,
+		d.msoDeliMemo,
+		d.msoDeliCompCd,
+		d.msoDeliNo,
+		d.msoDeliStateCd,
+		d.msoRegiDate,
+		(SELECT e.mName
+			FROM member e
+			WHERE 1=1 
+				AND d.oMember_mSeq = e.mSeq
+	    ) as omName
+	</sql>
+	
 	<select id="selectListCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon"/>
@@ -69,7 +107,18 @@
 		SELECT
 			<include refid="selectCommonColumn"/>
 		<include refid="selectCommon"/>
-		
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+	</select>
+	
+	<select id="selectMySalesListCount" resultType="Integer">
+		SELECT COUNT(*)
+			<include refid="selectMySalesCommon"/>
+	</select>
+
+	<select id="selectMySalesList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectMySalesCommonColumn"/>
+		<include refid="selectMySalesCommon"/>
 		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 	
@@ -143,10 +192,108 @@
 			msSeq=#{msSeq}
 	</update>
 	
+	<update id="updateSuccess">
+		UPDATE memberSales a
+		LEFT JOIN memberSalesOrder b ON a.msSeq = b.memberSales_msSeq
+		SET a.msStateCd = 22
+		WHERE b.msoSeq = #{msoSeq}
+	</update>
+	
 	<delete id="delete">
 		DELETE FROM memberSales
 		WHERE
 			msSeq=#{msSeq}
 	</delete>
+	
+	<select id="orderCheckByMsSeq" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			memberSalesOrder 
+		WHERE 1=1
+			AND memberSales_msSeq=#{msSeq}
+	</select>
+	
+	<select id="insertOrderCheck" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			memberSalesOrder 
+		WHERE 1=1
+			AND memberSales_msSeq=#{memberSales_msSeq}
+	</select>
+	
+	<select id="selectOrderOne" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectMySalesCommonColumn"/>
+		FROM 
+			memberSales a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+			LEFT JOIN memberSalesOrder d ON a.msSeq = d.memberSales_msSeq
+		WHERE 1=1
+			AND msoSeq=#{msoSeq}
+	</select>
+	
+	<select id="orderCheck" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			memberSalesOrder 
+		WHERE 1=1
+			AND msoSeq=#{msoSeq}
+	</select>
+	
+	<insert id="insertOrder">
+		INSERT INTO memberSalesOrder
+		(
+			memberSales_msSeq,
+			oMember_mSeq,
+			msoDeliName,
+			msoDeliPostcode,
+			msoDeliRoadAddr,
+			msoDeliDetailAddr,
+			msoDeliTel,
+			msoDeliMemo
+		)
+		VALUES
+		(
+			#{memberSales_msSeq},
+		    #{oMember_mSeq},
+		    #{msoDeliName},
+		    #{msoDeliPostcode},
+		    #{msoDeliRoadAddr},
+		    #{msoDeliDetailAddr},
+		    #{msoDeliTel},
+		    #{msoDeliMemo}
+		)
+		
+		<selectKey resultType="String" keyProperty="msoSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteOrderByMSSeq">
+		DELETE FROM memberSalesOrder
+		WHERE
+			memberSales_msSeq=#{msSeq}
+	</delete>
+	
+	<delete id="deleteOrder">
+		DELETE FROM memberSalesOrder
+		WHERE
+			memberSales_msSeq=#{memberSales_msSeq}
+	</delete>
+	
+	<update id="updateOrderSuccess">
+		UPDATE memberSalesOrder
+		SET 
+			msoDeliStateCd = 52,
+			msoRegiDate = now()
+		WHERE msoSeq = #{msoSeq}
+	</update>
+	
+	<update id="updateOrderDeli">
+		UPDATE memberSalesOrder
+		SET 
+			msoDeliStateCd = 53,
+			msoDeliCompCd = #{msoDeliCompCd},
+			msoDeliNo = #{msoDeliNo}
+		WHERE msoSeq = #{msoSeq}
+	</update>
 	
 </mapper>

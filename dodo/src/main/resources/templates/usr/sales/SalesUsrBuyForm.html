@@ -28,7 +28,7 @@
 						<input type="hidden" id="msSeq" name="msSeq" th:value="${salesItem?.msSeq}">
 						<input type="hidden" id="game_gSeq" name="game_gSeq" th:value="${salesItem?.game_gSeq}">
 						<input type="hidden" id="member_mSeq" name="member_mSeq" th:value="${salesItem?.member_mSeq}">
-						<input type="hidden" id="bm_mSeq" name="bm_mSeq" th:value="${salesItem?.bm_mSeq}">
+						<input type="hidden" id="oMember_mSeq" name="oMember_mSeq">
 						
 						<div class="row mb-8 g-5">
 							<div class="col-lg-8">
@@ -57,13 +57,13 @@
 											<div class="col-6">
 												<h6 class="h6">받는이<span style="color: red;"> *</span></h6>
 												<input type="text" class="form-control rounded-end" autocomplete="off" 
-													id="msDeliName" name="msDeliName" th:value="${memberItem?.mName}" required />
+													id="msoDeliName" name="msoDeliName" th:value="${memberItem?.mName}" required />
 												<div class="invalid-feedback"> 이름을 입력해 주세요. 한글/영문/숫자만 허용 </div>
 											</div>
 											<div class="col-6">
 												<h6 class="h6">연락처<span style="color: red;"> *</span></h6>
 												<input type="text" class="form-control rounded-end" autocomplete="off" 
-													id="msDeliTel" name="msDeliTel" th:value="${memberItem?.mTel}" required />
+													id="msoDeliTel" name="msoDeliTel" th:value="${memberItem?.mTel}" required />
 												<div class="invalid-feedback"> 연락처를 9~11자리 숫자로 입력해 주세요. </div>
 											</div>
 										</div>
@@ -72,7 +72,7 @@
 											<h6 class="h6">주소<span style="color: red;"> *</span></h6>
 											<div class="d-flex gap-2">
 												<div>
-		                                 			<input type="text" class="form-control" id="msDeliPostcode" name="msDeliPostcode" 
+		                                 			<input type="text" class="form-control" id="msoDeliPostcode" name="msoDeliPostcode" 
 														th:value="${memberItem?.mPostcode}" placeholder="우편번호" readonly required />
 													<div class="invalid-feedback"> 우편번호를 입력해 주세요. </div>
 												</div>
@@ -81,12 +81,12 @@
 												</div>
 											</div>
 											<div class="mt-2">
-												<input type="text" class="form-control" id="msDeliRoadAddr" name="msDeliRoadAddr" 
+												<input type="text" class="form-control" id="msoDeliRoadAddr" name="msoDeliRoadAddr" 
 													th:value="${memberItem?.mRoadAddress}" placeholder="도로명주소" readonly required />
 												<div class="invalid-feedback"> 도로명 주소를 입력해 주세요. </div>
 											</div>
 											<div class="mt-2">
-												<input type="text" class="form-control" id="msDeliDetailAddr" name="msDeliDetailAddr" 
+												<input type="text" class="form-control" id="msoDeliDetailAddr" name="msoDeliDetailAddr" 
 													autocomplete="off" th:value="${memberItem?.mDetailAddress}" placeholder="상세주소" required />
 												<div class="invalid-feedback"> 상세 주소를 입력해 주세요. </div>
 											</div>
@@ -96,7 +96,7 @@
 												<h6 class="h6">배송 메모</h6>
 												<input type="text" class="form-control" autocomplete="off" 
 													placeholder="30자 제한" oninput="limitKoreanChars(this, 30)" 
-													id="msDeliMemo" name="msDeliMemo" />
+													id="msoDeliMemo" name="msoDeliMemo" />
 											</div>
 										</div>
 									</div>
@@ -161,11 +161,11 @@
 	let fom = document.querySelector("form[name=form]");
 	
 	// Input
-	let msDeliName = document.getElementById("msDeliName");
-	let msDeliTel = document.getElementById("msDeliTel");
-	let msDeliPostcode = document.getElementById("msDeliPostcode");
-	let msDeliRoadAddr = document.getElementById("msDeliRoadAddr");
-	let msDeliDetailAddr = document.getElementById("msDeliDetailAddr");
+	let msoDeliName = document.getElementById("msoDeliName");
+	let msoDeliTel = document.getElementById("msoDeliTel");
+	let msoDeliPostcode = document.getElementById("msoDeliPostcode");
+	let msoDeliRoadAddr = document.getElementById("msoDeliRoadAddr");
+	let msoDeliDetailAddr = document.getElementById("msoDeliDetailAddr");
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -175,24 +175,24 @@
 
 <script th:inline="javascript">
 	function changeDeliAddr(bValue) {
-		resetValidation(msDeliName);
-		resetValidation(msDeliTel);
-		resetValidation(msDeliPostcode);
-		resetValidation(msDeliRoadAddr);
-		resetValidation(msDeliDetailAddr);
+		resetValidation(msoDeliName);
+		resetValidation(msoDeliTel);
+		resetValidation(msoDeliPostcode);
+		resetValidation(msoDeliRoadAddr);
+		resetValidation(msoDeliDetailAddr);
 		
 		if (bValue) { // 신규 주소면
-			msDeliName.value = "";
-			msDeliTel.value = "";
-			msDeliPostcode.value = "";
-			msDeliRoadAddr.value = "";
-			msDeliDetailAddr.value = "";
+			msoDeliName.value = "";
+			msoDeliTel.value = "";
+			msoDeliPostcode.value = "";
+			msoDeliRoadAddr.value = "";
+			msoDeliDetailAddr.value = "";
 		} else {
-			msDeliName.value = /*[[${memberItem?.mName}]]*/ "";
-			msDeliTel.value = /*[[${memberItem?.mTel}]]*/ "";
-			msDeliPostcode.value = /*[[${memberItem?.mPostcode}]]*/ "";
-			msDeliRoadAddr.value = /*[[${memberItem?.mRoadAddress}]]*/ "";
-			msDeliDetailAddr.value = /*[[${memberItem?.mDetailAddress}]]*/ "";
+			msoDeliName.value = /*[[${memberItem?.mName}]]*/ "";
+			msoDeliTel.value = /*[[${memberItem?.mTel}]]*/ "";
+			msoDeliPostcode.value = /*[[${memberItem?.mPostcode}]]*/ "";
+			msoDeliRoadAddr.value = /*[[${memberItem?.mRoadAddress}]]*/ "";
+			msoDeliDetailAddr.value = /*[[${memberItem?.mDetailAddress}]]*/ "";
 		}
 	}
 </script>
@@ -212,18 +212,18 @@
                 var roadAddr = data.roadAddress; // 도로명 주소 변수
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                msDeliPostcode.value = data.zonecode;
-                msDeliRoadAddr.value = roadAddr;
+                msoDeliPostcode.value = data.zonecode;
+                msoDeliRoadAddr.value = roadAddr;
                 
                 // 상세주소 초기화
-                msDeliDetailAddr.value = "";
+                msoDeliDetailAddr.value = "";
                 
                 // Validation
-                resetValidation(msDeliPostcode);
-                resetValidation(msDeliRoadAddr);
-                resetValidation(msDeliDetailAddr);
-                msDeliPostcode.classList.add("is-valid");
-                msDeliRoadAddr.classList.add("is-valid");
+                resetValidation(msoDeliPostcode);
+                resetValidation(msoDeliRoadAddr);
+                resetValidation(msoDeliDetailAddr);
+                msoDeliPostcode.classList.add("is-valid");
+                msoDeliRoadAddr.classList.add("is-valid");
             }
         }).open();
     }
@@ -241,7 +241,7 @@
 		const tossPayments = TossPayments(clientKey);
         
 		// 회원 결제
-		const customerKey = "V2LzssPPyFpsOVX12y4Sa"; // TODO: 고유아이디로 변경
+		const customerKey = /*[[${memberItem?.mSeq}]]*/ "";
 		const widgets = tossPayments.widgets({
 			customerKey,
 		});
@@ -267,131 +267,161 @@
 		document.getElementById("payment-button").addEventListener("click", async function () {
 			var focus = false; // Validation 후 Focus 줘야 하는 Input
 			
-			// msDeliName 체크
-			resetValidation(msDeliName);
+			// msoDeliName 체크
+			resetValidation(msoDeliName);
 			
-			if (!strKorEngNumberValidation(msDeliName)) {
-				msDeliName.classList.add("is-invalid");
+			if (!strKorEngNumberValidation(msoDeliName)) {
+				msoDeliName.classList.add("is-invalid");
 				
 				if (!focus) {
-					msDeliName.focus();
+					msoDeliName.focus();
 					focus = true;
 				}
 			} else {
-				msDeliName.classList.add("is-valid");
+				msoDeliName.classList.add("is-valid");
 			}
 			
-			// msDeliTel 체크
-			resetValidation(msDeliTel);
+			// msoDeliTel 체크
+			resetValidation(msoDeliTel);
 			
-			if (!phoneValidation(msDeliTel)) {
-				msDeliTel.classList.add("is-invalid");
+			if (!phoneValidation(msoDeliTel)) {
+				msoDeliTel.classList.add("is-invalid");
 				
 				if (!focus) {
-					msDeliTel.focus();
+					msoDeliTel.focus();
 					focus = true;
 				}
 			} else {
-				msDeliTel.classList.add("is-valid");
+				msoDeliTel.classList.add("is-valid");
 			}
 			
-			// msDeliPostcode 체크
-			resetValidation(msDeliPostcode);
+			// msoDeliPostcode 체크
+			resetValidation(msoDeliPostcode);
 			
-			if (!strValidation(msDeliPostcode)) {
-				msDeliPostcode.classList.add("is-invalid");
+			if (!strValidation(msoDeliPostcode)) {
+				msoDeliPostcode.classList.add("is-invalid");
 				
 				if (!focus) {
-					msDeliPostcode.focus();
+					msoDeliPostcode.focus();
 					focus = true;
 				}
 			} else {
-				msDeliPostcode.classList.add("is-valid");
+				msoDeliPostcode.classList.add("is-valid");
 			}
 			
-			// msDeliRoadAddr 체크
-			resetValidation(msDeliRoadAddr);
+			// msoDeliRoadAddr 체크
+			resetValidation(msoDeliRoadAddr);
 			
-			if (!strValidation(msDeliRoadAddr)) {
-				msDeliRoadAddr.classList.add("is-invalid");
+			if (!strValidation(msoDeliRoadAddr)) {
+				msoDeliRoadAddr.classList.add("is-invalid");
 				
 				if (!focus) {
-					msDeliRoadAddr.focus();
+					msoDeliRoadAddr.focus();
 					focus = true;
 				}
 			} else {
-				msDeliRoadAddr.classList.add("is-valid");
+				msoDeliRoadAddr.classList.add("is-valid");
 			}
 			
-			// msDeliDetailAddr 체크
-			resetValidation(msDeliDetailAddr);
+			// msoDeliDetailAddr 체크
+			resetValidation(msoDeliDetailAddr);
 			
-			if (!strValidation(msDeliDetailAddr)) {
-				msDeliDetailAddr.classList.add("is-invalid");
+			if (!strValidation(msoDeliDetailAddr)) {
+				msoDeliDetailAddr.classList.add("is-invalid");
 				
 				if (!focus) {
-					msDeliDetailAddr.focus();
+					msoDeliDetailAddr.focus();
 					focus = true;
 				}
 			} else {
-				msDeliDetailAddr.classList.add("is-valid");
+				msoDeliDetailAddr.classList.add("is-valid");
 			}
 			
 			// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
 			// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 			if (focus) return false;
 
-			msDeliName.value = msDeliName.value.trim();
-			msDeliTel.value = msDeliTel.value.trim();
-			msDeliDetailAddr.value = msDeliDetailAddr.value.trim();
+			msoDeliName.value = msoDeliName.value.trim();
+			msoDeliTel.value = msoDeliTel.value.trim();
+			msoDeliDetailAddr.value = msoDeliDetailAddr.value.trim();
 
-			await widgets.requestPayment({
-				orderId: "6rqp2wGIeRCQmMS_oWFb5", // TODO: 고유값으로 변경
-				orderName: /*[[${salesItem?.gName}]]*/ "",
-				successUrl: window.location.origin + "/success.html",
-	            failUrl: window.location.origin + "/fail.html",
-				customerEmail: /*[[${memberItem?.mEmail}]]*/ "",
-				customerName: msDeliName.value,
-				customerMobilePhone: msDeliTel.value,
-			});
+			orderReady(); // 실제 결제 전 DB에 결제 정보 저장
 		});
+		
+		function orderReady() {
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/usr/sales/SalesUsrBuyInst"
+				,data : { 
+					"msSeq" : $("#msSeq").val(),
+					"msoDeliName" : $("#msoDeliName").val(),
+					"msoDeliPostcode" : $("#msoDeliPostcode").val(),
+					"msoDeliRoadAddr" : $("#msoDeliRoadAddr").val(),
+					"msoDeliDetailAddr" : $("#msoDeliDetailAddr").val(),
+					"msoDeliTel" : $("#msoDeliTel").val(),
+					"msoDeliMemo" : $("#msoDeliMemo").val(),
+					"meoRegiDate" : $("#meoRegiDate").val()
+				}
+				,success: function(response) {
+					if (response.rt == "fail") {
+						showModalAlert("확인", "결제 실패하였습니다. 다시 시도해 주세요.");
+					} else {
+						tossPay(response.rt);
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+		
+		async function tossPay(rtOrderId) {
+			await widgets.requestPayment({
+				orderId: rtOrderId,
+				orderName: /*[[${salesItem?.gName}]]*/ "",
+				successUrl: window.location.origin + "/usr/sales/SalesUsrBuySuccess",
+	            failUrl: window.location.origin + "/usr/sales/SalesUsrBuyFail",
+				customerEmail: /*[[${memberItem?.mEmail}]]*/ "",
+				customerName: /*[[${memberItem?.mName}]]*/ ""
+			});
+		}
 	}
 	
-	// msDeliName Input 시 체크
-	msDeliName.addEventListener("input", function(){
-		resetValidation(msDeliName);
+	// msoDeliName Input 시 체크
+	msoDeliName.addEventListener("input", function(){
+		resetValidation(msoDeliName);
 		
-		if (!strKorEngNumberValidation(msDeliName)) {
-			msDeliName.classList.add("is-invalid");
+		if (!strKorEngNumberValidation(msoDeliName)) {
+			msoDeliName.classList.add("is-invalid");
 		} else {
-			msDeliName.classList.add("is-valid");
+			msoDeliName.classList.add("is-valid");
 		}	
 	});
 	
-	// msDeliTel Input 시 체크
-	msDeliTel.addEventListener("input", function(){
-		resetValidation(msDeliTel);
+	// msoDeliTel Input 시 체크
+	msoDeliTel.addEventListener("input", function(){
+		resetValidation(msoDeliTel);
 		
-		if (!phoneValidation(msDeliTel)) {
-			msDeliTel.classList.add("is-invalid");
+		if (!phoneValidation(msoDeliTel)) {
+			msoDeliTel.classList.add("is-invalid");
 		} else {
-			msDeliTel.classList.add("is-valid");
+			msoDeliTel.classList.add("is-valid");
 		}	
 	});
 	
-	// msDeliDetailAddr Input 시 체크
-	msDeliDetailAddr.addEventListener("input", function(){
-		resetValidation(msDeliDetailAddr);
+	// msoDeliDetailAddr Input 시 체크
+	msoDeliDetailAddr.addEventListener("input", function(){
+		resetValidation(msoDeliDetailAddr);
 		
-		if (!strValidation(msDeliDetailAddr)) {
-			msDeliDetailAddr.classList.add("is-invalid");
+		if (!strValidation(msoDeliDetailAddr)) {
+			msoDeliDetailAddr.classList.add("is-invalid");
 		} else {
-			msDeliDetailAddr.classList.add("is-valid");
+			msoDeliDetailAddr.classList.add("is-valid");
 		}	
 	});
 </script>
-
-
 
 </body>
 </html>

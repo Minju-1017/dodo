@@ -36,8 +36,12 @@ public class Constants {
 	public final static int SALES_CODE_GROUP_SEQ_STATE = 4; // msStateCd
 	
 	// 판매상태(msStateCd)
-	public final static int SALES_CODE_ON_SALE = 20;
-	public final static int SALES_CODE_SALE_COMPLETED = 22;
+	public final static int SALES_CODE_ON_SALES = 20;
+	public final static int SALES_CODE_SALES_COMPLETED = 22;
+	
+	// Sales Order에 사용하는 코드 그룹
+	public final static int SALES_ORDER_CODE_GROUP_SEQ_DELI_STATE = 39; // msoDeliStateCd
+	public final static int SALES_ORDER_CODE_GROUP_SEQ_DELI_COMP = 40; // msoDeliCompCd
 	
 	// Member 등급
 	public final static int MEMBER_GRADE_CODE_ADMIN = 43;

@@ -14,5 +14,19 @@ public interface SalesDao {
 	public int insertCheck(SalesDto salesDto);
 	public int insert(SalesDto salesDto);
 	public int update(SalesDto salesDto);
+	public int updateSuccess(SalesOrderDto salesOrderDto);
 	public int delete(SalesDto salesDto);
+	
+	public SalesDto selectOrderOne(SalesDto salesDto);
+	public int orderCheckByMsSeq(SalesDto salesDto);
+	public int insertOrderCheck(SalesOrderDto salesOrderDto);
+	public int orderCheck(SalesOrderDto salesOrderDto);
+	public int insertOrder(SalesOrderDto salesOrderDto);
+	public int deleteOrderByMSSeq(SalesDto salesDto);
+	public int deleteOrder(SalesOrderDto salesOrderDto);
+	public int updateOrderSuccess(SalesOrderDto salesOrderDto);
+	public int updateOrderDeli(SalesOrderDto salesOrderDto);
+	
+	public int selectMySalesListCount(SalesVo vo);
+	public List<SalesDto> selectMySalesList(SalesVo vo); 
 }

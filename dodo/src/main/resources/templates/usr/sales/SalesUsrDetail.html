@@ -64,9 +64,9 @@
 													<tr>
 														<th style="text-align: right;" >판매상태</th>
 														<td>
-															<span th:if="${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE}" class="badge bg-primary" 
+															<span th:if="${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALES}" class="badge bg-primary" 
 																th:text="${@codeService.selectOneCachedCode(salesItem?.msStateCd)}"></span>
-															<span th:if="${salesItem?.msStateCd == @constants.SALES_CODE_SALE_COMPLETED}" class="badge bg-success"
+															<span th:if="${salesItem?.msStateCd == @constants.SALES_CODE_SALES_COMPLETED}" class="badge bg-secondary"
 																th:text="${@codeService.selectOneCachedCode(salesItem?.msStateCd)}"></span>
 														</td>
 													</tr>
@@ -88,22 +88,22 @@
 										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
 											and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}"
 										class="btn btn-primary" 
-										th:attr="onclick=|goModify(${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE})|">수정</a><span 
+										th:attr="onclick=|goModify(${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALES})|">수정</a><span 
 										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
 											and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}">&nbsp;</span>
 									<a href="javascript:void(0);" 
 										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
 											and not #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)
-											and salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE}"
+											and salesItem?.msStateCd == @constants.SALES_CODE_ON_SALES}"
 										class="btn btn-primary" onclick="goBuy()">구매</a><span 
 										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
 											and not #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)
-											and salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE}">&nbsp;</span>
+											and salesItem?.msStateCd == @constants.SALES_CODE_ON_SALES}">&nbsp;</span>
 									<a href="javascript:void(0);" 
 										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
 											and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}"
 										class="btn btn-danger" 
-										th:attr="onclick=|goDelete(${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALE})|">삭제</a><span 
+										th:attr="onclick=|goDelete(${salesItem?.msStateCd == @constants.SALES_CODE_ON_SALES})|">삭제</a><span 
 										th:if="${session.sessSeqUsr ne null and #strings.trim(session.sessSeqUsr) ne ''
 										and #strings.equals(session.sessSeqUsr, salesItem?.member_mSeq)}">&nbsp;</span>
 									<a href="/usr/sales/SalesUsrList" class="btn btn-outline-secondary">목록</a>&nbsp;
@@ -159,7 +159,26 @@
 	}
 	
 	document.getElementById("btnModalDelete").onclick = function () {
-		submit("/usr/sales/SalesUsrDele");
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/usr/sales/SalesUsrDele"
+			,data : { 
+				"msSeq" : $("#msSeq").val()
+			}
+			,success: function(response) {
+				if (response.rt == "fail") {
+					$("#modalConfirm").modal("hide");      	
+					showModalAlert("확인", "구매중이거나 판매완료 되어 삭제하실 수 없습니다.");
+				} else {
+					location.href = "/usr/sales/SalesUsrList";
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
 	}
 	
 	function goBuy() {

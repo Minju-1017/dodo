@@ -6,7 +6,9 @@ public class SalesVo extends BaseVo {
 	
 	private String msSeq;
 	
-	private Integer shStateCd; // null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
+	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
+	private Integer shStateCd;
+	private Integer shDeliStateCd;
 
 	public String getMsSeq() {
 		return msSeq;
@@ -22,6 +24,14 @@ public class SalesVo extends BaseVo {
 
 	public void setShStateCd(Integer shStateCd) {
 		this.shStateCd = shStateCd;
+	}
+
+	public Integer getShDeliStateCd() {
+		return shDeliStateCd;
+	}
+
+	public void setShDeliStateCd(Integer shDeliStateCd) {
+		this.shDeliStateCd = shDeliStateCd;
 	}
 	
 }

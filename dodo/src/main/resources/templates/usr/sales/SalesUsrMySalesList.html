@@ -72,8 +72,7 @@
 													<select class="form-select" id="shOption" name="shOption">
 														<option value="" th:selected="${vo.shOption == null}">검색구분</option>
 														<option value="1" th:selected="${vo.shOption == 1}">게임명</option>
-														<option value="2" th:selected="${vo.shOption == 2}">판매자</option>
-														<option value="3" th:selected="${vo.shOption == 3}">구매자</option>
+														<option value="2" th:selected="${vo.shOption == 2}">구매자</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
@@ -126,9 +125,9 @@
 													<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 													<td th:text="${list?.msSeq}"></td>
 													<td>
-														<span th:if="${list?.msStateCd == 20}" class="badge bg-primary" 
+														<span th:if="${list?.msStateCd == @constants.SALES_CODE_ON_SALES}" class="badge bg-primary" 
 															th:text="${@codeService.selectOneCachedCode(list?.msStateCd)}"></span>
-														<span th:if="${list?.msStateCd == 22}" class="badge bg-secondary"
+														<span th:if="${list?.msStateCd == @constants.SALES_CODE_SALES_COMPLETED}" class="badge bg-secondary"
 															th:text="${@codeService.selectOneCachedCode(list?.msStateCd)}"></span>
 													</td>
 													<td th:text="${list?.gName}"></td>
@@ -136,11 +135,14 @@
 													<td th:text="${list?.msRegiDate}"></td>
 													<td th:text="${list?.omName}"></td>
 													<td>
-														<span th:if="${list?.msoDeliStateCd == 52}" class="badge bg-primary" 
+														<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}" 
+															class="badge bg-primary" 
 															th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
-														<span th:if="${list?.msoDeliStateCd == 53}" class="badge bg-warning" 
+														<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_IN}" 
+															class="badge bg-warning" 
 															th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
-														<span th:if="${list?.msoDeliStateCd == 54}" class="badge bg-secondary"
+														<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_COMPLETED}" 
+															class="badge bg-secondary"
 															th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
 													</td>
 													<td>

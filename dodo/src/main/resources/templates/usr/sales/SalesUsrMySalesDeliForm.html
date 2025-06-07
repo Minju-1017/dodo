@@ -32,25 +32,33 @@
 								<div class="card card-lg">
 									<div class="card-body p-8 d-flex flex-column">
 										<div class="mb-3">
-											<h5 class="mb-1">구매 정보</h5>
+											<h5 class="mb-1">판매 정보</h5>
 										</div>
-										<table class="table table-borderless">
+										<table class="table table-borderless mb-0">
 											<tbody>
 												<tr>
 													<th width="120px">주문 번호</th>
 													<td th:text="${salesDeliItem?.msoSeq}"></td>
 												</tr>
 												<tr>
-													<th>구매자</th>
-													<td th:text="${salesDeliItem?.omName}"></td>
-												</tr>
-												<tr>
 													<th>게임명</th>
 													<td th:text="${salesDeliItem?.gName}"></td>
 												</tr>
 												<tr>
+													<th>구매자</th>
+													<td th:text="${salesDeliItem?.omName}"></td>
+												</tr>
+												<tr>
+													<th>구매일</th>
+													<td th:text="${salesDeliItem?.msoRegiDate}"></td>
+												</tr>
+												<tr>
 													<th>판매가</th>
 													<td th:text="${'￦ ' + @doDoUtil.formatNumberComma(salesDeliItem?.msPrice)}"></td>
+												</tr>
+												<tr>
+													<th>판매수수료</th>
+													<td th:text="${'￦ ' + @doDoUtil.formatNumberComma(salesDeliItem?.msFee)}"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -61,7 +69,7 @@
 										<div class="mb-3">
 											<h5 class="mb-1">배송 정보</h5>
 										</div>
-										<table class="table table-borderless">
+										<table class="table table-borderless mb-0">
 											<tbody>
 												<tr>
 													<th width="120px">받는이</th>
@@ -72,14 +80,14 @@
 													<td th:text="${salesDeliItem?.msoDeliTel}"></td>
 												</tr>
 												<tr>
-													<th rowspan="3">주소</th>
-													<td th:text="${salesDeliItem?.msoDeliPostcode}"></td>
+													<th rowspan="3" class="py-1">주소</th>
+													<td th:text="${salesDeliItem?.msoDeliPostcode}" class="py-1"></td>
 												</tr>
 												<tr>
-													<td th:text="${salesDeliItem?.msoDeliRoadAddr}"></td>
+													<td th:text="${salesDeliItem?.msoDeliRoadAddr}" class="py-1"></td>
 												</tr>
 												<tr>
-													<td th:text="${salesDeliItem?.msoDeliDetailAddr}"></td>
+													<td th:text="${salesDeliItem?.msoDeliDetailAddr}" class="py-1"></td>
 												</tr>
 												<tr>
 													<th>배송메모</th>
@@ -96,18 +104,19 @@
 										</div>
 										<div class="row">
 											<div class="col-12">
-												<span th:if="${salesDeliItem?.msoDeliStateCd == 52}" class="badge bg-primary" 
+												<span th:if="${salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}" class="badge bg-primary" 
 													th:text="${@codeService.selectOneCachedCode(salesDeliItem?.msoDeliStateCd)}"></span>
-												<span th:if="${salesDeliItem?.msoDeliStateCd == 53}" class="badge bg-warning" 
+												<span th:if="${salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_IN}" class="badge bg-warning" 
 													th:text="${@codeService.selectOneCachedCode(salesDeliItem?.msoDeliStateCd)}"></span>
-												<span th:if="${salesDeliItem?.msoDeliStateCd == 54}" class="badge bg-secondary"
+												<span th:if="${salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_COMPLETED}" class="badge bg-secondary"
 													th:text="${@codeService.selectOneCachedCode(salesDeliItem?.msoDeliStateCd)}"></span>
 											</div>
 										</div>
-										<div class="row mt-3">
+										<div th:if="${salesDeliItem?.msoDeliCompCd == null 
+											or salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}" class="row mt-3">
 											<div class="col-6">
 												<h6 class="h6">택배사<span style="color: red;"> *</span></h6>
-												<select class="form-select" id="msoDeliCompCd" name="shStateCd" required>
+												<select class="form-select" id="msoDeliCompCd" name="msoDeliCompCd" required>
 													<option value="" th:selected="${salesDeliItem?.msoDeliCompCd == null}">선택</option>
 													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_ORDER_CODE_GROUP_SEQ_DELI_COMP)}"
 														th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
@@ -122,13 +131,41 @@
 												<div class="invalid-feedback"> 송장번호를 입력해 주세요. </div>
 											</div>
 										</div>
+										<div th:unless="${salesDeliItem?.msoDeliCompCd == null 
+											or salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}" class="row mt-3">
+											<div class="col-6">
+												<h6 class="h6">택배사</h6>
+												<select class="form-select" id="msoDeliCompCd" name="msoDeliCompCd" disabled>
+													<option value="" th:selected="${salesDeliItem?.msoDeliCompCd == null}">선택</option>
+													<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_ORDER_CODE_GROUP_SEQ_DELI_COMP)}"
+														th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+														th:selected="${#strings.equals(codeList.cSeq, salesDeliItem?.msoDeliCompCd)}"></option>         
+												</select>
+											</div>
+											<div class="col-6">
+												<h6 class="h6">송장번호<span style="color: red;"> *</span></h6>
+												<input type="text" class="form-control rounded-end" autocomplete="off" 
+													id="msoDeliNo" name="msoDeliNo" th:value="${salesDeliItem?.msoDeliNo}" disabled />
+											</div>
+											<div class="mt-2 col-12">
+												<span class="small">배송준비중일 때만 수정하실 수 있습니다.</span>
+											</div>
+										</div>
 									</div>
 								</div>
-    							
-    							<!-- TODO: 송장 저장 및 배송중일때 수정 못하도록 -->
-								<div class="mt-6 mb-3 text-center">
+								<div th:if="${salesDeliItem?.msoDeliCompCd == null 
+									or salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}"
+									class="mt-6 mb-3 text-center">
 									<button class="btn btn-primary" type="button" id="btnSave">저장</button><span>&nbsp;</span>
-									<a href="/usr/sales/SalesUsrList" class="btn btn-light">취소</a>
+									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">취소</a>
+								</div>
+								<div th:unless="${salesDeliItem?.msoDeliCompCd == null 
+									or salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}"
+									class="mt-6 mb-3 text-center">
+									<a th:if="${salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_IN}"
+										class="btn btn-primary" href="javascript:void(0);"
+										onclick="submit('/usr/sales/SalesUsrMySalesDeliComplateUpdt')">배송완료 처리</a><span>&nbsp;</span>
+									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">목록</a>
 								</div>
 							</div>
 						</div>
@@ -143,9 +180,6 @@
 
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
-	//Seq
-	let msSeq = document.querySelector("input[name=msoSeq]");
-	
 	// URL
 	let fom = document.querySelector("form[name=form]");
 	
@@ -161,147 +195,71 @@
 
 <!-- Validation: Bootstrap -->
 <script type="text/javascript">
-	// btnFee 버튼 클릭시
-	document.getElementById("btnFee").addEventListener("click", function () {
-		resetValidation(msFee);
-		
-		if (!positiveNumberValidation(msPrice)) {
-			msFeeInvalidFeedback.textContent = "판매 가격(0보다 큰 정수)을 입력 후 확인해 주세요.";
-			msFee.classList.add("is-invalid");
-			msPrice.focus();
-			
-			return;
-		}
-		
-		msFee.classList.add("is-valid");
-    	msFee.value = getFee();
-	});
-	
-	function getFee() {
-		return Math.ceil(parseFloat(msPrice.value) * 0.02);
-	}
-  
-	// btnSave 클릭시
-	document.getElementById("btnSave").onclick = function() {
+	// btnSave 버튼 클릭시
+	document.getElementById("btnSave").addEventListener("click", function () {
 		var focus = false; // Validation 후 Focus 줘야 하는 Input
 		
-		// msTitle 체크
-		resetValidation(msTitle);
+		// msoDeliCompCd 체크
+		resetValidation(msoDeliCompCd);
 		
-		if (!strValidation(msTitle)) {
-			msTitle.classList.add("is-invalid");
+		if (!strValidation(msoDeliCompCd)) {
+			msoDeliCompCd.classList.add("is-invalid");
 			
 			if (!focus) {
-				msTitle.focus();
+				msoDeliCompCd.focus();
 				focus = true;
 			}
 		} else {
-			msTitle.classList.add("is-valid");
+			msoDeliCompCd.classList.add("is-valid");
 		}
 		
-		// msPrice 체크
-		resetValidation(msPrice);
+		// msoDeliNo 체크
+		resetValidation(msoDeliNo);
 		
-		if (!positiveNumberValidation(msPrice)) {
-			msPrice.classList.add("is-invalid");
+		if (!positiveNumberValidation(msoDeliNo)) {
+			msoDeliNo.classList.add("is-invalid");
 			
 			if (!focus) {
-				msPrice.focus();
+				msoDeliNo.focus();
 				focus = true;
 			}
 		} else {
-			msPrice.classList.add("is-valid");
-		}
-		
-		// msFee 체크
-		resetValidation(msFee);
-		
-		if (!positiveNumberValidation(msPrice)) {
-			msFeeInvalidFeedback.textContent = "판매 가격(0보다 큰 정수)을 입력 후 확인해 주세요.";
-			msFee.classList.add("is-invalid");
-			
-			if (!focus) {
-				msPrice.focus();
-				focus = true;
-			}
-		} else if (msFee.value != getFee()) {
-			msFeeInvalidFeedback.textContent = "수수료 확인 버튼을 클릭해 주세요.";
-			msFee.classList.add("is-invalid");
-			
-			if (!focus) {
-				btnFee.focus();
-				focus = true;
-			}
-		} else {
-			msFee.classList.add("is-valid");
+			msoDeliNo.classList.add("is-valid");
 		}
 		
 		// Alert/Modal과 달리 모든  Input창을 한번에 확인해야 하므로 return false 시
 		// Focus 줘야 하는 Input(Validation에 처음으로 걸린 Input)이 있는지 확인
 		if (focus) return false;
 
-		msTitle.value = msTitle.value.trim();
-		msDesc.value = msDesc.value.trim();
-		msPrice.value = msPrice.value.trim();
-		
-		if(msSeq.value == "0" || msSeq.value == "") {
-			submit("/usr/sales/SalesUsrInst");
-		} else {
-			salesModify();
-		}
-	}
+		msoDeliNo.value = msoDeliNo.value.trim();
+
+		submit("/usr/sales/SalesUsrMySalesDeliUpdt");
+	});
 	
-	// msTitle Input 시 체크
-	msTitle.addEventListener("input", function() {
-		resetValidation(msTitle);
+	// msoDeliCompCd Input 시 체크
+	msoDeliCompCd.addEventListener("input", function() {
+		resetValidation(msoDeliCompCd);
 		
-		if (!strValidation(msTitle)) {
-			msTitle.classList.add("is-invalid");
+		if (!strValidation(msoDeliCompCd)) {
+			msoDeliCompCd.classList.add("is-invalid");
 		} else {
-			msTitle.classList.add("is-valid");
+			msoDeliCompCd.classList.add("is-valid");
 		}		
 	});
 	
-	// msPrice Input 시 체크
-	msPrice.addEventListener("input", function() {
-		resetValidation(msPrice);
+	// msoDeliNo Input 시 체크
+	msoDeliNo.addEventListener("input", function() {
+		resetValidation(msoDeliNo);
 		
-		if (!positiveNumberValidation(msPrice)) {
-			msPrice.classList.add("is-invalid");
+		if (!positiveNumberValidation(msoDeliNo)) {
+			msoDeliNo.classList.add("is-invalid");
 		} else {
-			msPrice.classList.add("is-valid");
+			msoDeliNo.classList.add("is-valid");
 		}
 	});
 	
-	function salesModify() {
-		$.ajax({
-			async: true 
-			,cache: false
-			,type: "post"
-			,url: "/usr/sales/SalesUsrUpdt"
-			,data : { 
-				"msSeq" : $("#msSeq").val(),
-				"msTitle" : $("#msTitle").val(),
-				"msDesc" : $("#msDesc").val(),
-				"msPrice" : $("#msPrice").val(),
-				"msFee" : $("#msFee").val(),
-				"msUpdtDate" : $("#msUpdtDate").val()
-			}
-			,success: function(response) {
-				if (response.rt == "fail") {
-					showModalAlert("확인", "구매중이거나 판매완료 되어 수정하실 수 없습니다.");
-				} else {
-					submit("/usr/sales/SalesUsrDetail");
-				}
-			}
-			,error : function(jqXHR, textStatus, errorThrown){
-				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-			}
-		});
-	}
-	
-	$("#modalAlert").on("hidden.bs.modal", function (e) {
-		submit("/usr/sales/SalesUsrDetail");
+	document.getElementById("btnDeliComplate").addEventListener("click", function () {
+		alert("123");
 	});
 </script>
 

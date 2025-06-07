@@ -56,8 +56,13 @@
 			LEFT JOIN game b ON a.game_gSeq = b.gSeq
 			LEFT JOIN member c ON a.member_mSeq = c.mSeq
 			LEFT JOIN memberSalesOrder d ON a.msSeq = d.memberSales_msSeq
+			LEFT JOIN (
+	            SELECT e.mName, e.mSeq
+	            FROM member e
+	        ) AS om ON d.oMember_mSeq = om.mSeq
 		WHERE 1=1
 			AND a.msDelNy = 0
+			AND a.member_mSeq = #{member_mSeq}
 			<if test="shStateCd != null and !shStateCd.equals('')">AND a.msStateCd = #{shStateCd}</if>	
 			<if test="shDeliStateCd != null and !shDeliStateCd.equals('')">AND d.msoDeliStateCd = #{shDeliStateCd}</if>			
 			<choose>
@@ -70,10 +75,35 @@
 			</choose>				
 	        <choose>
 	            <when test="shOption == 1">AND b.gName LIKE CONCAT('%',#{shValue},'%')</when>
-	            <when test="shOption == 2">AND c.mName LIKE CONCAT('%',#{shValue},'%')</when>
-	            <when test="shOption == 3">AND d.oMember_mSeq LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 2">AND om.mName LIKE CONCAT('%',#{shValue},'%')</when>
 	        </choose>
 		ORDER BY a.msSeq DESC
+	</sql>
+	
+	<sql id="selectMySalesBuyCommon">
+		FROM 
+			memberSales a
+			LEFT JOIN game b ON a.game_gSeq = b.gSeq
+			LEFT JOIN member c ON a.member_mSeq = c.mSeq
+			LEFT JOIN memberSalesOrder d ON a.msSeq = d.memberSales_msSeq
+		WHERE 1=1
+			AND a.msDelNy = 0
+			AND d.oMember_mSeq = #{oMember_mSeq}
+			<if test="shDeliStateCd != null and !shDeliStateCd.equals('')">AND d.msoDeliStateCd = #{shDeliStateCd}</if>			
+			<choose>
+				<when test="shOptionDate != null and !shOptionDate.equals('')
+					and shOptionDate == 1
+					and shDateStart != null and !shDateStart.equals('')
+					and shDateEnd != null and !shDateEnd.equals('')">
+					AND a.msoRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
+				</when>
+			</choose>				
+	        <choose>
+	            <when test="shOption == 1">AND d.msoSeq = #{shValue}</when>
+	            <when test="shOption == 2">AND b.gName LIKE CONCAT('%',#{shValue},'%')</when>
+	            <when test="shOption == 3">AND c.mName LIKE CONCAT('%',#{shValue},'%')</when>
+	        </choose>
+		ORDER BY d.msoSeq DESC
 	</sql>
 	
 	<sql id="selectMySalesCommonColumn">
@@ -270,13 +300,13 @@
 	<delete id="deleteOrderByMSSeq">
 		DELETE FROM memberSalesOrder
 		WHERE
-			memberSales_msSeq=#{msSeq}
+			memberSales_msSeq=#{memberSales_msSeq}
 	</delete>
 	
 	<delete id="deleteOrder">
 		DELETE FROM memberSalesOrder
 		WHERE
-			memberSales_msSeq=#{memberSales_msSeq}
+			msoSeq=#{msoSeq}
 	</delete>
 	
 	<update id="updateOrderSuccess">
@@ -295,5 +325,24 @@
 			msoDeliNo = #{msoDeliNo}
 		WHERE msoSeq = #{msoSeq}
 	</update>
+	
+	<update id="updateOrderDeliComplate">
+		UPDATE memberSalesOrder
+		SET 
+			msoDeliStateCd = 54
+		WHERE msoSeq = #{msoSeq}
+	</update>
+	
+	<select id="selectMyBuyListCount" resultType="Integer">
+		SELECT COUNT(*)
+			<include refid="selectMySalesBuyCommon"/>
+	</select>
+
+	<select id="selectMyBuyList" resultMap="resultMapObj">
+		SELECT
+			<include refid="selectMySalesCommonColumn"/>
+		<include refid="selectMySalesBuyCommon"/>
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+	</select>
 	
 </mapper>

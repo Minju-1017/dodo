@@ -22,11 +22,15 @@ public interface SalesDao {
 	public int insertOrderCheck(SalesOrderDto salesOrderDto);
 	public int orderCheck(SalesOrderDto salesOrderDto);
 	public int insertOrder(SalesOrderDto salesOrderDto);
-	public int deleteOrderByMSSeq(SalesDto salesDto);
+	public int deleteOrderByMSSeq(SalesOrderDto salesOrderDto);
 	public int deleteOrder(SalesOrderDto salesOrderDto);
 	public int updateOrderSuccess(SalesOrderDto salesOrderDto);
-	public int updateOrderDeli(SalesOrderDto salesOrderDto);
+	public int updateOrderDeli(SalesDto salesDto);
+	public int updateOrderDeliComplate(SalesDto salesDto);
 	
 	public int selectMySalesListCount(SalesVo vo);
 	public List<SalesDto> selectMySalesList(SalesVo vo); 
+	
+	public int selectMyBuyListCount(SalesVo vo);
+	public List<SalesDto> selectMyBuyList(SalesVo vo); 
 }

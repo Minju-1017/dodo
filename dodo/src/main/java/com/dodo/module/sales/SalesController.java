@@ -230,7 +230,7 @@ public class SalesController {
 				returnMap.put("rt", salesOrderDto.getMsoSeq());
 			}
 		} else {
-			int cntDel = service.deleteOrder(salesOrderDto);
+			int cntDel = service.deleteOrderByMSSeq(salesOrderDto);
 			
 			if (cntDel == 0) {
 				returnMap.put("rt", "fail");
@@ -304,12 +304,16 @@ public class SalesController {
         	service.updateOrderSuccess(salesOrderDto);
         	
         	return path_user + "SalesUsrBuySuccess";
+        } else if (code == 400) {
+        	// 실패 메세지 - ALREADY_PROCESSED_PAYMENT
+        	model.addAttribute("message", "이미 처리된 주문입니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
+        	return path_user + "SalesUsrBuyFail";
         } else {
         	// 결제 승인 실패 시 임시 주문 정보 삭제
         	service.deleteOrder(salesOrderDto);
         	
         	// 실패 메세지
-        	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br>중고거래 게시판으로 이동합니다.");
+        	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
         	return path_user + "SalesUsrBuyFail";
         }
     }
@@ -318,8 +322,24 @@ public class SalesController {
 	 * Toss 결제 실패 UI
 	 * @return
 	 */
-	@RequestMapping(value = "SalesUsrBuyFail")
-	public String salesUsrBuyFail() {
+	@RequestMapping(value = "SalesUsrBuyFail", method = RequestMethod.GET)
+	public String salesUsrBuyFail(Model model,
+			@RequestParam("code") String code,
+	        @RequestParam("message") String message,
+	        @RequestParam("orderId") String orderId) {
+		if (code == "ALREADY_PROCESSED_PAYMENT") {
+        	// 실패 메세지 - ALREADY_PROCESSED_PAYMENT
+        	model.addAttribute("message", "이미 처리된 주문입니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
+        } else {
+        	// 결제 승인 실패 시 임시 주문 정보 삭제
+    		SalesOrderDto salesOrderDto = new SalesOrderDto();
+        	salesOrderDto.setMsoSeq(orderId);
+        	service.deleteOrder(salesOrderDto);
+        	
+        	// 실패 메세지
+        	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
+        }
+    	
 		return path_user + "SalesUsrBuyFail";
 	}
 	
@@ -329,8 +349,9 @@ public class SalesController {
 	 * @return
 	 */
 	@RequestMapping(value = "SalesUsrMySalesList")
-	public String salesUsrMySalesList(Model model, @ModelAttribute("vo") SalesVo vo) {
+	public String salesUsrMySalesList(Model model, @ModelAttribute("vo") SalesVo vo, HttpSession httpSession) {
 		// addAttribute 하기 전에 미리 실행되야함
+		vo.setMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
 		vo.setParamsPaging(service.selectMySalesListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
@@ -349,6 +370,48 @@ public class SalesController {
 		model.addAttribute("salesDeliItem", service.selectOrderOne(salesDto));
 		
 		return path_user + "SalesUsrMySalesDeliForm";
+	}
+	
+	/**
+	 * 입력한 데이터 수정하기
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "SalesUsrMySalesDeliUpdt")
+	public String salesUsrMySalesDeliUpdt(Model model, SalesDto salesDto) {
+		service.updateOrderDeli(salesDto);
+		model.addAttribute("salesDeliItem", service.selectOrderOne(salesDto));
+		
+		return path_user + "SalesUsrMySalesDeliForm";
+	}
+	
+	/**
+	 * 입력한 데이터 수정하기
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "SalesUsrMySalesDeliComplateUpdt")
+	public String salesUsrMySalesDeliComplateUpdt(Model model, SalesDto salesDto) {
+		service.updateOrderDeliComplate(salesDto);
+		model.addAttribute("salesDeliItem", service.selectOrderOne(salesDto));
+		
+		return path_user + "SalesUsrMySalesDeliForm";
+	}
+	
+	/**
+	 * 내 구매 정보 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrMyBuyList")
+	public String salesUsrMyBuyList(Model model, @ModelAttribute("vo") SalesVo vo, HttpSession httpSession) {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setoMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		vo.setParamsPaging(service.selectMyBuyListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("myBuyList", service.selectMyBuyList(vo));
+		}
+		
+		return path_user + "SalesUsrMyBuyList";
 	}
 
 }

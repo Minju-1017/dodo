@@ -67,8 +67,8 @@ public class SalesService {
 		return dao.insertOrder(salesOrderDto);
 	}
 	
-	public int deleteOrderByMSSeq(SalesDto salesDto) {
-		return dao.deleteOrderByMSSeq(salesDto);
+	public int deleteOrderByMSSeq(SalesOrderDto salesOrderDto) {
+		return dao.deleteOrderByMSSeq(salesOrderDto);
 	}
 	
 	public int deleteOrder(SalesOrderDto salesOrderDto) {
@@ -79,8 +79,12 @@ public class SalesService {
 		return dao.updateOrderSuccess(salesOrderDto);
 	}
 	
-	public int updateOrderDeli(SalesOrderDto salesOrderDto) {
-		return dao.updateOrderDeli(salesOrderDto);
+	public int updateOrderDeli(SalesDto salesDto) {
+		return dao.updateOrderDeli(salesDto);
+	}
+	
+	public int updateOrderDeliComplate(SalesDto salesDto) {
+		return dao.updateOrderDeliComplate(salesDto);
 	}
 	
 	public int selectMySalesListCount(SalesVo vo) {
@@ -89,6 +93,14 @@ public class SalesService {
 	
 	public List<SalesDto> selectMySalesList(SalesVo vo) {
 		return dao.selectMySalesList(vo);
+	}
+	
+	public int selectMyBuyListCount(SalesVo vo) {
+		return dao.selectMyBuyListCount(vo);
+	}
+	
+	public List<SalesDto> selectMyBuyList(SalesVo vo) {
+		return dao.selectMyBuyList(vo);
 	}
 
 }

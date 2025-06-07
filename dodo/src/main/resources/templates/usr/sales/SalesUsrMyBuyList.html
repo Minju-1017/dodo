@@ -11,7 +11,8 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb mb-0">
 							<li class="breadcrumb-item"><a href="/usr/index">홈</a></li>
-							<li class="breadcrumb-item active" aria-current="page">중고 거래</li>
+							<li class="breadcrumb-item">내 쇼핑</li>
+							<li class="breadcrumb-item active" aria-current="page">구매 내역</li>
 						</ol>
 					</nav>
 				</div>
@@ -23,11 +24,10 @@
 			<div class="row">
  				<div class="col-lg-12">
 					<form name="formList" id="formList" method="post" autocomplete="off">
-			
+						
 						<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 						<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-						<input type="hidden" name="msSeq">
-						<input type="hidden" name="member_mSeq">
+						<input type="hidden" name="msoSeq">
 						
 						<div class="row mb-8 g-5">
 							<div class="col-lg-12 col-12">
@@ -36,17 +36,17 @@
 										<div class="d-flex flex-column gap-4">
 											<div class="row g-3">
 												<div class="col-lg-2 col-12">
-													<select class="form-select" id="shStateCd" name="shStateCd">
-														<option value="" th:selected="${vo.shStateCd == null}">판매상태</option>
-														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_CODE_GROUP_SEQ_STATE)}"
+													<select class="form-select" id="shDeliStateCd" name="shDeliStateCd">
+														<option value="" th:selected="${vo.shDeliStateCd == null}">배송상태</option>
+														<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_ORDER_CODE_GROUP_SEQ_DELI_STATE)}"
 															th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
-															th:selected="${#strings.equals(codeList.cSeq, vo.shStateCd)}"></option>         
+															th:selected="${#strings.equals(codeList.cSeq, vo.shDeliStateCd)}"></option>         
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
 													<select class="form-select"id="shOptionDate" name="shOptionDate">
 														<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
-														<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+														<option value="1" th:selected="${vo.shOptionDate == 1}">구매일</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
@@ -61,8 +61,9 @@
 												<div class="col-lg-2 col-12">
 													<select class="form-select" id="shOption" name="shOption">
 														<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-														<option value="1" th:selected="${vo.shOption == 1}">게임명</option>
-														<option value="2" th:selected="${vo.shOption == 2}">판매자</option>
+														<option value="1" th:selected="${vo.shOption == 1}">주문번호</option>
+														<option value="2" th:selected="${vo.shOption == 2}">게임명</option>
+														<option value="3" th:selected="${vo.shOption == 3}">판매자</option>
 													</select>
 												</div>
 												<div class="col-lg-2 col-12">
@@ -73,7 +74,7 @@
 												<div class="col-lg-6 col-12">
 													<div class="d-flex flex-column flex-md-row gap-2">
 														<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
-														<a href="/usr/sales/SalesUsrList" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></a>
+														<a href="/usr/sales/SalesUsrMyBuyList" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></a>
 													</div>
 												</div>
 											</div>
@@ -94,38 +95,41 @@
 											<thead class="bg-light">
 												<tr>
 													<th>No.</th>
-													<th>상태</th>
-													<th>제목</th>
-													<th>게임명</th>
-													<th>판매가</th>
+													<th>주문번호</th>
 													<th>판매자</th>
-													<th>등록일</th>
-													<th>조회수</th>
+													<th>게임명</th>
+													<th>구매가</th>
+													<th>구매일</th>
+													<th>배송상태</th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:if="${#lists.isEmpty(salesList)}">
-													<td class="text-center" colspan="8">
+												<tr th:if="${#lists.isEmpty(myBuyList)}">
+													<td class="text-center" colspan="7">
 														데이터가 없습니다.
 													</td>
 												</tr> 
-												<tr th:if="${!#lists.isEmpty(salesList)}" th:each="list : ${salesList}">
+												<tr th:if="${!#lists.isEmpty(myBuyList)}" th:each="list : ${myBuyList}">
 													<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 													<td>
-														<span th:if="${list?.msStateCd == @constants.SALES_CODE_ON_SALES}" class="badge bg-primary" 
-															th:text="${@codeService.selectOneCachedCode(list?.msStateCd)}"></span>
-														<span th:if="${list?.msStateCd == @constants.SALES_CODE_SALES_COMPLETED}" class="badge bg-secondary"
-															th:text="${@codeService.selectOneCachedCode(list?.msStateCd)}"></span>
+														<a class="fw-bold text-inherit" href="javascript:void(0);" th:text="${list?.msoSeq}"
+															th:attr="onclick=|goDetail('${list.msoSeq}')|"></a>
 													</td>
-													<td>
-														<a href="javascript:void(0);" th:text="${list?.msTitle}"
-															th:attr="onclick=|goDetail('${list.msSeq}', '${list.member_mSeq}')|"></a>
-													</td>
+													<td th:text="${list?.mName}"></td>
 													<td th:text="${list?.gName}"></td>
 													<td th:text="${@doDoUtil.formatNumberComma(list?.msPrice)}"></td>
-													<td th:text="${list?.mName}"></td>
-													<td th:text="${list?.msRegiDate}"></td>
-													<td th:text="${list?.msHit}"></td>
+													<td th:text="${list?.msoRegiDate}"></td>
+													<td>
+														<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}" 
+															class="badge bg-primary" 
+															th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
+														<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_IN}" 
+															class="badge bg-warning" 
+															th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
+														<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_COMPLETED}" 
+															class="badge bg-secondary"
+															th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
+													</td>
 												</tr>
 											</tbody>
 										</table>
@@ -169,10 +173,11 @@
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
   	let msSeq = document.querySelector("input[name=msSeq]");
+  	let msoSeq = document.querySelector("input[name=msoSeq]");
   	let member_mSeq = document.querySelector("input[name=member_mSeq]");
     	
 	let fom = document.querySelector("form[name=formList]");
-	let goUrlUsrList = "/usr/sales/SalesUsrList";
+	let goUrlUsrList = "/usr/sales/SalesUsrMySalesList";
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -182,10 +187,20 @@
 
 <!-- Move Page / Paging -->
 <script type="text/javascript">
-	function goDetail(keyValue1, keyValue2) {
+	function goSalesDetail(keyValue1, keyValue2) {
 		msSeq.value = keyValue1;
 		member_mSeq.value = keyValue2;
 		submit("/usr/sales/SalesUsrDetail");
+	}
+	
+	function goDeliDetail(keyValue) {
+		if (keyValue === null || keyValue === "null") {
+			showModalAlert("확인", "판매완료 상태일 때만 배송정보를 수정할 수 있습니다.");
+			return;
+		}
+		
+		msoSeq.value = keyValue;
+		submit("/usr/sales/SalesUsrMySalesDeliForm");
 	}
 
 	function goList(currPage) {

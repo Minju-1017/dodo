@@ -63,12 +63,12 @@ public class SalesService {
 		return dao.orderCheck(salesOrderDto);
 	}
 	
-	public int insertOrder(SalesOrderDto salesOrderDto) {
-		return dao.insertOrder(salesOrderDto);
+	public int orderCheckSuccessState(SalesOrderDto salesOrderDto) {
+		return dao.orderCheckSuccessState(salesOrderDto);
 	}
 	
-	public int deleteOrderByMSSeq(SalesOrderDto salesOrderDto) {
-		return dao.deleteOrderByMSSeq(salesOrderDto);
+	public int insertOrder(SalesOrderDto salesOrderDto) {
+		return dao.insertOrder(salesOrderDto);
 	}
 	
 	public int deleteOrder(SalesOrderDto salesOrderDto) {

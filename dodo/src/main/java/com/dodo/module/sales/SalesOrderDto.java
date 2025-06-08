@@ -13,7 +13,7 @@ public class SalesOrderDto {
 	private String msoDeliMemo; 
 	private String msoDeliCompCd;
 	private String msoDeliNo;
-	private int msoDeliStateCd;
+	private Integer msoDeliStateCd;
 	private String msoRegiDate;
 	
 	private String omName;
@@ -106,11 +106,11 @@ public class SalesOrderDto {
 		this.msoDeliNo = msoDeliNo;
 	}
 	
-	public int getMsoDeliStateCd() {
+	public Integer getMsoDeliStateCd() {
 		return msoDeliStateCd;
 	}
 	
-	public void setMsoDeliStateCd(int msoDeliStateCd) {
+	public void setMsoDeliStateCd(Integer msoDeliStateCd) {
 		this.msoDeliStateCd = msoDeliStateCd;
 	}
 	

@@ -220,7 +220,7 @@ public class SalesController {
 		
 		int cnt = service.insertOrderCheck(salesOrderDto);
 		
-		if (cnt == 0) {
+		if (cnt == 0) { // 결제 중이 아니면
 			int cntInsert = service.insertOrder(salesOrderDto);
 			
 			if (cntInsert == 0) {
@@ -230,20 +230,7 @@ public class SalesController {
 				returnMap.put("rt", salesOrderDto.getMsoSeq());
 			}
 		} else {
-			int cntDel = service.deleteOrderByMSSeq(salesOrderDto);
-			
-			if (cntDel == 0) {
-				returnMap.put("rt", "fail");
-			} else {
-				int cntInsert = service.insertOrder(salesOrderDto);
-				
-				if (cntInsert == 0) {
-					returnMap.put("rt", "fail");
-				} else {
-					model.addAttribute("salesOrderItem", salesOrderDto);
-					returnMap.put("rt", salesOrderDto.getMsoSeq());
-				}
-			}
+			returnMap.put("rt", "fail_other");
 		}
 		
 		return returnMap;
@@ -304,17 +291,22 @@ public class SalesController {
         	service.updateOrderSuccess(salesOrderDto);
         	
         	return path_user + "SalesUsrBuySuccess";
-        } else if (code == 400) {
-        	// 실패 메세지 - ALREADY_PROCESSED_PAYMENT
-        	model.addAttribute("message", "이미 처리된 주문입니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
-        	return path_user + "SalesUsrBuyFail";
         } else {
-        	// 결제 승인 실패 시 임시 주문 정보 삭제
-        	service.deleteOrder(salesOrderDto);
+        	int checkState = service.orderCheckSuccessState(dto);
         	
-        	// 실패 메세지
-        	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
-        	return path_user + "SalesUsrBuyFail";
+        	// 결제 성공한 주문인지 확인한다.
+        	if (checkState > 0) {
+        		// 실패 메세지 - ALREADY_PROCESSED_PAYMENT
+            	model.addAttribute("message", "이미 구매완료 된 주문입니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
+            	return path_user + "SalesUsrBuyFail";
+        	} else {
+        		// 결제 승인 실패 시 임시 주문 정보 삭제
+            	service.deleteOrder(salesOrderDto);
+            	
+            	// 실패 메세지
+            	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
+            	return path_user + "SalesUsrBuyFail";
+        	}
         }
     }
 	
@@ -327,18 +319,23 @@ public class SalesController {
 			@RequestParam("code") String code,
 	        @RequestParam("message") String message,
 	        @RequestParam("orderId") String orderId) {
-		if (code == "ALREADY_PROCESSED_PAYMENT") {
-        	// 실패 메세지 - ALREADY_PROCESSED_PAYMENT
-        	model.addAttribute("message", "이미 처리된 주문입니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
-        } else {
-        	// 결제 승인 실패 시 임시 주문 정보 삭제
-    		SalesOrderDto salesOrderDto = new SalesOrderDto();
-        	salesOrderDto.setMsoSeq(orderId);
-        	service.deleteOrder(salesOrderDto);
+		SalesOrderDto dto = new SalesOrderDto();
+		dto.setMsoSeq(orderId);
+		
+		int checkState = service.orderCheckSuccessState(dto);
+    	
+    	// 결제 성공한 주문인지 확인한다.
+    	if (checkState > 0) {
+    		// 실패 메세지 - ALREADY_PROCESSED_PAYMENT
+        	model.addAttribute("message", "이미 구매완료 된 주문입니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
+
+    	} else {
+    		// 결제 승인 실패 시 임시 주문 정보 삭제
+        	service.deleteOrder(dto);
         	
         	// 실패 메세지
         	model.addAttribute("message", "주문 실패하였습니다.<br>에러코드: " + code + "<br><br>중고거래 게시판으로 이동합니다.");
-        }
+    	}
     	
 		return path_user + "SalesUsrBuyFail";
 	}
@@ -412,6 +409,17 @@ public class SalesController {
 		}
 		
 		return path_user + "SalesUsrMyBuyList";
+	}
+	
+	/**
+	 * 데이터 상세 보기
+	 * @return
+	 */
+	@RequestMapping(value = "SalesUsrMyBuyDetail")
+	public String salesUsrMyBuyDetail(Model model, SalesDto salesDto) {
+		model.addAttribute("salesDeliItem", service.selectOrderOne(salesDto));
+		
+		return path_user + "SalesUsrMyBuyDetail";
 	}
 
 }

@@ -67,7 +67,7 @@
 								<div class="mt-4 card card-lg">
 									<div class="card-body p-8 d-flex flex-column">
 										<div class="mb-3">
-											<h5 class="mb-1">배송 정보</h5>
+											<h5 class="mb-1">배송지 정보</h5>
 										</div>
 										<table class="table table-borderless mb-0">
 											<tbody>
@@ -100,7 +100,7 @@
 								<div class="mt-4 card card-lg">
 									<div class="card-body p-8 d-flex flex-column gap-3">
 										<div class="mb-3">
-											<h5 class="mb-1">송장 정보</h5>
+											<h5 class="mb-1">배송 정보</h5>
 										</div>
 										<div class="row">
 											<div class="col-12">
@@ -157,7 +157,8 @@
 									or salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}"
 									class="mt-6 mb-3 text-center">
 									<button class="btn btn-primary" type="button" id="btnSave">저장</button><span>&nbsp;</span>
-									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">취소</a>
+									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">취소</a><span>&nbsp;</span>
+									<a href="#" class="btn btn-outline-secondary"><i class="bi bi-arrow-up fs-6"></i> Top</a>
 								</div>
 								<div th:unless="${salesDeliItem?.msoDeliCompCd == null 
 									or salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}"
@@ -165,7 +166,8 @@
 									<a th:if="${salesDeliItem?.msoDeliStateCd == @constants.SALES_CODE_DELI_IN}"
 										class="btn btn-primary" href="javascript:void(0);"
 										onclick="submit('/usr/sales/SalesUsrMySalesDeliComplateUpdt')">배송완료 처리</a><span>&nbsp;</span>
-									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">목록</a>
+									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">목록</a><span>&nbsp;</span>
+									<a href="#" class="btn btn-outline-secondary"><i class="bi bi-arrow-up fs-6"></i> Top</a>
 								</div>
 							</div>
 						</div>

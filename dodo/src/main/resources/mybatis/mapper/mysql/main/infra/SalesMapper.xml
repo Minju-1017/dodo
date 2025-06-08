@@ -95,7 +95,7 @@
 					and shOptionDate == 1
 					and shDateStart != null and !shDateStart.equals('')
 					and shDateEnd != null and !shDateEnd.equals('')">
-					AND a.msoRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
+					AND d.msoRegiDate BETWEEN #{shDateStartDB} AND #{shDateEndDB}
 				</when>
 			</choose>				
 	        <choose>
@@ -258,7 +258,7 @@
 			LEFT JOIN member c ON a.member_mSeq = c.mSeq
 			LEFT JOIN memberSalesOrder d ON a.msSeq = d.memberSales_msSeq
 		WHERE 1=1
-			AND msoSeq=#{msoSeq}
+			AND d.msoSeq=#{msoSeq}
 	</select>
 	
 	<select id="orderCheck" resultType="Integer">
@@ -266,6 +266,14 @@
 			memberSalesOrder 
 		WHERE 1=1
 			AND msoSeq=#{msoSeq}
+	</select>
+	
+	<select id="orderCheckSuccessState" resultType="Integer">
+		SELECT COUNT(*) FROM 
+			memberSalesOrder 
+		WHERE 1=1
+			AND msoSeq=#{msoSeq}
+			AND msoDeliStateCd IS NOT NULL
 	</select>
 	
 	<insert id="insertOrder">
@@ -296,12 +304,6 @@
 			SELECT last_insert_id()
 		</selectKey>
 	</insert>
-	
-	<delete id="deleteOrderByMSSeq">
-		DELETE FROM memberSalesOrder
-		WHERE
-			memberSales_msSeq=#{memberSales_msSeq}
-	</delete>
 	
 	<delete id="deleteOrder">
 		DELETE FROM memberSalesOrder

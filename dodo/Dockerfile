@@ -5,7 +5,7 @@ FROM openjdk:21-jdk
 ENV project="dodo"
 
 # set timezone
-# RUN apk add tzdata && ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+RUN ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime && echo "Asia/Seoul" > /etc/timezone
 
 # create project directory
 RUN mkdir ${project}

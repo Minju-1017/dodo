@@ -724,6 +724,94 @@ public class MemberController {
 	}
 	
 	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberWishUsrInstByIndexPopular", method = RequestMethod.POST)
+	public String memberWishUsrInstByIndexPopular(MemberWishDto memberWishDto, 
+			Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		service.insertWish(memberWishDto);
+		
+		// 인기 게임 정보
+		vo.setRowNumToShow(10);
+		vo.setParamsPaging(10);
+		
+		if (vo.getTotalRows() > 0) {
+			// Top 10 List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+			List<GameDto> top10List = gameService.selectTop10List(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : top10List) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("gameList", top10List);
+		}
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/index :: #popularRefresh";
+	}
+	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberWishUsrDeleByIndexPopular", method = RequestMethod.POST)
+	public String memberWishUsrDeleByIndexPopular(MemberWishDto memberWishDto, 
+			Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 위시 추가
+		service.deleteWishByCondition(memberWishDto);
+		
+		// 인기 게임 정보
+		vo.setRowNumToShow(10);
+		vo.setParamsPaging(10);
+		
+		if (vo.getTotalRows() > 0) {
+			// Top 10 List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+			List<GameDto> top10List = gameService.selectTop10List(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : top10List) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("gameList", top10List);
+		}
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/index :: #popularRefresh";
+	}
+	
+	/**
 	 * Ajax를 통한 여러건 데이터 삭제
 	 * @param seqList
 	 * @return
@@ -1070,10 +1158,93 @@ public class MemberController {
 	    return "usr/game/GameUsrDetail :: #relationRefresh";
 	}
 	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberHoldUsrInstByIndexPopular", method = RequestMethod.POST)
+	public String memberHoldUsrInstIndexPopular(MemberHoldDto memberHoldDto, 
+			Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 보유게임 추가
+		service.insertHold(memberHoldDto);
+		
+		// 인기 게임 정보
+		vo.setRowNumToShow(10);
+		vo.setParamsPaging(10);
+		
+		if (vo.getTotalRows() > 0) {
+			// Top 10 List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+			List<GameDto> top10List = gameService.selectTop10List(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : top10List) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("gameList", top10List);
+		}
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/index :: #popularRefresh";
+	}
 	
-	
-	
-	
+	/**
+	 * 입력한 데이터 추가하기 - Admin
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "MemberHoldUsrDeleByIndexPopular", method = RequestMethod.POST)
+	public String memberHoldUsrDeleByIndexPopular(MemberHoldDto memberHoldDto, 
+			Model model, @ModelAttribute("vo") GameVo vo, HttpSession httpSession) {
+		if (httpSession.getAttribute("sessSeqUsr") == null) {
+			usrSignOut(httpSession);
+			return "redirect:MemberUsrSignIn";
+		}
+		
+		// 보유게임 추가
+		service.deleteHoldByCondition(memberHoldDto);
+		
+		// 인기 게임 정보
+		vo.setRowNumToShow(10);
+		vo.setParamsPaging(10);
+		
+		if (vo.getTotalRows() > 0) {
+			// Top 10 List
+			vo.setmSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+			List<GameDto> top10List = gameService.selectTop10List(vo);
+			
+			// 순위 리스트
+			List<GameDto> dtoOrderList = gameService.selectGameOrderList();
+			
+			// 순위 설정
+			for (GameDto dto : top10List) {
+				for (GameDto orderDto : dtoOrderList) {
+					if (dto.getgSeq().equals(orderDto.getgSeq())) {
+						dto.setGrOrder(orderDto.getGrOrder());
+						break;
+					}
+				}
+			}
+						
+			model.addAttribute("gameList", top10List);
+		}
+		
+		// Thymeleaf fragment만 리턴
+	    return "usr/index :: #popularRefresh";
+	}
 	
 	/**
 	 * Ajax를 통한 여러건 데이터 삭제

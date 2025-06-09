@@ -6,6 +6,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -20,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
+import com.dodo.module.codegroup.CodeGroupDto;
+import com.dodo.module.codegroup.CodeGroupVo;
+import com.dodo.module.game.GameDto;
+import com.dodo.module.game.GameVo;
 import com.dodo.module.member.MemberDto;
 import com.dodo.module.member.MemberService;
 
@@ -40,6 +45,112 @@ public class SalesController {
 	
 	@Value("${toss.secretKey}")
     private String tossSecretKey;
+	
+	/**
+	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "SalesXdmList")
+	public String salesXdmList(Model model, @ModelAttribute("vo") SalesVo vo) {
+		// addAttribute 하기 전에 미리 실행되야함
+		vo.setParamsPaging(service.selectXdmListCount(vo));
+		
+		if (vo.getTotalRows() > 0) {
+			model.addAttribute("salesList", service.selectXdmList(vo));
+		}
+		
+		return path_admin + "SalesXdmList";
+	}
+	
+	/**
+	 * 데이터 추가/수정 폼
+	 * @return
+	 */
+	@RequestMapping(value = "SalesXdmForm")
+	public String salesXdmForm(@ModelAttribute("vo") SalesVo vo, Model model, SalesDto salesDto) {
+		model.addAttribute("salesItem", service.selectXdmOne(salesDto));
+		
+		return path_admin + "SalesXdmForm";
+	}
+	
+	/**
+	 * 데이터 삭제하기
+	 * @return redirect: 데이터 삭제 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "SalesXdmDele")
+	public String salesXdmDele(SalesDto salesDto) {
+		service.deleteOrder(salesDto);	
+		service.delete(salesDto);	
+
+		return "redirect:SalesXdmList";
+	}
+	
+	/**
+	 * 데이터 삭제 옵션 세팅 - update 이용
+	 * @return redirect: 데이터 저장 후 돌아갈 주소(List)
+	 */
+	@RequestMapping(value = "SalesXdmUele")
+	public String salesXdmUele(SalesDto salesDto) {
+		service.uelete(salesDto);	
+
+		return "redirect:SalesXdmList";
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제
+	 * @param seqList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "SalesListXdmDeleProc")
+	public Map<String, Object> salesListXdmDeleProc(
+			@RequestParam(value="chbox") List<String> seqList) {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			service.listDeleteOrder(seqList);
+			int successCnt = service.listDelete(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
+	
+	/**
+	 * Ajax를 통한 여러건 데이터 삭제 옵션 세팅 - update 이용
+	 * @param seqList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "SalesListXdmUeleProc")
+	public Map<String, Object> salesListXdmUeleProc(@RequestParam(value="chbox") List<String> seqList) {
+		System.out.println("salesListXdmUeleProc: " + seqList);
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if (seqList == null || (seqList != null && seqList.size() == 0)) {
+			returnMap.put("rt", "fail");
+		} else {
+			int successCnt = service.listUelete(seqList);
+			
+			if (successCnt > 0) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
+		}
+
+		return returnMap;
+	}
+	
+	//////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * 전체 데이터 읽어오기 - 페이징 기능 들어감
@@ -67,9 +178,12 @@ public class SalesController {
 	public String salesSearchUsrList(Model model, @ModelAttribute("vo") SalesVo vo, 
 			@RequestParam("salesShValue") String salesShValue) {
 		// addAttribute 하기 전에 미리 실행되야함(판매중인 게임만 검색)
-		if (salesShValue != null && !salesShValue.equals("")) vo.setShValue(salesShValue);
-		vo.setShStateCd(Constants.SALES_CODE_ON_SALES);
-		vo.setShOption(1);
+		if (salesShValue != null && !salesShValue.equals("")) {
+			vo.setShValue(salesShValue);
+			vo.setShStateCd(Constants.SALES_CODE_ON_SALES);
+			vo.setShOption(1);
+		}
+		
 		vo.setParamsPaging(service.selectListCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
@@ -217,6 +331,9 @@ public class SalesController {
 		
 		salesOrderDto.setMemberSales_msSeq(salesDto.getMsSeq());
 		salesOrderDto.setoMember_mSeq(String.valueOf(httpSession.getAttribute("sessSeqUsr")));
+		
+		// 동일한 상품을 구매중 상태에서 20분이 지나도 구매완료 되지 않았다면 삭제한다.
+		service.insert20minCheck(salesOrderDto);
 		
 		int cnt = service.insertOrderCheck(salesOrderDto);
 		

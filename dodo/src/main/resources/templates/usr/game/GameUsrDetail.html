@@ -133,33 +133,6 @@
 											th:attr="onclick=|goWish(false)|" class="btn btn-outline-danger"
 											data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
 									</div>
-									<!-- <div class="col-xxl-3 col-lg-4 col-md-3 col-3 d-grid">
-										<div class="dropdown">
-											<a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
-												data-bs-toggle="dropdown" aria-expanded="false">Share</a>
-		
-											<ul class="dropdown-menu">
-												<li>
-													<a class="dropdown-item" href="#">
-														<i class="bi bi-facebook me-2"></i>
-														Facebook
-													</a>
-												</li>
-												<li>
-													<a class="dropdown-item" href="#">
-														<i class="bi bi-twitter me-2"></i>
-														Twitter
-													</a>
-												</li>
-												<li>
-													<a class="dropdown-item" href="#">
-														<i class="bi bi-instagram me-2"></i>
-														Instagram
-													</a>
-												</li>
-											</ul>
-										</div>
-									</div> -->
 								</div>
 							</div>
 						</div>
@@ -546,19 +519,19 @@
 	
 									<div class="card-product-action">
 										<a th:if="${list?.mhCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goHoldRelation(true, '${list.gSeq}')|" class="btn-action"
+											th:attr="onclick=|goHoldRelation(true, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="보유 게임 등록"><i class="bi bi-emoji-smile"></i></a>
 										<a th:unless="${list?.mhCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goHoldRelation(false, '${list.gSeq}')|" class="btn-action"
+											th:attr="onclick=|goHoldRelation(false, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="보유 게임 삭제"><i class="bi bi-emoji-smile-fill"></i></a>
 										<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goWishRelation(true, '${list.gSeq}')|" class="btn-action"
+											th:attr="onclick=|goWishRelation(true, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
 										<a th:unless="${list?.mwCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goWishRelation(false, '${list.gSeq}')|" class="btn-action"
+											th:attr="onclick=|goWishRelation(false, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
-										<a href="./usedgame-shopping.html" class="btn-action"><i class="bi bi-cart" 
-											data-bs-toggle="tooltip" title="중고 구매"></i></a> <!-- TODO!!!!!!!!!!!!!!!!!!!! -->
+										<a href="javascript:void(0);" th:attr="onclick=|goSales('${list.gName}')|" 
+											class="btn-action"><i class="bi bi-cart" data-bs-toggle="tooltip" title="중고 구매"></i></a>
 									</div>
 								</div>
 								<div class="text-small mb-1">
@@ -618,12 +591,19 @@
 	let grScore = document.getElementById("grScore");
 	let grComment = document.getElementById("grComment");
 	let salesShValue = document.querySelector("input[name=salesShValue]");
+	let gCategoryCd = document.querySelector("input[name=gCategoryCd]");
 	
 	let fom = document.querySelector("form[name=form]");
 
 	function submit(url) {
 		fom.action = url;
 		fom.submit();
+	}
+	
+	function goDetail(gameSeq, gameCate) {
+		gSeq.value = gameSeq;
+		gCategoryCd.value = gameCate;
+		submit("/usr/game/GameUsrDetail");
 	}
 </script>
 
@@ -672,7 +652,7 @@
 		});
 	}
 	
-	function goWishRelation(bWish, rgSeq) {
+	function goWishRelation(bWish, rgSeq, gameCate) {
 		var mSeq = document.getElementById("mSeq").value;
 		if (mSeq == null || mSeq == "") {
 			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
@@ -685,6 +665,8 @@
 		} else {
 			wishUrl = "/usr/member/MemberWishUsrDeleByGameDetailRelation";
 		}
+		
+		gCategoryCd.value = gameCate;
 		
 		$.ajax({
 			async: true 
@@ -750,7 +732,7 @@
 		});
 	}
 	
-	function goHoldRelation(bHold, rgSeq) {
+	function goHoldRelation(bHold, rgSeq, gameCate) {
 		var mSeq = document.getElementById("mSeq").value;
 		if (mSeq == null || mSeq == "") {
 			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
@@ -763,6 +745,8 @@
 		} else {
 			holdUrl = "/usr/member/MemberHoldUsrDeleByGameDetailRelation";
 		}
+		
+		gCategoryCd.value = gameCate;
 		
 		$.ajax({
 			async: true 
@@ -795,40 +779,41 @@
 	}
 	
 	function disposeAllTooltips() {
-		  // 기존 툴팁 인스턴스 숨기고 제거
-		  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-		    const tooltip = bootstrap.Tooltip.getInstance(el);
-		    if (tooltip) {
-		      tooltip.hide();    // 툴팁 숨기기
-		      tooltip.dispose(); // 인스턴스 완전 제거
-		    }
-		  });
-		  
-		  // body에 남아있는 툴팁 팝업 엘리먼트도 제거
-		  document.querySelectorAll('.tooltip').forEach(tt => tt.remove());
-		}
+	  // 기존 툴팁 인스턴스 숨기고 제거
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+			const tooltip = bootstrap.Tooltip.getInstance(el);
+			if (tooltip) {
+				tooltip.hide();    // 툴팁 숨기기
+				tooltip.dispose(); // 인스턴스 완전 제거
+			}
+		});
+	  
+		// body에 남아있는 툴팁 팝업 엘리먼트도 제거
+		document.querySelectorAll('.tooltip').forEach(tt => tt.remove());
+	}
 	
 	function refreshTooltipsAndTitles() {
 		// 텍스트 갱신
-	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-	      const icon = el.querySelector('i');
-	      if (icon) {
-	        if (icon.classList.contains('bi-heart-fill')) {
-	          el.setAttribute('title', '위시리스트 삭제');
-	        } else if (icon.classList.contains('bi-heart')) {
-	          el.setAttribute('title', '위시리스트 등록');
-	        } else if (icon.classList.contains('bi-emoji-smile-fill')) {
-	          el.setAttribute('title', '보유 게임 삭제');
-	        } else if (icon.classList.contains('bi-emoji-smile')) {
-	          el.setAttribute('title', '보유 게임 등록');
-	        }
-	      }
-	    });
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+			const icon = el.querySelector('i');
+			
+			if (icon) {
+				if (icon.classList.contains('bi-heart-fill')) {
+					el.setAttribute('title', '위시리스트 삭제');
+				} else if (icon.classList.contains('bi-heart')) {
+					el.setAttribute('title', '위시리스트 등록');
+				} else if (icon.classList.contains('bi-emoji-smile-fill')) {
+					el.setAttribute('title', '보유 게임 삭제');
+				} else if (icon.classList.contains('bi-emoji-smile')) {
+					el.setAttribute('title', '보유 게임 등록');
+				}
+			}
+		});
 
-	    // 툴팁 재초기화
-	    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-	      new bootstrap.Tooltip(el, { trigger: 'hover focus' });
-	    });
+		// 툴팁 재초기화
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+			new bootstrap.Tooltip(el, { trigger: 'hover focus' });
+		});
 	}
 </script>
 

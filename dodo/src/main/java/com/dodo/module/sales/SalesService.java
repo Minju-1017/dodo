@@ -11,6 +11,34 @@ public class SalesService {
 	@Autowired
 	SalesDao dao;
 	
+	public int selectXdmListCount(SalesVo vo) {
+		return dao.selectXdmListCount(vo);
+	}
+	
+	public List<SalesDto> selectXdmList(SalesVo vo) {
+		return dao.selectXdmList(vo);
+	}
+	
+	public SalesDto selectXdmOne(SalesDto salesDto) {
+		return dao.selectXdmOne(salesDto);
+	}
+	
+	public int uelete(SalesDto salesDto) {
+		return dao.uelete(salesDto);
+	}
+	
+	public int listDeleteOrder(List<String> seqList) {
+		return dao.listDeleteOrder(seqList);
+	}
+	
+	public int listDelete(List<String> seqList) {
+		return dao.listDelete(seqList);
+	}
+	
+	public int listUelete(List<String> seqList) {
+		return dao.listUelete(seqList);
+	}
+	
 	public int selectListCount(SalesVo vo) {
 		return dao.selectListCount(vo);
 	}
@@ -53,6 +81,10 @@ public class SalesService {
 	
 	public int orderCheckByMsSeq(SalesDto salesDto) {
 		return dao.orderCheckByMsSeq(salesDto);
+	}
+	
+	public int insert20minCheck(SalesOrderDto salesOrderDto) {
+		return dao.insert20minCheck(salesOrderDto);
 	}
 	
 	public int insertOrderCheck(SalesOrderDto salesOrderDto) {

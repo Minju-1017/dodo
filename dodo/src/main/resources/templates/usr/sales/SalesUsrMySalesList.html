@@ -152,7 +152,7 @@
 														</a>
 													</td>
 													<td>
-														<a href="javascript:void(0);" th:attr="onclick=|goDeliDetail('${list.msoSeq}')|"
+														<a href="javascript:void(0);" th:attr="onclick=|goDeliDetail('${list.msoSeq}', '${list.msoDeliStateCd}')|"
 															class="text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="배송수정">
 															<i class="bi bi-truck"></i>
 														</a>
@@ -220,13 +220,13 @@
 		submit("/usr/sales/SalesUsrDetail");
 	}
 	
-	function goDeliDetail(keyValue) {
-		if (keyValue === null || keyValue === "null") {
+	function goDeliDetail(orderSeq, orderState) {
+		if (orderSeq === null || orderSeq === "null" || orderState === null || orderState === "null") {
 			showModalAlert("확인", "판매완료 상태일 때만 배송정보를 수정할 수 있습니다.");
 			return;
 		}
 		
-		msoSeq.value = keyValue;
+		msoSeq.value = orderSeq;
 		submit("/usr/sales/SalesUsrMySalesDeliForm");
 	}
 

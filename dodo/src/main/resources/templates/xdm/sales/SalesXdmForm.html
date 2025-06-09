@@ -41,10 +41,10 @@
 									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link active" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
+									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/xdm/sales/SalesXdmList">중고거래관리</a>
+									<a class="nav-link active" href="/xdm/sales/SalesXdmList">중고거래관리</a>
 								</li>
 							</ul>
 						</div>
@@ -134,10 +134,10 @@
 									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link active" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
+									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/xdm/sales/SalesXdmList">중고거래관리</a>
+									<a class="nav-link active" href="/xdm/sales/SalesXdmList">중고거래관리</a>
 								</li>
 							</ul>
 						</div>
@@ -178,7 +178,7 @@
 			<div class="row mb-8">
 				<div class="col-md-12">
 					<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-						<h2>Game Review</h2>
+						<h2>Uesd Game Sales</h2>
 					</div>
 				</div>
 			</div>
@@ -187,65 +187,165 @@
 					<div class="card card-lg border-0">
 						<div class="card-body d-flex flex-column gap-8 p-7">
 							<div class="d-flex flex-column gap-4">
-								<form class="row g-5 needs-validation" novalidate 
-									method="post" id="form" name="form">
+								<form class="row g-5 needs-validation" novalidate method="post" id="form" name="form">
 									
-									<input type="hidden" name="grSeq" th:value="${gameReviewItem?.grSeq}">
+									<input type="hidden" name="msSeq" th:value="${salesItem?.msSeq}">
+									<input type="hidden" name="msoSeq" th:value="${salesItem?.msoSeq}">
 									
 									<div class="col-lg-3 col-12">
-										<label for="grSeq" class="form-label">고유번호</label>
-										<input type="text" class="form-control" name="grSeq" id="grSeq" 
-											th:value="${gameReviewItem?.grSeq}" disabled />
+										<label for="msSeq" class="form-label">등록번호</label>
+										<input type="text" class="form-control" name="msSeq" id="msSeq" 
+											th:value="${salesItem?.msSeq}" disabled />
 									</div>
-									<div class="col-lg-9 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="msStateCd" class="form-label">판매상태</label>
+										<select class="form-select" id="msStateCd" name="msStateCd" disabled>
+											<option value="" th:selected="${salesItem?.msStateCd == null}"></option>
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_CODE_GROUP_SEQ_STATE)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+												th:selected="${#strings.equals(codeList.cSeq, salesItem?.msStateCd)}"></option>         
+										</select>
+									</div>
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-3 col-12">
+										<label for="member_mSeq" class="form-label">판매자 고유번호</label>
+										<input type="text" class="form-control" name="member_mSeq" id="member_mSeq" 
+											th:value="${salesItem?.member_mSeq}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="mName" class="form-label">판매자</label>
+										<input type="text" class="form-control" name="mName" id="mName"
+											th:value="${salesItem?.mName}" disabled />
+									</div>
 									<div class="col-lg-3 col-12">
 										<label for="game_gSeq" class="form-label">게임 고유번호</label>
 										<input type="text" class="form-control" name="game_gSeq" id="game_gSeq" 
-											th:value="${gameReviewItem?.game_gSeq}" disabled />
+											th:value="${salesItem?.game_gSeq}" disabled />
 									</div>
 									<div class="col-lg-3 col-12">
 										<label for="gName" class="form-label">게임명</label>
-										<input type="text" class="form-control" name="gName" id="gName" autocomplete="off" 
-											th:value="${gameReviewItem?.gName}" disabled />
-									</div>
-									<div class="col-lg-6 col-12"></div>
-									<div class="col-lg-3 col-12">
-										<label for="member_mSeq" class="form-label">작성자 고유번호</label>
-										<input type="text" class="form-control" name="member_mSeq" id="member_mSeq" 
-											th:value="${gameReviewItem?.member_mSeq}" disabled />
+										<input type="text" class="form-control" name="gName" id="gName"
+											th:value="${salesItem?.gName}" disabled />
 									</div>
 									<div class="col-lg-3 col-12">
-										<label for="gName" class="form-label">작성자 아이디</label>
-										<input type="text" class="form-control" name="mId" id="mId" autocomplete="off" 
-											th:value="${gameReviewItem?.mId}" disabled />
+										<label for="msPrice" class="form-label">판매가</label>
+										<input type="text" class="form-control" name="msPrice" id="msPrice" 
+											th:value="${salesItem?.msPrice}" disabled />
 									</div>
 									<div class="col-lg-3 col-12">
-										<label for="gName" class="form-label">작성자명</label>
-										<input type="text" class="form-control" name="mName" id="mName" autocomplete="off" 
-											th:value="${gameReviewItem?.mName}" disabled />
-									</div>
-									<div class="col-lg-3 col-12"></div>
-									<div class="col-lg-3 col-12">
-										<label for="grRegiDate" class="form-label">등록일</label>
-										<input type="text" class="form-control" name="grRegiDate" id="grRegiDate" autocomplete="off" 
-											th:value="${gameReviewItem?.grRegiDate}" disabled />
+										<label for="msFee" class="form-label">수수료</label>
+										<input type="text" class="form-control" name="msFee" id="msFee" 
+											th:value="${salesItem?.msFee}" disabled />
 									</div>
 									<div class="col-lg-3 col-12">
-										<label for="grScore" class="form-label">평점</label>
-										<input type="text" class="form-control" name="grScore" id="grScore" autocomplete="off" 
-											th:value="${gameReviewItem?.grScore}" disabled />
+										<label for="msRegiDate" class="form-label">등록일</label>
+										<input type="text" class="form-control" name="msRegiDate" id="msRegiDate"
+											th:value="${salesItem?.msRegiDate}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msUpdtDate" class="form-label">수정일</label>
+										<input type="text" class="form-control" name="msUpdtDate" id="msUpdtDate"
+											th:value="${salesItem?.msUpdtDate}" disabled />
+									</div>
+									<div class="col-lg-6 col-12">
+										<label for="msTitle" class="form-label">제목</label>
+										<input type="text" class="form-control" name="msTitle" id="msTitle"
+											th:value="${salesItem?.msTitle}" disabled />
 									</div>
 									<div class="col-lg-6 col-12"></div>
 									<div class="col-lg-6 col-12">
-										<label for="grComment" class="form-label">내용</label>
-										<textarea class="form-control" id="grComment" name="grComment" rows="5" style="resize: none;"
-											autocomplete="off" th:text="${gameReviewItem?.grComment}" disabled></textarea>
+										<label for="msDesc" class="form-label">내용</label>
+										<textarea class="form-control" id="msDesc" name="msDesc" rows="3" style="resize: none;"
+											autocomplete="off" th:text="${salesItem?.msDesc}" disabled></textarea>
 									</div>
 									<div class="col-lg-6 col-12"></div>
-									<div class="col-lg-12 col-12">욕설, 비방인 경우에만 DB 저장 버튼을 클릭해 주세요. <br>"<b>관리자에 의해 가려진 리뷰입니다.</b>" 라고 표시됩니다.</div>
+									<div class="col-lg-3 col-12">
+										<label for="msoSeq" class="form-label">구매번호</label>
+										<input type="text" class="form-control" name="msoSeq" id="msoSeq"
+											th:value="${salesItem?.msoSeq}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msStateCd" class="form-label">배송상태</label>
+										<select class="form-select" id="msoDeliStateCd" name="msoDeliStateCd" disabled>
+											<option value="" th:selected="${salesItem?.msoDeliStateCd == null}"></option>
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_ORDER_CODE_GROUP_SEQ_DELI_STATE)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+												th:selected="${#strings.equals(codeList.cSeq, salesItem?.msoDeliStateCd)}"></option>         
+										</select>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msStateCd" class="form-label">택배사</label>
+										<select class="form-select" id="msoDeliCompCd" name="msoDeliCompCd" disabled>
+											<option value="" th:selected="${salesItem?.msoDeliCompCd == null}"></option>
+											<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_ORDER_CODE_GROUP_SEQ_DELI_COMP)}"
+												th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+												th:selected="${#strings.equals(codeList.cSeq, salesItem?.msoDeliCompCd)}"></option>         
+										</select>
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msoDeliNo" class="form-label">송장번호</label>
+										<input type="text" class="form-control" name="msoDeliNo" id="msoDeliNo"
+											th:value="${salesItem?.msoDeliNo}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="oMember_mSeq" class="form-label">구매자 고유번호</label>
+										<input type="text" class="form-control" name="oMember_mSeq" id="oMember_mSeq"
+											th:value="${salesItem?.oMember_mSeq}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="omName" class="form-label">구매자</label>
+										<input type="text" class="form-control" name="omName" id="omName"
+											th:value="${salesItem?.omName}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="createRowDate" class="form-label">주문 생성일</label>
+										<input type="text" class="form-control" name="createRowDate" id="createRowDate"
+											th:value="${salesItem?.createRowDate}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msoRegiDate" class="form-label">구매일</label>
+										<input type="text" class="form-control" name="msoRegiDate" id="msoRegiDate"
+											th:value="${salesItem?.msoRegiDate}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msoDeliName" class="form-label">받는이</label>
+										<input type="text" class="form-control" name="msoDeliName" id="msoDeliName"
+											th:value="${salesItem?.msoDeliName}" disabled />
+									</div>
+									<div class="col-lg-3 col-12">
+										<label for="msoDeliTel" class="form-label">연락처</label>
+										<input type="text" class="form-control" name="msoDeliTel" id="msoDeliTel"
+											th:value="${salesItem?.msoDeliTel}" disabled />
+									</div>
+									<div class="col-lg-6 col-12"></div>
+									<div class="col-lg-12 col-12">
+										<label class="form-label">주소</label>
+										<div class="d-flex gap-2">
+											<div class="col-lg-2">
+	                                 			<input type="text" class="form-control" id="msoDeliPostcode" name="msoDeliPostcode" 
+													th:value="${salesItem?.msoDeliPostcode}" disabled />
+											</div>
+										</div>
+										<div class="d-flex gap-2 mt-2">
+											<div class="col-lg-4">
+												<input type="text" class="form-control" id="msoDeliRoadAddr" name="msoDeliRoadAddr" 
+													th:value="${salesItem?.msoDeliRoadAddr}" disabled />
+											</div>
+											<div class="col-lg-4">
+												<input type="text" class="form-control" id="msoDeliDetailAddr" name="msoDeliDetailAddr" 
+													th:value="${salesItem?.msoDeliDetailAddr}" disabled />
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12">
+										<label for="msoDeliMemo" class="form-label">배송메모</label>
+										<input type="text" class="form-control" name="msoDeliMemo" id="msoDeliMemo"
+											th:value="${salesItem?.msoDeliMemo}" disabled />
+									</div>
+									<div class="col-lg-6 col-12"></div>
 									<div class="col-lg-6 col-12">
 										<div class="d-flex flex-column flex-md-row gap-2">
-											<a href="/xdm/game/GameReviewXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
+											<a href="/xdm/sales/SalesXdmList" class="btn btn-outline-secondary"><i class="bi bi-list-ul"></i></a>
 										</div>
 									</div>
 									<div class="col-lg-6 col-12" style="text-align: right;">
@@ -254,9 +354,6 @@
 										</button>
 										<button class="btn btn-danger" type="button" id="btnDelete">
 											<i class="bi bi-x-lg"></i>
-										</button>
-										<button class="btn btn-primary" type="button" id="btnSave">
-											<i class="bi bi-database-add"></i>
 										</button>
 									</div>
 								</form>
@@ -274,25 +371,18 @@
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
 	// Seq
-	let seq = document.querySelector("input[name=grSeq]");
+	let msSeq = document.querySelector("input[name=msSeq]");
+	let msoSeq = document.querySelector("input[name=msoSeq]");
 	
 	// URL
 	let fom = document.querySelector("form[name=form]");
-	let goUrlXdmUpdt = "/xdm/game/GameReviewXdmUpdt";
-	let goUrlXdmUele = "/xdm/game/GameReviewXdmUele";
-	let goUrlXdmDele = "/xdm/game/GameReviewXdmDele";
+	let goUrlXdmUele = "/xdm/sales/SalesXdmUele";
+	let goUrlXdmDele = "/xdm/sales/SalesXdmDele";
 	
 	function submit(goUrl) {
+		alert(msSeq.value);
 		fom.action = goUrl;
 		fom.submit();
-	}
-</script>
-
-<!-- Validation: Bootstrap -->
-<script type="text/javascript">
-	// btnSave 클릭시
-	document.getElementById("btnSave").onclick = function() {
-		submit(goUrlXdmUpdt);
 	}
 </script>
 

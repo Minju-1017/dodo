@@ -4,8 +4,6 @@
 <div th:replace="~{xdm/include/head :: head}"></div> <!-- 중복되는 head 처리 -->
 
 <div class="main-wrapper">
-	<!-- navbar vertical -->
-	<!-- navbar -->
 	<nav class="navbar-vertical-nav d-none d-xl-block">
 		<div class="navbar-vertical">
 			<div class="px-4 py-5">
@@ -37,7 +35,7 @@
 								<span class="nav-link-text">서비스관리</span>
 							</div>
 						</a>
-						<div id="navCategoriesService" class="collapse" data-bs-parent="#sideNavbar">
+						<div id="navCategoriesService" class="collapse show" data-bs-parent="#sideNavbar">
 							<ul class="nav flex-column">
 								<li class="nav-item">
 									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
@@ -46,7 +44,7 @@
 									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/xdm/sales/SalesXdmList">중고거래관리</a>
+									<a class="nav-link active" href="/xdm/sales/SalesXdmList">중고거래관리</a>
 								</li>
 							</ul>
 						</div>
@@ -73,14 +71,14 @@
 								<span class="nav-link-text">시스템관리</span>
 							</div>
 						</a>
-						<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
 							<ul class="nav flex-column">
 								<li class="nav-item">
 									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
 								</li>
 								<!-- Nav item -->
 								<li class="nav-item">
-									<a class="nav-link active" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
 								</li>
 							</ul>
 						</div>
@@ -130,7 +128,7 @@
 								<span class="nav-link-text">서비스관리</span>
 							</div>
 						</a>
-						<div id="navCategoriesService" class="collapse" data-bs-parent="#sideNavbar">
+						<div id="navCategoriesService" class="collapse show" data-bs-parent="#sideNavbar">
 							<ul class="nav flex-column">
 								<li class="nav-item">
 									<a class="nav-link" href="/xdm/game/GameXdmList">게임관리</a>
@@ -139,7 +137,7 @@
 									<a class="nav-link" href="/xdm/game/GameReviewXdmList">게임리뷰관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/xdm/sales/SalesXdmList">중고거래관리</a>
+									<a class="nav-link active" href="/xdm/sales/SalesXdmList">중고거래관리</a>
 								</li>
 							</ul>
 						</div>
@@ -158,43 +156,35 @@
 								<span class="nav-link-text">시스템관리</span>
 							</div>
 						</a>
-						<div id="navCategoriesOrders" class="collapse show" data-bs-parent="#sideNavbar">
+						<div id="navCategoriesOrders" class="collapse" data-bs-parent="#sideNavbar">
 							<ul class="nav flex-column">
 								<li class="nav-item">
 									<a class="nav-link" href="/xdm/code/CodeXdmList">코드관리</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link active" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
+									<a class="nav-link" href="/xdm/codegroup/CodeGroupXdmList">코드그룹관리</a>
 								</li>
 							</ul>
 						</div>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<div class="d-flex align-items-center">
-								<span class="nav-link-icon"><i class="bi bi-person"></i></span>
-								<span class="nav-link-text">개인정보관리</span>
-							</div>
-						</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-         	<!-- main wrapper -->
+    <!-- main wrapper -->
 	<main class="main-content-wrapper">
 		<form name="formList" id="formList" method="post" autocomplete="off">
 			
 			<input type="hidden" name="currPage" th:value="${vo.currPage}" default="1"/>
 			<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-			<input type="hidden" name="cgSeq">
+			<input type="hidden" name="msSeq">
 			
 			<div class="container">
 				<div class="row mb-8">
 					<div class="col-md-12">
 						<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
-							<h2>Code Group</h2>
+							<h2>Uesd Game Sales</h2>
 						</div>
 					</div>
 				</div>
@@ -212,17 +202,27 @@
 											</select>
 										</div>
 										<div class="col-lg-2 col-12">
-											<select class="form-select" name="shUseNy" id="shUseNy">
-												<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
-												<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
-												<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
+											<select class="form-select" id="shStateCd" name="shStateCd">
+												<option value="" th:selected="${vo.shStateCd == null}">판매상태</option>
+												<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_CODE_GROUP_SEQ_STATE)}"
+													th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+													th:selected="${#strings.equals(codeList.cSeq, vo.shStateCd)}"></option>         
 											</select>
 										</div>
 										<div class="col-lg-2 col-12">
-											<select class="form-select"id="shOptionDate" name="shOptionDate">
+											<select class="form-select" id="shDeliStateCd" name="shDeliStateCd">
+												<option value="" th:selected="${vo.shDeliStateCd == null}">배송상태</option>
+												<option th:each="codeList : ${@codeService.selectListCachedCode(@constants.SALES_ORDER_CODE_GROUP_SEQ_DELI_STATE)}"
+													th:value="${codeList.cSeq}" th:text="${codeList.cName}" 
+													th:selected="${#strings.equals(codeList.cSeq, vo.shDeliStateCd)}"></option>         
+											</select>
+										</div>
+										<div class="col-lg-6 col-12"></div>
+										<div class="col-lg-2 col-12">
+											<select class="form-select" id="shOptionDate" name="shOptionDate">
 												<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
 												<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
-												<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+												<option value="2" th:selected="${vo.shOptionDate == 2}">구매일</option>
 											</select>
 										</div>
 										<div class="col-lg-2 col-12">
@@ -233,13 +233,13 @@
 											<input type="text" class="form-control" id="shDateEnd" name="shDateEnd"
 												th:value="${vo.shDateEnd}" placeholder="종료일" autocomplete="off" readonly>
 										</div>
-										<div class="col-lg-2 col-12"></div>
+										<div class="col-lg-6 col-12"></div>
 										<div class="col-lg-2 col-12">
 											<select class="form-select" id="shOption" name="shOption">
 												<option value="" th:selected="${vo.shOption == null}">검색구분</option>
-												<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
-												<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
-												<option value="3" th:selected="${vo.shOption == 3}">코드그룹 이름 (영문)</option>
+												<option value="1" th:selected="${vo.shOption == 1}">판매자</option>
+												<option value="2" th:selected="${vo.shOption == 2}">구매자</option>
+												<option value="3" th:selected="${vo.shOption == 3}">게임명</option>
 											</select>
 										</div>
 										<div class="col-lg-2 col-12">
@@ -247,10 +247,10 @@
 												th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어">
 											<div class="invalid-feedback" id="shValueFeedback"></div>
 										</div>
-										<div class="col-lg-6 col-12">
+										<div class="col-lg-2 col-12">
 											<div class="d-flex flex-column flex-md-row gap-2">
 												<button type="submit" id="btnSearch" class="btn btn-primary"><i class="bi bi-search"></i></button>
-												<a href="/xdm/codegroup/CodeGroupXdmList" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></a>
+												<a href="/xdm/sales/SalesXdmList" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></a>
 											</div>
 										</div>
 									</div>
@@ -261,14 +261,11 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 text-center">
-						<!-- card -->
 						<div class="card h-100 card-lg">
-						
-							<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
 							
-							<!-- card body -->
+							<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div> <!-- 중복되는 totalAndRowNum 처리 -->
+
 							<div class="card-body p-0">
-								<!-- table -->
 								<div class="table-responsive">
 									<table class="table table-centered table-hover text-nowrap table-borderless mb-0 table-with-checkbox">
 										<thead class="bg-light">
@@ -279,40 +276,57 @@
 													</div>
 												</th>
 												<th>#</th>
-												<th>사용</th>
-												<th>코드그룹 코드</th>
-												<th>코드그룹 이름</th>
-												<th>코드그룹 이름(영문)</th>
-												<th>갯수</th>
-												<th>순서</th>
+												<th>등록번호</th>
+												<th>판매상태</th>
+												<th>배송상태</th>
+												<th>게임명</th>
+												<th>판매가</th>
+												<th>판매자</th>
+												<th>구매자</th>
 												<th>등록일</th>
-												<th>수정일</th>
+												<th>구매일</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:if="${#lists.isEmpty(codeGroupList)}">
-												<td class="text-center" colspan="10">
+											<tr th:if="${#lists.isEmpty(salesList)}">
+												<td class="text-center" colspan="14">
 													데이터가 없습니다.
 												</td>
 											</tr> 
-											<tr th:if="${!#lists.isEmpty(codeGroupList)}" th:each="list : ${codeGroupList}">
+											<tr th:if="${!#lists.isEmpty(salesList)}" th:each="list : ${salesList}">
 												<td>
 													<div class="form-check">
-														<input class="form-check-input" type="checkbox" name="check" th:value="${list?.cgSeq}">
+														<input class="form-check-input" type="checkbox" name="check" th:value="${list?.msSeq}">
 													</div>
 												</td>
 												<td th:text="${vo.totalRows - ((vo.currPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-												<td th:text="${list?.cgUseNyStr}"></td>
-												<td th:text="${list?.cgSeq}"></td>
-												<td>			
-													<a href="javascript:void(0);" th:text="${list?.cgName}"
-														th:attr="onclick=|goForm('${list.cgSeq}')|"></a>
+												<td th:text="${list?.msSeq}"></td>
+												<td>
+													<span th:if="${list?.msStateCd == @constants.SALES_CODE_ON_SALES}" class="badge bg-primary" 
+														th:text="${@codeService.selectOneCachedCode(list?.msStateCd)}"></span>
+													<span th:if="${list?.msStateCd == @constants.SALES_CODE_SALES_COMPLETED}" class="badge bg-secondary"
+														th:text="${@codeService.selectOneCachedCode(list?.msStateCd)}"></span>
 												</td>
-												<td th:text="${list?.cgNameEng}"></td>
-												<td th:text="${list?.cCount}"></td>
-												<td th:text="${list?.cgSequence}"></td>
-												<td th:text="${list?.cgRegiDate}"></td>
-												<td th:text="${list?.cgUpdtDate}"></td>
+												<td>
+													<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_READY}" 
+														class="badge bg-primary" 
+														th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
+													<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_IN}" 
+														class="badge bg-warning" 
+														th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
+													<span th:if="${list?.msoDeliStateCd == @constants.SALES_CODE_DELI_COMPLETED}" 
+														class="badge bg-secondary"
+														th:text="${@codeService.selectOneCachedCode(list?.msoDeliStateCd)}"></span>
+												</td>
+												<td>
+													<a href="javascript:void(0);" th:text="${list?.gName}"
+														th:attr="onclick=|goForm('${list.msSeq}')|"></a>
+												</td>
+												<td th:text="${@doDoUtil.formatNumberComma(list?.msPrice)}"></td>
+												<td th:text="${list?.mName}"></td>
+												<td th:text="${list?.omName}"></td>
+												<td th:text="${list?.msRegiDate}"></td>
+												<td th:text="${list?.msoRegiDate}"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -322,11 +336,6 @@
 								<div></div>
 								<nav class="mt-2 mt-md-0">
 									<ul class="pagination mb-0">
-										<!-- 타임리프 
-											gt 뜻: >
-											ne 뜻: !=
-											eq 뜻: ==
-										-->
 										<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
 											<a class="page-link" href="javascript:goList(${vo.startPage - 1})"
 												th:attr="onclick=|goList('${vo.startPage - 1}')|">
@@ -355,7 +364,6 @@
 								<div class="d-flex flex-column flex-md-row gap-2">
 									<a href="#" class="btn btn-primary" id="excel"><i class="bi bi-table"></i></a>
 									<a href="#" class="btn btn-info" id="modify">U</a>
-									<button type="button" id="btnForm" class="btn btn-info"><i class="bi bi-plus-lg"></i></button>
 								</div>
 							</div>
 						 </div>
@@ -364,20 +372,19 @@
 			</div>
 		</form>
 	</main>
-      </div>
+</div>
       
-    	<div th:replace="~{xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
-
+<div th:replace="~{xdm/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
+    	
 <!-- 변수 정의 / 공통 함수 -->
 <script type="text/javascript">
-	let seq = document.querySelector("input[name=cgSeq]");
-
-	// URL
+  	let seq = document.querySelector("input[name=msSeq]");
+    	
 	let fom = document.querySelector("form[name=formList]");
-	let goUrlXdmList = "/xdm/codegroup/CodeGroupXdmList";
-	let goUrlXdmForm = "/xdm/codegroup/CodeGroupXdmForm";
-	let goUrlXdmListUeleProc = "/xdm/codegroup/CodeGroupListXdmUeleProc";
-	let goUrlXdmListDeleProc = "/xdm/codegroup/CodeGroupListXdmDeleProc";
+	let goUrlXdmList = "/xdm/sales/SalesXdmList";
+	let goUrlXdmForm = "/xdm/sales/SalesXdmForm";
+	let goUrlXdmListUeleProc = "/xdm/sales/SalesListXdmUeleProc";
+	let goUrlXdmListDeleProc = "/xdm/sales/SalesListXdmDeleProc";
 	
 	function submit(goUrl) {
 		fom.action = goUrl;
@@ -387,11 +394,6 @@
 
 <!-- 데이터 추가/수정 -->
 <script type="text/javascript">
-	// 데이터 추가
-	document.getElementById("btnForm").onclick = function () {
-	    goForm(0);
-	}
-	
 	// 데이터 추가/수정
 	goForm = function (keyValue) {
 	    seq.value = keyValue;
@@ -411,23 +413,23 @@
 	    submit(goUrlXdmList);
 	}
 	
-   	document.getElementById("btnSearch").onclick = function () {
-   		submit(goUrlXdmList);
+	document.getElementById("btnSearch").onclick = function () {
+		submit(goUrlXdmList);
 	};
 </script>
 
 <!-- Table Check Box 처리 (Uelete/Delete/Update)-->
 <script type="text/javascript">
-	document.getElementById("checkAll").onclick = function() {
+     	document.getElementById("checkAll").onclick = function() {
 		allCheck("check", this.checked);
 	}
 	
 	document.getElementById("modify").onclick = function() {
-		modifyCheckedElement("1개의 코드 그룹");
+		modifyCheckedElement("1개의 중고 거래");
 	}
 	
 	document.getElementById("uelete").onclick = function() {
-		ueleteCheckedElementsModal("코드 그룹을");
+		ueleteCheckedElementsModal("중고 거래를");
 	}
 	
 	document.getElementById("btnModalUelete").onclick = function () {
@@ -435,7 +437,7 @@
 	}
 	
 	document.getElementById("delete").onclick = function() {
-		deleteCheckedElementsModal("코드 그룹을");
+		deleteCheckedElementsModal("중고 거래를");
 	}
 
 	document.getElementById("btnModalDelete").onclick = function () {

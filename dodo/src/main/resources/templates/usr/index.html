@@ -25,116 +25,152 @@
 		</div>
 	</section>
 	<!-- Popular Products Start-->
-	<section class="my-lg-14 my-8">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 mb-6">
-					<h3 class="mb-0">실시간 인기 게임</h3>
-				</div>
-			</div>
-			
-			<div id="popularRefresh" th:fragment="popularRefresh">
-				<div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
-					<div th:if="${#lists.isEmpty(gameList)}" class="col">
-						데이터가 없습니다.
-					</div>
-					<div th:if="${!#lists.isEmpty(gameList)}" class="col" th:each="list : ${gameList}">
-						<div class="card card-product">
-							<div class="card-body">
-								<div class="text-center position-relative">
-									<a href="javascript:void(0);"
-										th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
-										<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
-											class="mb-3 img-fluid" 
-											src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
-										<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
-											class="mb-3 img-fluid" th:src="${list?.fPath}" />
-									</a>
+	<form novalidate method="post" id="form" name="form">
 	
-									<div class="card-product-action">
-										<a th:if="${list?.mhCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goHoldR(true, '${list.gSeq}')|" class="btn-action"
-											data-bs-toggle="tooltip" title="보유 게임 등록"><i class="bi bi-emoji-smile"></i></a>
-										<a th:unless="${list?.mhCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goHold(false, '${list.gSeq}')|" class="btn-action"
-											data-bs-toggle="tooltip" title="보유 게임 삭제"><i class="bi bi-emoji-smile-fill"></i></a>
-										<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goWish(true, '${list.gSeq}')|" class="btn-action"
-											data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
-										<a th:unless="${list?.mwCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goWish(false, '${list.gSeq}')|" class="btn-action"
-											data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
-										<a href="./usedgame-shopping.html" class="btn-action"><i class="bi bi-cart" 
-											data-bs-toggle="tooltip" title="중고 구매"></i></a> <!-- TODO!!!!!!!!!!!!!!!!!!!! -->
+		<input type="hidden" id="mSeq" name="mSeq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="gSeq" name="gSeq">
+		<input type="hidden" name="salesShValue">
+		<input type="hidden" name="gCategoryCd">
+		
+		<section class="my-lg-14 my-8">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 mb-6">
+						<h3 class="mb-0">실시간 인기 게임</h3>
+					</div>
+				</div>
+				
+				<div id="popularRefresh" th:fragment="popularRefresh">
+					<div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
+						<div th:if="${#lists.isEmpty(gameList)}" class="col">
+							데이터가 없습니다.
+						</div>
+						<div th:if="${!#lists.isEmpty(gameList)}" class="col" th:each="list : ${gameList}">
+							<div class="card card-product">
+								<div class="card-body">
+									<div class="text-center position-relative">
+										<a href="javascript:void(0);"
+											th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|">
+											<img th:if="${list?.fPath eq null or #strings.trim(list?.fPath) eq ''}" 
+												class="mb-3 img-fluid" 
+												src="/assets/usr/template/FreshCart-1.4.0/images/products/placeholder-img.jpg" />
+											<img th:if="${list?.fPath ne null and #strings.trim(list?.fPath) ne ''}" 
+												class="mb-3 img-fluid" th:src="${list?.fPath}" />
+										</a>
+		
+										<div class="card-product-action">
+											<a th:if="${list?.mhCount == 0}" href="javascript:void(0);"
+												th:attr="onclick=|goHold(true, '${list.gSeq}')|" class="btn-action"
+												data-bs-toggle="tooltip" title="보유 게임 등록"><i class="bi bi-emoji-smile"></i></a>
+											<a th:unless="${list?.mhCount == 0}" href="javascript:void(0);"
+												th:attr="onclick=|goHold(false, '${list.gSeq}')|" class="btn-action"
+												data-bs-toggle="tooltip" title="보유 게임 삭제"><i class="bi bi-emoji-smile-fill"></i></a>
+											<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
+												th:attr="onclick=|goWish(true, '${list.gSeq}')|" class="btn-action"
+												data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
+											<a th:unless="${list?.mwCount == 0}" href="javascript:void(0);"
+												th:attr="onclick=|goWish(false, '${list.gSeq}')|" class="btn-action"
+												data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
+											<a href="javascript:void(0);" th:attr="onclick=|goSales('${list.gName}')|" 
+												class="btn-action"><i class="bi bi-cart" data-bs-toggle="tooltip" title="중고 구매"></i></a>
+										</div>
 									</div>
-								</div>
-								<div class="text-small mb-1">
-									<small class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></small>
-								</div>
-								<h2 class="fs-6">
-									<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
-										th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
-								</h2>
-								<div>
-									<span class="small">
-										<i class="bi bi-reception-4" data-bs-toggle="tooltip" title="난이도"></i>
-										<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
-										<i class="bi bi-person" data-bs-toggle="tooltip" title="인원"></i>
-										<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
-											th:text="${list?.gMinPeople + '인'}"></span>
-										<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
-											th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></span>&nbsp;&nbsp;
-										<i class="bi bi-alarm" data-bs-toggle="tooltip" title="소요시간"></i>
-										<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
-											th:text="${list?.gMinTime + '분'}"></span>
-										<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
-											th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
-									</span>
-								</div>
-								<div>
-									<span>
-										<small class="text-warning">
-											<i th:unless="${list?.fillStarCount eq 0}" 
-												th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
-												class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
-												th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
-												class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
-												th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
-												class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
-												and list?.harfStarCount eq 0 
-												and list?.fillStarCount eq 0}"   
-												th:each="i : ${#numbers.sequence(0, 4)}"
-												class="bi bi-star"></i>
-										</small>
-										<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + @doDoUtil.formatNumberComma(list?.grCount) + ')'}"></span>
-									</span>
+									<div class="text-small mb-1">
+										<small class="text-muted" th:text="${@codeService.selectOneCachedCode(list?.gCategoryCd)}"></small>
+									</div>
+									<h2 class="fs-6">
+										<a class="text-inherit text-decoration-none" href="javascript:void(0);" th:text="${list?.gName}"
+											th:attr="onclick=|goDetail('${list.gSeq}', '${list.gCategoryCd}')|"></a>
+									</h2>
+									<div>
+										<span class="small">
+											<i class="bi bi-reception-4" data-bs-toggle="tooltip" title="난이도"></i>
+											<span th:text="${list?.gLevel}"></span>&nbsp;&nbsp;
+											<i class="bi bi-person" data-bs-toggle="tooltip" title="인원"></i>
+											<span th:if="${list?.gMinPeople eq list?.gMaxPeople}"
+												th:text="${list?.gMinPeople + '인'}"></span>
+											<span th:unless="${list?.gMinPeople eq list?.gMaxPeople}"
+												th:text="${list?.gMinPeople + '-' + list?.gMaxPeople + '인'}"></span>&nbsp;&nbsp;
+											<i class="bi bi-alarm" data-bs-toggle="tooltip" title="소요시간"></i>
+											<span th:if="${list?.gMinTime eq list?.gMaxTime}" 
+												th:text="${list?.gMinTime + '분'}"></span>
+											<span th:unless="${list?.gMinTime eq list?.gMaxTime}"
+												th:text="${list?.gMinTime + '-' + list?.gMaxTime + '분'}"></span>
+										</span>
+									</div>
+									<div>
+										<span>
+											<small class="text-warning">
+												<i th:unless="${list?.fillStarCount eq 0}" 
+													th:each="i : ${#numbers.sequence(0, list?.fillStarCount - 1)}"
+													class="bi bi-star-fill"></i><i th:unless="${list?.harfStarCount eq 0}"  
+													th:each="i : ${#numbers.sequence(0, list?.harfStarCount - 1)}" 
+													class="bi bi-star-half"></i><i th:unless="${list?.emptyStarCount eq 0}"   
+													th:each="i : ${#numbers.sequence(0, list?.emptyStarCount - 1)}"
+													class="bi bi-star"></i><i th:if="${list?.emptyStarCount eq 0 
+													and list?.harfStarCount eq 0 
+													and list?.fillStarCount eq 0}"   
+													th:each="i : ${#numbers.sequence(0, 4)}"
+													class="bi bi-star"></i>
+											</small>
+											<span class="text-muted small" th:text="${list?.grScoreAvg + ' (' + @doDoUtil.formatNumberComma(list?.grCount) + ')'}"></span>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</form>
 	<!-- Popular Products End-->
 </main>
 
 <div th:replace="~{usr/include/footer :: footer}"></div> <!-- 중복되는 footer 처리 -->
 
+<!-- 변수 정의 / 공통 함수 -->
+<script type="text/javascript">
+	let salesShValue = document.querySelector("input[name=salesShValue]");
+	let gSeq = document.querySelector("input[name=gSeq]");
+  	let mSeq = document.querySelector("input[name=mSeq]");
+  	let gCategoryCd = document.querySelector("input[name=gCategoryCd]");
+  	
+	let fom = document.querySelector("form[name=form]");
+
+	function submit(url) {
+		fom.action = url;
+		fom.submit();
+	}
+	
+	function goDetail(gameSeq, gameCate) {
+		gSeq.value = gameSeq;
+		gCategoryCd.value = gameCate;
+		submit("/usr/game/GameUsrDetail");
+	}
+</script>
+
 <!-- Sales/Wish/Hold -->
 <script type="text/javascript">
-	function goWish(bWish, rgSeq) {
+	function goSales(gameName) {
+		salesShValue.value = gameName;
+		submit("/usr/sales/SalesSearchUsrList");
+	}
+
+	function goWish(bWish, gameSeq) {
 		var mSeq = document.getElementById("mSeq").value;
 		if (mSeq == null || mSeq == "") {
 			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
 			return false;
 		}
 		
+		gSeq.value = gameSeq;
+		
 		var wishUrl;
 		if (bWish) {
-			wishUrl = "/usr/member/MemberWishUsrInstByGameDetailRelation";
+			wishUrl = "/usr/member/MemberWishUsrInstByIndexPopular";
 		} else {
-			wishUrl = "/usr/member/MemberWishUsrDeleByGameDetailRelation";
+			wishUrl = "/usr/member/MemberWishUsrDeleByIndexPopular";
 		}
 		
 		$.ajax({
@@ -144,16 +180,14 @@
 			,url: wishUrl
 			,traditional: true
 			,data : {
-				"rgSeq" : rgSeq,
 				"gSeq" : $("#gSeq").val(),
-				"mSeq" : $("#mSeq").val(),
-				"gCategoryCd" : $("#gCategoryCd").val()
+				"mSeq" : $("#mSeq").val()
 			}
 			,success: function(fragmentHtml) {
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
 					disposeAllTooltips();
-					$('#relationRefresh').replaceWith(fragmentHtml);
+					$('#popularRefresh').replaceWith(fragmentHtml);
 					refreshTooltipsAndTitles();
 				}
 			}
@@ -163,18 +197,20 @@
 		});
 	}
 	
-	function goHold(bHold, rgSeq) {
+	function goHold(bHold, gameSeq) {
 		var mSeq = document.getElementById("mSeq").value;
 		if (mSeq == null || mSeq == "") {
 			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
 			return false;
 		}
 		
+		gSeq.value = gameSeq;
+		
 		var holdUrl;
 		if (bHold) {
-			holdUrl = "/usr/member/MemberHoldUsrInstByGameDetailRelation";
+			holdUrl = "/usr/member/MemberHoldUsrInstByIndexPopular";
 		} else {
-			holdUrl = "/usr/member/MemberHoldUsrDeleByGameDetailRelation";
+			holdUrl = "/usr/member/MemberHoldUsrDeleByIndexPopular";
 		}
 		
 		$.ajax({
@@ -184,16 +220,14 @@
 			,url: holdUrl
 			,traditional: true
 			,data : {
-				"rgSeq" : rgSeq,
 				"gSeq" : $("#gSeq").val(),
-				"mSeq" : $("#mSeq").val(),
-				"gCategoryCd" : $("#gCategoryCd").val()
+				"mSeq" : $("#mSeq").val()
 			}
 			,success: function(fragmentHtml) {
 				if (fragmentHtml != null && fragmentHtml != "") {
 					// fragmentHtml은 렌더링된 HTML fragment
 					disposeAllTooltips();
-					$('#relationRefresh').replaceWith(fragmentHtml);
+					$('#popularRefresh').replaceWith(fragmentHtml);
 					refreshTooltipsAndTitles();
 				}
 			}
@@ -203,45 +237,46 @@
 		});
 	}
 	
-	//TODO: 중고구매 안되있음 (게임 디테일도), xdm 중고 거래 관리 넣기
-	function goSales(bSales, rgSeq) {
-		var mSeq = document.getElementById("mSeq").value;
-		if (mSeq == null || mSeq == "") {
-			showModalMoveLoginConfirm("확인", "로그인 후 이용해 주세요. 로그인 화면으로 이동하시겠습니까?"); 
-			return false;
-		}
-		
-		var holdUrl;
-		if (bHold) {
-			holdUrl = "/usr/member/MemberHoldUsrInstByGameDetailRelation";
-		} else {
-			holdUrl = "/usr/member/MemberHoldUsrDeleByGameDetailRelation";
-		}
-		
-		$.ajax({
-			async: true 
-			,cache: false
-			,type: "post"
-			,url: holdUrl
-			,traditional: true
-			,data : {
-				"rgSeq" : rgSeq,
-				"gSeq" : $("#gSeq").val(),
-				"mSeq" : $("#mSeq").val(),
-				"gCategoryCd" : $("#gCategoryCd").val()
-			}
-			,success: function(fragmentHtml) {
-				if (fragmentHtml != null && fragmentHtml != "") {
-					// fragmentHtml은 렌더링된 HTML fragment
-					disposeAllTooltips();
-					$('#relationRefresh').replaceWith(fragmentHtml);
-					refreshTooltipsAndTitles();
-				}
-			}
-			,error : function(jqXHR, textStatus, errorThrown){
-				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+	function disposeAllTooltips() {
+		// 기존 툴팁 인스턴스 숨기고 제거
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+			const tooltip = bootstrap.Tooltip.getInstance(el);
+			if (tooltip) {
+				tooltip.hide();    // 툴팁 숨기기
+				tooltip.dispose(); // 인스턴스 완전 제거
 			}
 		});
+	  
+		// body에 남아있는 툴팁 팝업 엘리먼트도 제거
+		document.querySelectorAll('.tooltip').forEach(tt => tt.remove());
+	}
+	
+	function refreshTooltipsAndTitles() {
+		// 텍스트 갱신
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+			const icon = el.querySelector('i');
+			
+			if (icon) {
+				if (icon.classList.contains('bi-heart-fill')) {
+					el.setAttribute('title', '위시리스트 삭제');
+				} else if (icon.classList.contains('bi-heart')) {
+					el.setAttribute('title', '위시리스트 등록');
+				} else if (icon.classList.contains('bi-emoji-smile-fill')) {
+					el.setAttribute('title', '보유 게임 삭제');
+				} else if (icon.classList.contains('bi-emoji-smile')) {
+					el.setAttribute('title', '보유 게임 등록');
+				}
+			}
+		});
+
+		// 툴팁 재초기화
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+			new bootstrap.Tooltip(el, { trigger: 'hover focus' });
+		});
+	}
+	
+	document.getElementById("btnModalLogin").onclick = function() {
+		location.href = "/usr/member/MemberXdmSignIn";
 	}
 </script>
 

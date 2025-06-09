@@ -11,6 +11,10 @@ public class SalesVo extends BaseVo {
 	// null 값을 받아야 되는 경우가 있어서 int 대신 Integer 사용
 	private Integer shStateCd;
 	private Integer shDeliStateCd;
+	
+	public SalesVo() {
+		super.setShOptionDate(null);
+	}
 
 	public String getMsSeq() {
 		return msSeq;

@@ -27,7 +27,20 @@
 					
 						<input type="hidden" id="msoSeq" name="msoSeq" th:value="${salesDeliItem?.msoSeq}">
 						
-						<div class="row mb-8 g-5">
+						
+						<div th:if="${salesDeliItem?.msoDeliStateCd == null}" class="row mb-8 g-5">
+							<div class="col-lg-8">
+								<div class="card card-lg">
+									<div class="card-body p-8 d-flex flex-column">
+										판매완료 된 거래가 아닙니다.
+									</div>
+								</div>
+								<div class="mt-6 mb-3 text-center">
+									<a href="/usr/sales/SalesUsrMySalesList" class="btn btn-light">목록</a>
+								</div>
+							</div>
+						</div>
+						<div th:unless="${salesDeliItem?.msoDeliStateCd == null}" class="row mb-8 g-5">
 							<div class="col-lg-8">
 								<div class="card card-lg">
 									<div class="card-body p-8 d-flex flex-column">

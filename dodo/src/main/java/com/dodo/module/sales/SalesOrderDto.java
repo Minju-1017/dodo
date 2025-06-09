@@ -15,6 +15,7 @@ public class SalesOrderDto {
 	private String msoDeliNo;
 	private Integer msoDeliStateCd;
 	private String msoRegiDate;
+	private String createRowDate;
 	
 	private String omName;
 	
@@ -120,6 +121,14 @@ public class SalesOrderDto {
 	
 	public void setMsoRegiDate(String msoRegiDate) {
 		this.msoRegiDate = msoRegiDate;
+	}
+
+	public String getCreateRowDate() {
+		return createRowDate;
+	}
+
+	public void setCreateRowDate(String createRowDate) {
+		this.createRowDate = createRowDate;
 	}
 
 	public String getOmName() {

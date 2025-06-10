@@ -75,8 +75,8 @@ public class GameService {
 		return dao.listUelete(seqList);
 	}
 	
-	public int selectReviewOneCount(GameVo vo) {
-		return dao.selectReviewOneCount(vo);
+	public int selectReviewCount(GameVo vo) {
+		return dao.selectReviewCount(vo);
 	}
 	
 	public List<GameReviewDto> selectReviewList(GameVo vo) {

@@ -436,6 +436,15 @@
 	document.getElementById("btnModalDelete").onclick = function () {
 		deleteCheckedElements(goUrlXdmListDeleProc, goUrlXdmList);
 	}
+	
+	document.getElementById("excel").onclick = function() {
+		showModalExcelDownloadConfirm("확인", "데이터를 엑셀로 다운로드 하시겠습니까?"); 
+	}
+	
+	document.getElementById("btnModalExcelDownload").onclick = function () {
+		$("#modalConfirm").modal("hide");
+		submit("/xdm/excel/MemberXdmListExcelDownload");
+	}
 </script>
 
 </body>

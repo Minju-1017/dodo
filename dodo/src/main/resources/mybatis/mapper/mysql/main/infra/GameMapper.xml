@@ -441,7 +441,7 @@
 	
 	<!--################## Review ##################-->
 	
-	<select id="selectReviewOneCount" resultType="Integer">
+	<select id="selectReviewCount" resultType="Integer">
 		SELECT COUNT(*)
 		FROM 
 			gameReview a

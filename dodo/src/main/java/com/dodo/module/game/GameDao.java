@@ -24,7 +24,7 @@ public interface GameDao {
 	public int listDelete(List<String> seqList);
 	public int listUelete(List<String> seqList);
 	
-	public int selectReviewOneCount(GameVo vo);
+	public int selectReviewCount(GameVo vo);
 	public List<GameReviewDto> selectReviewList(GameVo vo); 
 	public GameReviewDto selectReviewOne(GameReviewDto gameReviewDto); 
 	public GameDto selectGameDetailReviewDistribution(GameDto gameDto);

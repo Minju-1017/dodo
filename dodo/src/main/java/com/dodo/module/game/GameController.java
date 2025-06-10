@@ -186,7 +186,7 @@ public class GameController {
 	@RequestMapping(value = "GameReviewXdmList")
 	public String gameReviewXdmList(Model model, @ModelAttribute("vo") GameVo vo) {
 		// addAttribute 하기 전에 미리 실행되야함
-		vo.setParamsPaging(service.selectReviewOneCount(vo));
+		vo.setParamsPaging(service.selectReviewCount(vo));
 		
 		if (vo.getTotalRows() > 0) {
 			model.addAttribute("gameReviewList", service.selectReviewList(vo));

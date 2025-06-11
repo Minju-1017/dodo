@@ -519,16 +519,16 @@
 	
 									<div class="card-product-action">
 										<a th:if="${list?.mhCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goHoldRelation(true, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
+											th:attr="onclick=|goHoldRelation(true, '${list.gSeq}', '${list.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="보유 게임 등록"><i class="bi bi-emoji-smile"></i></a>
 										<a th:unless="${list?.mhCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goHoldRelation(false, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
+											th:attr="onclick=|goHoldRelation(false, '${list.gSeq}', '${list.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="보유 게임 삭제"><i class="bi bi-emoji-smile-fill"></i></a>
 										<a th:if="${list?.mwCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goWishRelation(true, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
+											th:attr="onclick=|goWishRelation(true, '${list.gSeq}', '${list.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="위시리스트 등록"><i class="bi bi-heart"></i></a>
 										<a th:unless="${list?.mwCount == 0}" href="javascript:void(0);"
-											th:attr="onclick=|goWishRelation(false, '${list.gSeq}', '${gameItem.gCategoryCd}')|" class="btn-action"
+											th:attr="onclick=|goWishRelation(false, '${list.gSeq}', '${list.gCategoryCd}')|" class="btn-action"
 											data-bs-toggle="tooltip" title="위시리스트 삭제"><i class="bi bi-heart-fill"></i></a>
 										<a href="javascript:void(0);" th:attr="onclick=|goSales('${list.gName}')|" 
 											class="btn-action"><i class="bi bi-cart" data-bs-toggle="tooltip" title="중고 구매"></i></a>

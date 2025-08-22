@@ -54,6 +54,9 @@
 										<div class="col-6 d-grid">
 											<a href="/usr/index" class="btn btn-secondary">취소</a>
 										</div>
+										<div class="col-12">
+											<div id="naver_id_login"></div>
+										</div>
 										<div>
 											회원가입이 필요하세요?
 											<a href="/usr/member/MemberUsrSignUpForm">회원가입</a>
@@ -165,6 +168,55 @@
 				}
 			});
 		}
+	</script>
+	
+	<!-- 네이버 로그인 - 초기화 -->
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	
+	<script th:inline="javascript">
+		let state = /*[[${state}]]*/ "";
+		let clientId = /*[[${naverClientId}]]*/ "";
+		let redirectUri = /*[[${naverClientCallback}]]*/ "";
+		
+		var naver_id_login = new naver_id_login(clientId, redirectUri);
+		naver_id_login.setButton("green", 3, 43);
+		naver_id_login.setState(state);
+		naver_id_login.init_naver_id_login();
+	</script>
+	
+	<!-- 네이버 로그인 - Callback 처리 -->
+	<script type="text/javascript">
+		function naverSignInCallback() {
+			var mId = naver_id_login.getProfileData('id');
+			var mName = naver_id_login.getProfileData('name');
+			var mEmail = naver_id_login.getProfileData('email');
+			
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/usr/member/NaverLoginProc"
+				,data : { 
+					"mId" : mId, 
+					"mName" : mName, 
+					"mEmail" : mEmail
+				}
+				,success: function(response) {
+					if (response.rt == "success") {
+						location.href = "/usr/index";
+					} else {
+						showModalAlert("확인", "로그인 실패하였습니다. 탈퇴하신 ID인 경우 관리자에게 문의 해주세요.");
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+	
+	
+		// 네이버 사용자 프로필 조회
+		naver_id_login.get_naver_userprofile("naverSignInCallback()");
 	</script>
 		
 </body>

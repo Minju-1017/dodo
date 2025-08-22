@@ -3,8 +3,10 @@ package com.dodo.module.member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +49,12 @@ public class MemberController {
 	@Autowired
 	FileService fileService;
 	
+	@Value("${naver.client.id}")
+    private String naverClientId;
+	
+	@Value("${naver.client.callback}")
+    private String naverClientCallback;
+	
 	/**
 	 * 로그인 세션 처리 - User
 	 * @param httpSession
@@ -64,6 +72,17 @@ public class MemberController {
 	}
 	
 	/**
+	 * 네이버 로그인 세션 처리 - User
+	 * @param httpSession
+	 * @param memberDto
+	 * @throws Exception
+	 */
+	private void usrSignIn(HttpSession httpSession, MemberDto memberDto, boolean isNaver) throws Exception {
+		httpSession.setAttribute("sessNaver", isNaver ? "1" : "0");
+		usrSignIn(httpSession, memberDto);
+	}
+	
+	/**
 	 * 로그아웃 세션 처리 - User
 	 * @param httpSession
 	 */
@@ -73,6 +92,7 @@ public class MemberController {
 		httpSession.setAttribute("sessNameUsr", null);
 		httpSession.setAttribute("sessGradeUsr", null);
 		httpSession.setAttribute("sessPfFileNameUsr", null);
+		httpSession.setAttribute("sessNaver", null);
 	}
 	
 	/**
@@ -194,11 +214,90 @@ public class MemberController {
 	}
 	
 	/**
+	 * Ajax를 통한 Naver 회원가입/로그인 - User
+	 * @param mId
+	 * @param mName
+	 * @param mEmail
+	 * @param mBirth
+	 * @param mGenderCd
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "NaverLoginProc")
+	public Map<String, Object> naverLoginProc(MemberDto memberDto, HttpSession httpSession,
+			@RequestParam(value="mId") String mId,
+			@RequestParam(value="mName") String mName,
+			@RequestParam(value="mEmail") String mEmail) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		// 네이버에서 받은 유저 정보 세팅 
+		memberDto.setmId(mId);
+		memberDto.setmName(mName);
+		memberDto.setmEmail(mEmail);
+		memberDto.setmBirth(null);
+		memberDto.setmGenderCd(0);
+		memberDto.setmPwd("");
+		
+		// ID 존재 여부 체크
+		int cntId = service.insertCheckId(memberDto);
+		
+		if (cntId == 0) { // 존재하지 않는 ID - 회원가입 후 로그인
+			int cntSuccess = service.insert(memberDto);
+			
+			if (cntSuccess == 1) { // 회원 가입 성공
+				// 가입 축하 메일 보내기(SMTP 이용) - 오래 걸리므로, 새로운 쓰레드에서 보낸다.
+				new Thread() {
+					public void run() {
+						try {
+							mailService.sendMailWelcome(memberDto);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}.start();
+				
+				// 로그인
+				MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+				
+				if (mDto == null) { // 로그인 실패
+					usrSignOut(httpSession);
+					mDto = null;
+					returnMap.put("rt", "fail");
+				} else { // 로그인 성공
+					usrSignIn(httpSession, mDto, true);
+					returnMap.put("rt", "success");
+				}
+			} else { // 회원 가입 실패
+				returnMap.put("rt", "fail");
+			}
+		} else { // 이미 존재하는 ID - 바로 로그인
+			// 로그인
+			MemberDto mDto = service.selectSignInMember(memberDto); // MyBatis에서 디비 검색 후 결과값이 없으면 NULL이 떨어짐
+			
+			if (mDto == null) { // 로그인 실패
+				usrSignOut(httpSession);
+				mDto = null;
+				returnMap.put("rt", "fail");
+			} else { // 로그인 성공
+				usrSignIn(httpSession, mDto, true);
+				returnMap.put("rt", "success");
+			}
+		}
+		
+		return returnMap;
+	}
+	
+	/**
 	 * 로그인 화면 이동 - User
 	 * @return
 	 */
 	@RequestMapping(value = "MemberUsrSignIn")	
-	public String memberUsrSignIn() {				
+	public String memberUsrSignIn(Model model) {	
+		String state = String.valueOf(UUID.randomUUID());
+		model.addAttribute("state", state);
+		model.addAttribute("naverClientId", naverClientId);
+		model.addAttribute("naverClientCallback", naverClientCallback);
+		
 		return path_user + "MemberUsrSignIn";
 	}
 	

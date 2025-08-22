@@ -21,10 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodo.Constants;
-import com.dodo.module.codegroup.CodeGroupDto;
-import com.dodo.module.codegroup.CodeGroupVo;
-import com.dodo.module.game.GameDto;
-import com.dodo.module.game.GameVo;
 import com.dodo.module.member.MemberDto;
 import com.dodo.module.member.MemberService;
 
